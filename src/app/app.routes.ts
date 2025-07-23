@@ -2,7 +2,7 @@ import { RedirectCommand, Routes } from '@angular/router';
 import { Home } from './Pages/home/home';
 import { Login } from './Pages/login/login';
 import { Register } from './Pages/register/register';
-import { PropertyDetails } from './Pages/property-details/property-details';
+import { PropertyDetails } from './User/Property-Details/property-details/property-details';
 import { Checkout } from './Pages/checkout/checkout';
 import { Messages } from './Pages/messages/messages';
 import { Notifications } from './Pages/notifications/notifications';

@@ -1,0 +1,69 @@
+<!-- @if (images && images.length > 0) {
+  <div class="gallery-container">
+    <div class="main-image">
+      <img
+        [src]="images[selectedImageIndex]?.imageUrl"
+        [alt]="images[selectedImageIndex]?.description || 'Main Image'"
+        class="main-img"
+      />
+    </div>
+
+    <div class="thumbnail-grid">
+      @for (img of images; track img.Id) {
+        <img
+          [src]="img.imageUrl"
+          [alt]="img.description"
+          class="thumbnail-img"
+          [class.active]="images.indexOf(img) === selectedImageIndex"
+          (click)="selectImage(images.indexOf(img))"
+        />
+      }
+    </div>
+  </div>
+} @else {
+  <p class="no-images-message">No images available for this property.</p>
+}
+ -->
+
+ <div class="container py-4">
+        <div class="row g-2 mb-4 rounded overflow-hidden">
+            <div class="col-6">
+                @if (primaryImage){
+                    <img [src]="primaryImage.imageUrl" 
+                         alt="Main apartment view" 
+                         class="img-fluid rounded h-100 w-100 object-fit-cover gallery-image">
+                }
+            </div>
+            @if (otherImages && otherImages.length > 0) {
+                <div class="col-3">
+                <div class="row g-2 h-100">
+                    <div class="col-12 h-50">
+                        <img [src]="images?.[0]?.imageUrl"
+                             alt="Living room" 
+                             class="img-fluid rounded h-100 w-100 object-fit-cover gallery-image">
+                    </div>
+                    <div class="col-12 h-50">
+                        <img [src]="images?.[1]?.imageUrl"  
+                             alt="Kitchen" 
+                             class="img-fluid rounded h-100 w-100 object-fit-cover gallery-image">
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row g-2 h-100">
+                    <div class="col-12 h-50">
+                        <img [src]="images?.[2]?.imageUrl" 
+                             alt="Bathroom" 
+                             class="img-fluid rounded h-100 w-100 object-fit-cover gallery-image">
+                    </div>
+                    <div class="col-12 h-50">
+                        <img [src]="images?.[2]?.imageUrl"
+                             alt="Balcony view" 
+                             class="img-fluid rounded h-100 w-100 object-fit-cover gallery-image">
+                    </div>
+                </div>
+            </div>
+            }
+            
+        </div>
+    </div>
