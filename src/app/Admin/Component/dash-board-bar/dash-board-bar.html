@@ -1,28 +1,29 @@
-<div class="sidebar bg-light shadow-lg">
-  <div class="logo-container">
-    <div class="logo">
-      <!-- <div class="logo-icon">
-        <i class="fab fa-airbnb"></i>
-      </div> -->
-      <div class="logo-text">Admin Panel</div>
-    </div>
-  </div>
 
-  <div class="sidebar-menu">
-    <div class="menu-item"  routerLinkActive="active">
-      <!-- <i class="fas fa-home"></i> -->
+<div class="sidebar header bg-light shadow-lg">
+  <div class="logo mb-3  d-flex justify-content-center">
+    <div class="logo-icon ms-0">
+      <img src="https://img.icons8.com/?size=100&id=103424&format=png&color=000000" alt="Admin Icon" />
+    </div>
+    <div class="logo-text  ms-0">AdminPanel</div>
+
+    </div>
+
+
+  <div class="sidebar-menu  mt-0 text-start">
+    <div class="menu-item ms-3">
+      <i class="fas fa-chart-line"></i>
       <span>Dashboard</span>
     </div>
-    <div class="menu-item" [routerLink]="['/UserManagement']" >
-        <!-- <i class="fa-solid fa-user"></i> -->
-        <span> User Management</span>
+    <div class="menu-item ms-3" [routerLink]="['/UserManagement']" >
+      <i class="fas fa-user"></i>
+      <span>User Management</span>
     </div>
-    <div class="menu-item" [routerLink]="['/Violation']">
-      <!-- <i class="fas fa-building"></i> -->
+    <div class="menu-item ms-3" [routerLink]="['/Violation']">
+      <i class="fas fa-exclamation-triangle"></i>
       <span>Violation</span>
     </div>
-    <div class="menu-item"  [routerLink]="['/AdminNotifications']" >
-      <!-- <i class="fas fa-id-card"></i> -->
+    <div class="menu-item ms-3 " [routerLink]="['/AdminNotifications']">
+      <i class="fas fa-bell"></i>
       <span>Notifications</span>
     </div>
 
@@ -30,3 +31,4 @@
 
 
 </div>
+

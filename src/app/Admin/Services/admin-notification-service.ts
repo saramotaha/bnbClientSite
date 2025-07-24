@@ -15,4 +15,13 @@ export class AdminNotificationService {
    return this.http.post<IAdminNotifications>(`${this.baseUrl}`, NotificationBody);
   }
 
+
+  GetAdminNotifications():Observable<IAdminNotifications[]> {
+    return this.http.get<IAdminNotifications[]>(`${this.baseUrl}/GetAdminNotifications`);
+  }
+
+  GetNotificationsToAdmin(id:number):Observable<IAdminNotifications[]> {
+    return this.http.get<IAdminNotifications[]>(`${this.baseUrl}/user/${id}`);
+  }
+
 }
