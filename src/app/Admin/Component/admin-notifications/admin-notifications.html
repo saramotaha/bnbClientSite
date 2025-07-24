@@ -1,0 +1,53 @@
+<section class="bg-light  shadow-lg p-5">
+  <div class="">
+    <div class="admin-header">
+      <h1>🔔 Admin Notifications</h1>
+      <button class="btn btn-send" data-bs-toggle="modal" data-bs-target="#sendNotificationModal">+ New
+        Notification</button>
+    </div>
+
+    <div class="notification-panel p-5">
+
+
+      <!-- Dynamic Notification Cards Here -->
+    </div>
+
+    <!-- Send Notification Modal -->
+    <div class="modal fade p-5" id="sendNotificationModal" tabindex="-1" aria-labelledby="sendNotificationModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <form (ngSubmit)="submitForm()" [formGroup]="notificationForm" id="notificationForm" class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="sendNotificationModalLabel">Create Notification</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+           <input formControlName="senderId" hidden  type="text" class="form-control" id="notificationTitle" required>
+
+            <div class="mb-3">
+              <label for="notificationTitle" class="form-label">UserId</label>
+              <input formControlName="userId" type="text" class="form-control" id="notificationTitle" required>
+            </div>
+            <div class="mb-3">
+              <label for="notificationMessage" class="form-label">Message</label>
+              <textarea formControlName="message" class="form-control" id="notificationMessage" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="notificationType" class="form-label">Type</label>
+              <select class="form-select" id="notificationType">
+                <option value="primary">Info</option>
+                <option value="danger">Alert</option>
+                <option value="success">Success</option>
+                <option value="warning">Warning</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-send w-100">Send Notification</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</section>

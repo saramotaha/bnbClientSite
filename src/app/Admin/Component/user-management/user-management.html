@@ -1,0 +1,93 @@
+<!-- Stats Cards -->
+<section class=" mt-5">
+  <div class="stats-container mt-5">
+    <div class="stat-card">
+      <span class="label"><i class="fas fa-users"></i> Total Users</span>
+      <span class="value">8,426</span>
+      <span class="trend"><i class="fas fa-arrow-up"></i> 12% from last month</span>
+    </div>
+    <div class="stat-card">
+      <span class="label"><i class="fas fa-user-check"></i> Active Users</span>
+      <span class="value">7,184</span>
+      <span class="trend"><i class="fas fa-arrow-up"></i> 8% from last month</span>
+    </div>
+    <div class="stat-card">
+      <span class="label"><i class="fas fa-user-clock"></i> Pending Verification</span>
+      <span class="value">324</span>
+      <span class="trend down"><i class="fas fa-arrow-down"></i> 3% from last month</span>
+    </div>
+    <div class="stat-card">
+      <span class="label"><i class="fas fa-user-slash"></i> Suspended Users</span>
+      <span class="value">42</span>
+      <span class="trend"><i class="fas fa-arrow-down"></i> 15% from last month</span>
+    </div>
+  </div>
+
+
+
+  <div class="card-style">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Registered</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="toggleDetails('u1')">
+            <td>#U001</td>
+            <td>Jane Doe</td>
+            <td>jane.doe</td>
+            <td><span class="badge badge-active">Active</span></td>
+            <td>2023-11-03</td>
+            <td class="action-btns">
+              <button class="btn btn-outline-primary btn-sm">View</button>
+              <button class="btn btn-outline-danger btn-sm">Ban</button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              <div id="u1" class="user-detail">
+                <strong>Full Name:</strong> Jane Doe<br>
+                <strong>City:</strong> Paris<br>
+                <strong>Phone:</strong> +33 123 456 789<br>
+                <strong>Bookings:</strong> 24<br>
+                <strong>Reports:</strong> 1<br>
+                <strong>Last Login:</strong> 2024-07-20 14:33<br>
+              </div>
+            </td>
+          </tr>
+          <tr onclick="toggleDetails('u2')">
+            <td>#U002</td>
+            <td>Mohamed Ali</td>
+            <td>mohamed.ali</td>
+            <td><span class="badge badge-banned">Banned</span></td>
+            <td>2023-10-21</td>
+            <td class="action-btns">
+              <button class="btn btn-outline-primary btn-sm">View</button>
+              <button class="btn btn-outline-success btn-sm">Unban</button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              <div id="u2" class="user-detail">
+                <strong>Full Name:</strong> Mohamed Ali<br>
+                <strong>City:</strong> Cairo<br>
+                <strong>Phone:</strong> +20 100 200 3000<br>
+                <strong>Bookings:</strong> 10<br>
+                <strong>Reports:</strong> 3<br>
+                <strong>Last Login:</strong> 2024-07-22 10:15<br>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</section>
