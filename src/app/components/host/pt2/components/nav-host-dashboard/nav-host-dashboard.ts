@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nav-host-dashboard',
-  imports: [RouterLink],
+  imports: [RouterLink, RouterModule],
   templateUrl: './nav-host-dashboard.html',
   styleUrl: './nav-host-dashboard.css'
 })
