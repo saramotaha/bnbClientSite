@@ -1,0 +1,34 @@
+ .calendar-day {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .calendar-day:hover {
+            background-color: #f8f9fa;
+        }
+        .calendar-day.disabled {
+            color: #6c757d;
+            text-decoration: line-through;
+            cursor: not-allowed;
+        }
+        .calendar-day.disabled:hover {
+            background-color: transparent;
+        }
+        .calendar-day.selected-start {
+            background-color: #dc3545;
+            color: white;
+        }
+        .calendar-day.selected-end {
+            background-color: #dc3545;
+            color: white;
+        }
+        .calendar-day.selected-range {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+        .calendar-month {
+            min-height: 300px;
+        }

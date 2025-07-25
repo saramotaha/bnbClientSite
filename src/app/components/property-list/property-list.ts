@@ -76,7 +76,7 @@ export class PropertyList implements OnInit {
 
 
       this.FilterPropertiesByCity = this.AllData
-        .filter(p => p.city.toLowerCase() === 'paris'.toLowerCase())
+        .filter(p => p.city?.toLowerCase() === 'paris'.toLowerCase())
         .slice(0, 10);
 
 

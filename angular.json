@@ -55,6 +55,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+        "allowedHosts": ["c1d6fb4138a9.ngrok-free.app"]
+      },
           "configurations": {
             "production": {
               "buildTarget": "bnbClientApp:build:production"

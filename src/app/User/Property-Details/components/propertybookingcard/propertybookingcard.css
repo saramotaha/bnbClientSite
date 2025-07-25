@@ -1,0 +1,15 @@
+/* .sticky-top {
+            top: 1.5rem;
+            z-index: 1000;
+        } */
+        .btn-danger {
+            background-color: #ff385c;
+            border-color: #ff385c;
+        }
+        .btn-danger:hover {
+            background-color: #e31c5f;
+            border-color: #e31c5f;
+        }
+        .bi-star-fill {
+            color: #ffd700;
+        }

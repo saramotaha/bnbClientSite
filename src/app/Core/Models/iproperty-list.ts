@@ -5,10 +5,14 @@ export interface IPropertyList {
 
   id: number
   title: string
+  description :string
   propertyType: string
   city: string
   country: string
   pricePerNight: number
+  maxGuests:number
+  bedrooms:number
+  bathrooms: number
   status: string
   createdAt: string
   hostName: string
