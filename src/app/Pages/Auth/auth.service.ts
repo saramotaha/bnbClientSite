@@ -16,7 +16,7 @@ import {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'https://localhost:7145/api/auth'; 
+  private readonly API_URL = 'https://localhost:7145/api/auth'; //you need to make this in shared place , you could make the base url shared or create a file with all the routes
   private readonly TOKEN_KEY = 'auth_token';
   
   private currentUserSubject = new BehaviorSubject<User | null>(null);
