@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Nav } from './Shared/nav/nav';
+import { HostDashboard } from './components/host/pt2/pages/host-dashboard/host-dashboard';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Nav],
+  imports: [RouterOutlet, Nav, HostDashboard],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

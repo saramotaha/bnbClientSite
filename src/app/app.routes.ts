@@ -12,7 +12,8 @@ import { Trips } from './Pages/trips/trips';
 import { Wishlist } from './Pages/wishlist/wishlist';
 import { ProfileInfo } from './Pages/profile-info/profile-info';
 import { NotFound } from './Pages/not-found/not-found';
-
+import { HostDashboard } from './components/host/pt2/pages/host-dashboard/host-dashboard';
+import { AvailabilityCalendarComponent } from './components/host/pt2/components/availability-calendar/availability-calendar';
 export const routes: Routes = [
   { path: "", redirectTo:"home", pathMatch: "full"},
   { path: "home", component: Home , pathMatch:"full" },
@@ -27,5 +28,8 @@ export const routes: Routes = [
   { path: "profile", component: Profile , pathMatch:"full" },
   { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   { path: "checkout", component: Checkout , pathMatch:"full" },
-  { path: "**", component: NotFound}
+  { path: "**", component: NotFound},
+  {path: "hostDashboard", component: HostDashboard, pathMatch: "full"},
+  {path: "hostDashboard/Calendar", component: AvailabilityCalendarComponent, pathMatch: "full"},
+
 ];
