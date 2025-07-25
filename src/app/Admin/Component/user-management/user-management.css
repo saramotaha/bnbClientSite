@@ -66,9 +66,7 @@
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
     }
 
-    .table thead {
-      background-color: #f7f7f7;
-    }
+
 
     .badge-active {
       background-color: #FF385C;
@@ -124,3 +122,708 @@
       color: #FF385C;
       margin-bottom: 1.5rem;
     }
+
+
+
+    /* Table Card */
+.table-card {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  overflow: hidden;
+  border: none;
+}
+
+.table-header {
+  background-color: var(--airbnb-light-gray);
+  padding: 1.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.table-title {
+  font-weight: 600;
+  color: var(--airbnb-dark);
+}
+
+/* Table Styles */
+.user-table {
+  margin-bottom: 0;
+}
+
+.user-table thead {
+  background-color: var(--airbnb-light-gray);
+}
+
+.user-table th {
+  border: none;
+  padding: 1rem;
+  font-weight: 600;
+  color: var(--airbnb-dark);
+  font-size: 0.9rem;
+}
+
+.user-table td {
+  border: none;
+  padding: 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.user-table tbody tr {
+  transition: var(--transition);
+}
+
+.user-table tbody tr:hover {
+  background-color: #fafbfc;
+}
+
+
+.page-header {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 56, 92, 0.1);
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin: 0;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary-color));
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(255, 56, 92, 0.3);
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 56, 92, 0.4);
+            color: white;
+        }
+
+        /* Filters Section */
+        .filters-container {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 56, 92, 0.1);
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 12px 16px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.1);
+        }
+
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--airbnb-dark);
+        }
+
+        .refresh-btn {
+            background: none;
+            border: none;
+            color: var(--airbnb-gray);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+
+        .refresh-btn:hover {
+            color: var(--airbnb-red);
+            transform: rotate(90deg);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: var(--border-radius);
+            border: 1px solid #f0f0f0;
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 800px;
+        }
+
+        .user-table thead {
+            background-color: var(--airbnb-light-gray);
+        }
+
+        .user-table th {
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--airbnb-dark);
+            font-size: 14px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .user-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+
+        .user-table tbody tr {
+            transition: var(--transition);
+        }
+
+        .user-table tbody tr:hover {
+            background-color: rgba(255, 90, 95, 0.03);
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .badge-active {
+            background-color: rgba(0, 132, 137, 0.1);
+            color: var(--airbnb-green);
+        }
+
+        .badge-pending {
+            background-color: rgba(255, 90, 95, 0.1);
+            color: var(--airbnb-red);
+        }
+
+        .badge-inactive {
+            background-color: rgba(113, 113, 113, 0.1);
+            color: var(--airbnb-gray);
+        }
+
+    .btn-icon {
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+    }
+
+    .btn-icon:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-outline-dark {
+      border-color: #ccc;
+    }
+
+    .btn-outline-dark:hover {
+      background-color: #eee;
+      color: #000;
+    }
+
+
+
+
+
+
+        .airbnb-modal {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .modal-header {
+            background: white;
+            border-bottom: 1px solid var(--airbnb-border);
+            padding: 20px 30px;
+            position: relative;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--airbnb-dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-title i {
+            color: var(--airbnb-primary);
+            margin-right: 12px;
+        }
+
+        .btn-close {
+            font-size: 14px;
+        }
+
+        .modal-body {
+            padding: 30px;
+            background: white;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--airbnb-border);
+        }
+
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            position: relative;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .initials {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--airbnb-dark);
+        }
+
+        .profile-info {
+            margin-left: 25px;
+            flex-grow: 1;
+        }
+
+        .user-name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--airbnb-dark);
+        }
+
+        .user-email {
+            font-size: 16px;
+            color: var(--airbnb-gray);
+            margin-bottom: 15px;
+        }
+
+        .status-container {
+            display: flex;
+            gap: 12px;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .status-badge i {
+            margin-right: 6px;
+        }
+
+        .badge-active {
+            background-color: #e6f4ea;
+            color: #0a7c42;
+        }
+
+        .badge-verified {
+            background-color: #e6f2ff;
+            color: #1a73e8;
+        }
+
+        .badge-role {
+            background-color: #f0e6ff;
+            color: #7b1fa2;
+        }
+
+        .user-detail-section {
+            background-color: var(--airbnb-light);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--airbnb-dark);
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--airbnb-border);
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            color: var(--airbnb-primary);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .detail-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 18px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--airbnb-border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .detail-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .detail-label {
+            font-size: 13px;
+            color: var(--airbnb-gray);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-label i {
+            margin-right: 8px;
+            width: 20px;
+            color: var(--airbnb-primary);
+        }
+
+        .detail-value {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--airbnb-dark);
+            padding-left: 28px;
+        }
+
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .verification-badge.verified {
+            background-color: #e6f4ea;
+            color: #0a7c42;
+        }
+
+        .modal-footer {
+            background-color: white;
+            border-top: 1px solid var(--airbnb-border);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-outline-secondary {
+            border: 1px solid var(--airbnb-gray);
+            color: var(--airbnb-gray);
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 8px 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #f7f7f7;
+            border-color: var(--airbnb-dark);
+            color: var(--airbnb-dark);
+        }
+
+        .btn-primary {
+            background-color: var(--airbnb-primary);
+            border-color: var(--airbnb-primary);
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 8px 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #e00b41;
+            border-color: #e00b41;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 56, 92, 0.25);
+        }
+
+        .last-login {
+            color: var(--airbnb-gray);
+            font-size: 14px;
+            margin-top: 5px;
+            padding-left: 28px;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid var(--airbnb-border);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--airbnb-primary);
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--airbnb-gray);
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-info {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+
+            .status-container {
+                justify-content: center;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        .w-40{
+          width: 30%;
+        }
+
+
+
+
+
+
+
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid var(--airbnb-border);
+            padding: 12px 15px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--airbnb-primary);
+            box-shadow: 0 0 0 0.25rem rgba(255, 56, 92, 0.25);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--airbnb-dark);
+            margin-bottom: 8px;
+        }
+
+        .avatar-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: var(--airbnb-light);
+            border: 2px dashed var(--airbnb-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .avatar-preview:hover {
+            border-color: var(--airbnb-primary);
+        }
+
+        .avatar-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .avatar-placeholder {
+            color: var(--airbnb-gray);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .avatar-placeholder i {
+            font-size: 36px;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--airbnb-primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--airbnb-border);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--airbnb-primary);
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--airbnb-gray);
+        }
+
+        .stat-icon {
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .bg-users { background-color: rgba(255, 56, 92, 0.1); color: var(--airbnb-primary); }
+        .bg-active { background-color: rgba(10, 124, 66, 0.1); color: #0a7c42; }
+        .bg-pending { background-color: rgba(255, 180, 0, 0.1); color: #f57c00; }
+        .bg-suspended { background-color: rgba(211, 47, 47, 0.1); color: #d32f2f; }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            color: var(--airbnb-gray);
+            opacity: 0.3;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-info {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+
+            .status-container {
+                justify-content: center;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
