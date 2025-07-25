@@ -10,19 +10,19 @@
 
 
   <div class="sidebar-menu  mt-0 text-start">
-    <div class="menu-item ms-3">
+    <div class="menu-item ms-3" [routerLink]="['DashboardCharts']">
       <i class="fas fa-chart-line"></i>
       <span>Dashboard</span>
     </div>
-    <div class="menu-item ms-3" [routerLink]="['/UserManagement']" >
+    <div class="menu-item ms-3" [routerLink]="['UserManagement']" >
       <i class="fas fa-user"></i>
       <span>User Management</span>
     </div>
-    <div class="menu-item ms-3" [routerLink]="['/Violation']">
+    <div class="menu-item ms-3" [routerLink]="['Violation']">
       <i class="fas fa-exclamation-triangle"></i>
       <span>Violation</span>
     </div>
-    <div class="menu-item ms-3 " [routerLink]="['/AdminNotifications']">
+    <div class="menu-item ms-3 " [routerLink]="['AdminNotifications']">
       <i class="fas fa-bell"></i>
       <span>Notifications</span>
     </div>

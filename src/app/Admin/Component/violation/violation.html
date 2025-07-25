@@ -1,20 +1,18 @@
 <div class=" p-5  bg-light shadow-lg">
   <div>
-    <div class="d-flex justify-content-between align-items-center mb-4 admin-header">
-      <h2 class="fw-bold">📋 Violation Reports</h2>
-      <button class="btn btn-outline-primary filter-btn">🔍 Filter / Search</button>
+    <div class="d-flex justify-content-between align-items-center mb-5 admin-header">
+      <h2 class="">📋 Violation Reports</h2>
+      <!-- <button class="btn btn-outline-primary filter-btn">🔍 Filter / Search</button> -->
     </div>
 
 
-    <hr class="my-5">
-
 
     <!-- Filter/search placeholder -->
-    <div class="row mb-4">
-      <div class="col-md-4">
+    <div class="row mb-5 justify-content-between ">
+      <div class="col-md-5 ">
         <input type="text" class="form-control" placeholder="Search by keyword...">
       </div>
-      <div class="col-md-3">
+      <div class="col-md-5">
         <select class="form-select">
           <option>Status: All</option>
           <option>Pending</option>
@@ -22,20 +20,20 @@
           <option>Rejected</option>
         </select>
       </div>
-      <div class="col-md-3">
+      <!-- <div class="col-md-3">
         <select class="form-select">
           <option>Sort by Date</option>
           <option>Newest First</option>
           <option>Oldest First</option>
         </select>
-      </div>
+      </div> -->
     </div>
 
     <!-- Reports Table -->
     <div class="table-responsive mb-5">
-      <table class="table table-hover align-middle text-center" id="reportTable">
+      <table class="table table-hover align-middle text-center fs-6 " id="reportTable">
         <thead class="table-light">
-          <tr>
+          <tr >
             <th>ID</th>
             <th>fullName</th>
             <th>role</th>
@@ -48,14 +46,16 @@
         <tbody>
           @for (item of AllViolation; track $index) {
 
-          <tr>
+          <tr class="p-5 fs-6">
             <td>{{item.id}}</td>
             <td>{{item.reporter.fullName}}</td>
             <td>{{item.reporter.role}}</td>
             <td>{{item.description}}</td>
-            <td><span class="badge bg-success">{{item.status}}</span></td>
+            <td><span  class="btn" [ngClass]="{'btn-outline-warning' : item.status=='Pending'  ,'btn-outline-danger' : item.status=='Dismissed' , 'btn-outline-success':item.status=='Resolved' , 'btn-outline-secondary':item.status=='UnderReview'}" >{{item.status}}</span></td>
             <td>{{item.createdAt}}</td>
-            <button (click)="GetDetails(item.id)" class="btn">👁 View Details</button>
+           <div class="d-flex align-content-center">
+            <button (click)="GetDetails(item.id)" class="btn btn-outline-dark">👁 View Details</button>
+           </div>
           </tr>
           }
         </tbody>
@@ -104,19 +104,19 @@
       </div>
       <div class="col-md-3">
         <div class="bg-white rounded summary-box shadow-sm p-4">
-          <h5 class="text-warning fw-bold">14</h5>
+          <h5 class="text-warning fw-bold">{{PendingViolation}}</h5>
           <p class="text-muted mb-0">Pending</p>
         </div>
       </div>
       <div class="col-md-3">
         <div class="bg-white rounded summary-box shadow-sm p-4">
-          <h5 class="text-success fw-bold">28</h5>
+          <h5 class="text-success fw-bold">{{ResolvedViolation}}</h5>
           <p class="text-muted mb-0">Resolved</p>
         </div>
       </div>
       <div class="col-md-3">
         <div class="bg-white rounded summary-box shadow-sm p-4">
-          <h5 class="text-danger fw-bold">10</h5>
+          <h5 class="text-danger fw-bold">{{RejectedViolation}}</h5>
           <p class="text-muted mb-0">Rejected</p>
         </div>
       </div>
