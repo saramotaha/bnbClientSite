@@ -39,12 +39,12 @@ export class PropertyService {
    * Returns AdminPropertyListDto[] from the backend
    */
   getAllProperties(): Observable<AdminPropertyListDto[]> {
-    console.log('🌐 Fetching all properties from:', `${this.apiUrl}/properties`);
+    console.log(' Fetching all properties from:', `${this.apiUrl}/properties`);
     
     return this.http.get<AdminPropertyListDto[]>(`${this.apiUrl}/properties`, this.httpOptions).pipe(
       timeout(30000), // 30 second timeout
       tap((properties) => {
-        console.log('✅ Successfully fetched properties:', properties.length);
+        console.log(' Successfully fetched properties:', properties.length);
         console.log('First property sample:', properties[0] || 'No properties found');
         
         // Log property statuses for debugging
@@ -53,7 +53,7 @@ export class PropertyService {
           return acc;
         }, {} as Record<string, number>);
         
-        console.log('📊 Property status distribution:', statusCounts);
+        console.log('Property status distribution:', statusCounts);
       }),
       catchError((error) => this.handleError(error, 'getAllProperties'))
     );
@@ -65,12 +65,12 @@ export class PropertyService {
    * Returns AdminPropertyResponseDto from the backend
    */
   getPropertyById(id: number): Observable<AdminPropertyResponseDto> {
-    console.log('🌐 Fetching property by ID from admin endpoint:', id);
+    console.log(' Fetching property by ID from admin endpoint:', id);
     
     return this.http.get<AdminPropertyResponseDto>(`${this.apiUrl}/properties/${id}`, this.httpOptions).pipe(
       timeout(30000),
       tap((property) => {
-        console.log('✅ Successfully fetched property from admin endpoint:', {
+        console.log(' Successfully fetched property from admin endpoint:', {
           id: property.id,
           title: property.title,
           status: property.status,
@@ -87,12 +87,12 @@ export class PropertyService {
    * Returns PropertyDetailDto from the backend
    */
   getPropertyDetails(id: number): Observable<PropertyDetailDto> {
-    console.log('🌐 Fetching detailed property information from public API:', id);
+    console.log(' Fetching detailed property information from public API:', id);
     
     return this.http.get<PropertyDetailDto>(`${this.publicApiUrl}/${id}`, this.httpOptions).pipe(
       timeout(30000),
       tap((property) => {
-        console.log('✅ Successfully fetched detailed property information:', {
+        console.log(' Successfully fetched detailed property information:', {
           id: property.id,
           title: property.title,
           description: property.description,
@@ -112,7 +112,7 @@ export class PropertyService {
   updatePropertyStatus(id: number, request: PropertyStatusUpdateDto): Observable<any> {
     const url = `${this.apiUrl}/properties/${id}/status`;
     
-    console.log('🌐 Updating property status:', {
+    console.log(' Updating property status:', {
       url,
       propertyId: id,
       payload: request,
@@ -121,21 +121,21 @@ export class PropertyService {
     
     // Validate the request payload
     if (!request || !request.status) {
-      console.error('❌ Invalid payload for status update:', request);
+      console.error(' Invalid payload for status update:', request);
       return throwError(() => new Error('Invalid status update payload'));
     }
     
     // Validate the status value
     const validStatuses = ['active', 'rejected', 'suspended'];
     if (!validStatuses.includes(request.status)) {
-      console.error('❌ Invalid status value:', request.status);
+      console.error(' Invalid status value:', request.status);
       return throwError(() => new Error(`Invalid status: ${request.status}. Must be one of: ${validStatuses.join(', ')}`));
     }
 
     return this.http.put<any>(url, request, this.httpOptions).pipe(
       timeout(30000),
       tap((response) => {
-        console.log('✅ Status update successful:', {
+        console.log(' Status update successful:', {
           propertyId: id,
           newStatus: request.status,
           adminNotes: request.adminNotes,
@@ -157,7 +157,7 @@ export class PropertyService {
       adminNotes: adminNotes || 'Property suspended by admin'
     };
     
-    console.log('🌐 Soft deleting property:', {
+    console.log(' Soft deleting property:', {
       url,
       propertyId: id,
       payload,
@@ -167,7 +167,7 @@ export class PropertyService {
     return this.http.put<any>(url, payload, this.httpOptions).pipe(
       timeout(30000),
       tap((response) => {
-        console.log('✅ Property soft deletion successful:', {
+        console.log(' Property soft deletion successful:', {
           propertyId: id,
           adminNotes: payload.adminNotes,
           response
@@ -182,7 +182,7 @@ export class PropertyService {
    * Maps to soft delete functionality
    */
   deleteProperty(id: number): Observable<any> {
-    console.log('⚠️ Using legacy deleteProperty method - mapping to soft delete');
+    console.log(' Using legacy deleteProperty method - mapping to soft delete');
     return this.softDeleteProperty(id, 'Property deleted via legacy method');
   }
 
@@ -190,7 +190,7 @@ export class PropertyService {
    * Enhanced error handling function with detailed logging and context.
    */
   private handleError(error: HttpErrorResponse, operation: string, context?: any) {
-    console.error(`❌ ${operation} failed:`, error);
+    console.error(` ${operation} failed:`, error);
     
     // Log the context if provided
     if (context) {
@@ -237,27 +237,27 @@ export class PropertyService {
           } else {
             errorMessage = `Bad Request: ${error.error?.message || error.message || 'Invalid request data'}`;
           }
-          console.error('📝 Bad request - check request payload and validation');
+          console.error(' Bad request - check request payload and validation');
           break;
         case 401:
           errorMessage = 'Unauthorized. Please check your authentication credentials.';
-          console.error('🔐 Unauthorized - authentication required');
+          console.error(' Unauthorized - authentication required');
           break;
         case 403:
           errorMessage = 'Forbidden. You do not have permission to perform this action.';
-          console.error('🚫 Forbidden - insufficient permissions');
+          console.error(' Forbidden - insufficient permissions');
           break;
         case 404:
           errorMessage = `Resource not found: ${error.error?.message || 'The requested resource could not be found'}`;
-          console.error('🔍 Not found - check if the resource exists');
+          console.error(' Not found - check if the resource exists');
           break;
         case 409:
           errorMessage = `Conflict: ${error.error?.message || 'The request conflicts with current state'}`;
-          console.error('⚡ Conflict - resource state conflict');
+          console.error(' Conflict - resource state conflict');
           break;
         case 422:
           errorMessage = `Validation Error: ${error.error?.message || 'Invalid data provided'}`;
-          console.error('✅ Validation failed - check data format');
+          console.error(' Validation failed - check data format');
           break;
         case 500:
           // Handle the specific error message format from your controller
@@ -267,23 +267,23 @@ export class PropertyService {
           } else {
             errorMessage = `Server Error: ${serverMessage || 'Internal server error occurred'}`;
           }
-          console.error('🔥 Internal server error - check server logs');
+          console.error(' Internal server error - check server logs');
           break;
         case 502:
           errorMessage = 'Bad Gateway. The server is temporarily unavailable.';
-          console.error('🌉 Bad gateway - server connectivity issues');
+          console.error(' Bad gateway - server connectivity issues');
           break;
         case 503:
           errorMessage = 'Service Unavailable. The server is temporarily overloaded.';
-          console.error('⚠️ Service unavailable - server overloaded');
+          console.error(' Service unavailable - server overloaded');
           break;
         case 504:
           errorMessage = 'Gateway Timeout. The server took too long to respond.';
-          console.error('⏰ Gateway timeout - server response too slow');
+          console.error(' Gateway timeout - server response too slow');
           break;
         default:
           errorMessage = `HTTP ${error.status}: ${error.error?.message || error.message || error.statusText}`;
-          console.error(`🔢 HTTP ${error.status} error occurred`);
+          console.error(` HTTP ${error.status} error occurred`);
       }
     }
     

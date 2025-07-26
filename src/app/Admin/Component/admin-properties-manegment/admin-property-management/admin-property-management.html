@@ -80,14 +80,14 @@
               class="action-btn approve-btn" 
               (click)="approveProperty(property)"
               [disabled]="isProcessingProperty(property.id)">
-              <i class="fas fa-check"></i> 
+              <i class="fas fa-check text-success"></i> 
               {{ isProcessingProperty(property.id) ? 'Processing...' : 'Approve' }}
             </button>
             <button 
               class="action-btn reject-btn" 
               (click)="rejectProperty(property)"
               [disabled]="isProcessingProperty(property.id)">
-              <i class="fas fa-times"></i> 
+              <i class="fas fa-times text-danger"></i> 
               {{ isProcessingProperty(property.id) ? 'Processing...' : 'Reject' }}
             </button>
           </div>
@@ -147,10 +147,10 @@
           <div class="card-actions">
             <button 
               *ngIf="property.status === 'active'" 
-              class="action-btn suspend-btn" 
+              class="action-btn suspend-btn  " 
               (click)="suspendProperty(property)"
               [disabled]="isProcessingProperty(property.id)">
-              <i class="fas fa-pause-circle"></i> 
+              <i class="fas fa-pause-circle text-primary"></i> 
               {{ isProcessingProperty(property.id) ? 'Processing...' : 'Suspend' }}
             </button>
             <button 
@@ -165,13 +165,13 @@
               class="action-btn edit-btn" 
               (click)="openDetailsModal(property)"
               [disabled]="isProcessingProperty(property.id)">
-              <i class="fas fa-info-circle"></i> Details
+              <i class="fas fa-info-circle text-info"></i> Details
             </button>
             <button 
               class="action-btn delete-btn" 
               (click)="openDeleteModal(property)"
               [disabled]="isProcessingProperty(property.id)">
-              <i class="fas fa-trash-alt"></i> Delete
+              <i class="fas fa-trash-alt text-danger"></i> Delete
             </button>
           </div>
         </div>

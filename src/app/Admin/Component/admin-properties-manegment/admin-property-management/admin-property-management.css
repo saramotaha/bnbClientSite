@@ -85,16 +85,18 @@ body {
   margin-bottom: var(--space-12);
   padding-bottom: var(--space-6);
   border-bottom: 1px solid var(--border-color);
+  box-shadow: #e31c5f 0px 2px 4px rgba(0, 0, 0, 1);
 }
 
 .pm-header h1 {
-  color: var(--text-primary);
+  color:#e31c5f;
   font-size: 2.25rem;
   font-weight: var(--font-weight-semibold);
   margin: 0;
   letter-spacing: -0.025em;
   position: relative;
   display: inline-block;
+  margin-bottom: 8px;
 }
 
 .pm-header h1::after {
@@ -110,6 +112,8 @@ body {
 
 /* Enhanced Navigation */
 .pm-nav {
+    color: #e31c5f;
+
   display: flex;
   gap: var(--space-2);
   background-color: var(--gray-50);
@@ -119,6 +123,7 @@ body {
 }
 
 .pm-nav button {
+  color: #e31c5f;
   font-family: var(--font-family);
   font-size: 14px;
   font-weight: var(--font-weight-medium);
@@ -176,13 +181,15 @@ body {
 /* Modern Property Cards */
 .property-card {
   background: transparent;
-  border-radius: var(--card-radius);
+  border-radius: 20px; ;
   overflow: hidden;
   transition: var(--transition);
   cursor: pointer;
   position: relative;
   border: 1px solid rgba(0, 0, 0, 0.04);
   padding: var(--space-1);
+  padding-right: 3px;
+  padding-left: 3px;
 }
 
 .property-card:hover {
@@ -301,8 +308,8 @@ body {
 
 .property-title {
   font-size: 15px;
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
+  font-weight:bold;
+  color:black;
   margin-bottom: var(--space-2);
   line-height: 1.4;
   overflow: hidden;
@@ -488,6 +495,8 @@ body {
 }
 
 .modal-header {
+  font-weight: bolder;
+  color:#e31c5f;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -499,8 +508,8 @@ body {
 .modal-header h2 {
   margin: 0;
   font-size: 20px;
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
+  font-weight: var(--font-weight-bold);
+  color: black;
 }
 
 .close-modal-btn {
