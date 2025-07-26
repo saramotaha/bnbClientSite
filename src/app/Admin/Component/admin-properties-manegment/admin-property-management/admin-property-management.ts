@@ -59,14 +59,14 @@ export class PropertyManagementComponent implements OnInit {
    * Load all properties from the API
    */
   loadProperties(): void {
-    console.log('🔄 Starting to load properties...');
+    console.log(' Starting to load properties...');
     this.isLoading = true;
     this.errorMessage = null;
     
     this.propertyService.getAllProperties().subscribe({
       next: (properties: AdminPropertyListDto[]) => {
-        console.log('✅ Raw properties from API:', properties);
-        console.log('📊 Number of properties:', properties.length);
+        console.log(' Raw properties from API:', properties);
+        console.log('Number of properties:', properties.length);
         
         // Log each property's details for debugging
         properties.forEach((prop, index) => {
@@ -89,10 +89,10 @@ export class PropertyManagementComponent implements OnInit {
         this.allProperties = properties;
         this.filterProperties();
         
-        console.log('📋 After filtering:');
-        console.log('  - Pending properties:', this.pendingProperties.length);
-        console.log('  - Approved properties:', this.approvedProperties.length);
-        console.log('  - Current section:', this.currentSection);
+        console.log(' After filtering:');
+        console.log('  Pending properties:', this.pendingProperties.length);
+        console.log('  Approved properties:', this.approvedProperties.length);
+        console.log('  Current section:', this.currentSection);
         
         this.isLoading = false;
         this.isUpdatingStatus = false;
@@ -100,7 +100,7 @@ export class PropertyManagementComponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('❌ Failed to load properties:', err);
+        console.error('Failed to load properties:', err);
         this.errorMessage = err.message || 'Could not load properties. Please try again later.';
         this.isLoading = false;
         this.isUpdatingStatus = false;
@@ -114,7 +114,7 @@ export class PropertyManagementComponent implements OnInit {
    * Filter properties into pending and approved arrays
    */
   private filterProperties(): void {
-    console.log('🔍 Starting to filter properties...');
+    console.log(' Starting to filter properties...');
     console.log('All properties before filtering:', this.allProperties.length);
     
     // Check each property's status
@@ -136,7 +136,7 @@ export class PropertyManagementComponent implements OnInit {
       return isApproved;
     });
     
-    console.log('✅ Filtering complete:');
+    console.log(' Filtering complete:');
     console.log('  - Pending:', this.pendingProperties.length);
     console.log('  - Approved:', this.approvedProperties.length);
   }
@@ -145,7 +145,7 @@ export class PropertyManagementComponent implements OnInit {
    * Set the current section view
    */
   setSection(section: 'unverified-properties' | 'verified-properties'): void {
-    console.log('📌 Switching section to:', section);
+    console.log(' Switching section to:', section);
     this.currentSection = section;
   }
 
@@ -153,7 +153,7 @@ export class PropertyManagementComponent implements OnInit {
    * Update property status with admin notes
    */
   updateStatus(id: number, status: 'active' | 'rejected' | 'suspended', adminNotes?: string, autoRefresh: boolean = false): void {
-    console.log('🔄 Starting status update:', { id, status, adminNotes, autoRefresh });
+    console.log(' Starting status update:', { id, status, adminNotes, autoRefresh });
     
     // Clear any previous error messages
     this.errorMessage = null;
@@ -163,14 +163,14 @@ export class PropertyManagementComponent implements OnInit {
     // Find the property before updating to log its current state
     const property = this.allProperties.find(p => p.id === id);
     if (!property) {
-      console.error('❌ Property not found in local array:', id);
+      console.error(' Property not found in local array:', id);
       this.errorMessage = `Property with ID ${id} not found.`;
       this.isUpdatingStatus = false;
       this.processingPropertyId = null;
       return;
     }
     
-    console.log('📝 Property before update:', {
+    console.log(' Property before update:', {
       id: property.id,
       title: property.title,
       currentStatus: property.status,
@@ -182,14 +182,14 @@ export class PropertyManagementComponent implements OnInit {
       adminNotes: adminNotes || `Status changed to ${status} by admin`
     };
     
-    console.log('📤 Sending payload:', payload);
+    console.log(' Sending payload:', payload);
     
     this.propertyService.updatePropertyStatus(id, payload).subscribe({
       next: (response) => {
         console.log('✅ Status update successful:', response);
         
         if (autoRefresh) {
-          console.log('🔄 Auto-refreshing properties after status update...');
+          console.log(' Auto-refreshing properties after status update...');
           // Refresh the entire properties list from the server
           this.loadProperties();
         } else {
@@ -199,7 +199,7 @@ export class PropertyManagementComponent implements OnInit {
             const oldStatus = this.allProperties[propertyIndex].status;
             this.allProperties[propertyIndex].status = status;
             
-            console.log('🔄 Updated property status locally:', {
+            console.log(' Updated property status locally:', {
               propertyId: id,
               oldStatus,
               newStatus: status
@@ -209,9 +209,9 @@ export class PropertyManagementComponent implements OnInit {
             this.filterProperties();
             this.cdr.detectChanges();
             
-            console.log('✅ Property moved between sections successfully');
+            console.log(' Property moved between sections successfully');
           } else {
-            console.error('❌ Could not find property to update in local array');
+            console.error(' Could not find property to update in local array');
           }
           
           this.isUpdatingStatus = false;
@@ -219,7 +219,7 @@ export class PropertyManagementComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('❌ Failed to update status:', error);
+        console.error(' Failed to update status:', error);
         this.errorMessage = error.message || `Failed to update property status.`;
         this.isUpdatingStatus = false;
         this.processingPropertyId = null;
@@ -239,17 +239,17 @@ export class PropertyManagementComponent implements OnInit {
    * Reject property now sets status to 'suspended' instead of 'rejected'
    */
   rejectProperty(property: AdminPropertyListDto): void {
-    console.log('❌ Rejecting property - setting status to suspended');
+    console.log(' Rejecting property - setting status to suspended');
     this.updateStatus(property.id, 'suspended', `Property "${property.title}" rejected and suspended by admin`, true);
   }
 
   suspendProperty(property: AdminPropertyListDto): void {
-    console.log('⏸️ Suspending property with auto-refresh');
+    console.log(' Suspending property with auto-refresh');
     this.updateStatus(property.id, 'suspended', `Property "${property.title}" suspended by admin`, true);
   }
 
   activateProperty(property: AdminPropertyListDto): void {
-    console.log('▶️ Activating property with auto-refresh');
+    console.log(' Activating property with auto-refresh');
     this.updateStatus(property.id, 'active', `Property "${property.title}" reactivated by admin`, true);
   }
 
@@ -257,7 +257,7 @@ export class PropertyManagementComponent implements OnInit {
    * Open delete confirmation modal
    */
   openDeleteModal(property: AdminPropertyListDto): void {
-    console.log('🗑️ Opening delete modal for property:', property.id);
+    console.log(' Opening delete modal for property:', property.id);
     this.propertyToDelete = property;
     this.isDeleteModalOpen = true;
     this.deleteForm.adminNotes = `Property "${property.title}" suspended by admin`;
@@ -267,7 +267,7 @@ export class PropertyManagementComponent implements OnInit {
    * Close delete confirmation modal
    */
   closeDeleteModal(): void {
-    console.log('❌ Closing delete modal');
+    console.log(' Closing delete modal');
     this.isDeleteModalOpen = false;
     this.propertyToDelete = null;
     this.deleteForm.adminNotes = '';
@@ -278,14 +278,14 @@ export class PropertyManagementComponent implements OnInit {
    */
   confirmDelete(): void {
     if (!this.propertyToDelete) {
-      console.error('❌ No property selected for deletion');
+      console.error(' No property selected for deletion');
       return;
     }
 
     const propertyId = this.propertyToDelete.id;
     const propertyTitle = this.propertyToDelete.title;
     
-    console.log('🗑️ Starting property soft deletion with auto-refresh:', { propertyId, propertyTitle });
+    console.log(' Starting property soft deletion with auto-refresh:', { propertyId, propertyTitle });
     
     // Clear any previous error messages
     this.errorMessage = null;
@@ -293,17 +293,17 @@ export class PropertyManagementComponent implements OnInit {
 
     this.propertyService.softDeleteProperty(propertyId, this.deleteForm.adminNotes).subscribe({
       next: (response) => {
-        console.log('✅ Property soft deletion successful:', response);
+        console.log(' Property soft deletion successful:', response);
         
         // Close modal first
         this.closeDeleteModal();
         
         // Auto-refresh the properties list to get the latest data from server
-        console.log('🔄 Auto-refreshing properties after soft delete...');
+        console.log(' Auto-refreshing properties after soft delete...');
         this.loadProperties();
       },
       error: (error) => {
-        console.error('❌ Failed to soft delete property:', error);
+        console.error(' Failed to soft delete property:', error);
         this.errorMessage = error.message || `Failed to suspend property.`;
         this.closeDeleteModal();
         this.isDeleting = false;
@@ -316,7 +316,7 @@ export class PropertyManagementComponent implements OnInit {
    * UPDATED: Open details modal and fetch detailed property information
    */
   openDetailsModal(property: AdminPropertyListDto): void {
-    console.log('📋 Opening details modal for property:', property.id);
+    console.log(' Opening details modal for property:', property.id);
     
     // Show the modal immediately with basic info
     this.isDetailsModalOpen = true;
@@ -327,13 +327,13 @@ export class PropertyManagementComponent implements OnInit {
     // Fetch detailed property information from the Property controller
     this.propertyService.getPropertyDetails(property.id).subscribe({
       next: (detailedProperty: PropertyDetailDto) => {
-        console.log('✅ Successfully fetched detailed property information:', detailedProperty);
+        console.log(' Successfully fetched detailed property information:', detailedProperty);
         this.propertyToView = detailedProperty;
         this.isLoadingDetails = false;
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('❌ Failed to fetch detailed property information:', error);
+        console.error(' Failed to fetch detailed property information:', error);
         // Fallback to basic property information if detailed fetch fails
         this.propertyToView = {
           ...property,
@@ -356,7 +356,7 @@ export class PropertyManagementComponent implements OnInit {
    * Close details modal
    */
   closeDetailsModal(): void {
-    console.log('❌ Closing details modal');
+    console.log(' Closing details modal');
     this.isDetailsModalOpen = false;
     this.propertyToView = null;
     this.isLoadingDetails = false;
@@ -367,7 +367,7 @@ export class PropertyManagementComponent implements OnInit {
    * Get property image URL with fallback
    */
   getPropertyImageUrl(property: AdminPropertyListDto): string {
-    console.log(`🖼️ Getting image for property "${property.title}":`, property.images);
+    console.log(` Getting image for property "${property.title}":`, property.images);
     
     if (!property.images || property.images.length === 0) {
       console.log('No images found, using placeholder');
@@ -387,7 +387,7 @@ export class PropertyManagementComponent implements OnInit {
    * Handle image loading errors
    */
   onImageError(event: Event): void {
-    console.log('🚫 Image loading error occurred');
+    console.log(' Image loading error occurred');
     (event.target as HTMLImageElement).src = 'https://placehold.co/400x300/e0e0e0/777?text=Invalid+Image';
   }
 
@@ -402,7 +402,7 @@ export class PropertyManagementComponent implements OnInit {
    * Refresh properties data
    */
   refreshProperties(): void {
-    console.log('🔄 Refreshing properties data...');
+    console.log(' Refreshing properties data...');
     this.loadProperties();
   }
 
