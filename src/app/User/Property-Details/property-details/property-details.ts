@@ -27,7 +27,7 @@ export class PropertyDetails implements OnInit {
     this.PropertyDetailsService.getPropertyDetailsById(this.propertyId).subscribe({
       next: (propertyDetailsRes) => {
         this.propertyDetails = propertyDetailsRes;
-        console.log('Property details fetched successfully:', propertyDetailsRes);
+        console.log('Property details fetched successfully:', propertyDetailsRes); 
                 console.log('Property detailsDes successfully:', propertyDetailsRes.description);
         this.cdr.detectChanges();
       } ,

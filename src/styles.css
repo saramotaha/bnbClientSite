@@ -148,3 +148,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: var(--airbnb-white);
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
