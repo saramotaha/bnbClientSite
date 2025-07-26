@@ -3,7 +3,8 @@ export interface BookingCreateDto {
   startDate: string;
   endDate: string;
   totalGuests: number;
-  promotionId?: number;
+  promotionId?: number | null
+  ;
 }
 
 export interface BookingResponseDto {
