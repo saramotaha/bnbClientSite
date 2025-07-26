@@ -186,8 +186,8 @@
               <tr *ngFor="let week of days1">
       <td *ngFor="let day of week"
           class="calendar-day text-center"
-          [class.available]="day"
-          [class.disabled]="!day"
+          [class.available]="isAvailable(day)"
+          [class.disabled]="!isAvailable(day)"
           [class.selected-start]="isStartDate(day!)"
           [class.selected-end]="isEndDate(day!)"
           [class.selected-range]="isInRange(day!)"
@@ -212,11 +212,11 @@
               </tr>
             </thead>
             <tbody>
-             <tr *ngFor="let week of days1">
+             <tr *ngFor="let week of days2">
       <td *ngFor="let day of week"
           class="calendar-day text-center"
-          [class.available]="day"
-          [class.disabled]="!day"
+          [class.available]="isAvailable(day)"
+          [class.disabled]="!isAvailable(day)"
           [class.selected-start]="isStartDate(day!)"
           [class.selected-end]="isEndDate(day!)"
           [class.selected-range]="isInRange(day!)"
