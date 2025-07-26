@@ -1,3 +1,5 @@
+import { AdminPropertyResponseDto, AdminPropertyListDto } from './Admin/Models/Property.model';
+import { Component } from '@angular/core';
 import { RedirectCommand, Routes } from '@angular/router';
 import { Home } from './Pages/home/home';
 import { Login } from './Pages/login/login';
@@ -23,6 +25,7 @@ import { DashBoardBar } from './Admin/Component/dash-board-bar/dash-board-bar';
 import { AdminDashboard } from './Admin/Component/admin-dashboard/admin-dashboard';
 import { UserManagement } from './Admin/Component/user-management/user-management';
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
+import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
 export const routes: Routes = [
   { path: "", redirectTo:"admin", pathMatch: "full"},
   { path: "", component: Home, pathMatch: "full" },
@@ -37,7 +40,8 @@ export const routes: Routes = [
       { path: "AdminNotifications", component: AdminNotifications },
       { path: "Violation", component: Violation },
       { path: "UserManagement", component: UserManagement },
-      { path: "DashboardCharts", component: DashboardCharts }
+      { path: "DashboardCharts", component: DashboardCharts },
+      {path: "PropertyManagement", component: PropertyManagementComponent}
     ]
   },
 //  { path: "", redirectTo: "AdminNotifications"  , pathMatch:"full"},
