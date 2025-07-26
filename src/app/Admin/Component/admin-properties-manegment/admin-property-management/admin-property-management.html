@@ -1,0 +1,431 @@
+<!-- Property Management Component -->
+<div class="property-management-container">
+  <header class="pm-header">
+    <h1>Property Management</h1>
+    <div class="header-actions">
+      <button class="action-btn refresh-btn" (click)="refreshProperties()" [disabled]="isLoading">
+        <i class="fas fa-sync-alt" [class.fa-spin]="isLoading"></i>
+        {{ isLoading ? 'Loading...' : 'Refresh' }}
+      </button>
+    </div>
+    <nav class="pm-nav">
+      <button 
+        [class.active]="currentSection === 'unverified-properties'" 
+        (click)="setSection('unverified-properties')">
+        Unverified Properties <span class="count-badge">{{ pendingProperties.length }}</span>
+      </button>
+      <button 
+        [class.active]="currentSection === 'verified-properties'" 
+        (click)="setSection('verified-properties')">
+        Verified Properties <span class="count-badge">{{ approvedProperties.length }}</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="pm-content">
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Loading Properties...</p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>
+        <i class="fas fa-exclamation-triangle"></i> {{ errorMessage }}
+      </p>
+      <button class="action-btn retry-btn" (click)="loadProperties()">
+        <i class="fas fa-redo"></i> Retry
+      </button>
+    </div>
+
+    <!-- Unverified Properties Section -->
+    <section *ngIf="currentSection === 'unverified-properties' && !isLoading">
+      <div *ngIf="pendingProperties.length > 0; else noUnverified" class="properties-grid">
+        <div *ngFor="let property of pendingProperties" class="property-card pending">
+          <div class="card-image-container">
+            <img 
+              [src]="getPropertyImageUrl(property)" 
+              [alt]="'Image of ' + property.title" 
+              class="property-image" 
+              (error)="onImageError($event)">
+            <span class="status-badge status-pending">
+              {{ getStatusIcon(property.status) }} {{ getStatusDisplayText(property.status) }}
+            </span>
+          </div>
+          <div class="card-content">
+            <h3 class="property-title">{{ property.title }}</h3>
+            <p class="property-location">
+              <i class="fas fa-map-marker-alt"></i> 
+              {{ property.city || 'Unknown' }}, {{ property.country || 'Unknown' }}
+            </p>
+            <p class="property-price">
+              <span>${{ property.pricePerNight }}</span> / night
+            </p>
+            <p class="property-host">
+              <i class="fas fa-user"></i>
+              Hosted by: {{ property.hostName || 'Unknown Host' }}
+            </p>
+            <div class="property-meta">
+              <span *ngIf="property.averageRating" class="rating">
+                <i class="fas fa-star"></i> {{ property.averageRating | number:'1.1-1' }}
+              </span>
+              <span *ngIf="property.bookingsCount" class="bookings">
+                <i class="fas fa-calendar-check"></i> {{ property.bookingsCount }} bookings
+              </span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button 
+              class="action-btn approve-btn" 
+              (click)="approveProperty(property)"
+              [disabled]="isProcessingProperty(property.id)">
+              <i class="fas fa-check"></i> 
+              {{ isProcessingProperty(property.id) ? 'Processing...' : 'Approve' }}
+            </button>
+            <button 
+              class="action-btn reject-btn" 
+              (click)="rejectProperty(property)"
+              [disabled]="isProcessingProperty(property.id)">
+              <i class="fas fa-times"></i> 
+              {{ isProcessingProperty(property.id) ? 'Processing...' : 'Reject' }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <ng-template #noUnverified>
+        <div class="no-data-message">
+          <i class="fas fa-inbox"></i>
+          <h3>All Clear!</h3>
+          <p>There are no unverified properties awaiting review.</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <!-- Verified Properties Section -->
+    <section *ngIf="currentSection === 'verified-properties' && !isLoading">
+      <div *ngIf="approvedProperties.length > 0; else noVerified" class="properties-grid">
+        <div *ngFor="let property of approvedProperties" 
+             class="property-card" 
+             [ngClass]="{'suspended': property.status === 'suspended'}">
+          <div class="card-image-container">
+            <img 
+              [src]="getPropertyImageUrl(property)" 
+              [alt]="'Image of ' + property.title" 
+              class="property-image" 
+              (error)="onImageError($event)">
+            <span class="status-badge" 
+                  [ngClass]="{
+                    'status-verified': property.status === 'active', 
+                    'status-suspended': property.status === 'suspended'
+                  }">
+              {{ getStatusIcon(property.status) }} {{ getStatusDisplayText(property.status) }}
+            </span>
+          </div>
+          <div class="card-content">
+            <h3 class="property-title">{{ property.title }}</h3>
+            <p class="property-location">
+              <i class="fas fa-map-marker-alt"></i> 
+              {{ property.city || 'Unknown' }}, {{ property.country || 'Unknown' }}
+            </p>
+            <p class="property-price">
+              <span>${{ property.pricePerNight }}</span> / night
+            </p>
+            <p class="property-host">
+              <i class="fas fa-user"></i>
+              Hosted by: {{ property.hostName || 'Unknown Host' }}
+            </p>
+            <div class="property-meta">
+              <span *ngIf="property.averageRating" class="rating">
+                <i class="fas fa-star"></i> {{ property.averageRating | number:'1.1-1' }}
+              </span>
+              <span *ngIf="property.bookingsCount" class="bookings">
+                <i class="fas fa-calendar-check"></i> {{ property.bookingsCount }} bookings
+              </span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button 
+              *ngIf="property.status === 'active'" 
+              class="action-btn suspend-btn" 
+              (click)="suspendProperty(property)"
+              [disabled]="isProcessingProperty(property.id)">
+              <i class="fas fa-pause-circle"></i> 
+              {{ isProcessingProperty(property.id) ? 'Processing...' : 'Suspend' }}
+            </button>
+            <button 
+              *ngIf="property.status === 'suspended'" 
+              class="action-btn activate-btn" 
+              (click)="activateProperty(property)"
+              [disabled]="isProcessingProperty(property.id)">
+              <i class="fas fa-play-circle"></i> 
+              {{ isProcessingProperty(property.id) ? 'Processing...' : 'Activate' }}
+            </button>
+            <button 
+              class="action-btn edit-btn" 
+              (click)="openDetailsModal(property)"
+              [disabled]="isProcessingProperty(property.id)">
+              <i class="fas fa-info-circle"></i> Details
+            </button>
+            <button 
+              class="action-btn delete-btn" 
+              (click)="openDeleteModal(property)"
+              [disabled]="isProcessingProperty(property.id)">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      <ng-template #noVerified>
+        <div class="no-data-message">
+          <i class="fas fa-home"></i>
+          <h3>No Verified Properties</h3>
+          <p>There are no active or suspended properties to display.</p>
+        </div>
+      </ng-template>
+    </section>
+  </main>
+</div>
+
+<!-- ENHANCED: Details Property Modal with Loading State -->
+<div *ngIf="isDetailsModalOpen" class="modal-overlay">
+  <div class="modal-content">
+    <header class="modal-header">
+      <h2>
+        <i class="fas fa-info-circle"></i>
+        Property Details
+        <span *ngIf="propertyToView" class="property-id-badge">#{{ propertyToView.id }}</span>
+      </h2>
+      <button class="close-modal-btn" (click)="closeDetailsModal()">&times;</button>
+    </header>
+    
+    <div class="modal-body">
+      <!-- Loading State -->
+      <div *ngIf="isLoadingDetails" class="details-loading">
+        <div class="spinner-small"></div>
+        <p>Loading detailed property information...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="errorMessage && !isLoadingDetails" class="error-notice">
+        <i class="fas fa-exclamation-triangle"></i>
+        <p>{{ errorMessage }}</p>
+        <p class="note">Showing basic information available.</p>
+      </div>
+
+      <!-- Property Details Content -->
+      <div *ngIf="propertyToView && !isLoadingDetails" class="property-details">
+        <!-- Basic Information Section -->
+        <div class="detail-section">
+          <h4><i class="fas fa-home"></i> Property Information</h4>
+          <div class="details-grid">
+            <div class="detail-item">
+              <label>Title:</label>
+              <span>{{ propertyToView.title }}</span>
+            </div>
+            <div class="detail-item">
+              <label>Property Type:</label>
+              <span class="property-type-badge">{{ propertyToView.propertyType }}</span>
+            </div>
+            <div class="detail-item">
+              <label>Price per Night:</label>
+              <span class="price-highlight">${{ propertyToView.pricePerNight }}</span>
+            </div>
+            <div class="detail-item" *ngIf="propertyToView.numberOfBedrooms">
+              <label>Bedrooms:</label>
+              <span><i class="fas fa-bed"></i> {{ propertyToView.numberOfBedrooms }}</span>
+            </div>
+            <div class="detail-item" *ngIf="propertyToView.numberOfBathrooms">
+              <label>Bathrooms:</label>
+              <span><i class="fas fa-bath"></i> {{ propertyToView.numberOfBathrooms }}</span>
+            </div>
+            <div class="detail-item" *ngIf="propertyToView.maxGuests">
+              <label>Max Guests:</label>
+              <span><i class="fas fa-users"></i> {{ propertyToView.maxGuests }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Host Information Section -->
+        <div class="detail-section">
+          <h4><i class="fas fa-user-circle"></i> Host Information</h4>
+          <div class="details-grid">
+            <div class="detail-item">
+              <label>Host Name:</label>
+              <span>{{ propertyToView.hostName }}</span>
+            </div>
+            <div class="detail-item">
+              <label>Host Email:</label>
+              <span class="email-link">
+                <a [href]="'mailto:' + propertyToView.hostEmail">{{ propertyToView.hostEmail }}</a>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Section -->
+        <div class="detail-section">
+          <h4><i class="fas fa-map-marker-alt"></i> Location</h4>
+          <div class="location-info">
+            <p class="address">{{ propertyToView.address }}</p>
+            <p class="city-country">{{ propertyToView.city }}, {{ propertyToView.country }}</p>
+          </div>
+        </div>
+        
+        <!-- Description Section -->
+        <div class="detail-section">
+          <h4><i class="fas fa-align-left"></i> Description</h4>
+          <div class="description-content">
+            <p>{{ propertyToView.description }}</p>
+          </div>
+        </div>
+
+        <!-- Amenities Section -->
+        <div class="detail-section" *ngIf="propertyToView.amenities && propertyToView.amenities.length > 0">
+          <h4><i class="fas fa-star"></i> Amenities</h4>
+          <div class="amenities-grid">
+            <span *ngFor="let amenity of propertyToView.amenities" class="amenity-tag">
+              <i class="fas fa-check"></i> {{ amenity }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Performance Metrics Section -->
+        <div class="detail-section" *ngIf="propertyToView.averageRating || propertyToView.bookingsCount || propertyToView.totalReviews">
+          <h4><i class="fas fa-chart-line"></i> Performance Metrics</h4>
+          <div class="metrics-grid">
+            <div class="metric-card" *ngIf="propertyToView.averageRating">
+              <div class="metric-value">{{ propertyToView.averageRating | number:'1.1-1' }}</div>
+              <div class="metric-label">
+                <i class="fas fa-star"></i> Average Rating
+              </div>
+            </div>
+            <div class="metric-card" *ngIf="propertyToView.totalReviews">
+              <div class="metric-value">{{ propertyToView.totalReviews }}</div>
+              <div class="metric-label">
+                <i class="fas fa-comments"></i> Total Reviews
+              </div>
+            </div>
+            <div class="metric-card" *ngIf="propertyToView.bookingsCount">
+              <div class="metric-value">{{ propertyToView.bookingsCount }}</div>
+              <div class="metric-label">
+                <i class="fas fa-calendar-check"></i> Total Bookings
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Availability Status -->
+        <div class="detail-section" *ngIf="propertyToView.isAvailable !== undefined">
+          <h4><i class="fas fa-calendar-alt"></i> Availability Status</h4>
+          <div class="availability-status">
+            <span class="status-indicator" [ngClass]="propertyToView.isAvailable ? 'available' : 'unavailable'">
+              <i [class]="propertyToView.isAvailable ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i>
+              {{ propertyToView.isAvailable ? 'Available for Booking' : 'Not Available' }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Images Gallery Section -->
+        <div class="detail-section" *ngIf="propertyToView.images && propertyToView.images.length > 0">
+          <h4><i class="fas fa-images"></i> Property Images ({{ propertyToView.images.length }})</h4>
+          <div class="images-gallery">
+            <div *ngFor="let image of propertyToView.images; let i = index" 
+                 class="image-container" 
+                 [class.cover-image]="image.isCover">
+              <img [src]="image.imageUrl" 
+                   [alt]="'Property image ' + (i + 1)" 
+                   class="gallery-image"
+                   (error)="onImageError($event)">
+              <div class="image-overlay" *ngIf="image.isCover">
+                <span class="cover-badge">
+                  <i class="fas fa-crown"></i> Cover Image
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timestamps Section -->
+        <div class="detail-section" *ngIf="propertyToView.createdAt || propertyToView.updatedAt">
+          <h4><i class="fas fa-clock"></i> Timeline</h4>
+          <div class="timeline-info">
+            <div *ngIf="propertyToView.createdAt" class="timeline-item">
+              <i class="fas fa-plus-circle"></i>
+              <span>Created: {{ propertyToView.createdAt | date:'medium' }}</span>
+            </div>
+            <div *ngIf="propertyToView.updatedAt" class="timeline-item">
+              <i class="fas fa-edit"></i>
+              <span>Last Updated: {{ propertyToView.updatedAt | date:'medium' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Information Notice -->
+      <!-- <div class="details-notice">
+        <p>
+          <i class="fas fa-info-circle"></i> 
+          This information is fetched from the public Property API endpoint. 
+          Use the action buttons on the property card to modify the property status.
+        </p>
+      </div> -->
+    </div>
+    
+    <footer class="modal-footer">
+      <button class="modal-btn cancel-btn" (click)="closeDetailsModal()">
+        <i class="fas fa-times"></i> Close
+      </button>
+    </footer>
+  </div>
+</div>
+
+<!-- Soft Delete Confirmation Modal -->
+<div *ngIf="isDeleteModalOpen" class="modal-overlay">
+  <div class="modal-content">
+    <header class="modal-header">
+      <h2>Suspend Property</h2>
+      <button class="close-modal-btn" (click)="closeDeleteModal()">&times;</button>
+    </header>
+    <div class="modal-body">
+      <div *ngIf="propertyToDelete">
+        <p>Are you sure you want to suspend '<strong>{{ propertyToDelete.title }}</strong>'?</p>
+        <p class="info-text">
+          <i class="fas fa-info-circle"></i>
+          This will change the property status to "Suspended" and make it unavailable for new bookings.
+        </p>
+        
+        <div class="form-group">
+          <label for="deleteNotes">Admin Notes (Optional)</label>
+          <textarea 
+            id="deleteNotes"
+            class="form-control"
+            [(ngModel)]="deleteForm.adminNotes"
+            placeholder="Add a note explaining why this property is being suspended..."
+            rows="3">
+          </textarea>
+        </div>
+        
+        <p class="warning-text">
+          <i class="fas fa-exclamation-triangle"></i>
+          This action can be reversed by reactivating the property later.
+        </p>
+      </div>
+    </div>
+    <footer class="modal-footer">
+      <button 
+        class="modal-btn cancel-btn" 
+        (click)="closeDeleteModal()"
+        [disabled]="isDeleting">
+        Cancel
+      </button>
+      <button 
+        class="modal-btn confirm-delete-btn" 
+        (click)="confirmDelete()"
+        [disabled]="isDeleting">
+        <i class="fas fa-pause-circle"></i>
+        {{ isDeleting ? 'Suspending...' : 'Yes, Suspend Property' }}
+      </button>
+    </footer>
+  </div>
+</div>
