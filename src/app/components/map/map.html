@@ -1,6 +1,6 @@
 <div class="google-map-wrapper">
   <google-map [height]="'100vh'"
-    [width]="'100%'" class="google-map"  [zoom]="zoom" [options]="mapOptions">
+    [width]="'100%'" class="google-map" [center]="center" [zoom]="zoom" [options]="mapOptions">
     <map-marker *ngFor="let marker of markers" [position]="marker.position" [title]="marker.title"
       ></map-marker>
   </google-map>

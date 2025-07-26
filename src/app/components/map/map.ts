@@ -15,6 +15,8 @@ declare const google: any;
 export class Map implements OnInit {
 
   markers: any[] = [];
+  center: any;
+  zoom: any;
 
 
   constructor(private props:CurrentProperties) {}
@@ -34,6 +36,9 @@ export class Map implements OnInit {
         title: property.title,
       }));
 
+
+    this.center = { lat: this.props.getCurrentPageProperties()[0].latitude, lng: this.props.getCurrentPageProperties()[0].longitude };
+    this.zoom = 12
 
 
   //     markers = [
@@ -68,8 +73,7 @@ export class Map implements OnInit {
   }
 
   // Map center (Cairo)
-  // center = { lat: 30.0444, lng: 31.2357 };
-  zoom = 12;
+
 
 
 
