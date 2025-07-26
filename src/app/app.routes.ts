@@ -12,13 +12,17 @@ import { Trips } from './Pages/trips/trips';
 import { Wishlist } from './Pages/wishlist/wishlist';
 import { ProfileInfo } from './Pages/profile-info/profile-info';
 import { NotFound } from './Pages/not-found/not-found';
+import { HostCalendarPage } from './components/host/pt2/pages/host-calendar-page/host-calendar-page';
+import { HostDashboard } from './components/host/pt2/pages/host-dashboard/host-dashboard';
+import { TodayBookingsComponent } from './components/host/pt2/components/today-bookings/today-bookings';
+import { Reservations } from './components/host/pt2/components/reservations/reservations';
+import { Violations } from './components/host/pt2/components/violations/violations';
 import { AdminNotifications } from './Admin/Component/admin-notifications/admin-notifications';
 import { Violation } from './Admin/Component/violation/violation';
 import { DashBoardBar } from './Admin/Component/dash-board-bar/dash-board-bar';
 import { AdminDashboard } from './Admin/Component/admin-dashboard/admin-dashboard';
 import { UserManagement } from './Admin/Component/user-management/user-management';
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
-
 export const routes: Routes = [
   { path: "", redirectTo:"admin", pathMatch: "full"},
   { path: "", component: Home, pathMatch: "full" },
@@ -54,5 +58,10 @@ export const routes: Routes = [
   { path: "profile", component: Profile , pathMatch:"full" },
   { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   { path: "checkout", component: Checkout , pathMatch:"full" },
-  { path: "**", component: NotFound}
+  { path: 'host/calendar',component: HostCalendarPage },
+  { path: 'host', component: HostDashboard }, //layout shell
+  {path: 'host/today', component: TodayBookingsComponent},
+  {path: 'host/reservations', component: Reservations},
+  {path: 'host/violations', component: Violations},
+  { path: "**", component: NotFound} //MUST BE AT THE END
 ];
