@@ -1,0 +1,617 @@
+.calendar-container {
+  display: flex;
+  gap: 32px;
+  font-family: 'Circular', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #ffffff;
+}
+
+/* Calendar Section */
+.calendar-section {
+  flex: 1;
+  max-width: 750px;
+}
+
+.month-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding: 0;
+}
+
+.month-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.month-name {
+  font-size: 32px;
+  font-weight: 500;
+  color: #222222;
+  letter-spacing: -0.02em;
+  margin-right: 16px;
+}
+
+.calendar-icon {
+  padding: 8px;
+  cursor: pointer;
+  color: #717171;
+  transition: color 0.2s ease;
+}
+
+.calendar-icon:hover {
+  color: #222222;
+}
+
+.dropdown-icon {
+  color: #717171;
+  transition: color 0.2s ease;
+  margin-left: 8px;
+}
+
+/* Airbnb-style dropdowns */
+.month-dropdown,
+.year-dropdown {
+  padding: 8px 12px;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 16px;
+  font-weight: 500;
+  color: #222222;
+  cursor: pointer;
+  appearance: none;
+  transition: border-color 0.2s ease;
+  margin-right: 8px;
+}
+
+.month-dropdown:hover,
+.year-dropdown:hover {
+  border-color: #222222;
+}
+
+.month-dropdown:focus,
+.year-dropdown:focus {
+  outline: none;
+  border-color: #ff385c;
+  box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.2);
+}
+
+/* Loading Indicator */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e0e0e0;
+  border-top: 2px solid #ff385c;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.week-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  margin-bottom: 16px;
+}
+
+.week-day {
+  padding: 16px 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #717171;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  transition: opacity 0.3s ease;
+}
+
+.calendar-grid.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.calendar-cell {
+  background-color: #ffffff;
+  padding: 12px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  position: relative;
+}
+
+.calendar-cell.available {
+  background-color: #f7f7f7;
+  border: 1px solid #ebebeb;
+}
+
+.calendar-cell.available:hover:not(.readonly) {
+  background-color: #ffffff;
+  border-color: #222222;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  transform: scale(1.04);
+  z-index: 1;
+}
+
+.calendar-cell.unavailable {
+  background-color: #f0f0f0;
+  color: #b0b0b0;
+  cursor: default;
+}
+
+.calendar-cell.blocked {
+  background-color: #ffebee;
+  border-color: #ffcdd2;
+  color: #d32f2f;
+}
+
+.calendar-cell.other-month {
+  opacity: 0;
+  cursor: default;
+  pointer-events: none;
+}
+
+.calendar-cell.past-date {
+  background-color: #fafafa !important;
+  color: #b0b0b0 !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+.calendar-cell.past-date .price {
+  color: #b0b0b0 !important;
+  text-decoration: none !important;
+}
+
+.calendar-cell.selected {
+  background-color: #222222;
+  color: white;
+  border-color: #222222;
+  transform: scale(1.04);
+  z-index: 2;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-cell.today {
+  background-color: #ff385c;
+  color: white;
+  border-color: #ff385c;
+}
+
+.calendar-cell.today:hover:not(.readonly) {
+  background-color: #e31c5f;
+  border-color: #e31c5f;
+}
+
+.calendar-cell.today.selected {
+  background-color: #222222;
+  border-color: #222222;
+}
+
+.calendar-cell.weekend {
+  border-left: 3px solid #4caf50;
+}
+
+.calendar-cell.readonly {
+  cursor: default;
+}
+
+.date-number {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.availability-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #717171;
+  transition: all 0.2s ease;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  opacity: 0;
+}
+
+.calendar-cell:hover .availability-toggle {
+  opacity: 1;
+}
+
+.availability-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #222222;
+}
+
+.calendar-cell.selected .availability-toggle,
+.calendar-cell.today .availability-toggle {
+  color: white;
+}
+
+.calendar-cell.selected .availability-toggle:hover,
+.calendar-cell.today .availability-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.price-container {
+  width: 100%;
+}
+
+/* Price Display */
+.price {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  text-decoration: underline;
+  text-underline-offset: 1px;
+  text-decoration-thickness: 1px;
+  color: #222222;
+  cursor: text;
+  transition: background-color 0.2s ease;
+}
+
+.calendar-cell.selected .price,
+.calendar-cell.today .price {
+  color: white;
+}
+
+/* Inline Price Editing */
+.price-edit {
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  font-size: 12px;
+  background-color: #ffffff;
+  color: #222222;
+  text-align: center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  z-index: 3;
+  position: relative;
+}
+
+.price-edit:focus {
+  outline: none;
+  border-color: #ff385c;
+  box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.2);
+}
+
+.calendar-cell.selected .price-edit,
+.calendar-cell.today .price-edit {
+  background-color: #ffffff;
+  color: #222222;
+}
+
+.blocked-indicator {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: #d32f2f;
+}
+
+/* Calendar Legend */
+.calendar-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.legend-color.available {
+  background-color: #f7f7f7;
+}
+
+.legend-color.unavailable {
+  background-color: #f0f0f0;
+}
+
+.legend-color.blocked {
+  background-color: #ffebee;
+  border-color: #ffcdd2;
+}
+
+.legend-color.today {
+  background-color: #ff385c;
+}
+
+.legend-color.selected {
+  background-color: #222222;
+}
+
+/* Calendar Stats */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 16px 8px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+}
+
+.stat-number {
+  display: block;
+  font-size: 24px;
+  font-weight: 600;
+  color: #222222;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #717171;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Settings Sidebar */
+.settings-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  margin-left: 50px;
+}
+
+.settings-section {
+  margin-bottom: 40px;
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.settings-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #222222;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.chevron-right {
+  color: #717171;
+  transition: color 0.2s ease;
+}
+
+.settings-header:hover .chevron-right {
+  color: #222222;
+}
+
+.setting-item {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.setting-label {
+  font-size: 16px;
+  color: #717171;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+/* Bulk Actions */
+.bulk-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.bulk-btn {
+  padding: 8px 16px;
+  border: 1px solid #dddddd;
+  border-radius: 6px;
+  background-color: white;
+  color: #222222;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bulk-btn:hover {
+  border-color: #222222;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.price-inputs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.price-input {
+  width: 100px;
+  padding: 6px 8px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.price-input:focus {
+  outline: none;
+  border-color: #ff385c;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .calendar-container {
+    flex-direction: column;
+    padding: 20px;
+    gap: 24px;
+  }
+  
+  .settings-sidebar {
+    width: 100%;
+    order: -1;
+  }
+  
+  .calendar-section {
+    max-width: none;
+  }
+
+  .bulk-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .price-inputs {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar-container {
+    padding: 16px;
+  }
+  
+  .month-name {
+    font-size: 28px;
+  }
+  
+  .calendar-cell {
+    height: 70px;
+    padding: 10px;
+  }
+  
+  .calendar-grid {
+    gap: 6px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-item {
+    padding: 12px;
+  }
+
+  .calendar-legend {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .month-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .month-selector {
+    justify-content: center;
+  }
+  
+  .calendar-cell {
+    height: 60px;
+    padding: 8px;
+  }
+  
+  .date-number {
+    font-size: 13px;
+  }
+  
+  .price,
+  .price-edit {
+    font-size: 11px;
+  }
+  
+  .calendar-grid {
+    gap: 4px;
+  }
+
+  .bulk-actions {
+    padding: 12px;
+  }
+
+  .bulk-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+/* Hover Tooltip Prep */
+[title] {
+  position: relative;
+}
+
+[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222222;
+  color: #ffffff;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 10;
+}
