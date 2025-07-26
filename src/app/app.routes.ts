@@ -18,11 +18,11 @@ import { DashBoardBar } from './Admin/Component/dash-board-bar/dash-board-bar';
 import { AdminDashboard } from './Admin/Component/admin-dashboard/admin-dashboard';
 import { UserManagement } from './Admin/Component/user-management/user-management';
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
+import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
 
 export const routes: Routes = [
-  { path: "", redirectTo:"admin", pathMatch: "full"},
-  { path: "", component: Home, pathMatch: "full" },
-
+  { path: "", redirectTo:"Home", pathMatch: "full"},
+  { path: "Home", component: Home, pathMatch: "full" },
 
   {
 
@@ -36,18 +36,12 @@ export const routes: Routes = [
       { path: "DashboardCharts", component: DashboardCharts }
     ]
   },
-//  { path: "", redirectTo: "AdminNotifications"  , pathMatch:"full"},
-//  { path: "AdminNotifications", component: AdminNotifications , pathMatch:"full"},
-//  { path: "Violation", component: Violation , pathMatch:"full" },
-//  { path: "UserManagement", component: UserManagement , pathMatch:"full" },
-//  { path: "DashboardCharts", component: DashboardCharts , pathMatch:"full" },
   { path: "login", component: Login , pathMatch:"full" },
+  { path: "ViewAllHomes", component: ViewAllHomes , pathMatch:"full" },
   { path: "register", component: Register , pathMatch:"full" },
   { path: "propertyDetails/:id", component: PropertyDetails , pathMatch:"full" },
   { path: "messages", component: Messages , pathMatch:"full" },
   { path: "notifications", component: Notifications , pathMatch:"full" },
-  // { path: "AdminNotifications", component: DashBoardBar , pathMatch:"full" },
-
   { path: "propertyPhotos", component: PropertyPhotos , pathMatch:"full" },
   { path: "trips", component: Trips , pathMatch:"full" },
   { path: "wishList", component: Wishlist , pathMatch:"full" },
