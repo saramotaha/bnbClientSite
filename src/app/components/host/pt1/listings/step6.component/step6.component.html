@@ -1,0 +1,51 @@
+<div class="step6-container">
+  <h2 class="title">Add some photos of your house</h2>
+  <p class="subtitle">You'll need 5 photos to get started. You can add more or make changes later.</p>
+
+  <div class="upload-box">
+    <div class="add-button-wrapper">
+      <button class="add-photo-btn" (click)="openUploadModal()">+ Add photo</button>
+    </div>
+
+    <!-- ✅ الصور تفضل ظاهرة دايمًا -->
+    <div class="photo-grid" *ngIf="uploadedImages.length > 0">
+      <div *ngFor="let img of uploadedImages" class="photo-preview">
+        <img [src]="img" alt="Photo" />
+      </div>
+    </div>
+  </div>
+
+  <div class="navigation-buttons">
+    <button class="btn back" (click)="goBack()">Back</button>
+    <button class="btn next" [disabled]="uploadedImages.length < 5" (click)="goNext()">Next</button>
+  </div>
+</div>
+
+<!-- Upload Modal -->
+<div class="modal-overlay" *ngIf="showUploadModal">
+  <div class="upload-modal">
+    <h3>Upload photos</h3>
+    <p class="muted">No items selected</p>
+
+    <div class="drop-area" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+      <p class="drag-text">Drag and drop<br />or</p>
+      <input type="file" hidden multiple #fileInput (change)="onFileSelect($event)" />
+      <button class="browse-btn" (click)="fileInput.click()">Browse</button>
+    </div>
+
+    <p class="muted mt">{{ selectedFiles.length }} photo(s) selected</p>
+
+    <div class="modal-actions">
+      <button class="btn cancel" (click)="closeUploadModal()">Done</button>
+      <button class="btn upload" [disabled]="selectedFiles.length < 5" (click)="uploadPhotos()">Upload</button>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal-overlay" *ngIf="showSuccess">
+  <div class="success-popup">
+    <div class="check-icon">✅</div>
+    <p>Photos uploaded successfully!</p>
+  </div>
+</div>

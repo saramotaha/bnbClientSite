@@ -1,0 +1,28 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h2 class="modal-title">Which of these best describes your place?</h2>
+  </div>
+
+  <div class="category-grid">
+    <div 
+      *ngFor="let category of categories" 
+      class="category-item"
+      [class.selected]="selectedCategory === category.label"
+      (click)="selectCategory(category.label)"
+    >
+      <div class="category-icon">{{ category.icon }}</div>
+      <div class="category-label">{{ category.label }}</div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="back-btn" (click)="goBack()">Back</button>
+    <button 
+      class="next-btn" 
+      [disabled]="!selectedCategory"
+      (click)="goNext()"
+    >
+      Next
+    </button>
+  </div>
+</div>
