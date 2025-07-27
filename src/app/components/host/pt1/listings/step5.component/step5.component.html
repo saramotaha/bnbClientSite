@@ -1,0 +1,63 @@
+<div class="step5-container">
+  <h2 class="title">Tell guests what your place has to offer</h2>
+  <p class="subtitle">You can add more amenities after you publish your listing.</p>
+
+  <div class="section">
+    <h4>What about these guest favorites?</h4>
+    <div class="grid">
+      <div
+        class="amenity-card"
+        *ngFor="let amenity of guestFavorites"
+        [class.selected]="amenity.selected"
+        (click)="toggleSelection(amenity)"
+      >
+        <i class="{{ amenity.icon }}" [ngClass]="{
+          'animate-bounce': amenity.selected,
+          'animate-pulse': !amenity.selected
+        }"></i>
+        <span>{{ amenity.label }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h4>Do you have any standout amenities?</h4>
+    <div class="grid">
+      <div
+        class="amenity-card"
+        *ngFor="let amenity of standoutAmenities"
+        [class.selected]="amenity.selected"
+        (click)="toggleSelection(amenity)"
+      >
+        <i class="{{ amenity.icon }}" [ngClass]="{
+          'animate-bounce': amenity.selected,
+          'animate-pulse': !amenity.selected
+        }"></i>
+        <span>{{ amenity.label }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h4>Do you have any of these safety items?</h4>
+    <div class="grid">
+      <div
+        class="amenity-card"
+        *ngFor="let amenity of safetyItems"
+        [class.selected]="amenity.selected"
+        (click)="toggleSelection(amenity)"
+      >
+        <i class="{{ amenity.icon }}" [ngClass]="{
+          'animate-bounce': amenity.selected,
+          'animate-pulse': !amenity.selected
+        }"></i>
+        <span>{{ amenity.label }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="btn back" (click)="goBack()">Back</button>
+    <button class="btn next" (click)="goNext()">Next</button>
+  </div>
+</div>

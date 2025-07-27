@@ -1,0 +1,30 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="w-100" style="max-width: 700px;">
+    <div class="text-center mb-4">
+      <h2>Is the pin in the right spot?</h2>
+      <p class="text-muted">Your address is only shared with guests after they’ve made a reservation.</p>
+    </div>
+
+    <div class="map-box shadow-sm rounded p-3 mb-4">
+      <div id="map" class="map-container mb-3"></div>
+
+      <input
+        type="text"
+        [(ngModel)]="address"
+        (change)="onAddressChange()"
+        class="form-control mb-3"
+        placeholder="Enter location or confirm"
+      />
+
+      <div class="bg-white rounded p-3 shadow-sm text-center">
+        <i class="bi bi-geo-alt-fill me-2"></i>
+        <strong>{{ selectedAddress }}</strong>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-3">
+      <button class="btn btn-outline-secondary" (click)="goToPreviousStep()">Back</button>
+      <button class="btn btn-dark" (click)="goToNextStep()">Next</button>
+    </div>
+  </div>
+</div>

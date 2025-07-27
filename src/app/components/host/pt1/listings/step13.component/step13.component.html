@@ -1,0 +1,34 @@
+<div class="weekend-price-container">
+  <h2 class="title">Set a weekend price</h2>
+  <p class="subtitle">Add a premium for Fridays and Saturdays.</p>
+
+  <div class="price-display">
+    <span class="price">${{ weekendPrice }}</span>
+  </div>
+
+  <div class="guest-price">
+    <span>Guest price before taxes</span>
+    <span class="price-check">${{ guestPrice }} <span class="checkmark">✓</span></span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="premium-section">
+    <div class="premium-header">
+      <h3>Weekend premium</h3>
+      <span class="tip">Tip: Try 1%</span>
+    </div>
+
+    <div class="premium-slider-container">
+      <input type="range" min="0" max="99" [(ngModel)]="premiumPercentage"
+             class="premium-slider" (input)="updatePrices()">
+      <div class="slider-value">{{ premiumPercentage }}%</div>
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="nav-buttons">
+    <button class="btn btn-back" (click)="goBack()">Back</button>
+    <button class="btn btn-next" (click)="goNext()">Next</button>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="step16-container">
+  <h2>Provide a few final details</h2>
+  <p class="subtitle">What’s your residential address?</p>
+  <p class="note">Guests won’t see this information.</p>
+
+  <select [(ngModel)]="country">
+    <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+  </select>
+
+  <input type="text" placeholder="Apt, room, etc. (if applicable)" [(ngModel)]="apt">
+  <input type="text" placeholder="Street address" [(ngModel)]="street">
+  <input type="text" placeholder="City / markaz" [(ngModel)]="city">
+  <input type="text" placeholder="Governorate" [(ngModel)]="governorate">
+  <input type="text" placeholder="Postal code" [(ngModel)]="postalCode">
+
+  <div class="navigation">
+    <button (click)="goBack()">Back</button>
+    <button [disabled]="!isFormValid" (click)="createListing()">Create Listing</button>
+  </div>
+</div>
