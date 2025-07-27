@@ -1,0 +1,103 @@
+
+<div class="p-5 bg-white row     ">
+
+
+
+  <div class="section  mb-5   col-8 ">
+
+    <div>
+      <div class="row d-flex justify-content-around   ">
+        @for (item of pagedProperties; track $index) {
+
+        <div class="property-card rounded-5 shadow p-1 mx-1  col-3 mb-3  ">
+          <div class="property-image rounded-5 w-100  ">
+            <img
+              [src]="item?.images?.[0]?.imageUrl ?? 'https://www.hypneu.de/media/images/System/404-error-not-found-page-lost.png?_=0.027911563893951108'"
+              [alt]="item?.images?.[0]?.description ?? 'not found'">
+            <div class="guest-favorite" *ngIf="item.IsFav">
+              <i class="fas fa-crown"></i> Guest favorite
+            </div>
+            <button class="favorite-btn fs-3">♡</button>
+          </div>
+          <div class="property-info ">
+            <div class="property-title">{{item?.title}}</div>
+            <div class="property-details">
+              <div class="property-price">€{{item?.pricePerNight}} per night</div>
+              <div class="property-rating">
+                <span class="star">★</span>
+                <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+
+
+
+      </div>
+    </div>
+
+
+
+  <div *ngIf="pagedProperties.length>0==true" class="container my-4">
+
+
+
+    <!-- Pagination Controls -->
+  <div class="d-flex justify-content-center align-items-center gap-2 mt-5 flex-wrap">
+
+    <!-- Previous Button -->
+    <button class="rounded-circle d-flex justify-content-center align-items-center" [disabled]="currentPage === 1"
+      (click)="prevPage()" style="
+        width: 34px;
+        height: 34px;
+        border: 1px solid #ddd;
+        background-color: white;
+        transition: background-color 0.3s;
+      " [ngStyle]="{ opacity: currentPage === 1 ? 0.4 : 1 }" aria-label="Previous">
+      <i class="fa-solid fa-chevron-left" style="font-size: 14px; color: #333;"></i>
+    </button>
+
+    <!-- Page Numbers -->
+    <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+    <button class="rounded-circle fw-medium" [ngClass]="{
+        'text-white': currentPage === i + 1,
+        'text-dark': currentPage !== i + 1
+      }" (click)="goToPage(i + 1)" [ngStyle]="{
+        'width': '34px',
+        'height': '34px',
+        'border': '1px solid #ddd',
+        'background-color': currentPage === i + 1 ? '#FF385C' : '#fff',
+        'transition': 'all 0.3s'
+      }" [attr.aria-label]="'Go to page ' + (i + 1)">
+      {{ i + 1 }}
+    </button>
+
+    </ng-container>
+
+    <!-- Next Button -->
+    <button class="rounded-circle d-flex justify-content-center align-items-center"
+      [disabled]="currentPage === totalPages" (click)="nextPage()" style="
+        width: 34px;
+        height: 34px;
+        border: 1px solid #ddd;
+        background-color: white;
+        transition: background-color 0.3s;
+      " [ngStyle]="{ opacity: currentPage === totalPages ? 0.4 : 1 }" aria-label="Next">
+      <i class="fa-solid fa-chevron-right" style="font-size: 14px; color: #333;"></i>
+    </button>
+  </div>
+
+  </div>
+
+  </div>
+
+
+
+
+ <div *ngIf="pagedProperties.length>0 == true" class=" col-4 " >
+  <app-map></app-map>
+ </div>
+
+
+</div>

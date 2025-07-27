@@ -1,3 +1,5 @@
+import { AdminPropertyResponseDto, AdminPropertyListDto } from './Admin/Models/Property.model';
+import { Component } from '@angular/core';
 import { RedirectCommand, Routes } from '@angular/router';
 import { Home } from './Pages/home/home';
 import { Login } from './Pages/login/login';
@@ -30,10 +32,11 @@ import { ListingStep1Component } from './components/host/pt1/listings/listing-st
 import { Messages
 
  } from './components/host/pt2/components/messages/messages';
-export const routes: Routes = [
-  //{ path: "", redirectTo:"admin", pathMatch: "full"},
-  { path: "", component: Home, pathMatch: "full" },
+import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
 
+export const routes: Routes = [
+  { path: "", redirectTo:"Home", pathMatch: "full"},
+  { path: "Home", component: Home, pathMatch: "full" },
 
   {
 
@@ -44,15 +47,12 @@ export const routes: Routes = [
       { path: "AdminNotifications", component: AdminNotifications },
       { path: "Violation", component: Violation },
       { path: "UserManagement", component: UserManagement },
-      { path: "DashboardCharts", component: DashboardCharts }
+      { path: "DashboardCharts", component: DashboardCharts },
+      {path: "PropertyManagement", component: PropertyManagementComponent}
     ]
   },
-//  { path: "", redirectTo: "AdminNotifications"  , pathMatch:"full"},
-//  { path: "AdminNotifications", component: AdminNotifications , pathMatch:"full"},
-//  { path: "Violation", component: Violation , pathMatch:"full" },
-//  { path: "UserManagement", component: UserManagement , pathMatch:"full" },
-//  { path: "DashboardCharts", component: DashboardCharts , pathMatch:"full" },
   { path: "login", component: Login , pathMatch:"full" },
+  { path: "ViewAllHomes", component: ViewAllHomes , pathMatch:"full" },
   { path: "register", component: Register , pathMatch:"full" },
   { path: "propertyDetails/:id", component: PropertyDetails , pathMatch:"full" },
   // { path: "messages", component: Messages , pathMatch:"full" },

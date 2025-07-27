@@ -4,7 +4,11 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 
 import { routes } from './app.routes';
+// import { provideHttpClient } from '@angular/common/http';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts'; // ✅ add this
+
+
+
 
 
 export const appConfig: ApplicationConfig = {
