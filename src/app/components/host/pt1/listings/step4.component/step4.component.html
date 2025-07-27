@@ -1,0 +1,49 @@
+<div class="page-container">
+  <div class="form-container">
+    <h1>Share some basics about your place</h1>
+    <p class="subtitle">You'll add more details later, like bed types.</p>
+
+    <div class="counter-section">
+      <div class="counter-item">
+        <span class="counter-label">Guests</span>
+        <div class="counter-controls">
+          <button class="counter-btn" (click)="decrement('guests')">-</button>
+          <span class="counter-value">{{ guests }}</span>
+          <button class="counter-btn" (click)="increment('guests')">+</button>
+        </div>
+      </div>
+
+      <div class="counter-item">
+        <span class="counter-label">Bedrooms</span>
+        <div class="counter-controls">
+          <button class="counter-btn" (click)="decrement('bedrooms')">-</button>
+          <span class="counter-value">{{ bedrooms }}</span>
+          <button class="counter-btn" (click)="increment('bedrooms')">+</button>
+        </div>
+      </div>
+
+      <div class="counter-item">
+        <span class="counter-label">Beds</span>
+        <div class="counter-controls">
+          <button class="counter-btn" (click)="decrement('beds')">-</button>
+          <span class="counter-value">{{ beds }}</span>
+          <button class="counter-btn" (click)="increment('beds')">+</button>
+        </div>
+      </div>
+
+      <div class="counter-item">
+        <span class="counter-label">Bathrooms</span>
+        <div class="counter-controls">
+          <button class="counter-btn" (click)="decrement('bathrooms')">-</button>
+          <span class="counter-value">{{ bathrooms }}</span>
+          <button class="counter-btn" (click)="increment('bathrooms')">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="navigation-buttons">
+      <button class="btn-back" (click)="goBack()">Back</button>
+      <button class="btn-next" (click)="goNext()">Next</button>
+    </div>
+  </div>
+</div>

@@ -7,12 +7,13 @@ import {
   ViolationListDTO
 } from '../models/violation.model';
 import { Observable } from 'rxjs';
+import { AuthService } from '../../../../Pages/Auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ViolationService {
   private baseUrl = '/api/violations';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   // Submit a new violation report
   create(dto: CreateViolationDTO): Observable<string> {
@@ -59,5 +60,12 @@ export class ViolationService {
   // Get all pending violations (admin filter)
   getPendingViolations(): Observable<ViolationListDTO[]> {
     return this.http.get<ViolationListDTO[]>(`${this.baseUrl}/pending`);
+  }
+
+  // Refined: Get all violations for the current host via AuthService
+  getViolationsForCurrentHost(): Observable<ViolationDetailsDTO[]> {
+    const hostId = this.authService.getHostId();
+    const url = `${this.baseUrl}/host/${hostId}`;
+    return this.authService.makeAuthenticatedRequest<ViolationDetailsDTO[]>('GET', url);
   }
 }

@@ -1,0 +1,18 @@
+.map-container {
+  height: 400px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.map-box {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #f9f9f9;
+  transition: box-shadow 0.3s ease;
+}
+
+.map-box:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}

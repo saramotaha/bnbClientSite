@@ -1,0 +1,11 @@
+.selectable-card {
+  cursor: pointer;
+  border: 2px solid #dee2e6;
+  transition: border-color 0.2s;
+}
+
+.selectable-card:hover,
+.selectable-card.selected {
+  border-color: black !important;
+}
+

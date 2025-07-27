@@ -99,7 +99,7 @@ export class AuthService {
         // Update state
         this.currentUserSubject.next(user);
         this.isAuthenticatedSubject.next(true);
-        
+        this.fetchAndStoreHostId(); 
         return user;
       }),
       catchError(this.handleError)
@@ -363,4 +363,22 @@ export class AuthService {
       return true;
     }
   }
+  // Fetch and store host ID in local storage
+  fetchAndStoreHostId(): void {
+  const userId = this.currentUser?.id;
+  if (!userId) return;
+
+  this.http.get<{ hostId: number }>(`/api/hosts/by-user/${userId}`).subscribe({
+    next: (response) => {
+      localStorage.setItem('hostId', String(response.hostId));
+    },
+    error: (err) => {
+      console.warn('Unable to fetch host ID:', err);
+    }
+  });
+}
+getHostId(): string | null {
+  return localStorage.getItem('hostId');
+}
+
 }
