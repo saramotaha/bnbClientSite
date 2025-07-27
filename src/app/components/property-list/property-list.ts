@@ -5,15 +5,24 @@ import { CommonModule } from '@angular/common';
 import { FilterHomesServices } from '../../Core/Services/filter-homes-services';
 import { Router } from '@angular/router';
 
+import { FormsModule } from '@angular/forms';
+
+
+
 
 @Component({
   selector: 'app-property-list',
   standalone:true,
-  imports: [CommonModule ],
+  imports: [CommonModule,
+    FormsModule,
+  ],
   templateUrl: './property-list.html',
   styleUrls: ['./property-list.css']
 })
 export class PropertyList implements OnInit {
+
+
+   selectedDate: Date = new Date();
 
   FilterPropertiesByCity: IPropertyList[] = [];
   FilterPropertiesInParisByAvailability: IPropertyList[] = [];
@@ -23,9 +32,10 @@ export class PropertyList implements OnInit {
   FilterPropertiesByUnitedStates: IPropertyList[] = [];
   Reviews!: number[];
   AllData: IPropertyList[] = [];
+  AllCities: string[] = [];
   AllParisHomes: IPropertyList[] = [];
 
-  getNext7Days(): string[] {
+  getNextWeekEndDays(): string[] {
   const dates: string[] = [];
   const today = new Date();
 
@@ -58,25 +68,28 @@ export class PropertyList implements OnInit {
   }
 
 
+    constructor(private homeService: HomeService , private cdr:ChangeDetectorRef , private homes:FilterHomesServices ,private router:Router) { }
+
+
 
 
 
   ParisHomes() {
 
-    this.homes.Filters = {
+    this.homes.setFilters({
       "location": "Paris"
-    };
+    });
 
     this.router.navigate(['/ViewAllHomes']);
   }
 
 
   ParisHomesInWeekEnd() {
-    this.homes.Filters = {
+    this.homes.setFilters({
       "location": "Paris",
-      "startDate":this.getNext7Days()[0],
-      "endDate": this.getNext7Days()[1]
-    };
+      "startDate":this.getNextWeekEndDays()[0],
+      "endDate": this.getNextWeekEndDays()[1]
+    })  ;
 
 
     this.router.navigate(['/ViewAllHomes']);
@@ -85,9 +98,9 @@ export class PropertyList implements OnInit {
 
   UnitedHomes() {
 
-    this.homes.Filters = {
+    this.homes.setFilters({
       "location": "United States"
-    };
+    }) ;
 
 
     this.router.navigate(['/ViewAllHomes']);
@@ -100,11 +113,11 @@ export class PropertyList implements OnInit {
 
   CairoHomesNextMonth() {
 
-    this.homes.Filters = {
+    this.homes.setFilters({
       "location": "cairo",
       "startDate": this.getNextMonthDates()[0],
        "endDate": this.getNextMonthDates()[length-1]
-    };
+    }) ;
 
 
     this.router.navigate(['/ViewAllHomes']);
@@ -114,9 +127,9 @@ export class PropertyList implements OnInit {
 
   CairoHomes() {
 
-    this.homes.Filters = {
+    this.homes.setFilters({
       "location": "cairo"
-    };
+    })  ;
 
 
     this.router.navigate(['/ViewAllHomes']);
@@ -127,9 +140,9 @@ export class PropertyList implements OnInit {
 
   SpainHomes() {
 
-    this.homes.Filters = {
+    this.homes.setFilters({
       "location": "Spain"
-    };
+    })  ;
 
 
     this.router.navigate(['/ViewAllHomes']);
@@ -139,21 +152,27 @@ export class PropertyList implements OnInit {
 
 
 
-  constructor(private homeService: HomeService , private cdr:ChangeDetectorRef , private homes:FilterHomesServices ,private router:Router) { }
 
   ngOnInit(): void {
-    this.homes.Filters = [];
-    const next7Days = this.getNext7Days();
+    // this.homes.Filters = [];
+    const nextWeekEndDays = this.getNextWeekEndDays();
     const nextMonthDates = this.getNextMonthDates();
     const FavProperties= this.homeService.GetPopularHomes();
 
-    console.log(next7Days);
-    console.log(this.getNext7Days()[0]);
+    console.log(nextWeekEndDays);
+    console.log(this.getNextWeekEndDays()[0]);
 
 
   this.homeService.GetPopularHomes().subscribe({
     next: (response) => {
       this.AllData = response;
+
+      for (let index = 0; index < this.AllData.length; index++) {
+
+        if(!this.AllCities.includes(this.AllData[index].city))
+              this.AllCities.push(this.AllData[index].city)
+
+      }
 
 
       this.homeService.GetFavProp().subscribe({
@@ -175,12 +194,12 @@ export class PropertyList implements OnInit {
 
      if (!isInParis) return false;
 
-     const availableDates = property.availabilityDates?.filter(a => {
+     const availableDates = property.availabilityDates?.some(a => {
      const formattedDate = a.date.split('T')[0];
-     return next7Days.includes(formattedDate) && a.isAvailable;
+     return nextWeekEndDays.includes(formattedDate) && a.isAvailable;
   });
 
-  return availableDates && availableDates.length > 0;
+     return availableDates ;
       }).filter(x=>x.status=='active').slice(0, 8);
 
 
@@ -191,25 +210,20 @@ export class PropertyList implements OnInit {
         //  &&p.reviews.some(r=>r.rating>4));
 
       this.FilterPropertiesInCairoByAvailability = response.filter(property => {
-     const isInParis = property.city?.toLowerCase() == 'cairo'.toLowerCase();
+     const isInCairo = property.city?.toLowerCase() == 'cairo'.toLowerCase();
 
-     if (!isInParis) return false;
+     if (!isInCairo) return false;
 
-    const availableDates = property.availabilityDates?.filter(a => {
+    const availableDates = property.availabilityDates?.some(a => {
     const formattedDate = a.date.split('T')[0];
     return nextMonthDates.includes(formattedDate) && a.isAvailable;
   });
 
-    return availableDates && availableDates.length > 0;
+    return availableDates ;
       }).filter(x=>x.status=='active').slice(0, 8);
 
 
       this.cdr.detectChanges();
-
-
-
-
-
     }
   });
 
