@@ -7,6 +7,9 @@ import { routes } from './app.routes';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts'; // ✅ add this
 
 
+
+
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),

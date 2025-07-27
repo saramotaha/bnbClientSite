@@ -72,16 +72,24 @@ get totalPages(): number {
 
 
   ngOnInit(): void {
-    this.AllFilters = this.service.Filters;
+     this.service.filters$.subscribe(filters => {
+    if (Object.keys(filters).length > 0) {
+      this.AllFilters = filters;
+
+
+
     this.service.GetHomes(this.AllFilters).subscribe({
       next: (response) => {
         this.AllFilteredHomes = response;
         this.paginatedHomes();
         this.cdr.detectChanges();
-        // console.log(response);
+        console.log(response);
+
       }
 
     })
+      }
+     });
 
 
 

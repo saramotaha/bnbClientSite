@@ -375,3 +375,30 @@
 
 
 
+.allCities{
+  height: 500px !important;
+  width: 10%;
+  overflow-y: scroll;
+
+}
+
+
+.allCities img{
+  width: 30px;
+
+}
+
+
+.allCities p{
+
+  margin-top: 10px;
+
+
+}
+
+
+
+
+
+
+
