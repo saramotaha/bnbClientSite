@@ -9,8 +9,8 @@
         <div class="nav-links">
           <a routerLink="host/today" routerLinkActive="active-link" class="nav-link">Today</a>
           <a routerLink="host/calendar" routerLinkActive="active-link" class="nav-link">Calendar</a>
-          <a href="#" class="nav-link">Listings</a>
-          <a href="#" class="nav-link">Messages</a>
+          <a routerLink="host/listings" routerLinkActive="active-link" class="nav-link">Listings</a>
+          <a routerLink="host/messages" routerLinkActive="active-link" class="nav-link">Messages</a>
           <div class="menu-container">
             <button class="menu-button nav-link" [class.active]="isDropdownOpen" (click)="toggleDropdown()">
               Menu
@@ -23,8 +23,8 @@
           [class.show]="isDropdownOpen">
           <a class="dropdown-item" (click)="navigateTo('host/reservations')" routerLink="host/reservations">Reservations</a>
           <a class="dropdown-item" (click)="navigateTo('host/earnings')" routerLink="host/earnings">Earnings</a>
-          <a href="#" class="dropdown-item" (click)="navigateTo('host/insights')">Insights</a>
-          <a href="#" class="dropdown-item" (click)="navigateTo('host/create-listing')">Create a new listing</a>
+          <a class="dropdown-item" (click)="navigateTo('host/insights')">Insights</a>
+          <a class="dropdown-item" (click)="navigateTo('host/create-listing')" routerLink="host/create-listing">Create a new listing</a>
           <a class="dropdown-item" (click)="navigateTo('host/violations')" routerLink="host/violations">Violations</a>
         </div>
           </div>

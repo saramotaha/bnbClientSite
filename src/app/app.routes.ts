@@ -26,7 +26,10 @@ import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-ch
 import { Earnings } from './components/host/pt2/components/earnings/earnings';
 import { PropertyListComponent } from './components/host/pt1/property-list/property-list';
 import { listingsRoutes } from './components/host/pt1/listings/listings.routes';
+import { ListingStep1Component } from './components/host/pt1/listings/listing-step1/listing-step1.component';
+import { Messages
 
+ } from './components/host/pt2/components/messages/messages';
 export const routes: Routes = [
   //{ path: "", redirectTo:"admin", pathMatch: "full"},
   { path: "", component: Home, pathMatch: "full" },
@@ -67,6 +70,9 @@ export const routes: Routes = [
   { path: 'host/reservations', component: Reservations},
   { path: 'host/violations', component: Violations},
   { path: 'host/earnings', component: Earnings},
+  { path: 'host/listings', component: PropertyListComponent},
+  { path: 'host/create-listing', component: ListingStep1Component},
+  { path: 'host/messages', component: Messages},
   // { path: "**", component: NotFound} //MUST BE AT THE END
   { path: '', component: PropertyListComponent },
   { path: 'host', children: listingsRoutes },
