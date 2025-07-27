@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GoogleMap, MapMarker } from '@angular/google-maps';
 import { CurrentProperties } from '../../Core/Services/current-properties';
+import { IPropertyList } from '../../Core/Models/iproperty-list';
+import { Subscription } from 'rxjs';
 
 declare const google: any;
 
@@ -12,9 +14,12 @@ declare const google: any;
   templateUrl: './map.html',
   styleUrl: './map.css'
 })
-export class Map implements OnInit {
+export class Map implements OnInit , OnDestroy {
 
   markers: any[] = [];
+  center: any;
+  zoom: any;
+  private properties!: Subscription;
 
 
   constructor(private props:CurrentProperties) {}
@@ -26,72 +31,55 @@ export class Map implements OnInit {
      });
 
 
-    this.markers=this.props.getCurrentPageProperties().map((property) => ({
+    this.properties = this.props.currentProps$.subscribe(property=>{
+
+      if (property.length > 0) {
+         this.markers=property.map((prop) => ({
         position: {
-          lat: property.latitude,
-          lng: property.longitude
+          lat: prop.latitude,
+          lng: prop.longitude
         },
-        title: property.title,
-      }));
+      title: prop.title,
+
+
+    }));
+
+      }
 
 
 
-  //     markers = [
-  //   {
-  //     position: { lat: 30.0131, lng: 31.2089 },
-  //     title: 'Apartment in Giza',
-  //     price: '3,419 ج.م'
-  //   },
-  //   {
-  //     position: { lat: 30.0254, lng: 31.4913 },
-  //     title: 'Apartment in New Cairo',
-  //     price: '3,499 ج.م'
-  //   },
-  //   {
-  //     position: { lat: 29.9602, lng: 31.2569 },
-  //     title: 'Apartment in Maadi',
-  //     price: '4,368 ج.م'
-  //   },
-  //   {
-  //     position: { lat: 29.9792, lng: 31.1342 },
-  //     title: 'Near Pyramids',
-  //     price: '5,014 ج.م'
-  //   },
-  //   {
-  //     position: { lat: 30.0626, lng: 31.2197 },
-  //     title: 'Zamalek Apartment',
-  //     price: '3,761 ج.م'
-  //   }
-  // ];
+       else {
+        this.markers = [];
+      }
+
+
+
+    })
+
+    console.log(this.markers);
+
+
+
+
+
+
+    this.center = { lat: this.props.getCurrentPageProperties()[0].latitude, lng: this.props.getCurrentPageProperties()[0].longitude };
+    this.zoom = 2
+
 
 
   }
 
-  // Map center (Cairo)
-  // center = { lat: 30.0444, lng: 31.2357 };
-  zoom = 12;
+
+
+  ngOnDestroy(): void {
+    if (this.properties) {
+      this.properties.unsubscribe();
+    }
+  }
 
 
 
 
-
-  // Your locations/markers
-
-
-
-  mapOptions: google.maps.MapOptions = {
-    mapTypeId: 'roadmap',
-   styles: [
-  { elementType: 'geometry', stylers: [{ color: '#000000' }] }, // أسود
-  { elementType: 'labels.text.fill', stylers: [{ color: '#ff0000' }] }, // أحمر
-  { elementType: 'labels.text.stroke', stylers: [{ color: '#00ff00' }] } // أخضر
-],
-    disableDefaultUI: true
-  };
-
-  // When user clicks on marker
-  // onMarkerClick(marker: any) {
-  //   alert('You clicked: ' + marker.title + ' - ' + marker.price);
-  // }
 
 }

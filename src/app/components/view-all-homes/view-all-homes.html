@@ -5,7 +5,7 @@
 
   <div class="section  mb-5   col-8 ">
 
-    <div class="     ">
+    <div>
       <div class="row d-flex justify-content-around   ">
         @for (item of pagedProperties; track $index) {
 
@@ -39,12 +39,7 @@
 
 
 
-
-
-
-
-
-  <div class="container my-4">
+  <div *ngIf="pagedProperties.length>0==true" class="container my-4">
 
 
 
@@ -96,9 +91,6 @@
   </div>
 
   </div>
-
-
-
 
 
 
