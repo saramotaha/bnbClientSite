@@ -25,22 +25,22 @@ import { UserManagement } from './Admin/Component/user-management/user-managemen
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
 import { Earnings } from './components/host/pt2/components/earnings/earnings';
 export const routes: Routes = [
-  // { path: "", redirectTo:"admin", pathMatch: "full"},
+  //{ path: "", redirectTo:"admin", pathMatch: "full"},
   { path: "", component: Home, pathMatch: "full" },
 
 
-  // {
+  {
 
-  //   path: "admin",
-  //   component: AdminDashboard,
-  //   children: [
-  //     { path: "", redirectTo: "DashboardCharts", pathMatch: "full" },
-  //     { path: "AdminNotifications", component: AdminNotifications },
-  //     { path: "Violation", component: Violation },
-  //     { path: "UserManagement", component: UserManagement },
-  //     { path: "DashboardCharts", component: DashboardCharts }
-  //   ]
-  // },
+    path: "admin",
+    component: AdminDashboard,
+    children: [
+      { path: "", redirectTo: "DashboardCharts", pathMatch: "full" },
+      { path: "AdminNotifications", component: AdminNotifications },
+      { path: "Violation", component: Violation },
+      { path: "UserManagement", component: UserManagement },
+      { path: "DashboardCharts", component: DashboardCharts }
+    ]
+  },
 //  { path: "", redirectTo: "AdminNotifications"  , pathMatch:"full"},
 //  { path: "AdminNotifications", component: AdminNotifications , pathMatch:"full"},
 //  { path: "Violation", component: Violation , pathMatch:"full" },
@@ -58,7 +58,6 @@ export const routes: Routes = [
   { path: "profile", component: Profile , pathMatch:"full" },
   { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   { path: "checkout", component: Checkout , pathMatch:"full" },
-  
   { path: 'host/calendar',component: HostCalendarPage },
   { path: 'host', component: HostDashboard }, //layout shell
   { path: 'host/today', component: TodayBookingsComponent},
