@@ -1,6 +1,13 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  computed
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { BookingService } from '../../services/booking.service';
+import { AuthService } from '../../../../../Pages/Auth/auth.service';
 import { BookingResponseDto } from '../../models/booking.model';
 import { CommonModule } from '@angular/common';
 
@@ -13,108 +20,77 @@ import { CommonModule } from '@angular/common';
 })
 export class Reservations implements OnInit {
   private bookingService = inject(BookingService);
+  private authService = inject(AuthService);
   private router = inject(Router);
 
   activeTab = signal<string>('upcoming');
   reservations = signal<BookingResponseDto[]>([]);
   loading = signal<boolean>(false);
 
-  // Dummy data for development
-  private dummyReservations: BookingResponseDto[] = [
-    {
-      id: 1,
-      propertyTitle: 'Modern Apartment in Downtown',
-      propertyAddress: '123 Main St, New York, NY',
-      startDate: '2025-08-15',
-      endDate: '2025-08-18',
-      guestName: 'John Smith',
-      totalGuests: 2,
-      status: 'confirmed',
-      checkInStatus: 'pending',
-      checkOutStatus: 'pending',
-      totalAmount: 450,
-      createdAt: '2025-07-20T10:00:00Z'
-    },
-    {
-      id: 2,
-      propertyTitle: 'Cozy Studio Near Central Park',
-      propertyAddress: '456 Park Ave, New York, NY',
-      startDate: '2025-09-01',
-      endDate: '2025-09-05',
-      guestName: 'Emma Johnson',
-      totalGuests: 1,
-      status: 'confirmed',
-      checkInStatus: 'pending',
-      checkOutStatus: 'pending',
-      totalAmount: 320,
-      createdAt: '2025-07-22T14:30:00Z'
-    }
-  ];
-
   filteredReservations = computed(() => {
     const today = new Date();
-    const reservations = this.reservations();
-    const activeTab = this.activeTab();
-    
-    switch (activeTab) {
-      case 'upcoming':
-        return reservations.filter(r => 
-          new Date(r.startDate) >= today && r.status !== 'cancelled'
-        );
-      case 'completed':
-        return reservations.filter(r => r.status === 'completed');
-      case 'canceled':
-        return reservations.filter(r => r.status === 'cancelled');
-      case 'all':
-      default:
-        return reservations;
-    }
+    const all = this.reservations();
+    const tab = this.activeTab();
+
+    return all.filter(r => {
+      switch (tab) {
+        case 'upcoming':
+          return new Date(r.startDate) >= today && r.status !== 'cancelled';
+        case 'completed':
+          return r.status === 'completed';
+        case 'cancelled':
+          return r.status === 'cancelled';
+        case 'all':
+        default:
+          return true;
+      }
+    });
   });
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadReservations();
   }
 
-  loadReservations() {
+  loadReservations(): void {
     this.loading.set(true);
-    
-    // Try to load from API, fallback to dummy data
-    this.bookingService.getAll().subscribe({
-      next: (data) => {
-        this.reservations.set(data);
+
+    const hostId = this.authService.getHostId();
+    if (!hostId) {
+      console.warn('Missing host ID. Make sure it’s stored during login.');
+      this.loading.set(false);
+      return;
+    }
+
+    this.bookingService.getBookingsByHost(+hostId).subscribe({
+      next: (bookings) => {
+        this.reservations.set(bookings);
         this.loading.set(false);
       },
-      error: (error) => {
-        console.log('API not available, using dummy data');
-        this.reservations.set(this.dummyReservations);
+      error: (err) => {
+        console.error('Failed to load reservations:', err);
+        this.reservations.set([]);
         this.loading.set(false);
       }
     });
   }
 
-  setActiveTab(tab: string) {
+  setActiveTab(tab: string): void {
     this.activeTab.set(tab);
   }
 
-  goToHostDashboard() {
+  goToHostDashboard(): void {
     this.router.navigate(['/host/today']);
   }
 
-  seeAllReservations() {
+  seeAllReservations(): void {
     this.setActiveTab('all');
   }
 
-  exportReservations() {
-    // Export functionality
-    console.log('Export reservations');
-  }
-
-  printReservations() {
+  printReservations(): void {
     window.print();
   }
 
-  openFilter() {
-    // Filter functionality
-    console.log('Open filter');
+  openFilter(): void {
+    console.log('Filter modal or drawer goes here 🎛️');
   }
 }

@@ -23,23 +23,24 @@ import { DashBoardBar } from './Admin/Component/dash-board-bar/dash-board-bar';
 import { AdminDashboard } from './Admin/Component/admin-dashboard/admin-dashboard';
 import { UserManagement } from './Admin/Component/user-management/user-management';
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
+import { Earnings } from './components/host/pt2/components/earnings/earnings';
 export const routes: Routes = [
-  { path: "", redirectTo:"admin", pathMatch: "full"},
+  // { path: "", redirectTo:"admin", pathMatch: "full"},
   { path: "", component: Home, pathMatch: "full" },
 
 
-  {
+  // {
 
-    path: "admin",
-    component: AdminDashboard,
-    children: [
-      { path: "", redirectTo: "DashboardCharts", pathMatch: "full" },
-      { path: "AdminNotifications", component: AdminNotifications },
-      { path: "Violation", component: Violation },
-      { path: "UserManagement", component: UserManagement },
-      { path: "DashboardCharts", component: DashboardCharts }
-    ]
-  },
+  //   path: "admin",
+  //   component: AdminDashboard,
+  //   children: [
+  //     { path: "", redirectTo: "DashboardCharts", pathMatch: "full" },
+  //     { path: "AdminNotifications", component: AdminNotifications },
+  //     { path: "Violation", component: Violation },
+  //     { path: "UserManagement", component: UserManagement },
+  //     { path: "DashboardCharts", component: DashboardCharts }
+  //   ]
+  // },
 //  { path: "", redirectTo: "AdminNotifications"  , pathMatch:"full"},
 //  { path: "AdminNotifications", component: AdminNotifications , pathMatch:"full"},
 //  { path: "Violation", component: Violation , pathMatch:"full" },
@@ -51,17 +52,18 @@ export const routes: Routes = [
   { path: "messages", component: Messages , pathMatch:"full" },
   { path: "notifications", component: Notifications , pathMatch:"full" },
   // { path: "AdminNotifications", component: DashBoardBar , pathMatch:"full" },
-
   { path: "propertyPhotos", component: PropertyPhotos , pathMatch:"full" },
   { path: "trips", component: Trips , pathMatch:"full" },
   { path: "wishList", component: Wishlist , pathMatch:"full" },
   { path: "profile", component: Profile , pathMatch:"full" },
   { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   { path: "checkout", component: Checkout , pathMatch:"full" },
+  
   { path: 'host/calendar',component: HostCalendarPage },
   { path: 'host', component: HostDashboard }, //layout shell
-  {path: 'host/today', component: TodayBookingsComponent},
-  {path: 'host/reservations', component: Reservations},
-  {path: 'host/violations', component: Violations},
+  { path: 'host/today', component: TodayBookingsComponent},
+  { path: 'host/reservations', component: Reservations},
+  { path: 'host/violations', component: Violations},
+  { path: 'host/earnings', component: Earnings},
   { path: "**", component: NotFound} //MUST BE AT THE END
 ];
