@@ -33,7 +33,7 @@ get totalPages(): number {
 
 
  paginatedHomes():void {
-  const startIndex = (this.currentPage - 1) * this.totalPages;
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
   const EndIndex = startIndex + this.itemsPerPage;
    this.pagedProperties = this.AllFilteredHomes.slice(startIndex, EndIndex);
    this.CurrentProps.setCurrentPageProperties(this.pagedProperties);
@@ -76,15 +76,14 @@ get totalPages(): number {
     this.service.GetHomes(this.AllFilters).subscribe({
       next: (response) => {
         this.AllFilteredHomes = response;
+        this.paginatedHomes();
         this.cdr.detectChanges();
-        console.log(response);
-
-
-
-
+        // console.log(response);
       }
 
     })
+
+
 
   }
 

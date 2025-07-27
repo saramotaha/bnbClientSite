@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GoogleMap, MapMarker } from '@angular/google-maps';
 import { CurrentProperties } from '../../Core/Services/current-properties';
+import { IPropertyList } from '../../Core/Models/iproperty-list';
+import { Subscription } from 'rxjs';
 
 declare const google: any;
 
@@ -12,11 +14,12 @@ declare const google: any;
   templateUrl: './map.html',
   styleUrl: './map.css'
 })
-export class Map implements OnInit {
+export class Map implements OnInit , OnDestroy {
 
   markers: any[] = [];
   center: any;
   zoom: any;
+  private properties!: Subscription;
 
 
   constructor(private props:CurrentProperties) {}
@@ -28,20 +31,51 @@ export class Map implements OnInit {
      });
 
 
-    this.markers=this.props.getCurrentPageProperties().map((property) => ({
+    this.properties = this.props.currentProps$.subscribe(property=>{
+
+      if (property.length > 0) {
+         this.markers=property.map((prop) => ({
         position: {
-          lat: property.latitude,
-          lng: property.longitude
+          lat: prop.latitude,
+          lng: prop.longitude
         },
-        title: property.title,
-      }));
+      title: prop.title,
+
+
+    }));
+
+      }
+
+
+
+       else {
+        this.markers = [];
+      }
+
+
+
+    })
+
+    console.log(this.markers);
+
+
+
+
 
 
     this.center = { lat: this.props.getCurrentPageProperties()[0].latitude, lng: this.props.getCurrentPageProperties()[0].longitude };
-    this.zoom = 12
+    this.zoom = 2
 
 
 
+  }
+
+
+
+  ngOnDestroy(): void {
+    if (this.properties) {
+      this.properties.unsubscribe();
+    }
   }
 
 
