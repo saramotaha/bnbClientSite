@@ -461,43 +461,43 @@ export class Propertybookingcard {
       minimumFractionDigits: 0,
     }) */
   }
-
-  reserve() {
+reserve() {
   if (!this.checkInDate || !this.checkOutDate) {
-     this.showCalendar = true
+    alert('Please select check-in and check-out dates');
     return;
   }
 
-  const nights = this.getNights();
-  const amount = this.finalPriceDisplay; // make sure finalPrice is numeric
-  const bookingId = this; // make sure this is set
+  // Validate amount
+  if (this.finalPriceDisplay <= 0 || isNaN(this.finalPriceDisplay)) {
+    alert('Invalid amount');
+    return;
+  }
 
-  // Optionally show confirmation alert
-  alert(
-    `Reservation for ${this.guestCount} guest${this.guestCount > 1 ? "s" : ""} from ${this.formatDate(this.checkInDate)} to ${this.formatDate(this.checkOutDate)} (${nights} night${nights > 1 ? "s" : ""}) for a total of ${this.finalPriceDisplay}`
-  );
+  const paymentData = {
+    guestId: 1, // Assuming a static guest ID for now
+    propertyId: this.propertyId,
+    startDate: this.checkInDate.toISOString().split('T')[0],
+    endDate: this.checkOutDate.toISOString().split('T')[0],
+    totalGuests: this.guestCount,
+    promotionId:  0,
+    amount: this.finalPriceDisplay
+  };
 
-  const bookingData: IbookingCreate = {
-  propertyId: this.propertyId,
-  startDate: this.checkInDate.toLocaleDateString('en-CA'),
-  endDate: this.checkOutDate.toLocaleDateString('en-CA'),
-  totalGuests: this.guestCount,
-  promotionId:  0
-};
-  // Call backend to get Stripe Checkout URL
-  this.bookingPaymentService.getPaymentUrl(bookingData, amount).subscribe({
+  console.log('Submitting payment data:', paymentData);
+
+  this.bookingPaymentService.getPaymentUrl(paymentData).subscribe({
     next: (response) => {
       if (response?.url) {
-        // Redirect to Stripe Checkout
         window.location.href = response.url;
       } else {
-        alert("Payment URL not received");
+        alert('Payment URL not received');
       }
     },
     error: (err) => {
-      alert("Failed to start payment session");
-      console.error(err);
+      console.error('Payment Error:', err);
+      alert(`Payment failed: ${err.message}`);
     }
   });
 }
+
 }
