@@ -17,10 +17,16 @@ export class FilterHomesServices {
 
 
  setFilters(filters: {}) {
-    this.filtersSubject.next(filters);
+   this.filtersSubject.next(filters);
+   localStorage.setItem("filters", JSON.stringify(filters));
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    const savedFilters = localStorage.getItem('filters');
+    if (savedFilters) {
+      this.filtersSubject.next(JSON.parse(savedFilters));
+    }
+   }
 
 
 

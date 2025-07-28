@@ -8,7 +8,7 @@ import { Nav } from "./Shared/nav/nav";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, GoogleMapsModule, Footer, Nav],
+  imports: [RouterOutlet, GoogleMapsModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
