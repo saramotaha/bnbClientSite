@@ -1,157 +1,21 @@
-<!-- <div class="container py-4">
+
+<div class="px-0 mt-4">
   <div class="mb-4">
     <h2 class="fs-4 fw-semibold mb-2">
-      {{ getNights() }} night{{ getNights() === 1 ? '' : 's' }} in Greater Manchester
-    </h2>
-    <p class="text-muted mb-3">
-      {{ checkInDate ? (checkInDate | date: 'MMM d, y') : 'Check-in' }} –
-      {{ checkOutDate ? (checkOutDate | date: 'MMM d, y') : 'Check-out' }}
-    </p>
-    <p *ngIf="totalPrice > 0" class="text-success fw-semibold">
-      Total: ${{ totalPrice }}
-    </p>
+     <!-- Case 1: No check-in date -->
+  <ng-container *ngIf="!checkInDate">
+    Select check-in date
+  </ng-container>
 
-    <div class="border rounded p-4 shadow-sm bg-white">
-      
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <button class="btn btn-sm btn-outline-dark" (click)="prev()">‹ Previous</button>
-        <button class="btn btn-sm btn-outline-dark" (click)="next()">Next ›</button>
-      </div>
+  <!-- Case 2: Check-in selected, but no check-out -->
+  <ng-container *ngIf="checkInDate && !checkOutDate">
+    Select check-out date
+  </ng-container>
 
-      <div class="row">
-        <ng-container *ngFor="let month of months">
-          <div class="col-12 col-md-6 mb-4">
-            <div class="text-center mb-3">
-              <h4 class="fw-semibold">{{ month | date: 'MMMM yyyy' }}</h4>
-            </div>
-            <div class="calendar-month">
-             <table>
-  <thead>
-    <tr>
-      <th *ngFor="let day of ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']">{{ day }}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let week of [0,1,2,3,4,5]">
-      <td *ngFor="let day of days1.slice(week * 7, week * 7 + 7)">
-        <div class="calendar-day" *ngIf="day; else emptyDay">
-          {{ day.getDate() }}
-        </div>
-        <ng-template #emptyDay>
-          <div class="calendar-day empty"></div>
-        </ng-template>
-      </td>
-    </tr>
-  </tbody>
-</table>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-
-      <div class="d-flex justify-content-between align-items-center mt-3 small text-muted">
-        <div class="d-flex gap-3 flex-wrap">
-          <div class="d-flex align-items-center gap-2">
-            <div class="bg-secondary opacity-25 rounded" style="width: 12px; height: 12px;"></div>
-            <span>Available</span>
-          </div>
-          <div class="d-flex align-items-center gap-2">
-            <div class="bg-light border rounded" style="width: 12px; height: 12px;"></div>
-            <span>Unavailable</span>
-          </div>
-        </div>
-        <button class="btn btn-link p-0 small text-decoration-underline" >
-          Clear dates
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
- -->
-
-
-<!-- 
- <div class="container py-4">
-  <div class="mb-4">
-    <h2 class="fs-4 fw-semibold mb-2">
-      {{ getNights() }} night{{ getNights() === 1 ? '' : 's' }} in Greater Manchester
-    </h2>
-    <p class="text-muted mb-3">
-      {{ checkInDate ? (checkInDate | date: 'MMM d, y') : 'Check-in' }} –
-      {{ checkOutDate ? (checkOutDate | date: 'MMM d, y') : 'Check-out' }}
-    </p>
-    <p *ngIf="totalPrice > 0" class="text-success fw-semibold">
-      Total: ${{ totalPrice }}
-    </p>
-
-    <div class="border rounded p-4 shadow-sm bg-white">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <button class="btn btn-outline-secondary btn-sm" (click)="prev()">
-          ‹ Previous
-        </button>
-        <button class="btn btn-outline-secondary btn-sm" (click)="next()">
-          Next ›
-        </button>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6" *ngFor="let month of [currentMonth1, currentMonth2]; let i = index">
-          <div class="text-center fw-semibold mb-2">
-            {{ month | date: 'MMMM yyyy' }}
-          </div>
-          <table class="table table-bordered text-center calendar-table mb-4">
-            <thead class="small text-muted">
-              <tr>
-                <th *ngFor="let d of ['Su','Mo','Tu','We','Th','Fr','Sa']">{{ d }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let week of [0, 1, 2, 3, 4, 5]">
-                <td *ngFor="let day of (i === 0 ? days1 : days2).slice(week * 7, week * 7 + 7)">
-                  <div
-                    class="calendar-day rounded"
-                    [class.bg-primary]="isSelected(day)"
-                    [class.text-white]="isSelected(day)"
-                    [class.bg-light]="day"
-                    (click)="selectDate(day)"
-                    [ngClass]="{
-                      'text-muted': !day,
-                      'cursor-pointer': day
-                    }"
-                  >
-                    {{ day?.getDate() || '' }}
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-between align-items-center mt-3 small text-muted">
-        <div class="d-flex gap-3 flex-wrap">
-          <div class="d-flex align-items-center gap-2">
-            <div class="bg-secondary opacity-25 rounded" style="width: 12px; height: 12px;"></div>
-            <span>Available</span>
-          </div>
-          <div class="d-flex align-items-center gap-2">
-            <div class="bg-primary rounded" style="width: 12px; height: 12px;"></div>
-            <span>Selected</span>
-          </div>
-        </div>
-        <button class="btn btn-link p-0 small text-decoration-underline" (click)="clearDates()">
-          Clear dates
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
- -->
-
-<div class="container py-4">
-  <div class="mb-4">
-    <h2 class="fs-4 fw-semibold mb-2">
-      {{ getNights() }} night{{ getNights() === 1 ? '' : 's' }} in Greater Manchester
+  <!-- Case 3: Both check-in and check-out selected -->
+  <ng-container *ngIf="checkInDate && checkOutDate">
+    {{ getNights() }} night{{ getNights() === 1 ? '' : 's' }} in {{ propertyDetails.title }}
+  </ng-container>
     </h2>
     <p class="text-muted mb-3">
       {{ checkInDate ? (checkInDate | date: 'MMM d, y') : 'Check-in' }} –
@@ -164,8 +28,8 @@
     <div class="border rounded p-4 shadow-sm bg-white">
       <!-- Month Navigation -->
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <button class="btn btn-sm btn-outline-dark" (click)="prev()">‹ Previous</button>
-        <button class="btn btn-sm btn-outline-dark" (click)="next()">Next ›</button>
+        <button class="btn rounded-circle" (click)="prev()"><i class="bi bi-arrow-left-short fs-2"></i></button>
+        <button class="btn rounded-circle" (click)="next()"><i class="bi bi-arrow-right-short fs-2"></i></button>
       </div>
 
       <div class="row">
@@ -176,23 +40,28 @@
   {{ currentMonth1 | date: 'MMMM y' }}
 </h4>
           </div>
-          <table class="calendar-table w-100 text-center">
+          <table class="calendar-table text-center">
             <thead>
               <tr>
                 <th *ngFor="let day of ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']">{{ day }}</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let week of days1">
-      <td *ngFor="let day of week"
-          class="calendar-day text-center"
-          [class.available]="isAvailable(day)"
-          [class.disabled]="!isAvailable(day)"
+              <tr  *ngFor="let week of days1">
+
+      <td  *ngFor="let day of week"
+          class="calendar-day  rounded-circle text-center position-relative"
+          [class.disabled]="day && !isAvailable(day)"
           [class.selected-start]="isStartDate(day!)"
           [class.selected-end]="isEndDate(day!)"
           [class.selected-range]="isInRange(day!)"
           (click)="selectDate(day!)">
-        {{ day?.getDate() }}
+        {{day?.getDate() }}
+        <!-- Tooltip -->
+  <span *ngIf="isStartDate(day!) || isEndDate(day!)"
+        class="tooltip-text">
+    {{ isStartDate(day!) ? 'Check-in' : 'Check-out' }}
+  </span>
       </td>
     </tr>
             </tbody>
@@ -205,7 +74,7 @@
 <h4 class="fw-semibold">
   {{ currentMonth2 | date: 'MMMM y' }}
 </h4>          </div>
-          <table class="calendar-table w-100 text-center">
+          <table class="calendar-table  text-center">
             <thead>
               <tr>
                 <th *ngFor="let day of ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']">{{ day }}</th>
@@ -228,10 +97,12 @@
           </table>
         </div>
       </div>
-
+ <div *ngIf="rangeUnavailableMessage" class="alert alert-danger mt-2 text-center">
+  {{ rangeUnavailableMessage }}
+</div>
       <!-- Legend + Clear -->
-      <div class="d-flex justify-content-between align-items-center mt-3 small text-muted">
-        <div class="d-flex gap-3 flex-wrap">
+      <div class="d-flex justify-content-end align-items-center mt-3 small text-muted">
+        <!-- <div class="d-flex gap-3 flex-wrap">
           <div class="d-flex align-items-center gap-2">
             <div class="bg-secondary opacity-25 rounded" style="width: 12px; height: 12px;"></div>
             <span>Available</span>
@@ -240,8 +111,8 @@
             <div class="bg-light border rounded" style="width: 12px; height: 12px;"></div>
             <span>Unavailable</span>
           </div>
-        </div>
-        <button class="btn btn-link p-0 small text-decoration-underline" (click)="clearDates()">
+        </div> -->
+        <button class="btn btn-link text-black fw-medium p-0 small text-decoration-underline" (click)="clearDates()">
           Clear dates
         </button>
       </div>

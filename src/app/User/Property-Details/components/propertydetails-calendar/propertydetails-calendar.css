@@ -89,8 +89,33 @@ td {
             position: relative;
         }
         .calendar-day:hover {
+          
             background-color: #f8f9fa;
         }
+
+
+ 
+        /* Tooltip style */
+        .tooltip-text {
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color:#dc3545;
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+        }
+
+        .calendar-day:hover .tooltip-text {
+        opacity: 1;
+        }
+       
         .calendar-day.disabled {
             color: #6c757d;
             text-decoration: line-through;
@@ -101,10 +126,12 @@ td {
         }
         .calendar-day.selected-start {
             background-color: #dc3545;
+            font-weight: bold;
             color: white;
         }
         .calendar-day.selected-end {
             background-color: #dc3545;
+            font-weight: bold;
             color: white;
         }
         .calendar-day.selected-range {
