@@ -7,8 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { CurrentProperties } from '../../Core/Services/current-properties';
 import { Nav } from "../../Shared/nav/nav";
 import { Footer } from "../../Shared/footer/footer";
-import { NotFound } from "../../Pages/not-found/not-found";
+import { NotFound } from '../../Pages/not-found/not-found';
 import { Loader } from "../loader/loader";
+
 
 @Component({
   selector: 'app-view-all-homes',
