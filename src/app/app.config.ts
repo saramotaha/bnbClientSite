@@ -1,26 +1,17 @@
-import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
-
+import { provideHttpClient, withInterceptors, withFetch } from '@angular/common/http';
 import { routes } from './app.routes';
-// import { provideHttpClient } from '@angular/common/http';
-import { provideCharts, withDefaultRegisterables } from 'ng2-charts'; // ✅ add this
-
-
-
-
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { authInterceptorFn } from './Pages/Auth/interceptors/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
-    provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection(),
+    provideHttpClient(
+      withInterceptors([authInterceptorFn]),
+      withFetch()
+    ),
     provideRouter(routes),
-    provideHttpClient(),
-    provideCharts(withDefaultRegisterables()),
-
-    provideRouter(routes),
-    importProvidersFrom(HttpClientModule) // ✅ دي اللي كانت ناقصة
+    provideCharts(withDefaultRegisterables())
   ]
 };
