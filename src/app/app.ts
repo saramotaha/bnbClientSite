@@ -10,7 +10,7 @@ import { HostDashboard } from './components/host/pt2/pages/host-dashboard/host-d
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, GoogleMapsModule, Footer, Nav, HostDashboard, Login],
+  imports: [RouterOutlet, GoogleMapsModule, HostDashboard, Login],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
