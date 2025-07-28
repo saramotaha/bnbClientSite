@@ -4,12 +4,13 @@ import { Home } from "./Pages/home/home";
 import { GoogleMapsModule } from '@angular/google-maps';
 import { Footer } from "./Shared/footer/footer";
 import { Nav } from "./Shared/nav/nav";
-
+import { Login } from './Pages/login/login';
 import { HostDashboard } from './components/host/pt2/pages/host-dashboard/host-dashboard';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, GoogleMapsModule, Footer, Nav, HostDashboard],
+  standalone: true,
+  imports: [RouterOutlet, GoogleMapsModule, Footer, Nav, HostDashboard, Login],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

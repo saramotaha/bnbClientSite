@@ -78,3 +78,8 @@ export interface BookingPaymentDto {
   createdAt: Date;
   propertyTitle: string;
 }
+export interface MonthlyEarning {
+  month: string;
+  amount: number;
+  isCurrentMonth: boolean;
+}
