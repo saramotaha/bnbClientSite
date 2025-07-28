@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-box {
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.options-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.option-card {
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  border-radius: 12px;
+}
+
+.option-card:hover {
+  background-color: #f8f8f8;
+}
+
+.option-card.selected {
+  background-color: #f0f0f0;
+  border-left: 4px solid black;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-content {
+  text-align: left;
+  flex: 1;
+}
+
+.icon-container {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.material-icons {
+  font-size: 32px;
+  color: #333;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 0;
+}
+
+.divider {
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 20px -20px 0;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-back {
+  background-color: #9d9d9d;
+  border: none;
+  border-radius: 10px;
+  color: #333;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-next {
+  background-color: #636060;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-next.active {
+  background-color: #000000;
+}
+
+.btn-next:disabled {
+  cursor: not-allowed;
+}

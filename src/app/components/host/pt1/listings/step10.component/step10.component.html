@@ -1,0 +1,41 @@
+<div class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
+  <div class="text-center mb-4">
+    <h2>Pick your booking settings</h2>
+    <p class="text-muted">You can change this at any time. <a href="#">Learn more</a></p>
+  </div>
+
+  <div class="w-100" style="max-width: 600px;">
+    <div 
+      class="card mb-3 p-3 selectable-card" 
+      [class.selected]="selectedOption === 'approve'" 
+      (click)="selectOption('approve')"
+    >
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h5>Approve your first 5 bookings</h5>
+          <p class="mb-0 text-muted">Start by reviewing reservation requests, then switch to Instant Book, so guests can book automatically.</p>
+        </div>
+        <i class="bi bi-journal-check fs-3"></i>    
+      </div>
+    </div>
+
+    <div 
+      class="card mb-4 p-3 selectable-card" 
+      [class.selected]="selectedOption === 'instant'" 
+      (click)="selectOption('instant')"
+    >
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h5>Use Instant Book</h5>
+          <p class="mb-0 text-muted">Let guests book automatically.</p>
+        </div>
+        <i class="bi bi-lightning-charge fs-3"></i>  
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-outline-dark" (click)="goBack()">Back</button>
+      <button class="btn btn-dark" [disabled]="!selectedOption" (click)="goNext()">Next</button>
+    </div>
+  </div>
+</div>

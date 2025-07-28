@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
@@ -13,14 +13,16 @@ import { loadingInterceptor } from './Core/Interceptors/loading-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
-    provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection(),
+    provideHttpClient(
+      withInterceptors([authInterceptorFn]),
+      withFetch()
+    ),
     provideRouter(routes),
     provideHttpClient(withInterceptors([loadingInterceptor])),
     provideCharts(withDefaultRegisterables()),
 
 
 
+    provideCharts(withDefaultRegisterables())
   ]
 };
