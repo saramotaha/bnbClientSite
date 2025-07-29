@@ -40,9 +40,9 @@ export interface UserProfile {
 
 // JWT Token payload (for decoding the token controller creates)
 export interface JwtPayload {
-  email: string;
-  name: string;        
-  nameid: string;     
-  role: string;        
-  exp?: number;      
+  Email: string;      // ← Match backend claim
+  UserName: string;   // ← Match backend claim
+  Role: string;       // ← Capital R to match
+  UserID: string;     // ← Match backend claim
+  exp?: number;
 }

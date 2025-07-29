@@ -36,7 +36,10 @@ export class Login implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initializeForm();
-    
+    console.log('Initial user:', this.authService.currentUser);
+this.authService.currentUser$.subscribe(user => 
+  console.log('User update:', user)
+);
     // Redirect if already authenticated
     if (this.authService.isAuthenticated()) {
       this.redirectBasedOnRole();
@@ -104,30 +107,27 @@ private getFriendlyError(error: any): string {
     });
   }
 
-  private redirectBasedOnRole(): void {
-    const user = this.authService.currentUser;
-    
-    if (!user) {
-      this.router.navigate(['/']);
-      return;
-    }
-
-    // Redirect based on user role
-    switch (user.role.toLowerCase()) {
-      case 'admin':
-        this.router.navigate(['/admin/dashboard']);
-        break;
-      case 'host':
-        this.router.navigate(['/host/dashboard']);
-        break;
-      case 'guest':
-        this.router.navigate(['/guest/dashboard']);
-        break;
-      default:
-        this.router.navigate(['/dashboard']);
-        break;
-    }
+private redirectBasedOnRole(): void {
+  const user = this.authService.currentUser;
+  if (!user?.role) {
+    this.router.navigate(['/']);
+    return;
   }
+
+  const role = user.role.toLowerCase();
+  
+  switch (role) {
+    case 'admin':
+      this.router.navigate(['/admin/dashboard']);
+      break;
+    case 'host':
+      // Directly navigate to dashboard - host data will be fetched there
+      this.router.navigate(['/host/dashboard']);
+      break;
+    default:
+      this.router.navigate(['/']);
+  }
+}
 
   goToRegister(): void {
     this.router.navigate(['/register']);
