@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100 px-3">
+  <div class="card shadow rounded-4 p-4" style="max-width: 500px; width: 100%;">
+    <h3 class="mb-4 fw-bold text-center">Add Discounts</h3>
+    <p class="text-muted text-center mb-4">
+      Help your place stand out to get booked faster and earn your first reviews.
+    </p>
+
+    <form (ngSubmit)="saveDiscounts()" class="d-flex flex-column gap-3">
+
+      <!-- New Listing Promotion -->
+      <div class="card p-3 d-flex flex-row align-items-center justify-content-between hover-card">
+        <div>
+          <div class="fw-bold">20%</div>
+          <div>New listing promotion</div>
+          <small class="text-muted">Offer 20% off your first 3 bookings</small>
+        </div>
+        <input
+          class="form-check-input ms-3 black-checkbox"
+          type="checkbox"
+          [(ngModel)]="discounts.applyNewListingPromotion"
+          name="newListing">
+      </div>
+
+      <!-- Last Minute Discount -->
+      <div class="card p-3 d-flex flex-row align-items-center justify-content-between hover-card">
+        <div>
+          <div class="fw-bold">12%</div>
+          <div>Last-minute discount</div>
+          <small class="text-muted">For stays booked 14 days or less before arrival</small>
+        </div>
+        <input
+          class="form-check-input ms-3 black-checkbox"
+          type="checkbox"
+          [(ngModel)]="discounts.applyLastMinuteDiscount"
+          name="lastMinute">
+      </div>
+
+      <!-- Weekly Discount -->
+      <div class="card p-3 d-flex flex-row align-items-center justify-content-between hover-card">
+        <div>
+          <div class="fw-bold">10%</div>
+          <div>Weekly discount</div>
+          <small class="text-muted">For stays of 7 nights or more</small>
+        </div>
+        <input
+          class="form-check-input ms-3 black-checkbox"
+          type="checkbox"
+          [(ngModel)]="discounts.applyWeeklyDiscount"
+          name="weekly">
+      </div>
+
+      <!-- Monthly Discount -->
+      <div class="card p-3 d-flex flex-row align-items-center justify-content-between hover-card">
+        <div>
+          <div class="fw-bold">20%</div>
+          <div>Monthly discount</div>
+          <small class="text-muted">For stays of 28 nights or more</small>
+        </div>
+        <input
+          class="form-check-input ms-3 black-checkbox"
+          type="checkbox"
+          [(ngModel)]="discounts.applyMonthlyDiscount"
+          name="monthly">
+      </div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-secondary px-4" (click)="goBack()">Back</button>
+        <button type="submit" class="btn btn-dark px-4">Next</button>
+      </div>
+    </form>
+  </div>
+</div>

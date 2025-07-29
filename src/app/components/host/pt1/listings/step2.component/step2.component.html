@@ -1,0 +1,33 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="content-box w-100">
+    <h1>What type of place will guests have?</h1>
+
+    <div class="options-container">
+      <div class="option-card"
+           *ngFor="let option of placeOptions; let i = index"
+           (click)="selectOption(option)"
+           [class.selected]="selectedOption === option">
+        
+        <div class="content-wrapper">
+          <div class="text-content">
+            <h3>{{ option.title }}</h3>
+            <p>{{ option.description }}</p>
+          </div>
+          <div class="icon-container">
+            <span class="material-icons">{{ option.icon }}</span>
+          </div>
+        </div>
+
+        <div class="divider" *ngIf="i !== placeOptions.length - 1"></div>
+      </div>
+    </div>
+
+    <div class="navigation-buttons">
+<button class="btn-back" (click)="back()">Back</button>
+      <button class="btn-next"
+              [class.active]="selectedOption"
+              [disabled]="!selectedOption"
+              (click)="next()">Next</button>
+    </div>
+  </div>
+</div>

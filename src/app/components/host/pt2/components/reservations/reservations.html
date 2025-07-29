@@ -1,0 +1,94 @@
+<div class="reservations-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <button class="back-btn" (click)="goToHostDashboard()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <h1>Reservations</h1>
+    </div>
+    
+    <div class="header-actions">
+      <button class="filter-btn" (click)="openFilter()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Filter
+      </button>
+      
+      <button class="print-btn" (click)="printReservations()">
+        Print
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button 
+      class="tab" 
+      [class.active]="activeTab() === 'upcoming'"
+      (click)="setActiveTab('upcoming')">
+      Upcoming
+    </button>
+    <button 
+      class="tab" 
+      [class.active]="activeTab() === 'completed'"
+      (click)="setActiveTab('completed')">
+      Completed
+    </button>
+    <button 
+      class="tab" 
+      [class.active]="activeTab() === 'cancelled'"
+      (click)="setActiveTab('cancelled')">
+      Cancelled
+    </button>
+    <button 
+      class="tab" 
+      [class.active]="activeTab() === 'all'"
+      (click)="setActiveTab('all')">
+      All
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    @if (loading()) {
+      <div class="loading">
+        Loading reservations...
+      </div>
+    }
+
+    @if (!loading() && filteredReservations().length === 0) {
+      <div class="empty-state">
+        <div class="empty-content">
+          <h2>You have no {{activeTab() === 'upcoming' ? 'upcoming' : activeTab()}} reservations</h2>
+          <button class="see-all-link" (click)="seeAllReservations()">
+            See all reservations
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (!loading() && filteredReservations().length > 0) {
+      <div class="reservations-list">
+        @for (reservation of filteredReservations(); track reservation.id) {
+          <div class="reservation-card">
+            <div class="reservation-info">
+              <h3>{{reservation.propertyTitle}}</h3>
+              <p class="address">{{reservation.propertyAddress}}</p>
+              <div class="reservation-details">
+                <span>{{reservation.startDate | date:'MMM d'}} - {{reservation.endDate | date:'MMM d, y'}}</span>
+                <span>{{reservation.totalGuests}} guests</span>
+                <span class="status" [class]="reservation.status">{{reservation.status | titlecase}}</span>
+              </div>
+              <p class="guest-name">Guest: {{reservation.guestName}}</p>
+              <p class="amount">${{reservation.totalAmount}}</p>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

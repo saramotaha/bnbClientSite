@@ -73,37 +73,29 @@ export class Login implements OnInit, OnDestroy {
     this.showPassword = !this.showPassword;
   }
 
-  onSubmit(): void {
-    if (this.loginForm.valid && !this.isLoading) {
-      this.isLoading = true;
-      this.errorMessage = '';
+ onSubmit(): void {
+  if (this.loginForm.valid && !this.isLoading) {
+    this.isLoading = true;
+    this.errorMessage = '';
 
-      const loginData: LoginDto = {
-        email: this.loginForm.get('email')?.value?.trim(),
-        password: this.loginForm.get('password')?.value
-      };
-
-      this.authService.login(loginData)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (user) => {
-            console.log('Login successful:', user);
-            this.redirectBasedOnRole();
-          },
-          error: (error) => {
-            console.error('Login failed:', error);
-            this.errorMessage = error.message || 'Login failed. Please try again.';
-            this.isLoading = false;
-          },
-          complete: () => {
-            this.isLoading = false;
-          }
-        });
-    } else {
-      // Mark all fields as touched to show validation errors
-      this.markFormGroupTouched();
-    }
+    this.authService.login({
+      email: this.loginForm.get('email')?.value?.trim(),
+      password: this.loginForm.get('password')?.value
+    }).subscribe({
+      next: () => this.redirectBasedOnRole(),
+      error: (error) => {
+        this.errorMessage = this.getFriendlyError(error);
+        this.isLoading = false;
+      }
+    });
   }
+}
+
+private getFriendlyError(error: any): string {
+  if (error.status === 401) return 'Invalid email or password';
+  if (error.status === 0) return 'Network error - please check connection';
+  return error.message || 'Login failed. Please try again.';
+}
 
   private markFormGroupTouched(): void {
     Object.keys(this.loginForm.controls).forEach(key => {
