@@ -1,0 +1,8 @@
+<h2>Your Favorites</h2>
+<div class="cards-row">
+  <app-favorite-card
+    *ngFor="let fav of favorites; let i = index"
+    [favorite]="fav"
+    (remove)="removeFavorite(fav, i)">
+  </app-favorite-card>
+</div>
