@@ -67,7 +67,7 @@ export const routes: Routes = [
   // { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   // { path: "checkout", component: Checkout , pathMatch:"full" },
   { path: 'host/calendar',component: HostCalendarPage },
-  { path: 'host', component: HostDashboard }, //layout shell
+  { path: 'host/dashboard', component: HostDashboard }, //layout shell
   { path: 'host/today', component: TodayBookingsComponent},
   { path: 'host/reservations', component: Reservations},
   { path: 'host/violations', component: Violations},
