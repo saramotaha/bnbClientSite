@@ -189,6 +189,7 @@ export class PropertyList implements OnInit {
       this.FilterPropertiesByCity = this.AllData.filter(p => p.city?.toLowerCase() === 'paris'?.toLowerCase()).filter(x=>x.status=='active').slice(0, 8);
 
 
+
       this.FilterPropertiesInParisByAvailability = response.filter(property => {
       const isInParis = property.city?.toLowerCase() === 'paris';
 
