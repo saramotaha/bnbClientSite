@@ -1,0 +1,64 @@
+.editable-price {
+  display: inline-block;
+  min-width: 60px;
+  padding: 5px 12px;
+  font-size: 6rem;
+  font-weight: bold;
+  outline: none;
+  border-bottom: 2px solid transparent;
+  text-align: center;
+}
+
+.editable-price.invalid {
+  border-bottom: 2px solid red;
+}
+
+.step12-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.price-display {
+  font-size: 6rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.guest-summary {
+  font-size: 1rem;
+  color: #666;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.guest-summary .price {
+  font-weight: bold;
+  color: #000;
+}
+
+.details-box {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 15px;
+  max-width: 100%;
+}
+
+.nav-buttons .btn {
+  width: 100px;
+  border-radius: 8px;
+  font-weight: bold;
+  background-color: #000;
+  color: white;
+}
+
+.min-vh-100 {
+  min-height: 100vh;
+}
+.guest-summary i {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.guest-summary:hover {
+  color: black;
+}

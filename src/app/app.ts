@@ -1,19 +1,21 @@
 import { Component } from '@angular/core';
+
+
+import { PropertyDetails } from './User/Property-Details/property-details/property-details';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
-import { Favorites } from "./User/favorites/favorites";
-import { FavoriteCard } from "./User/favorites/favorite-card/favorite-card";
-import { MessageList } from "./User/messages/sidebar/message-list";
+import { Home } from './Pages/home/home';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { Footer } from "./Shared/footer/footer";
+import { Nav } from "./Shared/nav/nav";
+import { HostDashboard } from './components/host/pt2/pages/host-dashboard/host-dashboard';
+import { Login } from './Pages/login/login';
+
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    MatDialogModule,
-     RouterOutlet,
-      Favorites,
-       FavoriteCard,
-        MessageList],
+  standalone: true,
+  imports: [RouterOutlet, GoogleMapsModule ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

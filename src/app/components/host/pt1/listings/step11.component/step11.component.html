@@ -1,0 +1,54 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="w-50">
+
+    <h3 class="fw-bold mb-2">Choose who to welcome for your first reservation</h3>
+    <p class="text-muted mb-4">
+      After your first guest, anyone can book your place.
+      <a href="#" class="text-decoration-underline">Learn more</a>
+    </p>
+
+    <div
+      class="card p-3 mb-3 selectable-card d-flex flex-row align-items-start"
+      [class.selected]="selectedOption === 'any'"
+      (click)="selectOption('any')"
+    >
+      <input
+        type="radio"
+        name="guestOption"
+        class="form-check-input me-3 mt-1"
+        [checked]="selectedOption === 'any'"
+      />
+      <div>
+        <h5 class="fw-semibold mb-1">Any Airbnb guest</h5>
+        <p class="mb-0 text-muted">
+          Get reservations faster when you welcome anyone from the Airbnb community.
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="card p-3 mb-4 selectable-card d-flex flex-row align-items-start"
+      [class.selected]="selectedOption === 'experienced'"
+      (click)="selectOption('experienced')"
+    >
+      <input
+        type="radio"
+        name="guestOption"
+        class="form-check-input me-3 mt-1"
+        [checked]="selectedOption === 'experienced'"
+      />
+      <div>
+        <h5 class="fw-semibold mb-1">An experienced guest</h5>
+        <p class="mb-0 text-muted">
+          For your first guest, welcome someone with a good track record on Airbnb who can offer tips for how to be a great Host.
+        </p>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-outline-dark" (click)="goBack()">Back</button>
+      <button class="btn btn-dark" [disabled]="!selectedOption" (click)="goNext()">Next</button>
+    </div>
+
+  </div>
+</div>

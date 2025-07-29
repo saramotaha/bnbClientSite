@@ -1,0 +1,193 @@
+<div class="dashboard-charts-container">
+
+<!--
+  <div class="metrics-row">
+    <div class="metric-card">
+      <div class="metric-icon">⭐</div>
+      <div class="metric-content">
+        <div class="metric-value">4.8</div>
+        <div class="metric-label">Average Rating</div>
+      </div>
+      <div class="metric-trend trend-up">+0.2</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-icon">👥</div>
+      <div class="metric-content">
+        <div class="metric-value">1,247</div>
+        <div class="metric-label">Active Hosts</div>
+      </div>
+      <div class="metric-trend trend-up">+156</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-icon">🏠</div>
+      <div class="metric-content">
+        <div class="metric-value">3,892</div>
+        <div class="metric-label">Properties</div>
+      </div>
+      <div class="metric-trend trend-up">+89</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-icon">🌍</div>
+      <div class="metric-content">
+        <div class="metric-value">127</div>
+        <div class="metric-label">Cities</div>
+      </div>
+      <div class="metric-trend trend-stable">+3</div>
+    </div>
+  </div> -->
+
+
+  <!-- Professional Header (Airbnb Style) -->
+  <div class="charts-header">
+    <div class="header-content">
+      <div>
+        <h1 class="dashboard-title">
+          <span class="title-icon">🏠</span>
+          Analytics Dashboard
+        </h1>
+        <p class="dashboard-subtitle">Monitor your platform's performance and growth</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline refresh-btn" (click)="refreshData()">
+          <span class="btn-icon">↻</span>
+          Refresh
+        </button>
+        <button class="btn btn-primary export-btn" (click)="exportData()">
+          <span class="btn-icon">↓</span>
+          Export Data
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Grid -->
+  <div class="charts-grid">
+    <!-- Bookings Chart Card -->
+    <div class="chart-card bookings-card">
+      <div class="card-header">
+        <div class="header-left">
+          <div class="chart-icon bookings-icon">
+            <span>📊</span>
+          </div>
+          <div class="chart-info">
+            <h3 class="chart-title">Monthly Bookings</h3>
+            <p class="chart-subtitle">Track booking trends and growth</p>
+          </div>
+        </div>
+        <div class="chart-stats">
+          <div class="stat-item">
+            <span class="stat-value">{{ totalBookings | number }}</span>
+            <span class="stat-label">Total Bookings</span>
+          </div>
+          <div class="stat-trend trend-up">
+            <span class="trend-icon">↗</span>
+            <span class="trend-value">+12.5%</span>
+          </div>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas #bookingsChartCanvas class="chart-canvas"></canvas>
+        <div class="chart-overlay" *ngIf="isLoading">
+          <div class="loading-spinner"></div>
+        </div>
+      </div>
+      <div class="chart-footer">
+        <div class="chart-legend">
+          <div class="legend-item">
+            <div class="legend-color bookings-color"></div>
+            <span>Monthly Bookings</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Income Chart Card -->
+    <div class="chart-card income-card">
+      <div class="card-header">
+        <div class="header-left">
+          <div class="chart-icon income-icon">
+            <span>💰</span>
+          </div>
+          <div class="chart-info">
+            <h3 class="chart-title">Revenue Growth</h3>
+            <p class="chart-subtitle">Monthly income and trends</p>
+          </div>
+        </div>
+        <div class="chart-stats">
+          <div class="stat-item">
+            <span class="stat-value">${{ (totalIncome / 1000000) | number:'1.1-1' }}M</span>
+            <span class="stat-label">Total Revenue</span>
+          </div>
+          <div class="stat-trend trend-up">
+            <span class="trend-icon">↗</span>
+            <span class="trend-value">+18.3%</span>
+          </div>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas #incomeChartCanvas class="chart-canvas"></canvas>
+        <div class="chart-overlay" *ngIf="isLoading">
+          <div class="loading-spinner"></div>
+        </div>
+      </div>
+      <div class="chart-footer">
+        <div class="chart-legend">
+          <div class="legend-item">
+            <div class="legend-color income-color"></div>
+            <span>Monthly Revenue</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Distribution Donut Chart Card -->
+    <div class="chart-card distribution-card">
+      <div class="card-header">
+        <div class="header-left">
+          <div class="chart-icon distribution-icon">
+            <span>📈</span>
+          </div>
+          <div class="chart-info">
+            <h3 class="chart-title">Booking Distribution</h3>
+            <p class="chart-subtitle">Monthly performance breakdown</p>
+          </div>
+        </div>
+        <div class="chart-stats">
+          <div class="stat-item">
+            <span class="stat-value">{{ distributionData.length }}</span>
+            <span class="stat-label">Active Months</span>
+          </div>
+        </div>
+      </div>
+      <div class="chart-container donut-container">
+        <canvas #donutChartCanvas class="chart-canvas donut-canvas"></canvas>
+        <div class="donut-center-info">
+          <div class="center-value">{{ totalBookings | number }}</div>
+          <div class="center-label">Total Bookings</div>
+        </div>
+        <div class="chart-overlay" *ngIf="isLoading">
+          <div class="loading-spinner"></div>
+        </div>
+      </div>
+      <div class="chart-footer">
+        <div class="donut-legend">
+          <div class="legend-item" *ngFor="let item of distributionData; let i = index">
+            <div class="legend-indicator">
+              <div class="legend-color" [style.background-color]="getDonutColor(i)"></div>
+            </div>
+            <div class="legend-content">
+              <span class="legend-label">{{ item.label }}</span>
+              <span class="legend-value">{{ item.value | number }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Professional Metrics Row -->
+
+</div>

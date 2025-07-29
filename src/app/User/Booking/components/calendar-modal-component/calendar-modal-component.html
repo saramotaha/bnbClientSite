@@ -1,0 +1,59 @@
+<div class="calendar-modal">
+  <!-- Header with night count -->
+  <div class="calendar-header">
+    <h2 *ngIf="startDate && endDate">
+      {{ getNightCount() }} nights
+    </h2>
+    <p *ngIf="startDate && endDate">
+      {{ startDate | date: 'MMM d, y' }} – {{ endDate | date: 'MMM d, y' }}
+    </p>
+  </div>
+
+  <!-- Check-in and Checkout inputs -->
+  <div class="calendar-inputs">
+    <div class="date-input">
+      <label>Check-in</label>
+      <input [value]="startDate ? (startDate | date:'yyyy-MM-dd') : ''" readonly (click)="openCalendar()" />
+      <button *ngIf="startDate" class="clear-btn" (click)="clearStartDate()">×</button>
+    </div>
+
+    <div class="date-input">
+      <label>Checkout</label>
+      <input [value]="endDate ? (endDate | date:'yyyy-MM-dd') : ''" readonly (click)="openCalendar()" />
+      <button *ngIf="endDate" class="clear-btn" (click)="clearEndDate()">×</button>
+    </div>
+  </div>
+
+  <!-- Calendar months -->
+  <div class="calendar-body">
+    <div class="month" *ngFor="let month of [days1, days2]; let i = index">
+      <div class="month-header">
+        <span>{{ getMonthTitle(i) }}</span>
+      </div>
+      <div class="calendar-grid">
+        <div class="day-names">
+          <div *ngFor="let day of dayNames">{{ day }}</div>
+        </div>
+        <div class="week" *ngFor="let week of month">
+          <div
+            *ngFor="let day of week"
+            class="day"
+            [class.disabled]="!day"
+            [class.selected-start]="isStartDate(day)"
+            [class.selected-end]="isEndDate(day)"
+            [class.selected-range]="isInRange(day)"
+            (click)="selectDate(day)"
+          >
+            {{ day?.getDate() }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom actions -->
+  <div class="calendar-footer">
+    <button class="clear" (click)="clearDates()">Clear dates</button>
+    <button class="close" (click)="closeModal()">Close</button>
+  </div>
+</div>

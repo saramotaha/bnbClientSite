@@ -1,0 +1,205 @@
+<div class="booking-card-container">
+<!-- Final Price Display -->
+<!-- <div class="final-price-display mb-3">
+  <span class="price-value">{{ finalPriceDisplay }}</span>
+  <span class="price-label">Total price</span>
+</div>
+ -->
+<!-- Pricing Section -->
+<div class="pricing-section d-flex justify-content-center">
+  <ng-container class=" text-center" *ngIf="finalPriceDisplay==0">
+    <span class="current-price-title  text-center w-100">Add dates for prices</span>
+    
+  </ng-container>
+  <ng-container class="" *ngIf="finalPriceDisplay!=0">
+    <span class="current-price text-center ">${{finalPriceDisplay}}</span>
+     <span class="nights-text text-center" *ngIf="getNights() > 0">for {{ getNights() }} night{{ getNights() === 1 ? '' : 's' }}</span>
+  </ng-container>
+
+<!-- 
+    <span class="current-price">{{ finalPriceDisplay == 0 ? "Add dates for prices": finalPriceDisplay}}</span>
+    <span class="nights-text" *ngIf="getNights() > 0">for {{ getNights() }} night{{ getNights() === 1 ? '' : 's' }}</span>
+    <span class="nights-text" *ngIf="getNights() === 0">Select dates for pricing</span> -->
+  </div>
+
+<!-- Booking Form -->
+<div class="booking-form">
+  <!-- Date Inputs Section -->
+  <div class="date-inputs-section">
+    <!-- Date Inputs Row -->
+    <div class="row g-0">
+      <div class="col-6">
+        <div class="date-input-container" id="checkin-container" (click)="openCalendar('checkin')">
+          <label class="date-label">CHECK-IN</label>
+          <div class="date-value" id="checkin-display">Add date</div>
+        </div>
+      </div>
+      <div class="col-6" style="border-left: 1px solid #d1d5db;">
+        <div class="date-input-container" id="checkout-container" (click)="openCalendar('checkout')">
+          <label class="date-label">CHECKOUT</label>
+          <div class="date-value" id="checkout-display">Add date</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calendar Dropdown -->
+    <div
+     class="calendar-dropdown" id="calendar-dropdown" [class.show]="showCalendar">
+      <div class="calendar-container">
+        <!-- Calendar Header - Matches reference structure -->
+        <div class="calendar-header">
+          <div class="selected-dates-info">
+            <h2 class="fs-4 fw-semibold mb-2">
+              <!-- Case 1: No check-in date -->
+              <ng-container *ngIf="!checkInDate"> Select check-in date </ng-container>
+              <!-- Case 2: Check-in selected, but no check-out -->
+              <ng-container *ngIf="checkInDate && !checkOutDate"> Select check-out date </ng-container>
+              <!-- Case 3: Both check-in and check-out selected -->
+              <ng-container *ngIf="checkInDate && checkOutDate">
+                {{ getNights() }} night{{ getNights() === 1 ? '' : 's' }} in {{ propertyDetails?.title }}
+              </ng-container>
+            </h2>
+            <p class="text-muted mb-3">
+              {{ checkInDate ? (checkInDate | date: 'MMM d, y') : 'Check-in' }} –
+              {{ checkOutDate ? (checkOutDate | date: 'MMM d, y') : 'Check-out' }}
+            </p>
+            <p *ngIf="totalPrice > 0" class="text-success fw-semibold">Total: ${{ totalPrice }}</p>
+          </div>
+        </div>
+
+        <!-- Calendar Navigation -->
+        <div class="calendar-nav">
+          <button class="btn btn-nav" (click)="prev()">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          <div class="month-display">
+            <span class="month-name">{{ currentMonth1 | date: 'MMMM y' }}</span>
+            <span class="month-name">{{ currentMonth2 | date: 'MMMM y' }}</span>
+          </div>
+          <button class="btn btn-nav" (click)="next()">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+
+        <!-- Calendar Grid -->
+        <div class="calendar-grid">
+          <!-- First Month -->
+          <div class="month-grid">
+            <div class="weekdays">
+              <div class="weekday" *ngFor="let day of ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']">{{ day }}</div>
+            </div>
+            <table class="calendar-table text-center">
+              <thead>
+                <tr>
+                  <th *ngFor="let day of ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']">{{ day }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let week of days1">
+                  <td *ngFor="let day of week">
+                    <div
+                      *ngIf="day; else emptyCell"
+                      class="calendar-day rounded-circle text-center position-relative"
+                      [class.disabled]="!isAvailable(day)"
+                      [class.selected-start]="isStartDate(day)"
+                      [class.selected-end]="isEndDate(day)"
+                      [class.selected-range]="isInRange(day)"
+                      (click)="selectDate(day)"
+                    >
+                      {{ day.getDate() }}
+                      <span *ngIf="isStartDate(day) || isEndDate(day)" class="tooltip-text">
+                        {{ isStartDate(day) ? 'Check-in' : 'Check-out' }}
+                      </span>
+                    </div>
+                    <ng-template #emptyCell>
+                      <div class="calendar-day empty"></div>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Second Month -->
+          <div class="month-grid">
+            <div class="weekdays">
+              <div class="weekday" *ngFor="let day of ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']">{{ day }}</div>
+            </div>
+            <table class="calendar-table text-center">
+              <thead>
+                <tr>
+                  <th *ngFor="let day of ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']">{{ day }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let week of days2">
+                <td *ngFor="let day of week">
+                  <div
+                    *ngIf="day; else emptyCell"
+                    class="calendar-day rounded-circle text-center position-relative"
+                    [class.disabled]="!isAvailable(day)"
+                    [class.selected-start]="isStartDate(day)"
+                    [class.selected-end]="isEndDate(day)"
+                    [class.selected-range]="isInRange(day)"
+                    (click)="selectDate(day)"
+                  >
+                    {{ day.getDate() }}
+                    <span *ngIf="isStartDate(day) || isEndDate(day)" class="tooltip-text">
+                      {{ isStartDate(day) ? 'Check-in' : 'Check-out' }}
+                    </span>
+                  </div>
+                  <ng-template #emptyCell>
+                    <div class="calendar-day empty"></div>
+                  </ng-template>
+                </td>
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div *ngIf="rangeUnavailableMessage" class="alert alert-danger mt-2 text-center">
+          {{ rangeUnavailableMessage }}
+        </div>
+
+        <!-- Calendar Footer -->
+        <div class="calendar-footer">
+          <button class="btn btn-outline-secondary" (click)="clearDates()">Clear dates</button>
+          <button class="btn btn-dark" (click)="closeCalendar()" id="close-btn" [disabled]="!(checkInDate && checkOutDate)">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guests Section -->
+  <div class="guests-container">
+    <label class="guest-label">GUESTS</label>
+    <div class="guest-controls">
+      <div class="guest-value" id="guest-display">{{ guestCount }} guest{{ guestCount > 1 ? 's' : '' }}</div>
+      <div class="guest-buttons">
+        <button class="guest-btn" id="guest-minus" (click)="changeGuests(-1)" [disabled]="guestCount <= 1">−</button>
+        <input type="number" class="guest-input" id="guest-input" [(ngModel)]="guestCount" min="1" max="10" (change)="setGuestsFromInput()" (input)="setGuestsFromInput()">
+        <button class="guest-btn" id="guest-plus" (click)="changeGuests(1)" [disabled]="guestCount >= 10">+</button>
+      </div>
+    </div>
+    <!-- Error Message -->
+<div *ngIf="guestInputError" class="text-center text-danger mt-3" style="font-size: 0.875rem;">
+  {{ guestInputError }}
+</div>
+  </div>
+</div>
+
+<!-- Reserve Button -->
+<button class="btn btn-reserve" (click)="reserve()">Reserve</button>
+
+<!-- Disclaimer -->
+<p class="disclaimer-text">You won't be charged yet</p>
+
+<!-- Report Link -->
+<div class="report-section">
+  <a href="#" class="report-link">
+    <i class="bi bi-flag"></i>
+    Report this listing
+  </a>
+</div>
+</div>

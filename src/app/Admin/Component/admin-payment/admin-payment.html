@@ -1,0 +1,70 @@
+<section>
+
+  <div class="admin-header mt-5">
+    <h2>Admin Notifications</h2>
+
+  </div>
+
+  <div class="card-style   mt-5 ">
+    <div class="row">
+      <div class="col-12 ">
+        <div class="table-card">
+          <!-- <div class="table-header">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn btn-ghost btn-sm">
+                              <i class="fas fa-sync-alt"></i>
+                            </button>
+                          </div>
+                        </div> -->
+
+          <div class="table-responsive">
+            <table class="table table-hover user-table">
+              <thead>
+                <tr class="bg-secondary">
+                  <th>UserId</th>
+                  <th>guestFullName</th>
+                  <th>propertyTitle</th>
+                  <th>amount</th>
+                  <th>status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody id="userTableBody">
+
+                @for (item of Payments; track $index) {
+
+                <tr>
+                  <td>{{item.id}}</td>
+                  <td>{{item.guestFullName}}</td>
+                  <td>{{item.propertyTitle}}</td>
+                  <td>{{item.amount}}</td>
+                  <td>{{item.status}}</td>
+                  <td class="">
+                    <div class="action-btns d-flex">
+
+                      <!-- <button  (click)="ReversePayment(item.id)" class="btn btn-outline-danger btn-icon"><i class="fa fa-add"></i></button> -->
+                    </div>
+                  </td>
+                </tr>
+                }
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State -->
+          <div id="emptyState" class="empty-state d-none">
+            <i class="fas fa-users empty-icon"></i>
+            <h5>No users found</h5>
+            <p>Try adjusting your search or filter criteria</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+

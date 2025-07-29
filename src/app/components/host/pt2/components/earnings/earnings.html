@@ -1,0 +1,109 @@
+<!-- <div class="earnings-container">
+   Header Section 
+  <div class="header-section">
+     Back Button Header 
+    <div class="header">
+      <button class="back-btn" (click)="goToHostDashboard()" title="Go back">
+        <svg viewBox="0 0 16 16" fill="currentColor">
+          <path d="M11.354 1.646a.5.5 0 010 .708L5.707 8l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z"/>
+        </svg>
+      </button>
+      <h1>Earnings</h1>
+    </div>
+  </div>
+
+   Earnings Dashboard 
+  <div class="earnings-dashboard">
+     Monthly Earnings Section 
+    <div class="monthly-earnings-section">
+      <div class="earnings-header">
+        <div class="earnings-title">
+          <h2>You've made</h2>
+          <div class="earnings-amount">{{ formatCurrency(currentMonthEarnings) }} <span class="period">this month</span></div>
+        </div>
+         <button class="expand-btn" (click)="expandChart()" title="Expand chart">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <path d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"/>
+          </svg>
+        </button> 
+      </div>
+
+       Chart Area 
+      <div class="chart-container">
+        <div class="chart-area">
+           Y-axis labels 
+          <div class="y-axis">
+            <div class="y-label">$10</div>
+            <div class="y-label">$5</div>
+            <div class="y-label">$0</div>
+          </div>
+          
+           Chart grid and bars 
+          <div class="chart-content">
+            <div class="chart-grid">
+               Horizontal grid lines 
+              <div class="grid-line"></div>
+              <div class="grid-line"></div>
+              <div class="grid-line"></div>
+            </div>
+            
+             Month bars 
+            <div class="month-bars">
+              @for (earning of monthlyEarnings; track earning.month) {
+                <div class="month-bar-container">
+                  <div class="month-bar" [class.current-month]="earning.isCurrentMonth">
+                     Bar height would be calculated based on earnings amount 
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+         X-axis (months) 
+        <div class="x-axis">
+          @for (earning of monthlyEarnings; track earning.month) {
+            <div class="month-label" [class.current-month]="earning.isCurrentMonth">
+              {{ earning.month }}
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+     Year-to-Date Summary 
+    <div class="ytd-summary-section">
+      <div class="ytd-header">
+        <h3>Year-to-date summary</h3>
+        <div class="date-range">{{ ytdDateRange }}</div>
+      </div>
+
+      <div class="summary-items">
+        <div class="summary-item">
+          <span class="item-label">Gross earnings</span>
+          <span class="item-amount">{{ formatCurrency(ytdSummary.grossEarnings) }}</span>
+        </div>
+        
+        <div class="summary-item">
+          <span class="item-label">Adjustments</span>
+          <span class="item-amount">{{ formatCurrency(ytdSummary.adjustments) }}</span>
+        </div>
+        
+        <div class="summary-item">
+          <span class="item-label">Airbnb service fee</span>
+          <span class="item-amount">{{ formatCurrency(ytdSummary.airbnbServiceFee) }}</span>
+        </div>
+        
+        <div class="summary-item">
+          <span class="item-label">Tax withheld</span>
+          <span class="item-amount">{{ formatCurrency(ytdSummary.taxWithheld) }}</span>
+        </div>
+        
+        <div class="summary-item total">
+          <span class="item-label">Total (USD)</span>
+          <span class="item-amount">{{ formatCurrency(ytdSummary.total) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

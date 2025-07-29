@@ -1,0 +1,40 @@
+<div class="step15-container">
+  <h2 class="title">Share safety details</h2>
+  <p class="subtitle">Does your place have any of these?</p>
+
+<div class="options">
+  <label>
+   Exterior security camera present
+    <input type="checkbox" [(ngModel)]="hasCamera" />
+  </label>
+
+  <label>
+Noise decibel monitor present
+    <input type="checkbox" [(ngModel)]="hasNoiseMonitor" />
+  </label>
+
+  <label>
+        Weapon(s) on the property
+
+
+    <input type="checkbox" [(ngModel)]="hasWeapons" />
+  </label>
+</div>
+
+
+
+  <div class="note">
+    <p>
+      Security cameras that monitor indoor spaces are not allowed even if they're turned off.
+      All exterior security cameras must be disclosed.
+    </p>
+    <p>
+      Be sure to comply with your local laws and review Airbnb's anti-discrimination policy and guest and Host fees.
+    </p>
+  </div>
+
+  <div class="navigation">
+    <button class="nav-btn" (click)="goBack()">Back</button>
+    <button class="nav-btn" (click)="goNext()">Next</button>
+  </div>
+</div>

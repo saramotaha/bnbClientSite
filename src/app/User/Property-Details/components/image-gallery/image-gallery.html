@@ -1,0 +1,34 @@
+ <div class="rounded-3 my-3 overflow-hidden" style="max-width: 1120px; max-height: 519px">
+        <div class="row g-2"
+        >
+            <div class="col-6 " style="max-width: 1120px; max-height: 519px">
+                @if (primaryImage){
+                    <img [src]="primaryImage.imageUrl" 
+                         alt="Main apartment view" 
+                         class="img-fluid object-fit-cover h-100 w-100 gallery-image"
+                         style="object-fit: cover;">
+                      }
+            </div>
+            @if (otherImages && otherImages.length > 0) {
+              @for (i of [0, 1]; let idx = $index; track idx) {
+                <div  class="col-3 " style="max-width: 1120px; max-height: 519px">
+                  <div class="row g-2 h-100">
+                    <div class="col-12 h-50">
+                      <img [src]="otherImages?.[i * 2]?.imageUrl"
+                          alt="Image {{ i * 2 }}"     
+                          class="img-fluid h-100 w-100 object-fit-cover gallery-image">
+                    </div>
+                    <div class="col-12 h-50">
+                      <img [src]="otherImages?.[i * 2 + 1]?.imageUrl"
+                          alt="Image {{ i * 2 + 1 }}"
+                          class="img-fluid h-100 w-100 object-fit-cover gallery-image">
+                    </div>
+                  </div>
+                </div>
+              }
+            }
+        </div>
+    </div>
+
+
+

@@ -1,1 +1,292 @@
-<p>property-list works!</p>
+<app-loader></app-loader>
+
+
+<div class="p-5 bg-white shadow-lg mt-5">
+
+
+
+  <div class="section px-5 mb-5" >
+    <div class="section-header">
+    <h2 (click)="ParisHomes()" class="section-title view-all">Homes in Paris <i class="fas fa-arrow-trend-up"></i></h2>
+    </div>
+    <div class="properties-container">
+      <div class="properties-grid ">
+        @for (item of FilterPropertiesByCity; track $index) {
+
+      <div class="property-card rounded-5 shadow p-1">
+        <div class="property-image rounded-5 ">
+    <img
+       [src]="item?.images?.[0]?.imageUrl ?? 'https://www.hypneu.de/media/images/System/404-error-not-found-page-lost.png?_=0.027911563893951108'"
+      [alt]="item?.images?.[0]?.description ?? 'not found'">
+    <div class="guest-favorite" *ngIf="item.IsFav">
+      <i class="fas fa-crown"></i> Guest favorite
+    </div>
+    <button  class="favorite-btn fs-3">♡</button>
+        </div>
+  <div class="property-info ">
+    <div class="property-title">{{item?.title}}</div>
+    <div class="property-details">
+      <div class="property-price">€{{item?.pricePerNight}} per night</div>
+      <div class="property-rating">
+        <span class="star">★</span>
+        <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+      </div>
+    </div>
+  </div>
+      </div>
+        }
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="section px-5 mb-5" >
+    <div class="section-header">
+      <h2 class="section-title view-all" (click)="ParisHomesInWeekEnd()">Available in Paris this weekend <i class="fas fa-arrow-trend-up"></i></h2>    </div>
+
+    <div class="properties-container">
+      <div class="properties-grid">
+        @for (item of FilterPropertiesInParisByAvailability; track $index) {
+
+          <div class="property-card rounded-5 shadow p-1">
+            <div class="property-image rounded-5">
+              <img
+                [src]="item?.images?.[0]?.imageUrl ?? 'https://www.hypneu.de/media/images/System/404-error-not-found-page-lost.png?_=0.027911563893951108'"
+                [alt]="item?.images?.[0]?.description ?? 'not found'">
+              <div class="guest-favorite" *ngIf="item.IsFav">
+                <i class="fas fa-crown"></i> Guest favorite
+              </div>
+              <button class="favorite-btn fs-3">♡</button>
+            </div>
+            <div class="property-info">
+              <div class="property-title">{{item.title}}</div>
+              <div class="property-details">
+                <div class="property-price">€{{item.pricePerNight}} per night</div>
+                <div class="property-rating">
+                  <span class="star">★</span>
+                  <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="section px-5 mb-5" >
+
+
+    <div class="section-header">
+      <h2 class="section-title view-all" (click)="CairoHomes()">Stay in New Cairo <i class="fas fa-arrow-trend-up"></i></h2>
+    </div>
+    <div class="properties-container">
+      <div class="properties-grid">
+        @for (item of FilterPropertiesByCairo; track $index) {
+
+      <div class="property-card rounded-5 shadow p-1">
+        <div class="property-image rounded-5">
+          <img
+            [src]="item?.images?.[0]?.imageUrl ?? 'https://www.hypneu.de/media/images/System/404-error-not-found-page-lost.png?_=0.027911563893951108'"
+            [alt]="item?.images?.[0]?.description ?? 'not found'">
+          <div class="guest-favorite" *ngIf="item.IsFav==true">
+            <i class="fas fa-crown"></i> Guest favorite
+          </div>
+          <button class="favorite-btn fs-3">♡</button>
+        </div>
+        <div class="property-info">
+          <div class="property-title">{{item.title}}</div>
+          <div class="property-details">
+            <div class="property-price">€{{item.pricePerNight}} per night</div>
+            <div class="property-rating">
+              <span class="star">★</span>
+              <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        }
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="section px-5 mb-5" >
+
+
+    <div class="section-header">
+      <h2 class="section-title view-all" (click)="CairoHomesNextMonth()" >Available next month in Cairo <i class="fas fa-arrow-trend-up"></i></h2>
+    </div>
+
+
+    <div class="properties-container">
+      <div class="properties-grid">
+        @for (item of FilterPropertiesInCairoByAvailability; track $index) {
+
+
+        <div class="property-card rounded-5 shadow p-1">
+          <div class="property-image rounded-5">
+            <img
+              [src]="item?.images?.[0]?.imageUrl ?? 'https://www.hypneu.de/media/images/System/404-error-not-found-page-lost.png?_=0.027911563893951108'"
+              [alt]="item?.images?.[0]?.description ?? 'not found'">
+            <div class="guest-favorite" *ngIf="item.IsFav">
+              <i class="fas fa-crown"></i> Guest favorite
+            </div>
+            <button class="favorite-btn fs-3">♡</button>
+          </div>
+          <div class="property-info">
+            <div class="property-title">{{item.title}}</div>
+            <div class="property-details">
+              <div class="property-price">€{{item.pricePerNight}} per night</div>
+              <div class="property-rating">
+                <span class="star">★</span>
+                <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        }
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+    <div class="section px-5 mb-5  ">
+
+
+      <div class="section-header">
+        <h2 class="section-title view-all" (click)="SpainHomes()">Check out homes in Spain <i class="fas fa-arrow-trend-up"></i></h2>
+      </div>
+
+
+      <div class="properties-container">
+        <div class="properties-grid">
+          @for (item of FilterPropertiesBySpain; track $index) {
+
+
+          <div class="property-card rounded-5 shadow p-1">
+            <div class="property-image rounded-5">
+              <img
+                [src]="item?.images?.[0]?.imageUrl ?? 'https://www.hypneu.de/media/images/System/404-error-not-found-page-lost.png?_=0.027911563893951108'"
+                [alt]="item?.images?.[0]?.description ?? 'not found'">
+              <div class="guest-favorite" *ngIf="item.IsFav">
+                <i class="fas fa-crown"></i> Guest favorite
+              </div>
+              <button class="favorite-btn fs-3">♡</button>
+            </div>
+            <div class="property-info">
+              <div class="property-title">{{item.title}}</div>
+              <div class="property-details">
+                <div class="property-price">€{{item.pricePerNight}} per night</div>
+                <div class="property-rating">
+                  <span class="star">★</span>
+                  <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          }
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+      <div class="section px-5 ">
+
+
+        <div class="section-header">
+          <h2 class="section-title view-all" (click)="UnitedHomes()">Popular homes in United States <i class="fas fa-arrow-trend-up"></i></h2>
+        </div>
+
+
+        <div class="properties-container">
+          <div class="properties-grid">
+            @for (item of FilterPropertiesByUnitedStates; track $index) {
+
+
+            <div class="property-card rounded-5 shadow p-1">
+              <div class="property-image rounded-5">
+                <img
+                  [src]="item?.images?.[0]?.imageUrl ?? 'https://www.hypneu.de/media/images/System/404-error-not-found-page-lost.png?_=0.027911563893951108'"
+                  [alt]="item?.images?.[0]?.description ?? 'not found'">
+                <div class="guest-favorite" *ngIf="item.IsFav">
+                  <i class="fas fa-crown"></i> Guest favorite
+                </div>
+                <button class="favorite-btn fs-3">♡</button>
+              </div>
+              <div class="property-info">
+                <div class="property-title">{{item.title}}</div>
+                <div class="property-details">
+                  <div class="property-price">€{{item.pricePerNight}} per night</div>
+                  <div class="property-rating">
+                    <span class="star">★</span>
+                    <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            }
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- <div class="w-25 m-5 p-5 shadow-lg rounded allCities">
+  @for (item of AllCities; track $index) {
+    <div class="d-flex">
+      <img src="https://a0.muscache.com/im/pictures/airbnb-platform-assets/AirbnbPlatformAssets-hawaii-autosuggest-destination-icons-1/original/2cab2315-eab8-4e3b-8ffa-1411745515f3.png" alt="">
+      <p>{{item}}</p>
+    </div>
+  }
+
+
+
+</div> -->
+
+
+

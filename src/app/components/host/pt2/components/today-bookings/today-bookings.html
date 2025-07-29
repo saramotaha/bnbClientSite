@@ -1,0 +1,97 @@
+<!-- <div class="booking-dashboard">
+   Header 
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1 class="welcome-text">Welcome, {{hostName}}!</h1>
+       <button class="complete-listing-btn">Complete your listing</button> 
+    </div>
+  </div>
+
+   Reservations Section 
+  <div class="reservations-section">
+    <div class="section-header">
+      <h2 class="section-title">Your reservations</h2>
+      <a class="all-reservations-link">All reservations ({{bookings.length}})</a>
+    </div>
+
+     Tab Navigation 
+    <div class="tab-navigation">
+      @for (tab of tabs; track tab.key) {
+        <button 
+          class="tab-button"
+          [class.active]="selectedTab === tab.key"
+          (click)="selectTab(tab.key)">
+          {{tab.label}} ({{tab.count}})
+        </button>
+      }
+    </div>
+
+     Content Area 
+    <div class="content-area">
+      @if (isLoading) {
+         Loading Spinner 
+        <div class="spinner-container">
+          <div class="spinner"></div>
+          <p class="loading-message">Loading reservations for today...</p>
+        </div>
+      } @else {
+        @if (getFilteredBookings().length === 0) {
+           Empty State 
+          <div class="empty-state">
+            <div class="empty-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 12l2 2 4-4"></path>
+                <circle cx="12" cy="12" r="10"></circle>
+              </svg>
+            </div>
+            <p class="empty-message">{{getEmptyStateMessage()}}</p>
+          </div>
+        } @else {
+           Booking Cards 
+          <div class="booking-cards">
+            @for (booking of getFilteredBookings(); track booking.id) {
+              <div class="booking-card">
+                <div class="booking-info">
+                  <div class="guest-avatar">
+                    {{booking.avatar}}
+                  </div>
+                  <div class="booking-details">
+                    <div class="guest-name">{{booking.guestName}}</div>
+                    <div class="property-name">{{booking.propertyName}}</div>
+                    <div class="booking-dates">
+                      {{formatDate(booking.checkInDate)}} – {{formatDate(booking.checkOutDate)}} · {{booking.nights}} night{{booking.nights > 1 ? 's' : ''}} · {{booking.guestCount}} guest{{booking.guestCount > 1 ? 's' : ''}}
+                    </div>
+                  </div>
+                </div>
+                <div class="booking-actions">
+                  @switch (selectedTab) {
+                    @case ('checking-out') {
+                      <button class="action-btn secondary">Contact guest</button>
+                      <button class="action-btn primary">View details</button>
+                    }
+                    @case ('currently-hosting') {
+                      <button class="action-btn secondary">Contact guest</button>
+                      <button class="action-btn primary">View details</button>
+                    }
+                    @case ('arriving-soon') {
+                      <button class="action-btn secondary">Contact guest</button>
+                      <button class="action-btn primary">Prepare for arrival</button>
+                    }
+                    @case ('upcoming') {
+                      <button class="action-btn secondary">Contact guest</button>
+                      <button class="action-btn primary">View details</button>
+                    }
+                    @case ('pending-review') {
+                      <button class="action-btn secondary">Skip</button>
+                      <button class="action-btn primary">Write review</button>
+                    }
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div> -->

@@ -1,0 +1,51 @@
+<div class="step12-container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="w-100" style="max-width: 500px;">
+
+    <h2 class="text-center mb-4">Now, set a weekday base price</h2>
+    <p class="text-center text-muted mb-4">Tip: $49. You’ll set a weekend price next.</p>
+
+    <!-- Editable price in main display -->
+    <div class="price-display mb-2">
+      <span>$</span>
+      <span
+        contenteditable="true"
+        class="editable-price"
+        [class.invalid]="!isValidPrice && basePrice > 0"
+        (input)="onEditableInput($event)"
+        [innerText]="basePrice"
+      ></span>
+    </div>
+
+    <!-- Validation -->
+    <div class="text-danger text-center mb-3" *ngIf="!isValidPrice && basePrice > 0">
+      Please enter a base price between $10 and $10,000
+    </div>
+
+   <!-- Summary + Toggle Together -->
+<div
+  class="guest-summary text-muted d-flex justify-content-center align-items-center gap-2 mt-3"
+  *ngIf="isValidPrice && basePrice > 0"
+  (click)="toggleDetails()"
+  style="cursor: pointer;"
+>
+  Guest price before taxes <span class="price">${{ guestPrice }}</span>
+  <i class="bi" [ngClass]="showDetails ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+</div>
+
+<!-- Details Box -->
+<div *ngIf="showDetails" class="details-box text-start mt-2">
+  <p><strong>Base price</strong><br /> ${{ basePrice }}</p>
+  <p><strong>Guest service fee</strong><br /> ${{ serviceFee }}</p>
+  <p><strong>Guest price before taxes</strong><br /> ${{ guestPrice }}</p>
+  <p><strong>You earn</strong><br /> ${{ youEarn }}</p>
+</div>
+
+
+    <!-- Navigation -->
+    <div class="nav-buttons mt-5 d-flex justify-content-between">
+      <button class="btn btn-dark" (click)="goBack()">Back</button>
+      <button class="btn btn-dark" [disabled]="!isValidPrice" (click)="goNext()">Next</button>
+    </div>
+
+  </div>
+</div>
