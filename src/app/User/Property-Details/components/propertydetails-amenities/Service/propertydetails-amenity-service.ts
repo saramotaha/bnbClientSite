@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
-import { AmenitiesList } from './../../../../../components/amenities-list/amenities-list';
+// import { AmenitiesList } from './../../../../../components/amenities-list/amenities-list';
 import { IpropertyAmenity } from '../iproperty-amenity';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
@@ -18,7 +18,7 @@ export class PropertydetailsAmenityService {
       .pipe(
         tap(amenities => {
           console.log('Fetched property amenities:', amenities);
-          this.PropertyAmentiesSupject.next(amenities); 
+          this.PropertyAmentiesSupject.next(amenities);
         }),
         catchError(error => {
           console.error('Error fetching property amenities:', error);
@@ -26,5 +26,5 @@ export class PropertydetailsAmenityService {
         })
       );
   }
-  
+
 }

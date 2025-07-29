@@ -3,7 +3,7 @@ import { BookingService } from '../../../Booking/Service/booking-service';
 import { Router } from '@angular/router';
 import { IbookingCreate } from '../../../Booking/Model/ibooking-create';
 import { CalendarModalComponent } from '../../../Booking/components/calendar-modal-component/calendar-modal-component';
-import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { BookingPaymentService } from '../../../Booking/Service/booking-payment-service';
 import { FormsModule } from '@angular/forms';
 import { PropertydetailsCalendar } from '../propertydetails-calendar/propertydetails-calendar';
@@ -12,7 +12,7 @@ import { PropertyDetailsService } from '../../property-details/property-details-
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-propertybookingcard' ,
-  imports: [CalendarModalComponent, PropertydetailsCalendar, NgbModalModule, FormsModule, CommonModule ],
+  imports: [CalendarModalComponent, PropertydetailsCalendar, FormsModule, CommonModule ],
 templateUrl: './propertybookingcard.html',
   styleUrl: './propertybookingcard.css'
 })
@@ -66,7 +66,7 @@ export class Propertybookingcard {
       error: (err) => {
         console.error("Error fetching property details:", err)
         // Fallback to ensure propertyDetails is defined, preventing errors in other functions
-      
+
         this.mapAvailabilityDates() // Try to map even if empty
         this.generateCalendar() // Regenerate calendar with fallback data
         this.cdr.detectChanges()
@@ -98,7 +98,7 @@ export class Propertybookingcard {
       !dateInputsSection.contains(event.target as Node) &&
       !calendarDropdown.contains(event.target as Node)
     ) {
-      this.closeCalendar(); 
+      this.closeCalendar();
       // Reverted to close only if both dates are selected, to match reference's close button disabled state
       if (this.checkInDate && this.checkOutDate) {
         this.closeCalendar()

@@ -45,6 +45,7 @@ import { ListingStep1Component } from './components/host/pt1/listings/listing-st
 import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
 import { Login } from './Pages/login/login';
 import { AdminPayment } from './Admin/Component/admin-payment/admin-payment';
+import { Messages } from './User/messages/messages';
 
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
@@ -69,7 +70,7 @@ export const routes: Routes = [
   { path: "register", component: Register , pathMatch:"full" },
   { path: "propertyDetails/:id", component: PropertyDetails , pathMatch:"full" },
 
-  // { path: "messages", component: Messages , pathMatch:"full" },
+  { path: "messages", component: Messages , pathMatch:"full" },
   // { path: "notifications", component: Notifications , pathMatch:"full" },
   // // { path: "AdminNotifications", component: DashBoardBar , pathMatch:"full" },
   // { path: "propertyPhotos", component: PropertyPhotos , pathMatch:"full" },

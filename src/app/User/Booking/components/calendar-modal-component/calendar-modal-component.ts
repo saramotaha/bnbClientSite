@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-calendar-modal-component',
-  imports: [CommonModule ,NgbModalModule],
+  imports: [CommonModule ],
     standalone: true, // ✅ This is required
 
   templateUrl: './calendar-modal-component.html',
