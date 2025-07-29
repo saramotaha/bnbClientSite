@@ -5,5 +5,5 @@ import { HttpClient } from "@angular/common/http";
 export class messageService {
     constructor(private http:HttpClient){}
     sendMessage(dto:{content:string;senderId:number;receiverId:number}){
-return this.http.post('https://localhost:7145/api/Message/send', dto)    }
+return this.http.post('http://localhost:7145/api/Message/send', dto)    }
 }
