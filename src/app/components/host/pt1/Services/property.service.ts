@@ -8,6 +8,7 @@ export class PropertyService {
     private listingData: any = {};
 
   private baseUrl = 'https://localhost:7145/api/property';    
+  
 
   constructor(private http: HttpClient) {}
 
@@ -20,4 +21,21 @@ export class PropertyService {
   resetListingData() {
     this.listingData = {};
   }
+
+ update(id: number, data: any): Observable<any> {
+  return this.http.put(`https://localhost:7145/api/property/${id}`, data);
+}
+
+
+
+
+getById(id: number): Observable<Property> {
+  return this.http.get<Property>(`${this.baseUrl}/${id}`);
+}
+
+
+
+
+
+
 }
