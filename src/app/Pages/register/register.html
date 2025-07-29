@@ -1,1 +1,154 @@
-<p>register works!</p>
+<div class="register-container">
+  <div class="register-card">
+    <h1>Create an account</h1>
+    <h2>Welcome to Airbnb</h2>
+    
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input 
+          type="text" 
+          id="firstName"
+          formControlName="firstName" 
+          class="form-control" 
+          [class.is-invalid]="isFieldInvalid('firstName')"
+          placeholder="First Name"
+          autocomplete="given-name">
+        <app-validation-error 
+          [errors]="getFieldErrors('firstName')" 
+          fieldName="First name" 
+          *ngIf="isFieldInvalid('firstName')">
+        </app-validation-error>
+      </div>
+      
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input 
+          type="text" 
+          id="lastName"
+          formControlName="lastName" 
+          class="form-control" 
+          [class.is-invalid]="isFieldInvalid('lastName')"
+          placeholder="Last Name"
+          autocomplete="family-name">
+        <app-validation-error 
+          [errors]="getFieldErrors('lastName')" 
+          fieldName="Last name" 
+          *ngIf="isFieldInvalid('lastName')">
+        </app-validation-error>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email"
+          formControlName="email" 
+          class="form-control" 
+          [class.is-invalid]="isFieldInvalid('email')"
+          placeholder="Email"
+          autocomplete="email">
+        <app-validation-error 
+          [errors]="getFieldErrors('email')" 
+          fieldName="Email" 
+          *ngIf="isFieldInvalid('email')">
+        </app-validation-error>
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number (Optional)</label>
+        <input 
+          type="tel" 
+          id="phoneNumber"
+          formControlName="phoneNumber" 
+          class="form-control" 
+          [class.is-invalid]="isFieldInvalid('phoneNumber')"
+          placeholder="Phone Number"
+          autocomplete="tel">
+        <app-validation-error 
+          [errors]="getFieldErrors('phoneNumber')" 
+          fieldName="Phone number" 
+          *ngIf="isFieldInvalid('phoneNumber')">
+        </app-validation-error>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-input-container">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            class="form-control"
+            [class.is-invalid]="isFieldInvalid('password')"
+            placeholder="Enter your password"
+            autocomplete="new-password">
+          <button 
+            type="button" 
+            class="password-toggle-btn" 
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+            <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
+        <app-validation-error 
+          [errors]="getFieldErrors('password')" 
+          fieldName="Password" 
+          *ngIf="isFieldInvalid('password')">
+        </app-validation-error>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="password-input-container">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            class="form-control"
+            [class.is-invalid]="isFieldInvalid('confirmPassword') || hasPasswordMismatchError"
+            placeholder="Confirm your password"
+            autocomplete="new-password">
+        </div>
+        <app-validation-error 
+          [errors]="getFieldErrors('confirmPassword')" 
+          fieldName="Confirm password" 
+          *ngIf="isFieldInvalid('confirmPassword')">
+        </app-validation-error>
+        <app-validation-error 
+          [errors]="registerForm.errors" 
+          fieldName=""
+          *ngIf="hasPasswordMismatchError">
+        </app-validation-error>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <button 
+        type="submit" 
+        class="btn-primary" 
+        [disabled]="isLoading"
+        [class.loading]="isLoading">
+        <span *ngIf="isLoading">
+          <i class="fa fa-spinner fa-spin"></i> Processing...
+        </span>
+        <span *ngIf="!isLoading">Continue</span>
+      </button>
+    </form>
+    
+    <div class="divider">
+      <span>or</span>
+    </div>
+    
+    <!-- <button class="btn-social " (click)="signInWithGoogle()">
+      <i class="fab fa-google"></i> Continue with Google
+    </button> -->
+
+    <div class="login-link">
+      Already have an account? <a (click)="goToLogin()" style="cursor: pointer;">Log in</a>
+    </div>
+  </div>
+</div>
