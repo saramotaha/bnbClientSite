@@ -1,1 +1,55 @@
+<app-base-nav/>
+
+<div class="container mt-3" style="max-width: 1120px">
+    @if(propertyDetails) {
+    <div class="mt-3">
+        <h3 class="mt-3">{{propertyDetails.title}}</h3>
+    </div>
+
+}@else {
+    <p>No property details available.</p>
+}
 <app-image-gallery [propertyId]="1" ></app-image-gallery>
+    
+   
+<div class="row p-0 details ">
+    <div class="col-8 ">
+        <h4>{{propertyDetails.description}} , {{propertyDetails.country}}</h4>
+        <div class="d-flex gap-3">
+            <p>{{propertyDetails.maxGuests }} {{propertyDetails.maxGuests > 1 ? 'Guests':'Guest'}} • 
+                {{propertyDetails.bedrooms}} {{propertyDetails.bedrooms > 1 ? 'Bedrooms':'Bedroom'}} • {{propertyDetails.bathrooms}} {{propertyDetails.bathrooms > 1 ? 'Baths':'Bath'}} </p>
+            <!-- <p>{{propertyDetails.bedrooms}} {{propertyDetails.bedrooms > 1 ? 'Bedrooms':'Bedroom'}} </p>
+            <p>{{propertyDetails.bathrooms}} {{propertyDetails.bathrooms > 1 ? 'Baths':'Bath'}} </p> -->
+        </div>
+        <div class="d-flex align-items-center mt-3 gap-3">
+             <div class="rounded-circle">
+                <img src="https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                     alt="Host" 
+                     class="rounded-circle"
+                    style="width: 60px; height: 60px; object-fit: cover;">
+            </div>
+            <div>
+                <h6 class="fs-5 fw-semibold mb-1">Hosted by {{propertyDetails.hostName}}</h6>
+            </div>
+        </div>
+        <hr class="my-5"/>
+        
+        <app-propertydetails-amenities/>
+        <hr class="my-5"/>
+        <app-propertydetails-calendar/>
+         
+
+    </div>
+    <div class="col-4">
+        <div class="sticky-top" style="top: 15px;">
+            <app-propertybookingcard />
+        </div>
+    </div>
+            <hr class="my-5"/>
+
+    <app-property-detials-review/>
+</div>
+
+
+   
+<app-footer/>

@@ -20,9 +20,5 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([loadingInterceptor])),
     provideCharts(withDefaultRegisterables()),
-
-
-
-    provideCharts(withDefaultRegisterables())
   ]
 };
