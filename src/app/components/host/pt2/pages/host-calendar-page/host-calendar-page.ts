@@ -1,19 +1,20 @@
-// import { Component, OnInit, ViewChild } from '@angular/core';
-// import { AvailabilityCalendarComponent } from '../../components/availability-calendar/availability-calendar';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AvailabilityCalendarComponent } from '../../components/availability-calendar/availability-calendar';
 // import { AvailabilityService } from '../../services/availability.service';
-// import { AuthService } from '../../../../../Pages/Auth/auth.service';
-// import { CalendarData, DateAvailability } from '../../models/calendar-data.model';
-// import { CreateAvailabilityDTO } from '../../models/availability.model';
-// import { CommonModule } from '@angular/common';
-// declare var bootstrap: any; 
+import { AuthService } from '../../../../../Pages/Auth/auth.service';
+import { CalendarData, DateAvailability } from '../../models/calendar-data.model';
+import { CreateAvailabilityDTO } from '../../models/availability.model';
+import { CommonModule } from '@angular/common';
+declare var bootstrap: any; 
 
-// @Component({
-//   selector: 'app-host-calendar-page',
-//   standalone: true,
-//   imports: [AvailabilityCalendarComponent, CommonModule],
-//   templateUrl: './host-calendar-page.html',
-//   styleUrls: ['./host-calendar-page.css']
-// })
+@Component({
+  selector: 'app-host-calendar-page',
+  standalone: true,
+  imports: [AvailabilityCalendarComponent, CommonModule],
+  templateUrl: './host-calendar-page.html',
+  styleUrls: ['./host-calendar-page.css']
+})
+export class HostCalendarPage {}
 // export class HostCalendarPage implements OnInit {
 //   @ViewChild(AvailabilityCalendarComponent) calendarComponent!: AvailabilityCalendarComponent;
 

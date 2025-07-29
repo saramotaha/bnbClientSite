@@ -1,16 +1,17 @@
-// import { Component, OnInit } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { Router } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 // import { ViolationService } from '../../services/violation.service';
-// import { ViolationDetailsDTO } from '../../models/violation.model';
+import { ViolationDetailsDTO } from '../../models/violation.model';
 
-// @Component({
-//   selector: 'app-violations',
-//   standalone: true,
-//   imports: [CommonModule],
-//   templateUrl: './violations.html',
-//   styleUrls: ['./violations.css']
-// })
+@Component({
+  selector: 'app-violations',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './violations.html',
+  styleUrls: ['./violations.css']
+})
+export class Violations{}
 // export class Violations implements OnInit {
 //   selectedTab: string = 'all';
 //   violations: ViolationDetailsDTO[] = [];
@@ -18,7 +19,7 @@
 //   isLoading = true;
 //   error: string | null = null;
 
-//   constructor(private violationService: ViolationService, private router: Router) {}
+   //constructor(private violationService: ViolationService, private router: Router , private cdr: ChangeDetectorRef) {}
 
 //   ngOnInit(): void {
 //     this.fetchHostViolations(); // Loads host-specific data
@@ -35,6 +36,7 @@
 //         this.filterViolations();
 //         setTimeout(() => {
 //           this.isLoading = false;
+            //cdr.detectChanges(); // Ensure view updates after async operations
 //         }); // Ensures change detection after async call
 //       },
 //       error: (err) => {

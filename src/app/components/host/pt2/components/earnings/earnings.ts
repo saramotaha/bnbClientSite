@@ -1,23 +1,24 @@
-// import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 // import { BookingService } from '../../services/booking.service';
-// import { BookingResponseDto } from '../../models/booking.model';
-// import { CommonModule } from '@angular/common';
-// import { RouterModule } from '@angular/router';
-// import { Router } from '@angular/router';
+import { BookingResponseDto } from '../../models/booking.model';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
-// interface MonthlyEarning {
-//   month: string;
-//   amount: number;
-//   isCurrentMonth: boolean;
-// }
+interface MonthlyEarning {
+  month: string;
+  amount: number;
+  isCurrentMonth: boolean;
+}
 
-// @Component({
-//   selector: 'app-earnings',
-//   templateUrl: './earnings.html',
-//   styleUrls: ['./earnings.css'],
-//   imports: [CommonModule, RouterModule],
-//   standalone: true
-// })
+@Component({
+  selector: 'app-earnings',
+  templateUrl: './earnings.html',
+  styleUrls: ['./earnings.css'],
+  imports: [CommonModule, RouterModule],
+  standalone: true
+})
+export class Earnings{}
 // export class Earnings implements OnInit {
 //   bookings: BookingResponseDto[] = [];
 

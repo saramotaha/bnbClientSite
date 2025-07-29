@@ -1,23 +1,24 @@
-// import {
-//   Component,
-//   OnInit,
-//   inject,
-//   signal,
-//   computed
-// } from '@angular/core';
-// import { Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  computed
+} from '@angular/core';
+import { Router } from '@angular/router';
 // import { BookingService } from '../../services/booking.service';
-// import { AuthService } from '../../../../../Pages/Auth/auth.service';
-// import { BookingResponseDto } from '../../models/booking.model';
-// import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../../../Pages/Auth/auth.service';
+import { BookingResponseDto } from '../../models/booking.model';
+import { CommonModule } from '@angular/common';
 
-// @Component({
-//   selector: 'app-reservations',
-//   standalone: true,
-//   imports: [CommonModule],
-//   templateUrl: './reservations.html',
-//   styleUrls: ['./reservations.css']
-// })
+@Component({
+  selector: 'app-reservations',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './reservations.html',
+  styleUrls: ['./reservations.css']
+})
+export class Reservations{}
 // export class Reservations implements OnInit {
 //   private bookingService = inject(BookingService);
 //   private authService = inject(AuthService);
@@ -93,4 +94,4 @@
 //   openFilter(): void {
 //     console.log('Filter modal or drawer goes here 🎛️');
 //   }
-// }
+//}
