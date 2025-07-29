@@ -5,7 +5,7 @@ import { routes } from './app.routes';
 // import { provideHttpClient } from '@angular/common/http';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts'; // ✅ add this
 import { loadingInterceptor } from './Core/Interceptors/loading-interceptor';
-//import { authInterceptorFn } from './Pages/Auth/interceptors/auth-interceptor';
+// import { authInterceptorFn } from './Pages/Auth/interceptors/auth-interceptor';
 
 
 
@@ -14,7 +14,7 @@ import { loadingInterceptor } from './Core/Interceptors/loading-interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(
-      //withInterceptors([authInterceptorFn]),
+      // withInterceptors([authInterceptorFn]),
       withFetch()
     ),
     provideRouter(routes),

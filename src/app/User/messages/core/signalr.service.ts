@@ -5,7 +5,7 @@ import { Conversation } from '../models/conversation';
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
   private hubConnection?: signalR.HubConnection;
-  private baseUrl = 'https://localhost:7145/chatHub'; // Directly use your API URL
+  private baseUrl = 'http://localhost:7145/chatHub'; // Directly use your API URL
 
   constructor() { }
 
