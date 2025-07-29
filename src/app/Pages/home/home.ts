@@ -7,7 +7,7 @@ import { AdminDashboard } from "../../Admin/Component/admin-dashboard/admin-dash
 
 @Component({
   selector: 'app-home',
-  imports: [AdminDashboard],
+  imports: [AdminDashboard,PropertyList],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

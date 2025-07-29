@@ -21,8 +21,8 @@ import { UserManagement } from './Admin/Component/user-management/user-managemen
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
 
 export const routes: Routes = [
-  { path: "", redirectTo:"admin", pathMatch: "full"},
-  { path: "", component: Home, pathMatch: "full" },
+  { path: "", redirectTo:"home", pathMatch: "full"},
+  { path: "home", component: Home, pathMatch: "full" },
 
 
   {
