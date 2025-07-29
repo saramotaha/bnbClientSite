@@ -5,10 +5,15 @@ import { CommonModule } from '@angular/common';
 import { Map } from "../map/map";
 import { FormsModule } from '@angular/forms';
 import { CurrentProperties } from '../../Core/Services/current-properties';
+import { Nav } from "../../Shared/nav/nav";
+import { Footer } from "../../Shared/footer/footer";
+import { NotFound } from '../../Pages/not-found/not-found';
+import { Loader } from "../loader/loader";
+
 
 @Component({
   selector: 'app-view-all-homes',
-  imports: [CommonModule, Map , FormsModule],
+  imports: [CommonModule, Map, FormsModule, Nav, Footer, NotFound, Loader],
   templateUrl: './view-all-homes.html',
   styleUrl: './view-all-homes.css'
 })
@@ -73,10 +78,8 @@ get totalPages(): number {
 
   ngOnInit(): void {
      this.service.filters$.subscribe(filters => {
-    if (Object.keys(filters).length > 0) {
+     if (Object.keys(filters).length > 0) {
       this.AllFilters = filters;
-
-
 
     this.service.GetHomes(this.AllFilters).subscribe({
       next: (response) => {

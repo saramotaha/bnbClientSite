@@ -6,6 +6,7 @@ import { FilterHomesServices } from '../../Core/Services/filter-homes-services';
 import { Router } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
+import { Loader } from "../loader/loader";
 
 
 
@@ -14,8 +15,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-property-list',
   standalone:true,
   imports: [CommonModule,
-    FormsModule,
-  ],
+    FormsModule, Loader],
   templateUrl: './property-list.html',
   styleUrls: ['./property-list.css']
 })
