@@ -1,0 +1,20 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="w-100" style="max-width: 600px;">
+    <h2 class="mb-3">Create your description</h2>
+    <p class="text-muted">Share what makes your place special.</p>
+
+    <textarea
+      [(ngModel)]="description"
+      class="form-control p-3"
+      rows="6"
+      maxlength="500"
+      style="resize: vertical; border: 2px solid black;"
+    ></textarea>
+    <div class="text-end mt-2 text-muted">{{ description.length }}/500</div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <button class="btn btn-outline-dark px-4" (click)="goBack()">Back</button>
+      <button class="btn btn-dark px-4" [disabled]="!description.trim()" (click)="goNext()">Next</button>
+    </div>
+  </div>
+</div>

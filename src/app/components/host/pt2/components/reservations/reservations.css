@@ -1,0 +1,257 @@
+.reservations-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  color: #717171;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background-color: #f7f7f7;
+  color: #222;
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0;
+  color: #222;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter-btn, .export-btn, .print-btn {
+  background: white;
+  border: 1px solid #DDDDDD;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  color: #222;
+}
+
+.filter-btn:hover, .export-btn:hover, .print-btn:hover {
+  border-color: #B0B0B0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dropdown {
+  position: relative;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #EBEBEB;
+  margin-bottom: 32px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  padding: 16px 0;
+  margin-right: 32px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #717171;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  color: #222;
+}
+
+.tab.active {
+  color: #222;
+  border-bottom-color: #222;
+}
+
+.content {
+  min-height: 400px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 16px;
+  color: #717171;
+}
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 300px;
+  text-align: center;
+}
+
+.empty-content h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 16px;
+}
+
+.see-all-link {
+  background: none;
+  border: none;
+  color: #FF5A5F;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.see-all-link:hover {
+  color: #E00007;
+}
+
+.reservations-list {
+  display: grid;
+  gap: 16px;
+}
+
+.reservation-card {
+  border: 1px solid #EBEBEB;
+  border-radius: 12px;
+  padding: 24px;
+  background: white;
+  transition: all 0.2s;
+}
+
+.reservation-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #DDDDDD;
+}
+
+.reservation-info h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 8px 0;
+}
+
+.address {
+  color: #717171;
+  font-size: 14px;
+  margin: 0 0 12px 0;
+}
+
+.reservation-details {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #717171;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status.confirmed {
+  background-color: #DEF7EC;
+  color: #047857;
+}
+
+.status.pending {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.status.cancelled {
+  background-color: #FEE2E2;
+  color: #DC2626;
+}
+
+.status.completed {
+  background-color: #E0E7FF;
+  color: #3730A3;
+}
+
+.guest-name {
+  font-size: 14px;
+  color: #717171;
+  margin: 8px 0;
+}
+
+.amount {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+  margin: 8px 0 0 0;
+}
+
+@media (max-width: 768px) {
+  .reservations-container {
+    padding: 16px;
+  }
+  
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .tab {
+    white-space: nowrap;
+    margin-right: 24px;
+  }
+  
+  .reservation-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

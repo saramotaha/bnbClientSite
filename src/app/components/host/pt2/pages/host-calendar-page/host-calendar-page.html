@@ -1,0 +1,54 @@
+<div class="container">
+<div class="dashboard-container">
+  <h2>Manage Availability</h2>
+
+  <!-- Property Selector -->
+  <div class="property-selector">
+    <label for="propertySelect">Select Property:</label>
+    <select id="propertySelect" (change)="onSelectProperty(getSelectValue($event))">
+      <option *ngFor="let property of properties" [value]="property"> <!--should be property.id when fetching from db-->
+        Property #{{ property }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Availability Calendar -->
+<app-availability-calendar
+  [calendarData]="calendarData"
+  [propertyId]="propertyId.toString()"
+  [initialMonth]="getInitialMonth()"
+  (monthChanged)="handleCalendarRequest($event)"
+  (dateAvailabilityChanged)="handleAvailabilityUpdate($event)"
+  (dataLoadRequested)="handleCalendarRequest($event)">
+</app-availability-calendar>
+
+</div>
+</div>
+<div class="toast-container">
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div
+    class="toast align-items-center text-white bg-success border-0"
+    id="availabilityToast"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="d-flex">
+      <div class="toast-body">
+        Availability saved successfully!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+</div>
+<div class="toast-container">
+  <div class="toast align-items-center text-white bg-danger border-0" id="errorToast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        An error occurred while saving availability.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>

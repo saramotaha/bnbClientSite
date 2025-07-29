@@ -1,0 +1,273 @@
+.step6-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  min-height: 100vh;  
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+}
+
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.add-photo-btn {
+  background-color: white;
+  color: black;
+  border: 1px solid #000;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.add-photo-btn:hover {
+  background-color: black;
+  color: white;
+}
+
+.photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.photo-preview img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.upload-modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 420px;
+  text-align: center;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+}
+
+.success-popup {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  font-weight: bold;
+  color: green;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeout 2.5s ease-out forwards;
+}
+
+@keyframes fadeout {
+  0%, 80% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+
+.drop-area {
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 1.2rem 0;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.drop-area:hover {
+  border-color: black;
+}
+
+.drag-text {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.browse-btn {
+  background-color: #eee;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.browse-btn:hover {
+  background-color: #ddd;
+}
+
+.muted {
+  color: #777;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel {
+  background-color: #ccc;
+  color: #333;
+  border: none;
+}
+
+.upload {
+  background-color: #000;
+  color: white;
+  border: none;
+}
+
+.upload:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+}
+.upload-box {
+  border: 2px dashed #ccc;
+  border-radius: 16px;
+  padding: 2rem;
+  background: #f9f9f9;
+  transition: 0.3s;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  position: relative;
+}
+.upload-box {
+  min-height: 400px;
+  padding: 2rem 1rem;
+}
+
+.add-button-wrapper {
+  margin-bottom: 1rem;
+}
+.photo-preview img {
+  transform: scale(0.9);
+  opacity: 0;
+  animation: zoomFade 0.4s forwards;
+}
+
+@keyframes zoomFade {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.add-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.photo-preview img {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.add-photo-btn {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.add-photo-btn:hover {
+  transform: scale(1.05);
+}
+
+.photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+
+.upload-box:hover {
+  border-color: #999;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.back, .next {
+  background-color: #000;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.back:hover, .next:hover {
+  background-color: #444;
+}
+
+.next:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+/* Updated success-popup styling */
+.success-popup {
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  text-align: center;
+  font-weight: bold;
+  color: #4BB543;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeout 2.5s ease-out forwards;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.check-icon {
+  font-size: 2rem;
+}
+

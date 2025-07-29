@@ -4,10 +4,12 @@ import { Violation } from "../../Admin/Component/violation/violation";
 import { AdminNotifications } from "../../Admin/Component/admin-notifications/admin-notifications";
 import { DashBoardBar } from "../../Admin/Component/dash-board-bar/dash-board-bar";
 import { AdminDashboard } from "../../Admin/Component/admin-dashboard/admin-dashboard";
+import { Nav } from "../../Shared/nav/nav";
+import { Footer } from "../../Shared/footer/footer";
 
 @Component({
   selector: 'app-home',
-  imports: [AdminDashboard,PropertyList],
+  imports: [PropertyList, Nav, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
