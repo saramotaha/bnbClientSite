@@ -1,5 +1,5 @@
-<!-- <div class="booking-dashboard">
-   Header 
+<div class="booking-dashboard">
+   <!-- Header  -->
   <div class="dashboard-header">
     <div class="header-content">
       <h1 class="welcome-text">Welcome, {{hostName}}!</h1>
@@ -7,14 +7,14 @@
     </div>
   </div>
 
-   Reservations Section 
+   <!-- Reservations Section  -->
   <div class="reservations-section">
     <div class="section-header">
       <h2 class="section-title">Your reservations</h2>
       <a class="all-reservations-link">All reservations ({{bookings.length}})</a>
     </div>
 
-     Tab Navigation 
+     <!-- Tab Navigation  -->
     <div class="tab-navigation">
       @for (tab of tabs; track tab.key) {
         <button 
@@ -26,7 +26,7 @@
       }
     </div>
 
-     Content Area 
+     <!-- Content Area  -->
     <div class="content-area">
       @if (isLoading) {
          Loading Spinner 
@@ -94,4 +94,4 @@
       }
     </div>
   </div>
-</div> -->
+</div>
