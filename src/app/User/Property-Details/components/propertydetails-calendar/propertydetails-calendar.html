@@ -1,0 +1,121 @@
+
+<div class="px-0 mt-4">
+  <div class="mb-4">
+    <h2 class="fs-4 fw-semibold mb-2">
+     <!-- Case 1: No check-in date -->
+  <ng-container *ngIf="!checkInDate">
+    Select check-in date
+  </ng-container>
+
+  <!-- Case 2: Check-in selected, but no check-out -->
+  <ng-container *ngIf="checkInDate && !checkOutDate">
+    Select check-out date
+  </ng-container>
+
+  <!-- Case 3: Both check-in and check-out selected -->
+  <ng-container *ngIf="checkInDate && checkOutDate">
+    {{ getNights() }} night{{ getNights() === 1 ? '' : 's' }} in {{ propertyDetails.title }}
+  </ng-container>
+    </h2>
+    <p class="text-muted mb-3">
+      {{ checkInDate ? (checkInDate | date: 'MMM d, y') : 'Check-in' }} –
+      {{ checkOutDate ? (checkOutDate | date: 'MMM d, y') : 'Check-out' }}
+    </p>
+    <p *ngIf="totalPrice > 0" class="text-success fw-semibold">
+      Total: ${{ totalPrice }}
+    </p>
+
+    <div class="border rounded p-4 shadow-sm bg-white">
+      <!-- Month Navigation -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <button class="btn rounded-circle" (click)="prev()"><i class="bi bi-arrow-left-short fs-2"></i></button>
+        <button class="btn rounded-circle" (click)="next()"><i class="bi bi-arrow-right-short fs-2"></i></button>
+      </div>
+
+      <div class="row">
+        <!-- First Month -->
+        <div class="col-12 col-md-6 mb-4">
+          <div class="text-center mb-3">
+           <h4 class="fw-semibold">
+  {{ currentMonth1 | date: 'MMMM y' }}
+</h4>
+          </div>
+          <table class="calendar-table text-center">
+            <thead>
+              <tr>
+                <th *ngFor="let day of ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']">{{ day }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let week of days1">
+
+      <td  *ngFor="let day of week"
+          class="calendar-day  rounded-circle text-center position-relative"
+          [class.disabled]="day && !isAvailable(day)"
+          [class.selected-start]="isStartDate(day!)"
+          [class.selected-end]="isEndDate(day!)"
+          [class.selected-range]="isInRange(day!)"
+          (click)="selectDate(day!)">
+        {{day?.getDate() }}
+        <!-- Tooltip -->
+  <span *ngIf="isStartDate(day!) || isEndDate(day!)"
+        class="tooltip-text">
+    {{ isStartDate(day!) ? 'Check-in' : 'Check-out' }}
+  </span>
+      </td>
+    </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Second Month -->
+        <div class="col-12 col-md-6 mb-4">
+          <div class="text-center mb-3">
+<h4 class="fw-semibold">
+  {{ currentMonth2 | date: 'MMMM y' }}
+</h4>          </div>
+          <table class="calendar-table  text-center">
+            <thead>
+              <tr>
+                <th *ngFor="let day of ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']">{{ day }}</th>
+              </tr>
+            </thead>
+            <tbody>
+             <tr *ngFor="let week of days2">
+      <td *ngFor="let day of week"
+          class="calendar-day text-center"
+          [class.available]="isAvailable(day)"
+          [class.disabled]="!isAvailable(day)"
+          [class.selected-start]="isStartDate(day!)"
+          [class.selected-end]="isEndDate(day!)"
+          [class.selected-range]="isInRange(day!)"
+          (click)="selectDate(day!)">
+        {{ day?.getDate() }}
+      </td>
+    </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ <div *ngIf="rangeUnavailableMessage" class="alert alert-danger mt-2 text-center">
+  {{ rangeUnavailableMessage }}
+</div>
+      <!-- Legend + Clear -->
+      <div class="d-flex justify-content-end align-items-center mt-3 small text-muted">
+        <!-- <div class="d-flex gap-3 flex-wrap">
+          <div class="d-flex align-items-center gap-2">
+            <div class="bg-secondary opacity-25 rounded" style="width: 12px; height: 12px;"></div>
+            <span>Available</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="bg-light border rounded" style="width: 12px; height: 12px;"></div>
+            <span>Unavailable</span>
+          </div>
+        </div> -->
+        <button class="btn btn-link text-black fw-medium p-0 small text-decoration-underline" (click)="clearDates()">
+          Clear dates
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

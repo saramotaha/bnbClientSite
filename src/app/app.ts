@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Home } from "./Pages/home/home";
+
+
+import { PropertyDetails } from './User/Property-Details/property-details/property-details';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
+import { Home } from './Pages/home/home';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { Footer } from "./Shared/footer/footer";
 import { Nav } from "./Shared/nav/nav";
