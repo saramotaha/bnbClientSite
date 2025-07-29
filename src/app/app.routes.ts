@@ -2,7 +2,6 @@ import { AdminPropertyResponseDto, AdminPropertyListDto } from './Admin/Models/P
 import { Component } from '@angular/core';
 import { RedirectCommand, Routes } from '@angular/router';
 import { Home } from './Pages/home/home';
-import { Login } from './Pages/login/login';
 import { Register } from './Pages/register/register';
 import { PropertyDetails } from './User/Property-Details/property-details/property-details';
 // import { Checkout } from './Pages/checkout/checkout';
@@ -33,6 +32,8 @@ import { Messages
 
  } from './components/host/pt2/components/messages/messages';
 import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
+import { Login } from './Pages/login/login';
+import { AdminPayment } from './Admin/Component/admin-payment/admin-payment';
 
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
@@ -48,10 +49,11 @@ export const routes: Routes = [
       { path: "Violation", component: Violation },
       { path: "UserManagement", component: UserManagement },
       { path: "DashboardCharts", component: DashboardCharts },
-      {path: "PropertyManagement", component: PropertyManagementComponent}
+      {path: "PropertyManagement", component: PropertyManagementComponent},
+      {path: "AdminPayment", component: AdminPayment},
     ]
   },
-  { path: "login", component: Login , pathMatch:"full" },
+  { path: "Login", component: Login , pathMatch:"full" },
   { path: "ViewAllHomes", component: ViewAllHomes , pathMatch:"full" },
   { path: "register", component: Register , pathMatch:"full" },
   { path: "propertyDetails/:id", component: PropertyDetails , pathMatch:"full" },
