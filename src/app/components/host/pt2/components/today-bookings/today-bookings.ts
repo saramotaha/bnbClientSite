@@ -1,28 +1,29 @@
-// import { Component, OnInit } from '@angular/core';
-// import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 // import { BookingService } from '../../services/booking.service';
-// import { AuthService } from '../../../../../Pages/Auth/auth.service';
-// import { BookingResponseDto } from '../../models/booking.model';
+import { AuthService } from '../../../../../Pages/Auth/auth.service';
+import { BookingResponseDto } from '../../models/booking.model';
 
-// interface Booking {
-//   id: string;
-//   guestName: string;
-//   checkInDate: Date;
-//   checkOutDate: Date;
-//   propertyName: string;
-//   guestCount: number;
-//   nights: number;
-//   status: 'checking-out' | 'currently-hosting' | 'arriving-soon' | 'upcoming' | 'pending-review';
-//   avatar?: string;
-// }
+interface Booking {
+  id: string;
+  guestName: string;
+  checkInDate: Date;
+  checkOutDate: Date;
+  propertyName: string;
+  guestCount: number;
+  nights: number;
+  status: 'checking-out' | 'currently-hosting' | 'arriving-soon' | 'upcoming' | 'pending-review';
+  avatar?: string;
+}
 
-// @Component({
-//   selector: 'app-today-bookings',
-//   standalone: true,
-//   imports: [CommonModule],
-//   templateUrl: './today-bookings.html',
-//   styleUrls: ['./today-bookings.css']
-// })
+@Component({
+  selector: 'app-today-bookings',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './today-bookings.html',
+  styleUrls: ['./today-bookings.css']
+})
+export class TodayBookingsComponent{}
 // export class TodayBookingsComponent implements OnInit {
 //   bookings: Booking[] = [];
 //   selectedTab: string = 'checking-out';

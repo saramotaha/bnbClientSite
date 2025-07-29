@@ -1,18 +1,14 @@
-import { HttpInterceptorFn, HttpEvent, HttpResponse } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+// auth.interceptor.ts
+import { Injectable } from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-export const authInterceptorFn: HttpInterceptorFn = (req, next) => {
-  // Clone request to add credentials
-  const authReq = req.clone({
-    withCredentials: true, // Required for cookies
-    headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
-  });
-
-  return next(authReq).pipe(
-    tap(event => {
-      if (event instanceof HttpResponse) {
-        console.log('Login response cookies:', event.headers.getAll('Set-Cookie'));
-      }
-    })
-  );
-};
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Only add withCredentials to API calls to your backend
+    const isApiUrl = req.url.startsWith('https://localhost:7145');
+    const authReq = isApiUrl ? req.clone({ withCredentials: true }) : req;
+    return next.handle(authReq);
+  }
+}
