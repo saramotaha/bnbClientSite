@@ -4,8 +4,10 @@ export interface User {
   firstName: string;
   email: string;
   role: string;
+  HostId?: string;
   accessToken?: string;
 }
+
 
 // API Request DTOs
 export interface RegisterDto {
@@ -40,9 +42,13 @@ export interface UserProfile {
 
 // JWT Token payload (for decoding the token controller creates)
 export interface JwtPayload {
-  Email: string;      // ← Match backend claim
-  UserName: string;   // ← Match backend claim
-  Role: string;       // ← Capital R to match
-  UserID: string;     // ← Match backend claim
+  emailaddress: string;
+  HostId?: string;
+  name: string;            // username (GUID في حالتك)
+  UserId?: string;         // موجود أحياناً
+  nameidentifier?: string; // نفس UserId أحياناً
+  role?: string;
   exp?: number;
 }
+
+

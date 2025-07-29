@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FilterHomesServices } from '../../Core/Services/filter-homes-services';
 import { Router } from '@angular/router';
 
-import { FormsModule } from '@angular/forms';
 import { Loader } from "../loader/loader";
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +15,7 @@ import { Loader } from "../loader/loader";
   selector: 'app-property-list',
   standalone:true,
   imports: [CommonModule,
-    FormsModule, Loader],
+   FormsModule , Loader],
   templateUrl: './property-list.html',
   styleUrls: ['./property-list.css']
 })
@@ -187,6 +187,7 @@ export class PropertyList implements OnInit {
       console.log(this.FilterPropertiesBySpain);
 
       this.FilterPropertiesByCity = this.AllData.filter(p => p.city?.toLowerCase() === 'paris'?.toLowerCase()).filter(x=>x.status=='active').slice(0, 8);
+
 
 
       this.FilterPropertiesInParisByAvailability = response.filter(property => {

@@ -11,11 +11,10 @@ import { LoginDto } from './../Auth/user.model';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
+ standalone: true,
   imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    ValidationErrorComponent
+    CommonModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './login.html',
   styleUrl: './login.css'
@@ -25,7 +24,7 @@ export class Login implements OnInit, OnDestroy {
   showPassword = false;
   errorMessage = '';
   isLoading = false;
-  
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -36,10 +35,7 @@ export class Login implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initializeForm();
-    console.log('Initial user:', this.authService.currentUser);
-this.authService.currentUser$.subscribe(user => 
-  console.log('User update:', user)
-);
+
     // Redirect if already authenticated
     if (this.authService.isAuthenticated()) {
       this.redirectBasedOnRole();
@@ -82,15 +78,16 @@ this.authService.currentUser$.subscribe(user =>
     this.errorMessage = '';
 
     this.authService.login({
-      email: this.loginForm.get('email')?.value?.trim(),
-      password: this.loginForm.get('password')?.value
-    }).subscribe({
-      next: () => this.redirectBasedOnRole(),
-      error: (error) => {
-        this.errorMessage = this.getFriendlyError(error);
-        this.isLoading = false;
-      }
-    });
+  email: this.loginForm.get('email')?.value?.trim(),
+  password: this.loginForm.get('password')?.value
+}).subscribe({
+  next: () => this.redirectBasedOnRole(), // ✅ استدعاء التوجيه بناءً على الدور
+  error: (error) => {
+    this.errorMessage = this.getFriendlyError(error);
+    this.isLoading = false;
+  }
+});
+
   }
 }
 
@@ -107,27 +104,30 @@ private getFriendlyError(error: any): string {
     });
   }
 
-private redirectBasedOnRole(): void {
-  const user = this.authService.currentUser;
-  if (!user?.role) {
-    this.router.navigate(['/']);
-    return;
-  }
+  private redirectBasedOnRole(): void {
+    const user = this.authService.getUserProfile();
 
-  const role = user.role.toLowerCase();
-  
-  switch (role) {
-    case 'admin':
-      this.router.navigate(['/admin/dashboard']);
-      break;
-    case 'host':
-      // Directly navigate to dashboard - host data will be fetched there
-      this.router.navigate(['/host/dashboard']);
-      break;
-    default:
+    if (!user) {
       this.router.navigate(['/']);
+      return;
+    }
+
+    // Redirect based on user role
+    switch (user.role.toLowerCase()) {
+      case 'admin':
+        this.router.navigate(['/admin']);
+        break;
+      // case 'host':
+      //   this.router.navigate(['/host/dashboard']);
+      //   break;
+      case 'guest':
+        this.router.navigate(['/Home']);
+        break;
+      default:
+        this.router.navigate(['/Home']);
+        break;
+    }
   }
-}
 
   goToRegister(): void {
     this.router.navigate(['/register']);
