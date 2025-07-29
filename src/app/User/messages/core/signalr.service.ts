@@ -31,8 +31,10 @@ export class SignalRService {
   }
 
   public onReceiveMessage(callback: (message: any) => void): void {
-    this.hubConnection?.on('ReceiveMessage', callback);
-  }
+    this.hubConnection?.on('ReceiveMessage', (message) => {
+      console.log('SignalR message received:', message); // Debug log
+      callback(message);
+    }); }
 
   public onConnectionStatusChanged(callback: (status: string) => void): void {
     this.hubConnection?.onclose(() => callback('disconnected'));
