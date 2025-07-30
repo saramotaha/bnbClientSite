@@ -38,11 +38,10 @@ import { AdminDashboard } from './Admin/Component/admin-dashboard/admin-dashboar
 import { UserManagement } from './Admin/Component/user-management/user-management';
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
 
-import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
 import { AdminHostVerificationComponent } from './Admin/Component/admin-host-verifications/admin-host-verifications';
-export const routes: Routes = [
-  { path: "", redirectTo:"admin", pathMatch: "full"},
-  { path: "", component: Home, pathMatch: "full" },
+// export const routes: Routes = [
+//   { path: "", redirectTo:"admin", pathMatch: "full"},
+//   { path: "", component: Home, pathMatch: "full" },
 
 import { Earnings } from './components/host/pt2/components/earnings/earnings';
 import { PropertyListComponent } from './components/host/pt1/property-list/property-list';
@@ -71,7 +70,7 @@ export const routes: Routes = [
       { path: "DashboardCharts", component: DashboardCharts },
       {path: "PropertyManagement", component: PropertyManagementComponent},
 
-      {path: "AdminHostVerificationComponent", component: AdminHostVerificationComponent}
+      {path: "AdminHostVerificationComponent", component: AdminHostVerificationComponent},
 
       {path: "AdminPayment", component: AdminPayment},
 
