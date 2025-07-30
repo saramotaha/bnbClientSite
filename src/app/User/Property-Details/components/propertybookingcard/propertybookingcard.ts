@@ -61,6 +61,7 @@ export class Propertybookingcard {
         this.propertyDetails = data
         this.mapAvailabilityDates()
         this.generateCalendar()
+        
         console.log("Property Details AvailabilityDates:", this.propertyDetails.availabilityDates) // Added console.log as per reference
         this.cdr.detectChanges() // Ensure the view updates with new data
       },

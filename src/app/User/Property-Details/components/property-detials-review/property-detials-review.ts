@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { IReviews } from '../../../Reviews/Model/ireviews';
 import { ReviewService } from '../../../Reviews/review-service';
-import { pipe } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
