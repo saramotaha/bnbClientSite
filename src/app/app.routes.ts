@@ -26,6 +26,7 @@ import { AdminDashboard } from './Admin/Component/admin-dashboard/admin-dashboar
 import { UserManagement } from './Admin/Component/user-management/user-management';
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
 import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
+import { AdminHostVerificationComponent } from './Admin/Component/admin-host-verifications/admin-host-verifications';
 export const routes: Routes = [
   { path: "", redirectTo:"admin", pathMatch: "full"},
   { path: "", component: Home, pathMatch: "full" },
@@ -41,8 +42,10 @@ export const routes: Routes = [
       { path: "Violation", component: Violation },
       { path: "UserManagement", component: UserManagement },
       { path: "DashboardCharts", component: DashboardCharts },
-      {path: "PropertyManagement", component: PropertyManagementComponent}
+      {path: "PropertyManagement", component: PropertyManagementComponent},
+      {path: "AdminHostVerificationComponent", component: AdminHostVerificationComponent}
     ]
+    
   },
 //  { path: "", redirectTo: "AdminNotifications"  , pathMatch:"full"},
 //  { path: "AdminNotifications", component: AdminNotifications , pathMatch:"full"},
