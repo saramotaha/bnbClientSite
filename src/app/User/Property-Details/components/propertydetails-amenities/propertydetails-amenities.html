@@ -1,0 +1,49 @@
+ @if(propertyDetailsAmenities&& propertyDetailsAmenities.length > 0) {
+   
+        <div class="mb-4">
+          <h2 class="fs-4 fw-semibold mb-3">What this place offers</h2>
+          <div class="row row-cols-1 row-cols-md-2 g-3">
+             @for (amenity of visibleAmenities; track amenity.amenityId) {
+            <div class="col">
+              <div class="d-flex align-items-center gap-3">
+<!--                 <i class="bi bi-eye fs-5"></i>
+ -->                <span class="amenityicon" [ngClass]="amenity.amenity.iconUrl "></span>
+                <span class="amenitytxt ">{{amenity.amenity.name}}</span>
+              </div>
+            </div>
+            }
+          </div>
+          
+          <button class="btn btn-secondary rounded-4 amenitybtn fs-5 fw-medium mt-3"  data-bs-toggle="modal" data-bs-target="#allAmenitiesModal">Show all {{totalAmenitiesCount}} amenities</button>
+        </div>
+        
+<!-- Modal -->
+<div class="modal fade" id="allAmenitiesModal" tabindex="-1" aria-labelledby="allAmenitiesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title" id="allAmenitiesModalLabel">All {{totalAmenitiesCount}} Amenities</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+                @for (category of amenityCategories; track category) {
+          <div>
+            <h6 class="fw-medium text-capitalize fs-5 mb-4">{{ category }}</h6>
+            <ul class="list-unstyled mt-2">
+              @for (amenity of groupedAmenities[category]; track amenity.id) {
+                <li class="d-flex align-items-center gap-2 mb-3">
+                  <span class="amenityicon" [ngClass]="amenity.iconUrl"></span>
+                  <span>{{ amenity.name }}</span>
+                </li>
+              }
+            </ul>
+            <hr>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+ }
+ 

@@ -1,0 +1,369 @@
+/* Container */
+.earnings-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #ffffff;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Header Section */
+.header-section {
+  margin-bottom: 48px;
+}
+
+/* Back Button Header */
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  color: #222222;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-right: 16px;
+}
+
+.back-btn:hover {
+  background-color: #f7f7f7;
+}
+
+.back-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0;
+  color: #222222;
+}
+
+/* Earnings Dashboard */
+.earnings-dashboard {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Monthly Earnings Section */
+.monthly-earnings-section {
+  background-color: #ffffff;
+}
+
+.earnings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.earnings-title h2 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #222222;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.earnings-amount {
+  font-size: 48px;
+  font-weight: 600;
+  color: #222222;
+  line-height: 1.1;
+}
+
+.period {
+  font-size: 32px;
+  font-weight: 400;
+  color: #222222;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  color: #717171;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.expand-btn:hover {
+  background-color: #f7f7f7;
+  color: #222222;
+}
+
+.expand-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Chart Container */
+.chart-container {
+  width: 100%;
+  height: 300px;
+}
+
+.chart-area {
+  display: flex;
+  height: 250px;
+  margin-bottom: 16px;
+}
+
+.y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40px;
+  height: 100%;
+  padding-right: 16px;
+}
+
+.y-label {
+  font-size: 14px;
+  color: #717171;
+  text-align: right;
+  line-height: 1;
+}
+
+.chart-content {
+  flex: 1;
+  position: relative;
+  height: 100%;
+}
+
+.chart-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.grid-line {
+  height: 1px;
+  background-color: #ebebeb;
+  width: 100%;
+}
+
+.month-bars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.month-bar-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+  max-width: 60px;
+}
+
+.month-bar {
+  width: 24px;
+  height: 2px; /* Minimal height since earnings are $0 */
+  background-color: #ebebeb;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.month-bar.current-month {
+  background-color: #222222;
+  border-radius: 12px;
+}
+
+/* X-axis */
+.x-axis {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.month-label {
+  font-size: 14px;
+  color: #717171;
+  text-align: center;
+  min-width: 32px;
+}
+
+.month-label.current-month {
+  background-color: #222222;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-weight: 500;
+}
+
+/* Year-to-Date Summary */
+.ytd-summary-section {
+  background-color: #ffffff;
+  padding: 0;
+}
+
+.ytd-header {
+  margin-bottom: 24px;
+}
+
+.ytd-header h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #222222;
+  margin: 0 0 8px 0;
+}
+
+.date-range {
+  font-size: 14px;
+  color: #717171;
+}
+
+.summary-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.summary-item:not(.total) {
+  border-bottom: 1px solid #ebebeb;
+}
+
+.summary-item.total {
+  border-top: 2px solid #222222;
+  padding-top: 16px;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.item-label {
+  font-size: 16px;
+  color: #222222;
+  flex: 1;
+}
+
+.item-amount {
+  font-size: 16px;
+  color: #222222;
+  font-weight: 500;
+  text-align: right;
+}
+
+.summary-item.total .item-label,
+.summary-item.total .item-amount {
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .earnings-dashboard {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .ytd-summary-section {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .earnings-container {
+    padding: 16px;
+  }
+
+  .earnings-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .earnings-title h2 {
+    font-size: 24px;
+  }
+
+  .earnings-amount {
+    font-size: 36px;
+  }
+
+  .period {
+    font-size: 24px;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+
+  .chart-area {
+    height: 200px;
+  }
+
+  .month-bars {
+    padding: 0 2px;
+  }
+
+  .month-bar-container {
+    max-width: 40px;
+  }
+
+  .month-bar {
+    width: 16px;
+  }
+
+  .x-axis {
+    padding: 0 8px;
+  }
+
+  .month-label {
+    font-size: 12px;
+    min-width: 24px;
+  }
+
+  .month-label.current-month {
+    padding: 2px 8px;
+  }
+
+  .summary-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .item-amount {
+    align-self: flex-end;
+  }
+}

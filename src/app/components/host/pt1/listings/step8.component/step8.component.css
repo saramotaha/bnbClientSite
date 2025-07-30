@@ -1,0 +1,28 @@
+.step8-wrapper {
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.highlight-item {
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 18px;
+  background-color: white;
+  border-radius: 20px;
+  min-width: 180px;
+  justify-content: center;
+  border: 2px solid #ccc;
+}
+
+.highlight-item:hover {
+  border-color: #000;
+}
+
+.highlight-item.selected {
+  border-color: #000;
+  background-color: #f0f0f0;
+}
+
+.highlight-item i {
+  font-size: 1.3rem;
+}

@@ -43,8 +43,13 @@
       }
     </div>
 
-    <!-- Calendar Grid -->
+
+    <!-- Calendar Grid with Spinner Overlay -->
     <div class="calendar-grid" [class.loading]="isLoading">
+      <div *ngIf="isLoading" class="spinner-overlay">
+        <div class="spinner"></div>
+      </div>
+
       @for (dateAvailability of calendarDates; track dateAvailability.date.getTime()) {
         <div 
           class="calendar-cell"
@@ -73,16 +78,16 @@
                 </div>
               } @else {
                 <input
-                class="price-edit"
-                type="number"
-                [value]="dateAvailability.price"
-                (blur)="updateDatePrice(dateAvailability, getInputValue($event))"
-                (keyup.enter)="updateDatePrice(dateAvailability, getInputValue($event))"
-                (keyup.escape)="toggleEditing(dateAvailability)"
-                (click)="$event.stopPropagation()"
-                autofocus
-                min="0"
-                step="1"
+                  class="price-edit"
+                  type="number"
+                  [value]="dateAvailability.price"
+                  (blur)="updateDatePrice(dateAvailability, getInputValue($event))"
+                  (keyup.enter)="updateDatePrice(dateAvailability, getInputValue($event))"
+                  (keyup.escape)="toggleEditing(dateAvailability)"
+                  (click)="$event.stopPropagation()"
+                  autofocus
+                  min="0"
+                  step="1"
                 />
               }
             </div>

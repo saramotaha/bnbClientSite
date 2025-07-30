@@ -11,11 +11,10 @@ import { LoginDto } from './../Auth/user.model';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
+ standalone: true,
   imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    ValidationErrorComponent
+    CommonModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './login.html',
   styleUrl: './login.css'
@@ -25,7 +24,7 @@ export class Login implements OnInit, OnDestroy {
   showPassword = false;
   errorMessage = '';
   isLoading = false;
-  
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -36,7 +35,7 @@ export class Login implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initializeForm();
-    
+
     // Redirect if already authenticated
     if (this.authService.isAuthenticated()) {
       this.redirectBasedOnRole();
@@ -73,37 +72,30 @@ export class Login implements OnInit, OnDestroy {
     this.showPassword = !this.showPassword;
   }
 
-  onSubmit(): void {
-    if (this.loginForm.valid && !this.isLoading) {
-      this.isLoading = true;
-      this.errorMessage = '';
+ onSubmit(): void {
+  if (this.loginForm.valid && !this.isLoading) {
+    this.isLoading = true;
+    this.errorMessage = '';
 
-      const loginData: LoginDto = {
-        email: this.loginForm.get('email')?.value?.trim(),
-        password: this.loginForm.get('password')?.value
-      };
-
-      this.authService.login(loginData)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (user) => {
-            console.log('Login successful:', user);
-            this.redirectBasedOnRole();
-          },
-          error: (error) => {
-            console.error('Login failed:', error);
-            this.errorMessage = error.message || 'Login failed. Please try again.';
-            this.isLoading = false;
-          },
-          complete: () => {
-            this.isLoading = false;
-          }
-        });
-    } else {
-      // Mark all fields as touched to show validation errors
-      this.markFormGroupTouched();
-    }
+    this.authService.login({
+  email: this.loginForm.get('email')?.value?.trim(),
+  password: this.loginForm.get('password')?.value
+}).subscribe({
+  next: () => this.redirectBasedOnRole(), // ✅ استدعاء التوجيه بناءً على الدور
+  error: (error) => {
+    this.errorMessage = this.getFriendlyError(error);
+    this.isLoading = false;
   }
+});
+
+  }
+}
+
+private getFriendlyError(error: any): string {
+  if (error.status === 401) return 'Invalid email or password';
+  if (error.status === 0) return 'Network error - please check connection';
+  return error.message || 'Login failed. Please try again.';
+}
 
   private markFormGroupTouched(): void {
     Object.keys(this.loginForm.controls).forEach(key => {
@@ -113,8 +105,8 @@ export class Login implements OnInit, OnDestroy {
   }
 
   private redirectBasedOnRole(): void {
-    const user = this.authService.currentUser;
-    
+    const user = this.authService.getUserProfile();
+
     if (!user) {
       this.router.navigate(['/']);
       return;
@@ -123,16 +115,16 @@ export class Login implements OnInit, OnDestroy {
     // Redirect based on user role
     switch (user.role.toLowerCase()) {
       case 'admin':
-        this.router.navigate(['/admin/dashboard']);
+        this.router.navigate(['/admin']);
         break;
-      case 'host':
-        this.router.navigate(['/host/dashboard']);
-        break;
+      // case 'host':
+      //   this.router.navigate(['/host/dashboard']);
+      //   break;
       case 'guest':
-        this.router.navigate(['/guest/dashboard']);
+        this.router.navigate(['/Home']);
         break;
       default:
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/Home']);
         break;
     }
   }

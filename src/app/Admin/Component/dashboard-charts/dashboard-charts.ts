@@ -1,7 +1,8 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
-import { Chart,  registerables,ChartConfiguration, ChartType } from 'chart.js';
+import { Chart,  registerables,ChartConfiguration, ChartType } from 'chart.js'
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { from } from 'rxjs';
 
 Chart.register(...registerables);
 
@@ -36,7 +37,7 @@ interface IncomeStatsResponse {
   selector: 'app-dashboard-charts',
   standalone:true,
   imports: [CommonModule],
-  templateUrl: './dashboard-charts.html',
+templateUrl: './dashboard-charts.html',
   styleUrl: './dashboard-charts.css'
 })
 export class DashboardCharts implements OnInit, AfterViewInit {

@@ -1,7 +1,6 @@
-<div class="violations-container">
-  <!-- Header Section -->
+<!-- <div class="violations-container">
+   Header Section 
   <div class="header-section">
-    <!-- Back Button Header -->
     <div class="header">
       <button class="back-btn" (click)="goToHostDashboard()" title="Go back">
         <svg viewBox="0 0 16 16" fill="currentColor">
@@ -19,48 +18,22 @@
             and address any issues to maintain your hosting standards.
           </p>
         </div>
-        
-        <!-- <div class="help-section">
-          <h3 class="help-title">Need help with violations?</h3>
-          <button class="help-button">Contact Support</button>
-        </div> -->
       </div>
     </div>
   </div>
 
-  <!-- Tab Navigation -->
+   Tab Navigation 
   <div class="tab-navigation">
     <h2 class="section-title">Check your violation reports</h2>
-    
     <div class="tabs">
-      <button 
-        class="tab-button" 
-        [class.active]="selectedTab === 'all'"
-        (click)="selectTab('all')">
-        All Reports
-      </button>
-      <button 
-        class="tab-button" 
-        [class.active]="selectedTab === 'pending'"
-        (click)="selectTab('pending')">
-        Pending
-      </button>
-      <button 
-        class="tab-button" 
-        [class.active]="selectedTab === 'under-review'"
-        (click)="selectTab('under-review')">
-        Under Review
-      </button>
-      <button 
-        class="tab-button" 
-        [class.active]="selectedTab === 'resolved'"
-        (click)="selectTab('resolved')">
-        Resolved
-      </button>
+      <button class="tab-button" [class.active]="selectedTab === 'all'" (click)="selectTab('all')">All Reports</button>
+      <button class="tab-button" [class.active]="selectedTab === 'pending'" (click)="selectTab('pending')">Pending</button>
+      <button class="tab-button" [class.active]="selectedTab === 'under-review'" (click)="selectTab('under-review')">Under Review</button>
+      <button class="tab-button" [class.active]="selectedTab === 'resolved'" (click)="selectTab('resolved')">Resolved</button>
     </div>
   </div>
 
-  <!-- Content Section -->
+   Content Section 
   <div class="content-section">
     @if (isLoading) {
       <div class="loading-state">
@@ -71,7 +44,7 @@
       <div class="error-state">
         <h3>Something went wrong</h3>
         <p>{{ error }}</p>
-        <button class="retry-button" (click)="loadViolations()">Try Again</button>
+        <button class="retry-button" (click)="fetchHostViolations()">Try Again</button>
       </div>
     } @else if (filteredViolations.length === 0) {
       <div class="empty-state">
@@ -154,6 +127,8 @@
               </div>
             </div>
 
+             ❌ Edit buttons commented out as requested 
+            
             <div class="violation-actions">
               @if (violation.status !== 'Resolved') {
                 <button class="action-button secondary" 
@@ -168,9 +143,10 @@
                 <span class="resolved-indicator">✓ This violation has been resolved</span>
               }
             </div>
+            
           </div>
         }
       </div>
     }
   </div>
-</div>
+</div> -->

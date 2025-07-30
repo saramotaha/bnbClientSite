@@ -1,3 +1,5 @@
+/* You can add global styles to this file, and also import other style files */
+
 
   :root {
      --primary-color: #FF385C;
@@ -74,6 +76,7 @@
       color: #333;
       margin: 0;
       padding-bottom: 4rem;
+      overflow-x: hidden;
     }
 
 
@@ -148,3 +151,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: var(--airbnb-white);
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+        :root {
+            --airbnb-pink: #FF385C;
+            --airbnb-dark: #222222;
+            --airbnb-light-gray: #EBEBEB;
+            --airbnb-gray: #717171;
+            --airbnb-white: #FFFFFF;
+            --airbnb-purple: #8B4CF6;
+            --airbnb-gradient: linear-gradient(to right, #E61E4D, #E31C5F, #D70466);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }

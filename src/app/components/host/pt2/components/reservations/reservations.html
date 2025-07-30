@@ -1,5 +1,5 @@
-<div class="reservations-container">
-  <!-- Header -->
+<!-- <div class="reservations-container">
+   Header 
   <div class="header">
     <div class="header-left">
       <button class="back-btn" (click)="goToHostDashboard()">
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <!-- Tabs -->
+   Tabs 
   <div class="tabs">
     <button 
       class="tab" 
@@ -40,9 +40,9 @@
     </button>
     <button 
       class="tab" 
-      [class.active]="activeTab() === 'canceled'"
-      (click)="setActiveTab('canceled')">
-      Canceled
+      [class.active]="activeTab() === 'cancelled'"
+      (click)="setActiveTab('cancelled')">
+      Cancelled
     </button>
     <button 
       class="tab" 
@@ -52,7 +52,7 @@
     </button>
   </div>
 
-  <!-- Content -->
+   Content 
   <div class="content">
     @if (loading()) {
       <div class="loading">
@@ -91,4 +91,4 @@
       </div>
     }
   </div>
-</div>
+</div> -->

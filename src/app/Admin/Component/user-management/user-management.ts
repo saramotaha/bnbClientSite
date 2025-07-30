@@ -29,7 +29,8 @@ export class UserManagement implements OnInit {
   GetAllUsers() {
      this.service.GetAllUsers().subscribe({
       next: (response) => {
-        this.AllUsers = response.filter(u=>u.role !='admin');
+         this.AllUsers = response.filter(u => u.role != 'admin');
+         this.FilteredUsers = [...this.AllUsers];
         // console.log(this.AllUsers);
         this.cdr.detectChanges();
 
@@ -80,47 +81,74 @@ export class UserManagement implements OnInit {
 
 
 
-  SubmitAddUser() {
+ SubmitAddUser() {
+  this.Data = this.AddUserForm.value as IAddUser;
 
-    this.Data = this.AddUserForm.value as IAddUser;
+  if (this.AddUserForm.valid) {
+    const payload: IAddUser = {
+      ...this.Data,
+      dateOfBirth: this.Data.dateOfBirth
+        ? new Date(this.Data.dateOfBirth).toISOString()
+        : null
+    };
 
-    if (this.AddUserForm.valid) {
-
-          const payload: IAddUser = {
-    ...this.Data,
-    dateOfBirth: this.Data.dateOfBirth
-      ? new Date(this.Data.dateOfBirth).toISOString()
-      : null
-  };
-
-
-
-
-
-    this.service.AddUser( payload).subscribe({
+    this.service.AddUser(payload).subscribe({
       next: (response) => {
-
         console.log(response);
-        this.cdr.detectChanges();
+        this.GetAllUsers();
 
+        // ✅ Hide Modal
+        const modal = document.getElementById('addUserModal');
+        if (modal) {
+          const bsModal = (window as any).bootstrap.Modal.getInstance(modal);
+          bsModal.hide();
+        }
 
+        // ✅ Reset Form
+        this.AddUserForm.reset();
       },
-
       error: (e) => {
         console.log(e);
-
       }
-    })
-
-    }
-
-
-
-    return;
-
-
-
+    });
   }
+}
+
+
+    FilteredUsers: IUser[] = []; // For displaying filtered data
+
+  searchQuery: string = '';
+  selectedRole: string = 'all';
+
+
+onSearch(event: any) {
+  this.searchQuery = event.target.value.toLowerCase();
+  this.applyFilters();
+}
+
+
+   onRoleFilterChange(event: any) {
+    this.selectedRole = event.target.value;
+    this.applyFilters();
+  }
+
+
+
+ applyFilters() {
+  this.FilteredUsers = this.AllUsers.filter(user => {
+    const matchesSearch =
+      user.firstName.toLowerCase().includes(this.searchQuery) ||
+      user.lastName.toLowerCase().includes(this.searchQuery) ||
+      user.email.toLowerCase().includes(this.searchQuery);
+
+    const matchesRole =
+      this.selectedRole === 'all' || user.role === this.selectedRole;
+
+    return matchesSearch && matchesRole;
+  });
+
+  this.cdr.detectChanges();
+}
 
 
   BanUserForm = new FormGroup({

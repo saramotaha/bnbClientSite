@@ -1,68 +1,74 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {
-  BookingCreateDto,
-  BookingResponseDto,
-  BookingUpdateDto,
-  BookingStatusUpdateDto,
-  BookingStatsDto,
-  BookingSearchDto,
-  BookingCheckInStatusUpdate,
-  BookingCheckOutStatusUpdate
-} from '../models/booking.model';
-import { Observable } from 'rxjs';
+// import { Injectable } from '@angular/core';
+// import { HttpClient } from '@angular/common/http';
+// import {
+//   BookingCreateDto,
+//   BookingResponseDto,
+//   BookingUpdateDto,
+//   BookingStatusUpdateDto,
+//   BookingStatsDto,
+//   BookingSearchDto,
+//   BookingCheckInStatusUpdate,
+//   BookingCheckOutStatusUpdate
+// } from '../models/booking.model';
+// import { Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
-export class BookingService {
-  private baseUrl = '/api/booking';
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class BookingService {
+//   private baseUrl = '/api/booking';
 
-  constructor(private http: HttpClient) {}
+//   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<BookingResponseDto[]> {
-    return this.http.get<BookingResponseDto[]>(this.baseUrl);
-  }
+//   getAll(): Observable<BookingResponseDto[]> {
+//     return this.http.get<BookingResponseDto[]>(this.baseUrl);
+//   }
 
-  getById(id: number): Observable<BookingResponseDto> {
-    return this.http.get<BookingResponseDto>(`${this.baseUrl}/${id}`);
-  }
+//   getBookingById(id: number): Observable<BookingResponseDto> {
+//     return this.http.get<BookingResponseDto>(`${this.baseUrl}/${id}`);
+//   }
 
-  getByGuestId(guestId: number): Observable<BookingResponseDto[]> {
-    return this.http.get<BookingResponseDto[]>(`${this.baseUrl}/ByGuestId/${guestId}`);
-  }
+//   createBooking(userId: number, dto: BookingCreateDto): Observable<number> {
+//     return this.http.post<number>(`${this.baseUrl}/CreateBookingByUserId${userId}`, dto);
+//   }
 
-  getByPropertyId(propertyId: number): Observable<BookingResponseDto[]> {
-    return this.http.get<BookingResponseDto[]>(`${this.baseUrl}/ByPropertyId/${propertyId}`);
-  }
+//   updateBooking(id: number, dto: BookingUpdateDto): Observable<string> {
+//     return this.http.put<string>(`${this.baseUrl}/${id}`, dto);
+//   }
 
-  create(booking: BookingCreateDto): Observable<number> {
-    return this.http.post<number>(this.baseUrl, booking);
-  }
+//   updateBookingStatus(id: number, dto: BookingStatusUpdateDto): Observable<string> {
+//     return this.http.put<string>(`${this.baseUrl}/Update-Status/${id}`, dto);
+//   }
 
-  update(id: number, booking: BookingUpdateDto): Observable<string> {
-    return this.http.put<string>(`${this.baseUrl}/${id}`, booking);
-  }
+//   updateCheckInStatus(id: number, dto: BookingCheckInStatusUpdate): Observable<string> {
+//     return this.http.put<string>(`${this.baseUrl}/Update-CheckInStatus/${id}`, dto);
+//   }
 
-  updateStatus(id: number, statusDto: BookingStatusUpdateDto): Observable<string> {
-    return this.http.put<string>(`${this.baseUrl}/Update-Status/${id}`, statusDto);
-  }
+//   updateCheckOutStatus(id: number, dto: BookingCheckOutStatusUpdate): Observable<string> {
+//     return this.http.put<string>(`${this.baseUrl}/Update-CheckOutStatus/${id}`, dto);
+//   }
 
-  updateCheckInStatus(id: number, dto: BookingCheckInStatusUpdate): Observable<string> {
-    return this.http.put<string>(`${this.baseUrl}/Update-CheckInStatus/${id}`, dto);
-  }
+//   deleteBooking(id: number): Observable<string> {
+//     return this.http.delete<string>(`${this.baseUrl}/${id}`);
+//   }
 
-  updateCheckOutStatus(id: number, dto: BookingCheckOutStatusUpdate): Observable<string> {
-    return this.http.put<string>(`${this.baseUrl}/Update-CheckOutStatus/${id}`, dto);
-  }
+//   getBookingsByGuest(guestId: number): Observable<BookingResponseDto[]> {
+//     return this.http.get<BookingResponseDto[]>(`${this.baseUrl}/ByGuestId/${guestId}`);
+//   }
 
-  delete(id: number): Observable<string> {
-    return this.http.delete<string>(`${this.baseUrl}/${id}`);
-  }
+//   getBookingsByProperty(propertyId: number): Observable<BookingResponseDto[]> {
+//     return this.http.get<BookingResponseDto[]>(`${this.baseUrl}/ByPropertyId/${propertyId}`);
+//   }
 
-  searchBookings(criteria: BookingSearchDto): Observable<BookingResponseDto[]> {
-    return this.http.post<BookingResponseDto[]>(`${this.baseUrl}/Search`, criteria);
-  }
+//   searchBookings(criteria: BookingSearchDto): Observable<BookingResponseDto[]> {
+//     return this.http.post<BookingResponseDto[]>(`${this.baseUrl}/Search`, criteria);
+//   }
 
-  getStats(): Observable<BookingStatsDto> {
-    return this.http.get<BookingStatsDto>(`${this.baseUrl}/Stats`);
-  }
-}
+//   getBookingStats(): Observable<BookingStatsDto> {
+//     return this.http.get<BookingStatsDto>(`${this.baseUrl}/Stats`);
+//   }
+//   getBookingsByHost(hostId: number): Observable<BookingResponseDto[]> {
+//   return this.http.get<BookingResponseDto[]>(`${this.baseUrl}/host/${hostId}`);
+// }
+
+// }

@@ -1,0 +1,52 @@
+/* messages.css */
+.messages-layout {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.sidebar-container {
+  flex-shrink: 0;
+  width: 400px;
+  height: 100vh;
+  border-right: 1px solid #e1e1e1;
+  background: #fff;
+  overflow: hidden;
+}
+
+.chat-container {
+  flex: 1;
+  height: 100vh;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .messages-layout {
+    flex-direction: column;
+  }
+  
+  .sidebar-container {
+    width: 100%;
+    height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e1e1e1;
+  }
+  
+  .chat-container {
+    height: 50vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-container {
+    height: 40vh;
+  }
+  
+  .chat-container {
+    height: 60vh;
+  }
+}
