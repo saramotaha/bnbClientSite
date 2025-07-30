@@ -46,6 +46,7 @@ import { PropertyManagementComponent } from './Admin/Component/admin-properties-
 import { Login } from './Pages/login/login';
 import { AdminPayment } from './Admin/Component/admin-payment/admin-payment';
 import { Messages } from './User/messages/messages';
+import { UserProfile } from './User/UserProfile/Component/user-profile/user-profile';
 
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
@@ -94,6 +95,7 @@ export const routes: Routes = [
 
     // { path: "messages", component: Messages , pathMatch:"full" },
   { path: "favorites",component:Favorites,pathMatch:"full"},
+  { path: "UserProfile",component:UserProfile,pathMatch:"full"},
   // { path: "notifications", component: Notifications , pathMatch:"full" },
   // { path: "AdminNotifications", component: DashBoardBar , pathMatch:"full" },
 
