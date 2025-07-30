@@ -78,7 +78,7 @@ export const routes: Routes = [
     ]
     
   },
-  { path: "Login", component: Login , pathMatch:"full" },
+  { path: "login", component: Login },
   { path: "ViewAllHomes", component: ViewAllHomes , pathMatch:"full" },
   { path: "register", component: Register , pathMatch:"full" },
   { path: "propertyDetails/:id", component: PropertyDetails , pathMatch:"full" },
@@ -92,15 +92,15 @@ export const routes: Routes = [
   // { path: "profile", component: Profile , pathMatch:"full" },
   // { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   // { path: "checkout", component: Checkout , pathMatch:"full" },
-  { path: 'host/calendar',component: HostCalendarPage },
+  { path: 'host/dashboard/calendar',component: HostCalendarPage },
   { path: 'host/dashboard', component: HostDashboard }, //layout shell
-  { path: 'host/today', component: TodayBookingsComponent},
-  { path: 'host/reservations', component: Reservations},
-  { path: 'host/violations', component: Violations},
-  { path: 'host/earnings', component: Earnings},
-  { path: 'host/listings', component: PropertyListComponent},
-  { path: 'host/create-listing', component: ListingStep1Component},
-  // { path: 'host/messages', component: Messages},
+  { path: 'host/dashboard/today', component: TodayBookingsComponent},
+  { path: 'host/dashboard/reservations', component: Reservations},
+  { path: 'host/dashboard/violations', component: Violations},
+  { path: 'host/dashboard/earnings', component: Earnings},
+  { path: 'host/dashboard/listings', component: PropertyListComponent},
+  { path: 'host/dashboard/create-listing', component: ListingStep1Component},
+  // { path: 'host/dashboard/messages', component: Messages},
   // { path: "**", component: NotFound} //MUST BE AT THE END
   { path: '', component: PropertyListComponent },
   { path: 'host', children: listingsRoutes },
