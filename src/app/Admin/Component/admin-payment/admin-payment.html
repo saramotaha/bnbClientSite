@@ -5,6 +5,15 @@
 
   </div>
 
+
+<div class="filters d-flex flex-wrap gap-2 mb-4 w-50 mt-5">
+  <select class="form-select" (change)="filterPayments($event)">
+    <option value="all" selected>All Status</option>
+    <option value="pending">Pending</option>
+    <option value="completed">Completed</option>
+  </select>
+</div>
+
   <div class="card-style   mt-5 ">
     <div class="row">
       <div class="col-12 ">
@@ -32,10 +41,10 @@
 
               <tbody id="userTableBody">
 
-                @for (item of Payments; track $index) {
+                @for (item of filteredPayments; track $index) {
 
                 <tr>
-                  <td>{{item.id}}</td>
+                  <td>{{item.bookingId}}</td>
                   <td>{{item.guestFullName}}</td>
                   <td>{{item.propertyTitle}}</td>
                   <td>{{item.amount}}</td>
@@ -43,7 +52,7 @@
                   <td class="">
                     <div class="action-btns d-flex">
 
-                      <!-- <button  (click)="ReversePayment(item.id)" class="btn btn-outline-danger btn-icon"><i class="fa fa-add"></i></button> -->
+                      <button [disabled]="item.status=='Completed'" (click)="ReversePayment(item.bookingId)"  class="btn btn-outline-success btn-icon"><i class="fa-solid fa-check-double"></i></button>
                     </div>
                   </td>
                 </tr>

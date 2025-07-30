@@ -63,12 +63,22 @@ private getUserFromToken(token: string): User {
   const payload = jwtDecode<JwtPayload>(token);
   console.log('Decoded JWT Payload:', payload);
 
+  // return {
+  //   id: payload.UserId || payload.nameidentifier || '',
+  //   firstName: payload.name || '',
+  //   email: payload.emailaddress || '',
+  //   role: payload.role || 'guest',
+  //   HostId: payload.HostId ? String(payload.HostId) : undefined
+  // };
   return {
-    id: payload.UserId || payload.nameidentifier || '',
-    firstName: payload.name || '',
-    email: payload.emailaddress || '',
-    role: payload.role || 'guest',
-  };
+  id: payload.UserID || payload.nameidentifier || '',
+  firstName: payload.firstName || '',
+  lastName: payload.lastName || '',
+  email: payload.email || '',
+  role: payload.role || 'guest',
+  HostId: payload.HostId ? String(payload.HostId) : undefined
+};
+
 }
 
 

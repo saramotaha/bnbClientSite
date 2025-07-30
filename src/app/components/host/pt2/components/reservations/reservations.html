@@ -1,5 +1,5 @@
-<!-- <div class="reservations-container">
-   Header 
+<div class="reservations-container">
+   <!-- Header  -->
   <div class="header">
     <div class="header-left">
       <button class="back-btn" (click)="goToHostDashboard()">
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-   Tabs 
+   <!-- Tabs  -->
   <div class="tabs">
     <button 
       class="tab" 
@@ -52,7 +52,7 @@
     </button>
   </div>
 
-   Content 
+   <!-- Content  -->
   <div class="content">
     @if (loading()) {
       <div class="loading">
@@ -84,11 +84,11 @@
                 <span class="status" [class]="reservation.status">{{reservation.status | titlecase}}</span>
               </div>
               <p class="guest-name">Guest: {{reservation.guestName}}</p>
-              <p class="amount">${{reservation.totalAmount}}</p>
+              <p class="amount">${{ reservation.totalAmount | currency:'USD':'symbol':'1.0-2' }}</p>
             </div>
           </div>
         }
       </div>
     }
   </div>
-</div> -->
+</div>

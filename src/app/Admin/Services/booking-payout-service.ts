@@ -17,8 +17,8 @@ export class BookingPayoutService {
   }
 
 
-  ReleasePayout(id:number) {
-    this.http.post(`${this.ReleaseURl}${id}`,null);
+  ReleasePayout(id:number):Observable<any> {
+   return this.http.post(`${this.ReleaseURl}${id}`,null);
   }
 
 }
