@@ -20,6 +20,8 @@ export class Propertybookingcard {
   @Input() bookingDetails!: IbookingCreate // Added as per reference
   @Input() propertyId = 1
   @Output() datesSelected = new EventEmitter<{ checkIn: string; checkOut: string }>() // Added as per reference
+  @Input() selectedCheckIn: string = ''
+  @Input() selectedCheckOut: string = ''
 
   // Calendar state from reference
   propertyDetails!: IPropertyList
@@ -84,30 +86,43 @@ export class Propertybookingcard {
     }
   }
 
-  @HostListener("document:click", ["$event"])
-  onClick(event: MouseEvent) {
-    const calendarDropdown = document.getElementById("calendar-dropdown")
-    const dateInputsSection = document.querySelector(".date-inputs-section")
+  // @HostListener("document:click", ["$event"])
+  // onClick(event: MouseEvent) {
+  //   const calendarDropdown = document.getElementById("calendar-dropdown")
+  //   const dateInputsSection = document.querySelector(".date-inputs-section")
 
-    // If calendar is open and click is outside the date inputs and calendar itself
-    if (
-      this.showCalendar &&
-      dateInputsSection &&
-      calendarDropdown &&
-      !dateInputsSection.contains(event.target as Node) &&
-      !calendarDropdown.contains(event.target as Node)
-    ) {
-      this.closeCalendar(); 
-      // Reverted to close only if both dates are selected, to match reference's close button disabled state
-      if (this.checkInDate && this.checkOutDate) {
-        this.closeCalendar()
-      } else {
-        // Optionally, you can still alert or prevent closing if dates are not selected
-        // alert("Please select both check-in and check-out dates before closing.");
-      }
-    }
+  //   // If calendar is open and click is outside the date inputs and calendar itself
+  //   if (
+  //     this.showCalendar &&
+  //     dateInputsSection &&
+  //     calendarDropdown &&
+  //     !dateInputsSection.contains(event.target as Node) &&
+  //     !calendarDropdown.contains(event.target as Node)
+  //   ) {
+
+      
+  //     // this.closeCalendar(); 
+  //     // Reverted to close only if both dates are selected, to match reference's close button disabled state
+  //     if (this.checkInDate && this.checkOutDate) {
+  //       this.closeCalendar()
+  //     } else {
+  //       // Optionally, you can still alert or prevent closing if dates are not selected
+  //       // alert("Please select both check-in and check-out dates before closing.");
+  //     } 
+     
+  //   }
+  // }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+  const path = event.composedPath(); // handles shadow DOM, nested elements
+  const isClickInside = path.some((el: any) => {
+    return el?.id === 'calendar-dropdown' || el?.classList?.contains('date-inputs-section');
+  });
+
+  if (!isClickInside && this.showCalendar) {
+    this.closeCalendar();
   }
-
+}
   openCalendar(type: "checkin" | "checkout") {
     this.activeInput = type
     this.showCalendar = true
@@ -119,7 +134,7 @@ export class Propertybookingcard {
     // Reverted to close only if both dates are selected, to match reference's close button disabled state
    /*  if (this.checkInDate|| this.checkOutDate) {
       this.showCalendar = false
-      this.updateInputStates()
+      // this.updateInputStates()
     } else {
       alert("Please select both check-in and check-out dates")
     } */
@@ -144,15 +159,6 @@ export class Propertybookingcard {
     }
   }
 
- /*  changeGuests(change: number) {
-    const newCount = this.guestCount + change
-    if (newCount >= 1 && newCount <= 10) {
-      this.guestCount = newCount
-      this.updateGuestDisplay()
-      this.calculateFinalPrice()
-    }
-  }
- */
 
 
   changeGuests(change: number) {
@@ -297,6 +303,7 @@ export class Propertybookingcard {
           this.datesSelected.emit({
             checkIn: this.checkInDate.toLocaleDateString("en-CA"),
             checkOut: this.checkOutDate.toLocaleDateString("en-CA"),
+            
           }) // Emitting as per reference
         } else {
           this.rangeUnavailableMessage = "Selected range includes unavailable dates. Please choose another range."
@@ -310,6 +317,7 @@ export class Propertybookingcard {
         this.checkOutDate = null
       }
     }
+    this.showCalendar = true;
     this.updateDisplays() // Keep for UI update
     this.updateInputStates() // Keep for UI update
     this.updateCloseButton() // Keep for UI update
@@ -317,6 +325,7 @@ export class Propertybookingcard {
     this.generateCalendar() // Re-generate calendar to update highlights
   }
 
+ 
   confirmSelection() {
     // This function exists in your reference, but its body is commented out.
     // Keeping it here for structural consistency.

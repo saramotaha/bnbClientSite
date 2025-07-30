@@ -22,7 +22,8 @@ export class PropertyDetails implements OnInit {
   constructor(private PropertyDetailsService:PropertyDetailsService, private cdr: ChangeDetectorRef,private route:ActivatedRoute) {}
   propertyId!:number;
   propertyDetails !: IPropertyList;
-  
+  selectedCheckIn: string = '';
+selectedCheckOut: string = '';
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.propertyId = +params['id']; // Get the property ID from the route parameters
@@ -40,6 +41,10 @@ export class PropertyDetails implements OnInit {
       }
     });      
     
+  }
+  onDatesSelected( event: { checkIn: string; checkOut: string } ){
+    this.selectedCheckIn = event.checkIn;
+    this.selectedCheckOut = event.checkOut;
   }
 
 }

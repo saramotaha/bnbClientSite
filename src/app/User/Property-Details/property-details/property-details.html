@@ -37,13 +37,13 @@
         
         <app-propertydetails-amenities [propertyId]="propertyId"></app-propertydetails-amenities>
         <hr class="my-5"/>
-        <app-propertydetails-calendar [propertyId]="propertyId"></app-propertydetails-calendar>
+        <app-propertydetails-calendar (datesSelected)="onDatesSelected($event)" [propertyId]="propertyId"></app-propertydetails-calendar>
          
 
     </div>
     <div class="col-4">
         <div class="sticky-top" style="top: 15px;">
-            <app-propertybookingcard [propertyId]="propertyId"></app-propertybookingcard>
+            <app-propertybookingcard [selectedCheckIn]="selectedCheckIn" [selectedCheckOut]="selectedCheckOut" [propertyId]="propertyId"></app-propertybookingcard>
         </div>
     </div>
             <hr class="my-5"/>
