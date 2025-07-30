@@ -39,9 +39,6 @@ import { UserManagement } from './Admin/Component/user-management/user-managemen
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
 
 import { AdminHostVerificationComponent } from './Admin/Component/admin-host-verifications/admin-host-verifications';
-// export const routes: Routes = [
-//   { path: "", redirectTo:"admin", pathMatch: "full"},
-//   { path: "", component: Home, pathMatch: "full" },
 
 import { Earnings } from './components/host/pt2/components/earnings/earnings';
 import { PropertyListComponent } from './components/host/pt1/property-list/property-list';
@@ -49,10 +46,11 @@ import { listingsRoutes } from './components/host/pt1/listings/listings.routes';
 import { EditPropertyComponent } from './components/host/pt1/edit-property.component/edit-property.component';
 import { ListingStep1Component } from './components/host/pt1/listings/listing-step1/listing-step1.component';
 // import { Messages } from './components/host/pt2/components/messages/messages';
-import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
 import { Login } from './Pages/login/login';
 import { AdminPayment } from './Admin/Component/admin-payment/admin-payment';
 import { Messages } from './User/messages/messages';
+import { UserProfile } from './User/UserProfile/Component/user-profile/user-profile';
+import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
 
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
@@ -75,7 +73,7 @@ export const routes: Routes = [
       {path: "AdminPayment", component: AdminPayment},
 
     ]
-    
+
   },
   { path: "login", component: Login },
   { path: "ViewAllHomes", component: ViewAllHomes , pathMatch:"full" },
@@ -110,6 +108,7 @@ export const routes: Routes = [
 
     // { path: "messages", component: Messages , pathMatch:"full" },
   { path: "favorites",component:Favorites,pathMatch:"full"},
+  { path: "UserProfile",component:UserProfile,pathMatch:"full"},
   // { path: "notifications", component: Notifications , pathMatch:"full" },
   // { path: "AdminNotifications", component: DashBoardBar , pathMatch:"full" },
 
