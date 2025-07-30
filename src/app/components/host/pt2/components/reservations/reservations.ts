@@ -7,9 +7,10 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
  import { BookingService } from '../../services/booking.service';
-// import { AuthService } from '../../../../../Pages/Auth/auth.service';
+import { AuthService } from '../../../../../Pages/Auth/auth.service';
 import { BookingResponseDto } from '../../models/booking.model';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-reservations',
@@ -20,7 +21,8 @@ import { CommonModule } from '@angular/common';
 })
  export class Reservations implements OnInit {
    private bookingService = inject(BookingService);
-  //  private authService = inject(AuthService);
+   private authService = inject(AuthService);
+   private cdRef = inject(ChangeDetectorRef);
    private router = inject(Router);
 
    activeTab = signal<string>('upcoming');
@@ -63,28 +65,32 @@ import { CommonModule } from '@angular/common';
      this.loadReservations();
    }
 
-   loadReservations(): void {
-     this.loading.set(true);
+loadReservations(): void {
+  this.loading.set(true);
 
-     const hostId = 3;
-     if (!hostId) {
-       console.warn('Missing host ID. Make sure it’s stored during login.');
-       this.loading.set(false);
-       return;
-     }
+  const hostId = Number(this.authService.getHostId());
+  if (!hostId) {
+    console.warn('Missing host ID.');
+    this.loading.set(false);
+    this.cdRef.detectChanges(); // Manually trigger change detection
+    return;
+  }
 
-     this.bookingService.getBookingsByHost(+hostId).subscribe({
-       next: (bookings) => {
-         this.reservations.set(bookings);
-         this.loading.set(false);
-       },
-       error: (err) => {
-         console.error('Failed to load reservations:', err);
-         this.reservations.set([]);
-         this.loading.set(false);
-       }
-     });
-   }
+  this.bookingService.getBookingsByHost(hostId).subscribe({
+    next: (bookings) => {
+      this.reservations.set(bookings);
+      this.loading.set(false);
+      this.cdRef.detectChanges(); // Ensure UI reflects the new state
+    },
+    error: (err) => {
+      console.error('Failed to load reservations:', err);
+      this.reservations.set([]);
+      this.loading.set(false);
+      this.cdRef.detectChanges(); // Reflect error state in the view
+    }
+  });
+}
+
 
    setActiveTab(tab: string): void {
      this.activeTab.set(tab);

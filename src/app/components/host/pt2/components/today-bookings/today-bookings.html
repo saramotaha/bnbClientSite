@@ -2,7 +2,7 @@
    <!-- Header  -->
   <div class="dashboard-header">
     <div class="header-content">
-      <h1 class="welcome-text">Welcome, {{hostName}}!</h1>
+      <h1 class="welcome-text">Welcome, {{hostName | titlecase}}!</h1>
        <button class="complete-listing-btn">Complete your listing</button> 
     </div>
   </div>
@@ -29,14 +29,14 @@
      <!-- Content Area  -->
     <div class="content-area">
       @if (isLoading) {
-         Loading Spinner 
+         <!-- Loading Spinner  -->
         <div class="spinner-container">
           <div class="spinner"></div>
           <p class="loading-message">Loading reservations for today...</p>
         </div>
       } @else {
         @if (getFilteredBookings().length === 0) {
-           Empty State 
+           <!-- Empty State  -->
           <div class="empty-state">
             <div class="empty-icon">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -47,7 +47,7 @@
             <p class="empty-message">{{getEmptyStateMessage()}}</p>
           </div>
         } @else {
-           Booking Cards 
+           <!-- Booking Cards  -->
           <div class="booking-cards">
             @for (booking of getFilteredBookings(); track booking.id) {
               <div class="booking-card">

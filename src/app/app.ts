@@ -15,7 +15,7 @@ import { Login } from './Pages/login/login';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, GoogleMapsModule ],
+  imports: [RouterOutlet, GoogleMapsModule, HostDashboard ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

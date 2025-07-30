@@ -7,7 +7,7 @@ import { Property } from '../Models/property.model';
 export class PropertyService {
     private listingData: any = {};
 
-  private baseUrl = 'https://localhost:7145/api/property';    
+  private baseUrl = 'http://localhost:7145/api/property';    
 
   constructor(private http: HttpClient) {}
 

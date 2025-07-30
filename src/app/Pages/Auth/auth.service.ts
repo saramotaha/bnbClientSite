@@ -22,12 +22,12 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-//   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-//   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-//   constructor(private http: HttpClient) {
-//     this.initializeAuthState();
-//   }
+  constructor(private http: HttpClient) {
+    this.initializeAuthState();
+  }
 
   /** ✅ REGISTER */
   register(registerDto: RegisterDto): Observable<any> {
@@ -63,12 +63,22 @@ private getUserFromToken(token: string): User {
   const payload = jwtDecode<JwtPayload>(token);
   console.log('Decoded JWT Payload:', payload);
 
+  // return {
+  //   id: payload.UserId || payload.nameidentifier || '',
+  //   firstName: payload.name || '',
+  //   email: payload.emailaddress || '',
+  //   role: payload.role || 'guest',
+  //   HostId: payload.HostId ? String(payload.HostId) : undefined
+  // };
   return {
-    id: payload.UserId || payload.nameidentifier || '',
-    firstName: payload.name || '',
-    email: payload.emailaddress || '',
-    role: payload.role || 'guest',
-  };
+  id: payload.UserID || payload.nameidentifier || '',
+  firstName: payload.firstName || '',
+  lastName: payload.lastName || '',
+  email: payload.email || '',
+  role: payload.role || 'guest',
+  HostId: payload.HostId ? String(payload.HostId) : undefined
+};
+
 }
 
 

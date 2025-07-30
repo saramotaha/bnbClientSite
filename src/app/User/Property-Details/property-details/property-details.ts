@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { IPropertyList } from '../../../Core/Models/iproperty-list';
 import { PropertyDetailsService } from './property-details-service';
 import { PropertyDetialsReview } from "../components/property-detials-review/property-detials-review";
-import { HostInfo } from "../../../components/host-info/host-info";
+// import { HostInfo } from "../../../components/host-info/host-info";
 import { Hostinfo } from "../components/hostinfo/hostinfo";
 import { Propertybookingcard } from "../components/propertybookingcard/propertybookingcard";
 import { PropertydetailsAmenities } from "../components/propertydetails-amenities/propertydetails-amenities";
@@ -14,7 +14,7 @@ import { PropertydetailsCalendar } from "../components/propertydetails-calendar/
 
 @Component({
   selector: 'app-property-details',
-  imports: [ImageGallery, BaseNav, Footer, PropertyDetialsReview, HostInfo, Hostinfo, Propertybookingcard, PropertydetailsAmenities, PropertydetailsCalendar],
+  imports: [ImageGallery, BaseNav, Footer, PropertyDetialsReview, Hostinfo, Propertybookingcard, PropertydetailsAmenities, PropertydetailsCalendar],
 templateUrl: './property-details.html',
   styleUrl: './property-details.css'
 })

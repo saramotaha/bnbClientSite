@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BookingService {
-  private baseUrl = '/api/booking';
+  private baseUrl = 'http://localhost:7145/api/booking';
 
   constructor(private http: HttpClient) {}
 
