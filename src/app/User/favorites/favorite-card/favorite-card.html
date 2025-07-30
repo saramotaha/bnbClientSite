@@ -1,0 +1,10 @@
+<div class="card" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+  <button 
+    *ngIf="hover" 
+    class="remove-btn" 
+    (click)="onRemoveClick()"
+  >✖</button>
+  <img [src]="favorite.imageUrl" alt="{{favorite.title}}" />
+  <h3>{{favorite.title}}</h3>
+  <p>Added: {{favorite.favouritedAt}}</p>
+</div>

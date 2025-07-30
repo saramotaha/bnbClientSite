@@ -1,0 +1,137 @@
+<div class=" p-5  bg-light shadow-lg">
+  <div>
+    <div class="d-flex justify-content-between align-items-center mb-5 admin-header">
+      <h2 class="">📋 Violation Reports</h2>
+      <!-- <button class="btn btn-outline-primary filter-btn">🔍 Filter / Search</button> -->
+    </div>
+
+
+
+    <!-- Filter/search placeholder -->
+    <div class="row mb-5 justify-content-between ">
+      <div class="col-md-5 ">
+            <input type="text" class="form-control" placeholder="Search by keyword..." [(ngModel)]="searchKeyword"
+              (input)="onSearchChange()" />
+    </div>
+      <div class="col-md-5">
+        <select class="form-select" (change)="onStatusChange($event)">
+          <option value="All">Status: All</option>
+          <option value="UnderReview">UnderReview</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Dismissed">Dismissed</option>
+        </select>
+      </div>
+      <!-- <div class="col-md-3">
+        <select class="form-select">
+          <option>Sort by Date</option>
+          <option>Newest First</option>
+          <option>Oldest First</option>
+        </select>
+      </div> -->
+    </div>
+
+    <!-- Reports Table -->
+    <div class="table-responsive mb-5">
+      <table class="table table-hover align-middle text-center fs-6 " id="reportTable">
+        <thead class="table-light">
+          <tr >
+            <th>ID</th>
+            <th>fullName</th>
+            <th>role</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of filteredViolations; track $index) {
+
+          <tr class="p-5 fs-6">
+            <td>{{item.id}}</td>
+            <td>{{item.reporter.fullName}}</td>
+            <td>{{item.reporter.role}}</td>
+            <td>{{item.description}}</td>
+            <td><span  class="btn" [ngClass]="{'btn-outline-warning' : item.status=='Pending'  ,'btn-outline-danger' : item.status=='Dismissed' , 'btn-outline-success':item.status=='Resolved' , 'btn-outline-secondary':item.status=='UnderReview'}" >{{item.status}}</span></td>
+            <td>{{item.createdAt}}</td>
+           <div class="d-flex align-content-center">
+            <button (click)="GetDetails(item.id)" class="btn btn-outline-dark">👁 View Details</button>
+           </div>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Selected Report Details -->
+    <div id="reportDetails" *ngIf="ViolationById?.description">
+
+
+      <div class="card violation-card p-4 bg-white shadow-sm mt-4">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <h5 class="mb-3 fw-semibold">{{ViolationById?.violationType}}</h5>
+            <p class="text-muted small mb-3">Reported by: <strong>{{ViolationById?.reporter?.fullName}}</strong> | On:
+              <strong>{{ViolationById?.createdAt}}</strong>
+            </p>
+          </div>
+          <span class="badge bg-${statusClass} badge-status">{{ViolationById?.status}}</span>
+        </div>
+        <p class="mb-2">Description:{{ViolationById?.description}}</p>
+        <p class="admin-notes mb-3">{{ViolationById?.adminNotes ?? "No Notes"}}</p>
+        <div class="d-flex gap-2 card-actions">
+
+          <button class="btn btn-sm btn-outline-warning"
+        (click)="UnderReview(ViolationById?.id ?? 0)">
+  ⌛ UnderReview
+</button>
+
+<button class="btn btn-sm btn-outline-success"
+        (click)="StatusToResolved(ViolationById?.id ?? 0)">
+  ✔️ Mark as Resolved
+</button>
+
+<button class="btn btn-sm btn-outline-danger"
+        (click)="Reject(ViolationById?.id ?? 0)">
+  ✖️ Reject
+</button>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+    <h4 class="fw-semibold mb-5 my-5">📊 Violation Summary</h4>
+    <div class="row text-center g-4 my-5">
+      <div class="col-md-3">
+        <div class="bg-white rounded summary-box shadow-sm p-4">
+          <h5 class="text-primary fw-bold">{{AllViolation.length}}</h5>
+          <p class="text-muted mb-0">Total Reports</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="bg-white rounded summary-box shadow-sm p-4">
+          <h5 class="text-warning fw-bold">{{PendingViolation}}</h5>
+          <p class="text-muted mb-0">Pending</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="bg-white rounded summary-box shadow-sm p-4">
+          <h5 class="text-success fw-bold">{{ResolvedViolation}}</h5>
+          <p class="text-muted mb-0">Resolved</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="bg-white rounded summary-box shadow-sm p-4">
+          <h5 class="text-danger fw-bold">{{RejectedViolation}}</h5>
+          <p class="text-muted mb-0">Rejected</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

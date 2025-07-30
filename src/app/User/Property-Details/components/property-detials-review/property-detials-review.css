@@ -1,0 +1,8 @@
+  .review-avatar {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+        .bi-star-fill {
+            color: #ffd700;
+        }

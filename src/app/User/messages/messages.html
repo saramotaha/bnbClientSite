@@ -1,0 +1,10 @@
+<!-- messages.html -->
+<div class="messages-layout">
+  <div class="sidebar-container">
+    <app-message-list (conversationSelected)="onConvoSelected($event)"></app-message-list>
+  </div>
+  
+  <div class="chat-container">
+    <app-chat-window [conversationId]="selectedConversationId"></app-chat-window>
+  </div>
+</div>

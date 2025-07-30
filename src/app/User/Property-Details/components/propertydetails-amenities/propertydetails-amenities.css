@@ -1,0 +1,19 @@
+.amenitytxt{
+    font-size: 1.3rem;
+   
+}
+.amenityicon {
+    font-size: 1.7rem !important;
+    
+}
+.amenitybtn{
+    background: #f2f2f2;
+    padding: 14px 24px;
+    color: #000;
+    border-radius: 8px;
+    border: none;
+}
+.amenitybtn:hover{
+    background: #ebebeb;
+    color: #000;
+}
