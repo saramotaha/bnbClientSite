@@ -62,6 +62,15 @@ getPrimaryImage(property: Property): string | undefined {
     : undefined; 
 }
 
+editProperty(property: Property): void {
+  if (property.id) {
+    this.closeModal('viewModal'); 
+       setTimeout(() => {
+      this.router.navigate(['/host/listings/edit', property.id]);
+    }, 300); 
+  }
+}
+
 
 
 getFullImageUrl(imageName: string | undefined): string {

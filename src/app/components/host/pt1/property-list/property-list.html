@@ -44,7 +44,7 @@
         <p class="text-muted">{{ selectedProperty.address }}</p>
 
         <div class="d-flex flex-column align-items-center mt-4">
-          <button class="custom-btn-edit mb-2 w-75">Edit Listing</button>
+          <button class="custom-btn-edit mb-2 w-75" (click)="editProperty(selectedProperty)">Edit Listing</button>
           <button class="custom-btn-delete w-75" (click)="deleteProperty(selectedProperty.id)">
             <i class="bi bi-trash me-2"></i> Remove Listing
           </button>
