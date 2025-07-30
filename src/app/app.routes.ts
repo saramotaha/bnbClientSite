@@ -40,20 +40,18 @@ import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-ch
 
 import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
 import { AdminHostVerificationComponent } from './Admin/Component/admin-host-verifications/admin-host-verifications';
-export const routes: Routes = [
-  { path: "", redirectTo:"admin", pathMatch: "full"},
-  { path: "", component: Home, pathMatch: "full" },
+
 
 import { Earnings } from './components/host/pt2/components/earnings/earnings';
 import { PropertyListComponent } from './components/host/pt1/property-list/property-list';
 import { listingsRoutes } from './components/host/pt1/listings/listings.routes';
 import { ListingStep1Component } from './components/host/pt1/listings/listing-step1/listing-step1.component';
 // import { Messages } from './components/host/pt2/components/messages/messages';
-import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
 import { Login } from './Pages/login/login';
 import { AdminPayment } from './Admin/Component/admin-payment/admin-payment';
 import { Messages } from './User/messages/messages';
 import { UserProfile } from './User/UserProfile/Component/user-profile/user-profile';
+import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
 
 
 export const routes: Routes = [
@@ -72,12 +70,12 @@ export const routes: Routes = [
       { path: "DashboardCharts", component: DashboardCharts },
       {path: "PropertyManagement", component: PropertyManagementComponent},
 
-      {path: "AdminHostVerificationComponent", component: AdminHostVerificationComponent}
+      {path: "AdminHostVerificationComponent", component: AdminHostVerificationComponent},
 
       {path: "AdminPayment", component: AdminPayment},
 
     ]
-    
+
   },
   { path: "Login", component: Login , pathMatch:"full" },
   { path: "ViewAllHomes", component: ViewAllHomes , pathMatch:"full" },
