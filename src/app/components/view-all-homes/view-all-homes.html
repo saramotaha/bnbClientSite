@@ -11,7 +11,7 @@
       <div class="row d-flex justify-content-around   ">
         @for (item of pagedProperties; track $index) {
 
-        <div class="property-card rounded-5 shadow p-1 mx-1  col-3 mb-3  ">
+        <div class="property-card rounded-5 shadow p-1 mx-1  col-3 mb-3  "[routerLink]="['/propertyDetails', item.id]">
           <div class="property-image rounded-5 w-100  ">
             <img
               [src]="item?.images?.[0]?.imageUrl ?? 'https://www.hypneu.de/media/images/System/404-error-not-found-page-lost.png?_=0.027911563893951108'"

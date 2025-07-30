@@ -237,9 +237,11 @@ export class PropertyList implements OnInit {
 }
 
 
+getPropertyId(id: number): void {
+    this.router.navigate(['/propertyDetails', id]);
+    console.log('Navigating to property details with ID:', id);
 
-
-
+}
   }
 
 

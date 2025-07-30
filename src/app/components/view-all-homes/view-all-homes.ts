@@ -9,11 +9,13 @@ import { Nav } from "../../Shared/nav/nav";
 import { Footer } from "../../Shared/footer/footer";
 import { NotFound } from '../../Pages/not-found/not-found';
 import { Loader } from "../loader/loader";
+import { Route, Router, RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-view-all-homes',
-  imports: [CommonModule, Map, FormsModule, Nav, Footer, NotFound, Loader],
+  standalone: true,
+  imports: [CommonModule, Map, FormsModule, Nav, Footer, NotFound, Loader,RouterLink],
   templateUrl: './view-all-homes.html',
   styleUrl: './view-all-homes.css'
 })
@@ -32,7 +34,7 @@ get totalPages(): number {
   return Math.ceil(this.AllFilteredHomes.length / this.itemsPerPage);
   }
 
-  constructor(private service: FilterHomesServices , private cdr:ChangeDetectorRef , private CurrentProps :CurrentProperties) { }
+  constructor(private service: FilterHomesServices , private cdr:ChangeDetectorRef , private CurrentProps :CurrentProperties,private router:Router) { }
 
 
 
@@ -98,5 +100,8 @@ get totalPages(): number {
 
   }
 
+/* getPropertyId(id: number): void {
+    this.router.navigate(['/propertyDetails', id]);
 
+} */
 }

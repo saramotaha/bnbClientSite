@@ -2,8 +2,7 @@ import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, Output
 import { BookingService } from '../../../Booking/Service/booking-service';
 import { Router } from '@angular/router';
 import { IbookingCreate } from '../../../Booking/Model/ibooking-create';
-import { CalendarModalComponent } from '../../../Booking/components/calendar-modal-component/calendar-modal-component';
-import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { BookingPaymentService } from '../../../Booking/Service/booking-payment-service';
 import { FormsModule } from '@angular/forms';
 import { PropertydetailsCalendar } from '../propertydetails-calendar/propertydetails-calendar';
@@ -12,7 +11,7 @@ import { PropertyDetailsService } from '../../property-details/property-details-
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-propertybookingcard' ,
-  imports: [CalendarModalComponent, PropertydetailsCalendar, NgbModalModule, FormsModule, CommonModule ],
+  imports: [ PropertydetailsCalendar, FormsModule, CommonModule ],
 templateUrl: './propertybookingcard.html',
   styleUrl: './propertybookingcard.css'
 })

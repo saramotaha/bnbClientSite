@@ -1,8 +1,63 @@
-  .review-avatar {
+  /* .review-avatar {
             width: 40px;
             height: 40px;
             object-fit: cover;
         }
         .bi-star-fill {
             color: #ffd700;
+        } */
+
+                .rating-bar {
+            height: 4px;
+            background-color: #e9ecef;
+            border-radius: 2px;
+            overflow: hidden;
         }
+        .rating-fill {
+            height: 100%;
+            background-color: #212529;
+            border-radius: 2px;
+        }
+        .star-filled {
+            color: #212529;
+        }
+        .star-empty {
+            color: #dee2e6;
+        }
+        .review-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .leaf-icon {
+            font-size: 3rem;
+            color: #212529;
+        }
+        .rating-display {
+            font-size: 100px;
+            font-weight: bold;
+            color: #212529;
+        }
+
+        .textRev{
+            font-size: 16px;
+            font-weight:  400;
+        }
+        .Shownore {
+            font-size: 16px;
+           
+        }
+        .star-filled {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #212529;
+}
+.star-half {
+  color: #fbbc04;
+}
+.star-empty {   
+    font-size: 0.8rem;
+
+  color: #ccc; /* Gray */
+}
