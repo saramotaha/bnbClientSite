@@ -22,21 +22,21 @@ export class PropertyDetails implements OnInit {
   constructor(private PropertyDetailsService:PropertyDetailsService, private cdr: ChangeDetectorRef) {}
   propertyId= 1;
   propertyDetails !: IPropertyList;
-  
+
   ngOnInit(): void {
     this.PropertyDetailsService.getPropertyDetailsById(this.propertyId).subscribe({
       next: (propertyDetailsRes) => {
         this.propertyDetails = propertyDetailsRes;
-        console.log('Property details fetched successfully:', propertyDetailsRes); 
+        console.log('Property details fetched successfully:', propertyDetailsRes);
                 console.log('Property detailsDes successfully:', propertyDetailsRes.description);
         this.cdr.detectChanges();
       } ,
-      error: (error) => { 
+      error: (error) => {
         console.error('Error fetching property details:', error);
       }
-    });      
-    
+    });
+
   }
-  
+
 
 }

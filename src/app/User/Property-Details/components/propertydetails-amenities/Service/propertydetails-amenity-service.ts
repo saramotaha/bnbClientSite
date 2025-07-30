@@ -18,7 +18,7 @@ export class PropertydetailsAmenityService {
       .pipe(
         tap(amenities => {
           console.log('Fetched property amenities:', amenities);
-          this.PropertyAmentiesSupject.next(amenities); 
+          this.PropertyAmentiesSupject.next(amenities);
         }),
         catchError(error => {
           console.error('Error fetching property amenities:', error);
@@ -26,5 +26,5 @@ export class PropertydetailsAmenityService {
         })
       );
   }
-  
+
 }
