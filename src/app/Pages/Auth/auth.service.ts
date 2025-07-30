@@ -64,7 +64,7 @@ private getUserFromToken(token: string): User {
   console.log('Decoded JWT Payload:', payload);
 
   return {
-    id: payload.UserId || payload.nameidentifier || '',
+    id: payload.UserID|| payload.nameidentifier || '',
     firstName: payload.name || '',
     email: payload.emailaddress || '',
     role: payload.role || 'guest',

@@ -45,7 +45,7 @@ export interface JwtPayload {
   emailaddress: string;
   HostId?: string;
   name: string;            // username (GUID في حالتك)
-  UserId?: string;         // موجود أحياناً
+  UserID?: string;         // موجود أحياناً
   nameidentifier?: string; // نفس UserId أحياناً
   role?: string;
   exp?: number;

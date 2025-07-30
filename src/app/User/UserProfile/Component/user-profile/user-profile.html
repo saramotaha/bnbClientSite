@@ -7,7 +7,7 @@
       </div>
       <div class="sidebar ms-3">
         <a href="#" class="sidebar-item active">
-          <div class="sidebar-icon active">S</div>
+          <div class="sidebar-icon active text-white">{{currentUser.firstName}}</div>
           <span>About me</span>
         </a>
         <a href="#" class="sidebar-item">
@@ -37,9 +37,9 @@
 
         <!-- Profile Section -->
         <div class="profile-section bg-light shadow-lg p-3 mt-5 rounded-5">
-          <div class="profile-avatar">S</div>
-          <h2 class="profile-name">Sara</h2>
-          <p class="profile-type">Guest</p>
+          <div class="profile-avatar">{{currentUser.firstName}}</div>
+          <h2 class="profile-name">{{currentUser.firstName}}</h2>
+          <p class="profile-type">{{currentUser.role}}</p>
         </div>
 
         <!-- Reviews Section -->
@@ -68,6 +68,11 @@
 
     </div>
 
+
+
+    <div>
+      
+    </div>
     <!-- Right Sidebar -->
 
   </div>
