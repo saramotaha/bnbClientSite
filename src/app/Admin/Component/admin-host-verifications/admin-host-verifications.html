@@ -1,0 +1,492 @@
+<div class="host-verification-container">
+  <!-- Header -->
+  <header class="hv-header">
+    <div>
+      <h1>Host Verification Management</h1>
+      <!-- Auto-refresh status indicator -->
+      <div class="refresh-status">
+        <small class="refresh-status-text" [ngClass]="{
+          'status-active': autoRefreshEnabled && isPageVisible,
+          'status-paused': !autoRefreshEnabled || !isPageVisible
+        }">
+          <i class="fas" [ngClass]="{
+            'fa-sync-alt fa-spin': autoRefreshEnabled && isPageVisible,
+            'fa-pause': !autoRefreshEnabled || !isPageVisible
+          }"></i>
+          {{ refreshStatusText }}
+        </small>
+        <div class="last-refresh">
+          Last updated: {{ lastRefreshTime | date:'short' }}
+        </div>
+      </div>
+    </div>
+    
+    <div class="header-actions">
+      <!-- Auto-refresh controls -->
+      <div class="refresh-controls">
+        <button class="action-btn toggle-refresh-btn" 
+                (click)="toggleAutoRefresh()"
+                [ngClass]="{'active': autoRefreshEnabled}">
+          <i class="fas" [ngClass]="{
+            'fa-pause': autoRefreshEnabled,
+            'fa-play': !autoRefreshEnabled
+          }"></i>
+          {{ autoRefreshEnabled ? 'Pause' : 'Resume' }}
+        </button>
+        
+        <select class="form-control refresh-interval-select" 
+                [value]="autoRefreshInterval / 1000"
+                (change)="setRefreshInterval(+$any($event.target).value)">
+          <option value="10">10s</option>
+          <option value="30">30s</option>
+          <option value="60">1m</option>
+          <option value="300">5m</option>
+        </select>
+      </div>
+
+      <button class="action-btn filter-btn" (click)="toggleFilters()">
+        <i class="fas fa-filter"></i>
+        {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+      </button>
+      
+      <button class="action-btn export-btn" (click)="exportToCSV()">
+        <i class="fas fa-download"></i>
+        Export CSV
+      </button>
+      
+      <button class="action-btn refresh-btn" (click)="forceRefresh()">
+        <i class="fas fa-sync-alt"></i>
+        Refresh Now
+      </button>
+    </div>
+  </header>
+
+  <!-- Filters Panel -->
+  <div class="filters-panel" [class.show]="showFilters" [formGroup]="filterForm">
+    <div class="filters-grid">
+      <div class="filter-group">
+        <label for="status">Status</label>
+        <select id="status" formControlName="status" class="form-control">
+          <option *ngFor="let option of statusOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="verificationType">Verification Type</label>
+        <select id="verificationType" formControlName="verificationType" class="form-control">
+          <option *ngFor="let option of verificationTypeOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="hostId">Host ID</label>
+        <input id="hostId" type="number" formControlName="hostId" class="form-control" placeholder="Enter Host ID">
+      </div>
+
+      <div class="filter-group">
+        <label for="searchTerm">Search</label>
+        <input id="searchTerm" type="text" formControlName="searchTerm" class="form-control" placeholder="Search by name or ID">
+      </div>
+
+      <div class="filter-group">
+        <label for="dateFrom">From Date</label>
+        <input id="dateFrom" type="date" formControlName="dateFrom" class="form-control">
+      </div>
+
+      <div class="filter-group">
+        <label for="dateTo">To Date</label>
+        <input id="dateTo" type="date" formControlName="dateTo" class="form-control">
+      </div>
+    </div>
+
+    <div class="filters-actions">
+      <button class="action-btn clear-btn" (click)="clearFilters()">
+        <i class="fas fa-times"></i>
+        Clear Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Results Summary -->
+  <div class="results-summary">
+    <p>Showing {{ paginatedVerifications.length }} of {{ totalItems }} verifications</p>
+    <div class="items-per-page">
+      <label>Items per page:</label>
+      <select [value]="itemsPerPage" (change)="changeItemsPerPage(+$any($event.target).value)" class="form-control">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="hv-content">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading verifications...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && filteredVerifications.length === 0" class="no-data-message">
+      <i class="fas fa-inbox"></i>
+      <h3>No verifications found</h3>
+      <p>Try adjusting your filters or search criteria.</p>
+    </div>
+
+    <!-- Verifications Table -->
+    <div *ngIf="!isLoading && paginatedVerifications.length > 0" class="table-container">
+      <table class="verifications-table">
+        <thead>
+          <tr>
+            <th class="id-column">#ID</th>
+            <th class="host-column">Host Details</th>
+            <th class="status-column">Status</th>
+            <th class="date-column">Submitted</th>
+            <th class="type-column">Type</th>
+            <th class="documents-column">Documents</th>
+            <th class="actions-column">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let verification of paginatedVerifications; trackBy: trackByVerificationId" 
+              class="verification-row" 
+              [class.pending]="verification.status === 'pending'"
+              [class.approved]="verification.status === 'approved'"
+              [class.rejected]="verification.status === 'rejected'">
+            
+            <td class="id-cell">
+              <span class="verification-id">#{{ verification.id }}</span>
+            </td>
+            
+            <td class="host-cell">
+              <div class="host-info">
+                <div class="host-name">
+                  <i class="fas fa-user"></i>
+                  {{ verification.hostname || 'N/A' }}
+                </div>
+                <div class="host-id">Host ID: {{ verification.hostId }}</div>
+              </div>
+            </td>
+
+            <td class="status-cell">
+              <span class="status-badge" 
+                    [ngClass]="{
+                      'status-pending': verification.status === 'pending',
+                      'status-approved': verification.status === 'approved',
+                      'status-rejected': verification.status === 'rejected'
+                    }" 
+                    [class.status-changed]="verification.isChangingStatus">
+                <i [class]="getStatusIcon(verification.status)"></i>
+                {{ verification.status | titlecase }}
+              </span>
+            </td>
+
+            <td class="date-cell">
+              <div class="date-info">
+                <div class="date-primary">{{ formatDate(verification.submittedDate) }}</div>
+                <div class="date-time">{{ verification.submittedDate | date:'shortTime' }}</div>
+              </div>
+            </td>
+
+            <td class="type-cell">
+              <span class="verification-type">
+                <i class="fas fa-tag"></i>
+                {{ verification.VerificationType || 'Standard' | titlecase }}
+              </span>
+            </td>
+
+            <td class="documents-cell">
+              <div class="documents-info">
+                <i class="fas fa-file-alt"></i>
+                <span class="documents-count">{{ getDocumentsCount(verification) }}</span>
+                <span class="documents-label">docs</span>
+              </div>
+            </td>
+
+            <td class="actions-cell">
+              <div class="action-buttons">
+                <button class="action-btn details-btn" 
+                        (click)="viewDetails(verification)" 
+                        title="View Details">
+                  <i class="fas fa-info-circle"></i>
+                  Details
+                </button>
+                
+                <button *ngIf="verification.status === 'pending'" 
+                        class="action-btn approve-btn" 
+                        (click)="openApprovalModal(verification)" 
+                        title="Approve Verification">
+                  <i class="fas fa-check"></i>
+                  Approve
+                </button>
+                
+                <button *ngIf="verification.status === 'pending'" 
+                        class="action-btn reject-btn" 
+                        (click)="openRejectionModal(verification)" 
+                        title="Reject Verification">
+                  <i class="fas fa-times"></i>
+                  Reject
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Pagination -->
+  <div *ngIf="totalPages > 1" class="pagination-container">
+    <div class="pagination">
+      <button class="action-btn pagination-btn" 
+              [disabled]="currentPage === 1" 
+              (click)="changePage(currentPage - 1)">
+        <i class="fas fa-chevron-left"></i>
+        Previous
+      </button>
+
+      <button *ngFor="let page of pageNumbers" 
+              class="action-btn pagination-btn" 
+              [class.active]="page === currentPage"
+              (click)="changePage(page)">
+        {{ page }}
+      </button>
+
+      <button class="action-btn pagination-btn" 
+              [disabled]="currentPage === totalPages" 
+              (click)="changePage(currentPage + 1)">
+        Next
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div *ngIf="showDetailModal" class="modal-overlay" (click)="closeModals()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>
+        <i class="fas fa-info-circle"></i>
+        Verification Details
+        <span *ngIf="selectedVerification" class="verification-id-badge">#{{ selectedVerification.id }}</span>
+      </h2>
+      <button class="close-modal-btn" (click)="closeModals()">
+        <i class="fas fa-times"></i>
+      </button>
+    </header>
+
+    <div class="modal-body">
+      <div *ngIf="isLoadingDetail" class="details-loading">
+        <div class="spinner-small"></div>
+        <p>Loading verification details...</p>
+      </div>
+
+      <div *ngIf="selectedVerification && !isLoadingDetail" class="verification-details">
+        <!-- Host Information -->
+        <div class="detail-section">
+          <h4><i class="fas fa-user-circle"></i> Host Information</h4>
+          <div class="details-grid">
+            <div class="detail-item">
+              <label>Host ID:</label>
+              <span>{{ selectedVerification.hostId }}</span>
+            </div>
+            <div class="detail-item">
+              <label>Name:</label>
+              <span>{{ selectedVerification.hostname || 'N/A' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Verification Status -->
+        <div class="detail-section">
+          <h4><i class="fas fa-shield-alt"></i> Verification Status</h4>
+          <div class="details-grid">
+            <div class="detail-item">
+              <label>Status:</label>
+              <span class="status-badge" 
+                    [ngClass]="{
+                      'status-pending': selectedVerification.status === 'pending',
+                      'status-approved': selectedVerification.status === 'approved',
+                      'status-rejected': selectedVerification.status === 'rejected'
+                    }">
+                <i [class]="getStatusIcon(selectedVerification.status)"></i>
+                {{ selectedVerification.status | titlecase }}
+              </span>
+            </div>
+            <div class="detail-item">
+              <label>Type:</label>
+              <span>{{ selectedVerification.VerificationType || 'Standard' | titlecase }}</span>
+            </div>
+            <div class="detail-item">
+              <label>Submitted Date:</label>
+              <span>{{ formatDate(selectedVerification.submittedDate) }}</span>
+            </div>
+            <div class="detail-item" *ngIf="selectedVerification.reviewedDate">
+              <label>Reviewed Date:</label>
+              <span>{{ formatDate(selectedVerification.reviewedDate) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Notes -->
+        <div class="detail-section" *ngIf="selectedVerification.AdminNotes">
+          <h4><i class="fas fa-sticky-note"></i> Admin Notes</h4>
+          <div class="description-content">
+            <p>{{ selectedVerification.AdminNotes }}</p>
+          </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="detail-section" *ngIf="selectedVerification.comments">
+          <h4><i class="fas fa-comment-alt"></i> Comments</h4>
+          <div class="description-content">
+            <p>{{ selectedVerification.comments }}</p>
+          </div>
+        </div>
+
+        <!-- Documents -->
+        <div class="detail-section">
+          <h4><i class="fas fa-file-alt"></i> Documents ({{ getDocumentsCount(selectedVerification) }})</h4>
+          <div class="documents-list" *ngIf="hasDocuments(selectedVerification)">
+            <div *ngIf="selectedVerification.documentUrl1" class="document-item">
+              <div class="document-info">
+                <div class="document-name">
+                  <i class="fas fa-file"></i>
+                  Document 1
+                </div>
+                <div class="document-date">Uploaded: {{ formatDate(selectedVerification.submittedDate) }}</div>
+              </div>
+              <div class="document-actions">
+                <button class="action-btn download-btn" 
+                        (click)="downloadDocument(selectedVerification.documentUrl1, 'Document_1')">
+                  <i class="fas fa-download"></i>
+                  Download
+                </button>
+              </div>
+            </div>
+            
+            <div *ngIf="selectedVerification.documentUrl2" class="document-item">
+              <div class="document-info">
+                <div class="document-name">
+                  <i class="fas fa-file"></i>
+                  Document 2
+                </div>
+                <div class="document-date">Uploaded: {{ formatDate(selectedVerification.submittedDate) }}</div>
+              </div>
+              <div class="document-actions">
+                <button class="action-btn download-btn" 
+                        (click)="downloadDocument(selectedVerification.documentUrl2, 'Document_2')">
+                  <i class="fas fa-download"></i>
+                  Download
+                </button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!hasDocuments(selectedVerification)" class="no-documents">
+            <p>No documents uploaded</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="modal-footer">
+      <button class="modal-btn cancel-btn" (click)="closeModals()">
+        <i class="fas fa-times"></i>
+        Close
+      </button>
+    </footer>
+  </div>
+</div>
+
+<!-- Approval Modal -->
+<div *ngIf="showApprovalModal" class="modal-overlay" (click)="closeModals()">
+  <div class="modal-content modal-sm" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>
+        <i class="fas fa-check-circle"></i>
+        Approve Verification
+        <span *ngIf="selectedVerification" class="verification-id-badge">#{{ selectedVerification.id }}</span>
+      </h2>
+      <button class="close-modal-btn" (click)="closeModals()">
+        <i class="fas fa-times"></i>
+      </button>
+    </header>
+
+    <form [formGroup]="approvalForm" (ngSubmit)="approveVerification()">
+      <div class="modal-body">
+        <p>Are you sure you want to approve this verification?</p>
+        
+        <div class="form-group">
+          <label for="approvalNotes">Admin Notes (Optional)</label>
+          <textarea id="approvalNotes" 
+                    formControlName="adminNotes" 
+                    class="form-control" 
+                    rows="3"
+                    placeholder="Add any approval notes..."></textarea>
+        </div>
+      </div>
+
+      <footer class="modal-footer">
+        <button type="button" class="modal-btn cancel-btn" (click)="closeModals()">
+          <i class="fas fa-times"></i>
+          Cancel
+        </button>
+        <button type="submit" class="modal-btn save-btn approve-confirm">
+          <i class="fas fa-check"></i>
+          Approve Verification
+        </button>
+      </footer>
+    </form>
+  </div>
+</div>
+
+<!-- Rejection Modal -->
+<div *ngIf="showRejectionModal" class="modal-overlay" (click)="closeModals()">
+  <div class="modal-content modal-sm" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>
+        <i class="fas fa-times-circle"></i>
+        Reject Verification
+        <span *ngIf="selectedVerification" class="verification-id-badge">#{{ selectedVerification.id }}</span>
+      </h2>
+      <button class="close-modal-btn" (click)="closeModals()">
+        <i class="fas fa-times"></i>
+      </button>
+    </header>
+
+    <form [formGroup]="rejectionForm" (ngSubmit)="rejectVerification()">
+      <div class="modal-body">
+        <p>Are you sure you want to reject this verification?</p>
+        
+        <div class="form-group">
+          <label for="rejectionNotes">Reason for Rejection *</label>
+          <textarea id="rejectionNotes" 
+                    formControlName="adminNotes" 
+                    class="form-control" 
+                    rows="3"
+                    placeholder="Please provide a reason for rejection..."
+                    required></textarea>
+        </div>
+      </div>
+
+      <footer class="modal-footer">
+        <button type="button" class="modal-btn cancel-btn" (click)="closeModals()">
+          <i class="fas fa-times"></i>
+          Cancel
+        </button>
+        <button type="submit" class="modal-btn confirm-delete-btn" [disabled]="rejectionForm.invalid">
+          <i class="fas fa-times"></i>
+          Reject Verification
+        </button>
+      </footer>
+    </form>
+  </div>
+</div>
