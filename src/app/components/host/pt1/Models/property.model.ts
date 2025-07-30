@@ -30,4 +30,8 @@ export interface Property {
   amenityNames: string[];
   images: PropertyImage[];
   availabilityDates: AvailabilityDate[];
+  city?: string;        
+  country?: string;     
+  bedrooms?: number;    
+    bathrooms?: number; 
 }

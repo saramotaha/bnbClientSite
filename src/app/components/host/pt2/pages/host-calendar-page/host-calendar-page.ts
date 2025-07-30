@@ -55,32 +55,25 @@ export class HostCalendarPage implements OnInit {
     });
   }
 
-  handleCalendarRequest({ year, month }: { year: number; month: number }) {
-    this.currentMonthYear = { year, month };
-    this.calendarComponent?.setLoading(true);
+ handleCalendarRequest({ year, month }: { year: number; month: number }) {
+  this.currentMonthYear = { year, month };
+  this.calendarComponent?.setLoading(true);
 
-    const fallback = setTimeout(() => {
+  this.availabilityService.getCurrentHostAvailability(month, year).subscribe({
+    next: slots => {
+      const calendarData = this.mapSlotsToCalendarData(slots);
+      this.calendarData = calendarData;
+      this.calendarComponent?.updateCalendarData(calendarData);
+      this.calendarComponent?.setLoading(false);
+      this.cdr.detectChanges();
+    },
+    error: err => {
+      console.error('Load failed:', err);
       this.calendarComponent?.setLoading(false);
       this.showToast('errorToast');
-    }, 10000);
-
-    this.availabilityService.getCurrentHostAvailability(month, year).subscribe({
-      next: slots => {
-        clearTimeout(fallback);
-        const calendarData = this.mapSlotsToCalendarData(slots);
-        this.calendarData = calendarData;
-        this.calendarComponent?.updateCalendarData(calendarData);
-        this.calendarComponent?.setLoading(false);
-        this.cdr.detectChanges(); // 🔔 Ensure view updates
-      },
-      error: err => {
-        clearTimeout(fallback);
-        console.error('Load failed:', err);
-        this.calendarComponent?.setLoading(false);
-        this.showToast('errorToast');
-      }
-    });
-  }
+    }
+  });
+}
 
   onSelectProperty(propertyId: number): void {
     this.selectedPropertyId = propertyId;
@@ -115,29 +108,55 @@ export class HostCalendarPage implements OnInit {
     });
   }
 
-  handleAvailabilityUpdate(change: { date: Date; availability: DateAvailability }) {
-    const dto: CreateAvailabilityDTO = {
-      propertyId: this.selectedPropertyId,
-      date: new Date(change.date).toISOString().split('T')[0],
-      isAvailable: change.availability.available,
-      blockedReason: change.availability.blocked ? 'manual block' : undefined,
-      price: change.availability.price,
-      minNights: change.availability.minStay ?? 1
-    };
-
-    console.log('Sending DTO:', dto);
-
-    this.availabilityService.addAvailability(dto).subscribe({
-      next: () => this.showToast(
-        'availabilityToast',
-        `Saved: ${dto.date} • ${dto.isAvailable ? 'Available' : 'Unavailable'} • €${dto.price}`
-      ),
-      error: (err) => {
-        this.showToast('errorToast');
-        console.error('Failed to save availability:', err);
+handleAvailabilityUpdate(change: { date: Date; availability: DateAvailability }) {
+  const dateStr = new Date(change.date).toISOString().split('T')[0];
+  
+  this.availabilityService.getByPropertyId(this.selectedPropertyId).subscribe({
+    next: (availabilities) => {
+      const existing = availabilities.find(a => a.date.split('T')[0] === dateStr);
+      
+      // If no existing record, create new
+      if (!existing || existing.id === undefined) {
+        const newDto: CreateAvailabilityDTO = {
+          propertyId: this.selectedPropertyId,
+          date: dateStr,
+          isAvailable: change.availability.available,
+          blockedReason: change.availability.blocked ? 'manual block' : undefined,
+          price: change.availability.price,
+          minNights: change.availability.minStay ?? 1
+        };
+        
+        this.availabilityService.addAvailability(newDto).subscribe({
+          next: () => this.showToast('availabilityToast', `Added: ${newDto.date}`),
+          error: (err) => this.handleError(err)
+        });
+        return;
       }
-    });
-  }
+
+      // TypeScript now knows existing.id is definitely a number here
+      const updateDto: CreateAvailabilityDTO = {
+        id: existing.id,
+        propertyId: this.selectedPropertyId,
+        date: dateStr,
+        isAvailable: change.availability.available,
+        blockedReason: change.availability.blocked ? 'manual block' : undefined,
+        price: change.availability.price,
+        minNights: change.availability.minStay ?? 1
+      };
+
+      this.availabilityService.updateAvailability(existing.id, updateDto).subscribe({
+        next: () => this.showToast('availabilityToast', `Updated: ${updateDto.date}`),
+        error: (err) => this.handleError(err)
+      });
+    },
+    error: (err) => this.handleError(err)
+  });
+}
+
+private handleError(err: any) {
+  console.error('Availability operation failed:', err);
+  this.showToast('errorToast');
+}
 
   mapSlotsToCalendarData(slots: CreateAvailabilityDTO[]): CalendarData {
     const data: CalendarData = {};
