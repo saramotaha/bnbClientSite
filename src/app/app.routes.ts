@@ -37,6 +37,13 @@ import { DashBoardBar } from './Admin/Component/dash-board-bar/dash-board-bar';
 import { AdminDashboard } from './Admin/Component/admin-dashboard/admin-dashboard';
 import { UserManagement } from './Admin/Component/user-management/user-management';
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
+
+import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
+import { AdminHostVerificationComponent } from './Admin/Component/admin-host-verifications/admin-host-verifications';
+export const routes: Routes = [
+  { path: "", redirectTo:"admin", pathMatch: "full"},
+  { path: "", component: Home, pathMatch: "full" },
+
 import { Earnings } from './components/host/pt2/components/earnings/earnings';
 import { PropertyListComponent } from './components/host/pt1/property-list/property-list';
 import { listingsRoutes } from './components/host/pt1/listings/listings.routes';
@@ -47,6 +54,7 @@ import { Login } from './Pages/login/login';
 import { AdminPayment } from './Admin/Component/admin-payment/admin-payment';
 import { Messages } from './User/messages/messages';
 import { UserProfile } from './User/UserProfile/Component/user-profile/user-profile';
+
 
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
@@ -63,8 +71,13 @@ export const routes: Routes = [
       { path: "UserManagement", component: UserManagement },
       { path: "DashboardCharts", component: DashboardCharts },
       {path: "PropertyManagement", component: PropertyManagementComponent},
+
+      {path: "AdminHostVerificationComponent", component: AdminHostVerificationComponent}
+
       {path: "AdminPayment", component: AdminPayment},
+
     ]
+    
   },
   { path: "Login", component: Login , pathMatch:"full" },
   { path: "ViewAllHomes", component: ViewAllHomes , pathMatch:"full" },
