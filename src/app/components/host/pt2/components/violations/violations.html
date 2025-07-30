@@ -1,5 +1,5 @@
-<!-- <div class="violations-container">
-   Header Section 
+<div class="violations-container">
+   <!-- Header Section  -->
   <div class="header-section">
     <div class="header">
       <button class="back-btn" (click)="goToHostDashboard()" title="Go back">
@@ -22,7 +22,7 @@
     </div>
   </div>
 
-   Tab Navigation 
+   <!-- Tab Navigation  -->
   <div class="tab-navigation">
     <h2 class="section-title">Check your violation reports</h2>
     <div class="tabs">
@@ -33,7 +33,7 @@
     </div>
   </div>
 
-   Content Section 
+   <!-- Content Section  -->
   <div class="content-section">
     @if (isLoading) {
       <div class="loading-state">
@@ -126,10 +126,8 @@
                 }
               </div>
             </div>
-
-             ❌ Edit buttons commented out as requested 
             
-            <div class="violation-actions">
+            <!-- <div class="violation-actions">
               @if (violation.status !== 'Resolved') {
                 <button class="action-button secondary" 
                         (click)="updateViolationStatus(violation.id, 'Under Review')">
@@ -142,11 +140,11 @@
               } @else {
                 <span class="resolved-indicator">✓ This violation has been resolved</span>
               }
-            </div>
+            </div> -->
             
           </div>
         }
       </div>
     }
   </div>
-</div> -->
+</div>

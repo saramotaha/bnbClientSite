@@ -2,6 +2,7 @@
 export interface User {
   id: string;
   firstName: string;
+  lastName: string;
   email: string;
   role: string;
   HostId?: string;
@@ -42,13 +43,15 @@ export interface UserProfile {
 
 // JWT Token payload (for decoding the token controller creates)
 export interface JwtPayload {
-  emailaddress: string;
+  email: string;
   HostId?: string;
   name: string;            // username (GUID في حالتك)
   UserID?: string;         // موجود أحياناً
   nameidentifier?: string; // نفس UserId أحياناً
   role?: string;
   exp?: number;
+  firstName: string;
+  lastName?: string; 
 }
 
 
