@@ -2,20 +2,23 @@
 <div class="dashboard-container">
   <h2>Manage Availability</h2>
 
-  <!-- Property Selector -->
+   <!-- Property Selector  -->
   <div class="property-selector">
     <label for="propertySelect">Select Property:</label>
-    <select id="propertySelect" (change)="onSelectProperty(getSelectValue($event))">
-      <option *ngFor="let property of properties" [value]="property"> <!--should be property.id when fetching from db-->
-        Property #{{ property }}
-      </option>
+    <select id="propertySelect" (change)="onSelectProperty(getSelectValue($event))" [(ngModel)]="selectedPropertyId">
+    <option *ngIf="properties.length === 0" disabled>
+      No properties found for this host
+    </option>
+    <option *ngFor="let property of properties" [value]="property.id">
+      {{ property.title }}
+    </option>
     </select>
   </div>
 
-  <!-- Availability Calendar -->
+   <!-- Availability Calendar  -->
 <app-availability-calendar
   [calendarData]="calendarData"
-  [propertyId]="propertyId.toString()"
+  [propertyId]="selectedPropertyId.toString()"
   [initialMonth]="getInitialMonth()"
   (monthChanged)="handleCalendarRequest($event)"
   (dateAvailabilityChanged)="handleAvailabilityUpdate($event)"

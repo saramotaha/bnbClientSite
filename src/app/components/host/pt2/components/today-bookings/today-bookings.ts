@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookingService } from '../../services/booking.service';
-import { AuthService } from '../../../../../Pages/Auth/auth.service';
 import { BookingResponseDto } from '../../models/booking.model';
+import { AuthService } from '../../../../../Pages/Auth/auth.service';
+import { User } from '../../../../../Pages/Auth/user.model';
 
 interface Booking {
   id: string;
@@ -19,10 +20,12 @@ interface Booking {
 @Component({
   selector: 'app-today-bookings',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
   templateUrl: './today-bookings.html',
   styleUrls: ['./today-bookings.css']
 })
+
 export class TodayBookingsComponent implements OnInit {
   bookings: Booking[] = [];
   selectedTab: string = 'checking-out';
@@ -38,31 +41,68 @@ export class TodayBookingsComponent implements OnInit {
   ];
 
   constructor(
-    private bookingService: BookingService,
-    private authService: AuthService
-  ) {}
+  private bookingService: BookingService,
+  private authService: AuthService,
+  private cdr: ChangeDetectorRef
+) {}
 
-  ngOnInit(): void {
-    this.isLoading = true;
-    this.hostName = this.authService.getUserFullName();
 
-    const hostId = this.authService.getHostId();
-    if (!hostId) {
-      console.warn('Host ID missing — ensure login flow completes and host ID is stored');
-      this.isLoading = false;
-      return;
+ngOnInit(): void {
+  this.isLoading = true;
+
+  this.authService.currentUser$.subscribe(user => {
+    const currentUser = this.authService.getUserProfile();
+    console.log('👤 User Profile:', currentUser);
+
+    const capitalize = (name: string): string =>
+      name ? name.charAt(0).toUpperCase() + name.slice(1) : 'Host';
+
+    if (currentUser?.firstName) {
+      this.hostName = capitalize(currentUser.firstName);
+    } else if (currentUser?.id) {
+      this.authService.makeAuthenticatedRequest<User>(
+        'GET',
+        `http://localhost:7145/api/User/${currentUser.id}`
+      ).subscribe({
+        next: (userData) => {
+          this.hostName = capitalize(userData.firstName || '');
+          this.cdr.detectChanges(); // Ensure view updates
+        },
+        error: (err) => {
+          console.error('Error fetching user info:', err);
+          this.hostName = 'Host';
+        }
+      });
+    } else {
+      this.hostName = 'Host'; // Absolute fallback
     }
 
-    this.bookingService.getBookingsByHost(+hostId).subscribe(allBookings => {
-      const todayBookings = allBookings.filter(this.isTodayBooking);
-      this.bookings = todayBookings.map(this.mapToBookingCardModel);
-      this.updateTabCounts();
+    if (user?.HostId) {
+      const hostId = user.HostId;
+      this.bookingService.getBookingsByHost(+hostId).subscribe({
+        next: (allBookings) => {
+          const todayBookings = allBookings.filter(this.isTodayBooking);
+          this.bookings = todayBookings.map(dto => this.mapToBookingCardModel(dto));
+          this.updateTabCounts();
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('Error fetching bookings:', error);
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        }
+      });
+    } else {
+      console.warn('Host ID missing from AuthService');
       this.isLoading = false;
-    }, error => {
-      console.error('Error fetching bookings:', error);
-      this.isLoading = false;
-    });
-  }
+      this.cdr.detectChanges();
+    }
+  });
+}
+
+
+
 
   isTodayBooking(dto: BookingResponseDto): boolean {
     const today = new Date();
@@ -110,14 +150,12 @@ export class TodayBookingsComponent implements OnInit {
     return Math.max(1, Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)));
   }
 
-  updateTabCounts(): void {
-    this.tabs.forEach(tab => {
-      tab.count = this.bookings.filter(booking => 
-        booking.status === tab.key.replace('-', '_') ||
-        booking.status === tab.key
-      ).length;
-    });
-  }
+updateTabCounts(): void {
+  this.tabs = this.tabs.map(tab => ({
+    ...tab,
+    count: this.bookings.filter(b => b.status === tab.key).length
+  }));
+}
 
   selectTab(tabKey: string): void {
     this.selectedTab = tabKey;

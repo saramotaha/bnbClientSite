@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BookingService {
-  private baseUrl = '/api/booking';
+  private baseUrl = 'http://localhost:7145/api/booking';
 
   constructor(private http: HttpClient) {}
 
@@ -28,9 +28,9 @@ export class BookingService {
     return this.http.get<BookingResponseDto>(`${this.baseUrl}/${id}`);
   }
 
-  createBooking(userId: number, dto: BookingCreateDto): Observable<number> {
-    return this.http.post<number>(`${this.baseUrl}/CreateBookingByUserId${userId}`, dto);
-  }
+ createBooking(userId: number, dto: BookingCreateDto): Observable<number> {
+  return this.http.post<number>(`${this.baseUrl}/CreateBookingByUserId:${userId}`, dto);
+}
 
   updateBooking(id: number, dto: BookingUpdateDto): Observable<string> {
     return this.http.put<string>(`${this.baseUrl}/${id}`, dto);

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../../../Pages/Auth/auth.service';
 import {
   CreateViolationDTO,
   EditViolationDTO,
@@ -7,13 +8,12 @@ import {
   ViolationListDTO
 } from '../models/violation.model';
 import { Observable } from 'rxjs';
-import { AuthService } from '../../../../Pages/Auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ViolationService {
-  private baseUrl = '/api/violations';
+  private baseUrl = 'http://localhost:7145/api/violations';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient,private authService: AuthService ) {}
 
   // Submit a new violation report
   create(dto: CreateViolationDTO): Observable<string> {
@@ -62,10 +62,10 @@ export class ViolationService {
     return this.http.get<ViolationListDTO[]>(`${this.baseUrl}/pending`);
   }
 
-  // Refined: Get all violations for the current host via AuthService
-  getViolationsForCurrentHost(): Observable<ViolationDetailsDTO[]> {
-    const hostId = this.authService.getHostId();
-    const url = `${this.baseUrl}/host/${hostId}`;
-    return this.authService.makeAuthenticatedRequest<ViolationDetailsDTO[]>('GET', url);
-  }
+getViolationsForCurrentHost(): Observable<ViolationDetailsDTO[]> {
+  const hostId = Number(this.authService.getHostId());
+  const url = `${this.baseUrl}/host/${hostId}`;
+  return this.http.get<ViolationDetailsDTO[]>(url);
+}
+
 }

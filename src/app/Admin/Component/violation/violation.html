@@ -10,14 +10,15 @@
     <!-- Filter/search placeholder -->
     <div class="row mb-5 justify-content-between ">
       <div class="col-md-5 ">
-        <input type="text" class="form-control" placeholder="Search by keyword...">
-      </div>
+            <input type="text" class="form-control" placeholder="Search by keyword..." [(ngModel)]="searchKeyword"
+              (input)="onSearchChange()" />
+    </div>
       <div class="col-md-5">
-        <select class="form-select">
-          <option>Status: All</option>
-          <option>Pending</option>
-          <option>Resolved</option>
-          <option>Rejected</option>
+        <select class="form-select" (change)="onStatusChange($event)">
+          <option value="All">Status: All</option>
+          <option value="UnderReview">UnderReview</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Dismissed">Dismissed</option>
         </select>
       </div>
       <!-- <div class="col-md-3">
@@ -44,7 +45,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (item of AllViolation; track $index) {
+          @for (item of filteredViolations; track $index) {
 
           <tr class="p-5 fs-6">
             <td>{{item.id}}</td>
@@ -80,12 +81,21 @@
         <p class="admin-notes mb-3">{{ViolationById?.adminNotes ?? "No Notes"}}</p>
         <div class="d-flex gap-2 card-actions">
 
-          <button class="btn btn-sm btn-outline-warning" (click)="UnderReview(ViolationById?.id ?? 0 , 'UnderReview')">⌛
-            UnderReview </button>
-          <button class="btn btn-sm btn-outline-success" (click)="StatusToResolved(ViolationById?.id ?? 0 , 'Resolved')">✔️
-            Mark as Resolved</button>
-          <button class="btn btn-sm btn-outline-danger" (click)="Reject(ViolationById?.id ?? 0 , 'Dismissed')">✖️
-            Reject</button>
+          <button class="btn btn-sm btn-outline-warning"
+        (click)="UnderReview(ViolationById?.id ?? 0)">
+  ⌛ UnderReview
+</button>
+
+<button class="btn btn-sm btn-outline-success"
+        (click)="StatusToResolved(ViolationById?.id ?? 0)">
+  ✔️ Mark as Resolved
+</button>
+
+<button class="btn btn-sm btn-outline-danger"
+        (click)="Reject(ViolationById?.id ?? 0)">
+  ✖️ Reject
+</button>
+
         </div>
       </div>
 

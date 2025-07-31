@@ -11,11 +11,10 @@ import { LoginDto } from './../Auth/user.model';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
+ standalone: true,
   imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    ValidationErrorComponent
+    CommonModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './login.html',
   styleUrl: './login.css'
@@ -25,7 +24,7 @@ export class Login implements OnInit, OnDestroy {
   showPassword = false;
   errorMessage = '';
   isLoading = false;
-  
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -36,7 +35,7 @@ export class Login implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initializeForm();
-    
+
     // Redirect if already authenticated
     if (this.authService.isAuthenticated()) {
       this.redirectBasedOnRole();
@@ -79,15 +78,16 @@ export class Login implements OnInit, OnDestroy {
     this.errorMessage = '';
 
     this.authService.login({
-      email: this.loginForm.get('email')?.value?.trim(),
-      password: this.loginForm.get('password')?.value
-    }).subscribe({
-      next: () => this.redirectBasedOnRole(),
-      error: (error) => {
-        this.errorMessage = this.getFriendlyError(error);
-        this.isLoading = false;
-      }
-    });
+  email: this.loginForm.get('email')?.value?.trim(),
+  password: this.loginForm.get('password')?.value
+}).subscribe({
+  next: () => this.redirectBasedOnRole(), // ✅ استدعاء التوجيه بناءً على الدور
+  error: (error) => {
+    this.errorMessage = this.getFriendlyError(error);
+    this.isLoading = false;
+  }
+});
+
   }
 }
 
@@ -105,8 +105,8 @@ private getFriendlyError(error: any): string {
   }
 
   private redirectBasedOnRole(): void {
-    const user = this.authService.currentUser;
-    
+    const user = this.authService.getUserProfile();
+
     if (!user) {
       this.router.navigate(['/']);
       return;
@@ -115,16 +115,16 @@ private getFriendlyError(error: any): string {
     // Redirect based on user role
     switch (user.role.toLowerCase()) {
       case 'admin':
-        this.router.navigate(['/admin/dashboard']);
+        this.router.navigate(['/admin']);
         break;
-      case 'host':
-        this.router.navigate(['/host/dashboard']);
-        break;
+      // case 'host':
+      //   this.router.navigate(['/host/dashboard']);
+      //   break;
       case 'guest':
-        this.router.navigate(['/guest/dashboard']);
+        this.router.navigate(['/Home']);
         break;
       default:
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/Home']);
         break;
     }
   }
