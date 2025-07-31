@@ -6,7 +6,6 @@ export interface IPropertyList {
 
   id: number
   title: string
-  description:string
   propertyType: string
   city: string
   country: string
@@ -17,6 +16,7 @@ export interface IPropertyList {
   status: string
   createdAt: string
   hostName: string
+  hostId: number
   hostEmail: string
    latitude: number
   longitude: number
