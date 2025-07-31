@@ -12,10 +12,11 @@
   import { PropertydetailsCalendar } from "../components/propertydetails-calendar/propertydetails-calendar";
   import { Route, ActivatedRoute } from '@angular/router';
   import { PorpertyLocation } from "../components/porperty-location/porperty-location";
+import { PropertyHost } from "../components/property-host/property-host";
 
   @Component({
     selector: 'app-property-details',
-    imports: [ImageGallery, BaseNav, Footer, PropertyDetialsReview, Hostinfo, Hostinfo, Propertybookingcard, PropertydetailsAmenities, PropertydetailsCalendar, PorpertyLocation],
+    imports: [ImageGallery, BaseNav, Footer, PropertyDetialsReview, Hostinfo, Hostinfo, Propertybookingcard, PropertydetailsAmenities, PropertydetailsCalendar, PorpertyLocation, PropertyHost],
   templateUrl: './property-details.html',
     styleUrl: './property-details.css'
   })

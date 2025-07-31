@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import * as L from 'leaflet';
 
 
@@ -13,8 +13,8 @@ export class PorpertyLocation implements AfterViewInit {
   
 
   // Replace with actual coordinates from backend
-  latitude: number = 30.0444;    // Cairo
-  longitude: number = 31.2357;
+  @Input() latitude: number = 30.0444;    // Cairo
+   @Input() longitude: number = 31.2357;
 
   ngAfterViewInit(): void {
     this.initMap();
