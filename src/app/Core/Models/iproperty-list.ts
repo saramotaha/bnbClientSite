@@ -25,6 +25,7 @@ export interface IPropertyList {
   IsFav: boolean
   availabilityDates: IPropertiesAvailability[]
   reviews: IPropertyReviews[]
+  description: string
 }
 
 

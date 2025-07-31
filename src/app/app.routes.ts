@@ -38,13 +38,12 @@ import { AdminDashboard } from './Admin/Component/admin-dashboard/admin-dashboar
 import { UserManagement } from './Admin/Component/user-management/user-management';
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
 
-import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
 import { AdminHostVerificationComponent } from './Admin/Component/admin-host-verifications/admin-host-verifications';
-
 
 import { Earnings } from './components/host/pt2/components/earnings/earnings';
 import { PropertyListComponent } from './components/host/pt1/property-list/property-list';
 import { listingsRoutes } from './components/host/pt1/listings/listings.routes';
+import { EditPropertyComponent } from './components/host/pt1/edit-property.component/edit-property.component';
 import { ListingStep1Component } from './components/host/pt1/listings/listing-step1/listing-step1.component';
 // import { Messages } from './components/host/pt2/components/messages/messages';
 import { Login } from './Pages/login/login';
@@ -54,7 +53,6 @@ import { UserProfile } from './User/UserProfile/Component/user-profile/user-prof
 import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
 import { ProfileInfo } from './User/UserProfile/Component/profile-info/profile-info';
 import { UserTrips } from './User/UserProfile/Component/user-trips/user-trips';
-
 
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
@@ -115,6 +113,10 @@ export const routes: Routes = [
   { path: '', component: PropertyListComponent },
   { path: 'host', children: listingsRoutes },
 
+  { path: 'edit/:id', component: EditPropertyComponent }
+
+
+
     // { path: "messages", component: Messages , pathMatch:"full" },
   { path: "favorites",component:Favorites,pathMatch:"full"},
   { path: "UserProfile",component:UserProfile,pathMatch:"full"},
@@ -128,4 +130,5 @@ export const routes: Routes = [
   // { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   // { path: "checkout", component: Checkout , pathMatch:"full" },
   { path: "**", component: NotFound}
+
 ];

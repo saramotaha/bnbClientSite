@@ -12,7 +12,7 @@ import { PropertyDetailsService } from '../../property-details/property-details-
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-propertybookingcard' ,
-  imports: [ FormsModule, CommonModule ],
+  imports: [PropertydetailsCalendar, FormsModule, CommonModule ],
 templateUrl: './propertybookingcard.html',
   styleUrl: './propertybookingcard.css'
 })
