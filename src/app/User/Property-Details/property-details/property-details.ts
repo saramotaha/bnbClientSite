@@ -1,3 +1,4 @@
+
   import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
   import { ImageGallery } from "../components/image-gallery/image-gallery";
   import { BaseNav } from "../../../Shared/base-nav/base-nav/base-nav";
@@ -55,5 +56,6 @@ import { PropertyHost } from "../components/property-host/property-host";
       this.selectedCheckIn = event.checkIn;
       this.selectedCheckOut = event.checkOut;
     }
+
 
   }

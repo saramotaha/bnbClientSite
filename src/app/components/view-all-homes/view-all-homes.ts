@@ -3,12 +3,13 @@ import { FilterHomesServices } from '../../Core/Services/filter-homes-services';
 import { IPropertyList } from '../../Core/Models/iproperty-list';
 import { CommonModule } from '@angular/common';
 import { Map } from "../map/map";
-import { FormsModule } from '@angular/forms';
+
 import { CurrentProperties } from '../../Core/Services/current-properties';
 import { Nav } from "../../Shared/nav/nav";
 import { Footer } from "../../Shared/footer/footer";
-import { NotFound } from '../../Pages/not-found/not-found';
 import { Loader } from "../loader/loader";
+import { FormsModule } from '@angular/forms';
+import { NotFound } from '../../Pages/not-found/not-found';
 import { Route, Router, RouterLink } from '@angular/router';
 
 

@@ -1,0 +1,41 @@
+<div class="container mt-5" *ngIf="propertyForm">
+  <div class="card shadow-lg rounded-4 p-5 border-0 bg-light-subtle">
+    <h2 class="mb-4 text-center text-primary fw-bold">✏️ Edit Property</h2>
+
+    <div class="mb-4">
+      <button type="button" class="btn btn-outline-secondary shadow-sm rounded-pill px-4 py-2" (click)="goBack()">
+        🔙 Back to Listings
+      </button>
+    </div>
+
+    <form [formGroup]="propertyForm" (ngSubmit)="saveChanges()">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">🏷️ Title</label>
+          <input class="form-control shadow-sm" formControlName="title" placeholder="Enter title" />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">💰 Price Per Night</label>
+          <input class="form-control shadow-sm" type="number" formControlName="pricePerNight" />
+        </div>
+
+        <div class="col-12">
+          <label class="form-label fw-semibold">📝 Description</label>
+          <textarea class="form-control shadow-sm" rows="3" formControlName="description" placeholder="Write a short description..."></textarea>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">👥 Max Guests</label>
+          <input class="form-control shadow-sm" type="number" formControlName="maxGuests" />
+        </div>
+      </div>
+
+      <div class="text-end mt-5">
+        <button class="btn btn-primary px-5 py-2 shadow-lg rounded-pill">
+          💾 Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

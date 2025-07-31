@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ViolationService } from '../../services/violation.service';
@@ -18,7 +18,7 @@ export class Violations implements OnInit {
   isLoading = true;
   error: string | null = null;
 
-  constructor(private violationService: ViolationService, private router: Router) {}
+   constructor(private violationService: ViolationService, private router: Router , private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.fetchHostViolations(); // Loads host-specific data
@@ -34,7 +34,8 @@ export class Violations implements OnInit {
         this.violations = data;
         this.filterViolations();
         setTimeout(() => {
-          this.isLoading = false;
+        this.isLoading = false;
+        this.cdr.detectChanges(); // Ensure view updates after async operations
         }); // Ensures change detection after async call
       },
       error: (err) => {
@@ -58,7 +59,7 @@ export class Violations implements OnInit {
         this.filteredViolations = this.violations.filter(v => v.status === 'Pending');
         break;
       case 'under-review':
-        this.filteredViolations = this.violations.filter(v => v.status === 'Under Review');
+        this.filteredViolations = this.violations.filter(v => v.status === 'UnderReview');
         break;
       case 'resolved':
         this.filteredViolations = this.violations.filter(v => v.status === 'Resolved');

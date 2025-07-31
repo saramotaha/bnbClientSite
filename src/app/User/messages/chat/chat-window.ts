@@ -1,11 +1,12 @@
 import { ConversationService } from './../sidebar/conversation.service';
 import { Conversation } from './../models/conversation';
-import { Component, Input,OnChanges, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { messageService } from './message.service';
 import { SignalRService } from '../core/signalr.service';
 import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-chat-window',
   standalone:true,
@@ -21,7 +22,8 @@ isSending=false;
 private signalRSubscription?:Subscription;
 constructor(private conversationService:ConversationService,
   private messageservise:messageService,
-  private signalRservice :SignalRService
+  private signalRservice :SignalRService,
+  private cdr: ChangeDetectorRef
 ){
   this.initializeSignalR();
 };
@@ -40,6 +42,7 @@ private initializeSignalR(): void {
     }).catch(err => {
       console.error('Error establishing SignalR connection:', err);
     });
+    
   }
   ngOnChanges(): void {
     if (this.conversationId > 0) {
@@ -97,6 +100,8 @@ sendMessage(){
       this.isSending=false;
       
     }
+    
+    
   });
 }
 }

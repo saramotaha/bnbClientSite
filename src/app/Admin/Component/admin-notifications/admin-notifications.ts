@@ -57,6 +57,17 @@ export class AdminNotifications implements OnInit {
     this.service.AddNotification(this.data).subscribe({
       next: (response) => {
         console.log(response);
+          this.AdminNotifications = [response, ...this.AdminNotifications];
+
+
+      const modalElement = document.getElementById('sendNotificationModal');
+      if (modalElement) {
+        const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
+        modal?.hide();
+      }
+
+
+      this.notificationForm.reset({ senderId: '5' });
 
 
         this.cdr.detectChanges();

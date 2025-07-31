@@ -5,4 +5,5 @@ export interface CreateAvailabilityDTO {
   blockedReason?: string;
   price: number;
   minNights: number;
+  id?: number;
 }
