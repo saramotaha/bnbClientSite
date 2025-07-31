@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { IAmenity, IpropertyAmenity } from './iproperty-amenity';
 import { PropertydetailsAmenityService } from './Service/propertydetails-amenity-service';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class PropertydetailsAmenities implements OnInit {
 constructor(private propertyDetailsAmentyService:PropertydetailsAmenityService ,private cdr :ChangeDetectorRef) {}
-  propertyId = 1; // This should be dynamically set based on the property being viewed
+  @Input() propertyId!: number;
   propertyDetailsAmenities: IpropertyAmenity[] = [];
   visibleAmenities: any[] = [];
   groupedAmenities: { [category: string]: IAmenity[] } = {};

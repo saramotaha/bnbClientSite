@@ -20,6 +20,7 @@ import { TodayBookingsComponent } from './components/host/pt2/components/today-b
 import { Reservations } from './components/host/pt2/components/reservations/reservations';
 import { Violations } from './components/host/pt2/components/violations/violations';
 
+
 // import { Checkout } from './Pages/checkout/checkout';
 // import { Messages } from './User/messages/messages';
 // import { Notifications } from './Pages/notifications/notifications';
@@ -55,8 +56,9 @@ import { ProfileInfo } from './User/UserProfile/Component/profile-info/profile-i
 import { UserTrips } from './User/UserProfile/Component/user-trips/user-trips';
 
 export const routes: Routes = [
-  { path: "", redirectTo:"Home", pathMatch: "full"},
-  { path: "Home", component: Home, pathMatch: "full" },
+  { path: "", redirectTo:"home", pathMatch: "full"},
+  { path: "home", component: Home, pathMatch: "full" },
+
 
   {
 
@@ -119,7 +121,8 @@ export const routes: Routes = [
 
     // { path: "messages", component: Messages , pathMatch:"full" },
   { path: "favorites",component:Favorites,pathMatch:"full"},
-  { path: "UserProfile",component:UserProfile,pathMatch:"full"},
+
+    { path: "UserProfile",component:UserProfile,pathMatch:"full"},
   // { path: "notifications", component: Notifications , pathMatch:"full" },
   // { path: "AdminNotifications", component: DashBoardBar , pathMatch:"full" },
 
@@ -129,6 +132,7 @@ export const routes: Routes = [
   // { path: "profile", component: Profile , pathMatch:"full" },
   // { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   // { path: "checkout", component: Checkout , pathMatch:"full" },
+
   { path: "**", component: NotFound}
 
 ];
