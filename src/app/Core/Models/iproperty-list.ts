@@ -6,6 +6,7 @@ export interface IPropertyList {
 
   id: number
   title: string
+  description:string
   propertyType: string
   city: string
   country: string

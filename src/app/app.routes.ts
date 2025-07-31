@@ -52,6 +52,8 @@ import { AdminPayment } from './Admin/Component/admin-payment/admin-payment';
 import { Messages } from './User/messages/messages';
 import { UserProfile } from './User/UserProfile/Component/user-profile/user-profile';
 import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
+import { ProfileInfo } from './User/UserProfile/Component/profile-info/profile-info';
+import { UserTrips } from './User/UserProfile/Component/user-trips/user-trips';
 
 
 export const routes: Routes = [
@@ -77,6 +79,15 @@ export const routes: Routes = [
     ]
 
   },
+
+
+  {path: "UserProfile",
+    component: UserProfile,children: [
+      { path: "", redirectTo: "profileInfo", pathMatch: "full" },
+      { path: "profileInfo", component: ProfileInfo },
+      { path: "UserTrips", component: UserTrips },
+
+    ]},
   { path: "login", component: Login },
   { path: "ViewAllHomes", component: ViewAllHomes , pathMatch:"full" },
   { path: "register", component: Register , pathMatch:"full" },
