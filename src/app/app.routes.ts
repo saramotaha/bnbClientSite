@@ -37,7 +37,7 @@ import { DashBoardBar } from './Admin/Component/dash-board-bar/dash-board-bar';
 import { AdminDashboard } from './Admin/Component/admin-dashboard/admin-dashboard';
 import { UserManagement } from './Admin/Component/user-management/user-management';
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
-
+import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
 import { AdminHostVerificationComponent } from './Admin/Component/admin-host-verifications/admin-host-verifications';
 
 import { Earnings } from './components/host/pt2/components/earnings/earnings';
@@ -102,7 +102,7 @@ export const routes: Routes = [
   { path: '', component: PropertyListComponent },
   { path: 'host', children: listingsRoutes },
 
-  { path: 'edit/:id', component: EditPropertyComponent }
+  { path: 'edit/:id', component: EditPropertyComponent },
 
 
 
