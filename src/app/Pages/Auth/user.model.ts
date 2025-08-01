@@ -51,7 +51,7 @@ export interface JwtPayload {
   role?: string;
   exp?: number;
   firstName: string;
-  lastName?: string; 
+  lastName?: string;
 }
 // google auth related interfaces and services
 export interface GoogleAuthRequest {
