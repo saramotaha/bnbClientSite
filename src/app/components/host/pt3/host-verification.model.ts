@@ -22,3 +22,7 @@ export interface HostVerification {
   documentUrl2?: string;
   submittedAt?: Date;
 }
+
+export interface HostVerificationTest {
+  type: string;
+}
