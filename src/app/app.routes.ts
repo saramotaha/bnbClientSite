@@ -54,10 +54,11 @@ import { UserProfile } from './User/UserProfile/Component/user-profile/user-prof
 import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
 import { ProfileInfo } from './User/UserProfile/Component/profile-info/profile-info';
 import { UserTrips } from './User/UserProfile/Component/user-trips/user-trips';
+import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
 
 export const routes: Routes = [
-  { path: "", redirectTo:"home", pathMatch: "full"},
-  { path: "home", component: Home, pathMatch: "full" },
+  { path: "", redirectTo:"Home", pathMatch: "full"},
+  { path: "Home", component: Home, pathMatch: "full" },
 
 
   {
@@ -115,7 +116,7 @@ export const routes: Routes = [
   { path: '', component: PropertyListComponent },
   { path: 'host', children: listingsRoutes },
 
-  { path: 'edit/:id', component: EditPropertyComponent }
+  { path: 'edit/:id', component: EditPropertyComponent },
 
 
 

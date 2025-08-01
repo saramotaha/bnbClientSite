@@ -18,7 +18,7 @@ export interface IPropertyList {
   hostName: string
   hostId: number
   hostEmail: string
-   latitude: number
+  latitude: number
   longitude: number
   images?: IPropImage[]
   review: number

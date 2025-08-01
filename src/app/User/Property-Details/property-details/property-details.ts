@@ -17,7 +17,7 @@ import { PropertyHost } from "../components/property-host/property-host";
 
   @Component({
     selector: 'app-property-details',
-    imports: [ImageGallery, BaseNav, Footer, PropertyDetialsReview, Hostinfo, Hostinfo, Propertybookingcard, PropertydetailsAmenities, PropertydetailsCalendar, PorpertyLocation, PropertyHost],
+    imports: [ImageGallery, BaseNav, Footer, PropertyDetialsReview, Propertybookingcard, PropertydetailsAmenities, PropertydetailsCalendar, PorpertyLocation, PropertyHost],
   templateUrl: './property-details.html',
     styleUrl: './property-details.css'
   })
@@ -27,6 +27,8 @@ import { PropertyHost } from "../components/property-host/property-host";
     propertyDetails !: IPropertyList;
     longitude! :number
     latitude! :number
+    address!: string;
+    hostId!: number 
     selectedCheckIn: string = '';
   selectedCheckOut: string = '';
     ngOnInit(): void {
@@ -40,9 +42,15 @@ import { PropertyHost } from "../components/property-host/property-host";
           console.log('Property details fetched successfully:', propertyDetailsRes); 
                   console.log('Property detailsDes successfully:', propertyDetailsRes.description);
                   // ✅ Assign after the property is loaded
-        this.longitude = this.propertyDetails.longitude;
-        this.latitude = this.propertyDetails.latitude;
+                            console.log('HEEEEProperty detailsssssss y:', this.propertyDetails); 
+
+        this.longitude = this.propertyDetails?.longitude;
+        this.latitude = this.propertyDetails?.latitude;
+        this.address = this.propertyDetails?.country + ', ' + this.propertyDetails?.city;
+        this.hostId = this.propertyDetails?.hostId;
+          console.log('lat', this.latitude);
         console.log('long', this.longitude);
+                            console.log('Host:', this.hostId); 
 
           this.cdr.detectChanges();
         } ,

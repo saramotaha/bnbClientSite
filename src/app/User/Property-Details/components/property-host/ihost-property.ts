@@ -19,4 +19,7 @@ export interface IHostProperty {
   pets: string
   obsessedWith: string
   specialAbout: string
+  firstName: string;
+  lastName: string;
+  profilePictureUrl: string;
 }

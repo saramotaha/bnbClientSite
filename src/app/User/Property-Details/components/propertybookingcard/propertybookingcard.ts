@@ -11,6 +11,7 @@ import { PropertydetailsCalendar } from '../propertydetails-calendar/propertydet
 import { IPropertyList } from '../../../../Core/Models/iproperty-list';
 import { PropertyDetailsService } from '../../property-details/property-details-service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../../Pages/Auth/auth.service';
 @Component({
   selector: 'app-propertybookingcard' ,
 
@@ -23,7 +24,7 @@ templateUrl: './propertybookingcard.html',
 export class Propertybookingcard {
   // Inputs and Outputs from your reference
   @Input() bookingDetails!: IbookingCreate // Added as per reference
-  @Input() propertyId = 1
+  @Input() propertyId !: number // Added as per reference
   @Output() datesSelected = new EventEmitter<{ checkIn: string; checkOut: string }>() // Added as per reference
   @Input() selectedCheckIn: string = ''
   @Input() selectedCheckOut: string = ''
@@ -54,6 +55,8 @@ export class Propertybookingcard {
     private bookingService: BookingService,
     private bookingPaymentService: BookingPaymentService,
     private cdr: ChangeDetectorRef,
+    private router: Router,
+    private AutProService: AuthService
   ) {}
 
   ngOnInit() {
@@ -487,9 +490,9 @@ reserve() {
     alert('Invalid amount');
     return;
   }
-
+  const userId =(this.AutProService.currentUser); // Assuming you have a method to get the current user's ID
   const paymentData = {
-    guestId: 1, // Assuming a static guest ID for now
+    guestId: (Number(userId)), // Assuming a static guest ID for now
     propertyId: this.propertyId,
     startDate: this.checkInDate.toISOString().split('T')[0],
     endDate: this.checkOutDate.toISOString().split('T')[0],

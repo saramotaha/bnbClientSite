@@ -13,8 +13,9 @@ export class PorpertyLocation implements AfterViewInit {
   
 
   // Replace with actual coordinates from backend
-  @Input() latitude: number = 30.0444;    // Cairo
-   @Input() longitude: number = 31.2357;
+  @Input() latitude!: number ;    // Cairo
+   @Input() longitude!: number;
+  @Input() address!: string;
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -23,7 +24,7 @@ export class PorpertyLocation implements AfterViewInit {
   private initMap(): void {
     this.map = L.map('map', {
       center: [this.latitude, this.longitude],
-      zoom: 40,
+      zoom: 17,
       scrollWheelZoom: false
     });
 
