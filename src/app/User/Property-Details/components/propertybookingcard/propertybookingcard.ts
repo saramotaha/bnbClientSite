@@ -5,6 +5,7 @@ import { IbookingCreate } from '../../../Booking/Model/ibooking-create';
 
 
 
+
 import { BookingPaymentService } from '../../../Booking/Service/booking-payment-service';
 import { FormsModule } from '@angular/forms';
 import { PropertydetailsCalendar } from '../propertydetails-calendar/propertydetails-calendar';
@@ -16,7 +17,6 @@ import { AuthService } from '../../../../Pages/Auth/auth.service';
   selector: 'app-propertybookingcard' ,
 
   imports: [PropertydetailsCalendar, FormsModule, CommonModule ],
-
 
 templateUrl: './propertybookingcard.html',
   styleUrl: './propertybookingcard.css'

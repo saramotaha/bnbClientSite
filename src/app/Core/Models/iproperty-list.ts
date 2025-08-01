@@ -10,6 +10,7 @@ export interface IPropertyList {
   city: string
   country: string
   pricePerNight: number
+  description:string
   maxGuests:number
   bedrooms:number
   bathrooms: number
