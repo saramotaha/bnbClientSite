@@ -206,7 +206,11 @@ makeAuthenticatedRequest<T>(
     });
   }
 
+    /** 🔍 Get User ID */
+  getUserId(): string | null {
+    return this.currentUserSubject.value?.id || null;
 
+  }
 
 
 //   // Add this method to your AuthService class:
@@ -307,6 +311,9 @@ googleAuth(googleUser: GoogleUser): Observable<User> {
       return throwError(() => new Error(`Google authentication failed: ${err.error?.message || err.message || 'Unknown error'}`));
     })
   );
+
+
+
 }
 
 // Method to handle Google authentication response
@@ -323,14 +330,10 @@ handleGoogleAuthResponse(response: GoogleLoginResponse): Observable<User> {
   } else {
     throw new Error(response.message || 'Google authentication failed');
 
-    /** 🔍 Get User ID */
-  getUserId(): string | null {
-    return this.currentUserSubject.value?.id || null;
 
-  }
 }
 
 
 }
 
-
+}
