@@ -170,4 +170,8 @@ makeAuthenticatedRequest<T>(
       'Authorization': `Bearer ${this.getToken()}`
     });
   }
+    /** 🔍 Get User ID */
+  getUserId(): string | null {
+    return this.currentUserSubject.value?.id || null;
+  }
 }
