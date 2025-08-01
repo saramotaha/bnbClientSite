@@ -20,6 +20,7 @@ import { TodayBookingsComponent } from './components/host/pt2/components/today-b
 import { Reservations } from './components/host/pt2/components/reservations/reservations';
 import { Violations } from './components/host/pt2/components/violations/violations';
 
+
 // import { Checkout } from './Pages/checkout/checkout';
 // import { Messages } from './User/messages/messages';
 // import { Notifications } from './Pages/notifications/notifications';
@@ -37,14 +38,13 @@ import { DashBoardBar } from './Admin/Component/dash-board-bar/dash-board-bar';
 import { AdminDashboard } from './Admin/Component/admin-dashboard/admin-dashboard';
 import { UserManagement } from './Admin/Component/user-management/user-management';
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
-
-import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
+//import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
 import { AdminHostVerificationComponent } from './Admin/Component/admin-host-verifications/admin-host-verifications';
-
 
 import { Earnings } from './components/host/pt2/components/earnings/earnings';
 import { PropertyListComponent } from './components/host/pt1/property-list/property-list';
 import { listingsRoutes } from './components/host/pt1/listings/listings.routes';
+import { EditPropertyComponent } from './components/host/pt1/edit-property.component/edit-property.component';
 import { ListingStep1Component } from './components/host/pt1/listings/listing-step1/listing-step1.component';
 // import { Messages } from './components/host/pt2/components/messages/messages';
 import { Login } from './Pages/login/login';
@@ -52,11 +52,14 @@ import { AdminPayment } from './Admin/Component/admin-payment/admin-payment';
 import { Messages } from './User/messages/messages';
 import { UserProfile } from './User/UserProfile/Component/user-profile/user-profile';
 import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
-
+import { ProfileInfo } from './User/UserProfile/Component/profile-info/profile-info';
+import { UserTrips } from './User/UserProfile/Component/user-trips/user-trips';
+import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
 
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
   { path: "Home", component: Home, pathMatch: "full" },
+
 
   {
 
@@ -77,6 +80,15 @@ export const routes: Routes = [
     ]
 
   },
+
+
+  {path: "UserTrips",
+    component: UserProfile,children: [
+      { path: "", redirectTo: "profileInfo", pathMatch: "full" },
+      { path: "profileInfo", component: ProfileInfo },
+      { path: "UserTrips", component: UserTrips },
+
+    ]},
   { path: "login", component: Login },
   { path: "ViewAllHomes", component: ViewAllHomes , pathMatch:"full" },
   { path: "register", component: Register , pathMatch:"full" },
@@ -104,9 +116,14 @@ export const routes: Routes = [
   { path: '', component: PropertyListComponent },
   { path: 'host', children: listingsRoutes },
 
+  { path: 'edit/:id', component: EditPropertyComponent },
+
+
+
     // { path: "messages", component: Messages , pathMatch:"full" },
   { path: "favorites",component:Favorites,pathMatch:"full"},
-  { path: "UserProfile",component:UserProfile,pathMatch:"full"},
+
+    { path: "UserProfile",component:UserProfile,pathMatch:"full"},
   // { path: "notifications", component: Notifications , pathMatch:"full" },
   // { path: "AdminNotifications", component: DashBoardBar , pathMatch:"full" },
 
@@ -116,5 +133,7 @@ export const routes: Routes = [
   // { path: "profile", component: Profile , pathMatch:"full" },
   // { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   // { path: "checkout", component: Checkout , pathMatch:"full" },
+
   { path: "**", component: NotFound}
+
 ];

@@ -58,27 +58,57 @@ export class AuthService {
     );
   }
 
-  /** 👤 EXTRACT USER FROM TOKEN */
-private getUserFromToken(token: string): User {
-  const payload = jwtDecode<JwtPayload>(token);
-  console.log('Decoded JWT Payload:', payload);
+//   /** 👤 EXTRACT USER FROM TOKEN */
+// private getUserFromToken(token: string): User {
+//   const payload = jwtDecode<JwtPayload>(token);
+//   console.log('Decoded JWT Payload:', payload);
 
-  // return {
-  //   id: payload.UserId || payload.nameidentifier || '',
-  //   firstName: payload.name || '',
-  //   email: payload.emailaddress || '',
-  //   role: payload.role || 'guest',
-  //   HostId: payload.HostId ? String(payload.HostId) : undefined
-  // };
+//   // return {
+//   //   id: payload.UserId || payload.nameidentifier || '',
+//   //   firstName: payload.name || '',
+//   //   email: payload.emailaddress || '',
+//   //   role: payload.role || 'guest',
+//   //   HostId: payload.HostId ? String(payload.HostId) : undefined
+//   // };
+//   return {
+//   id: payload.UserID || payload.nameidentifier || '',
+//   firstName: payload.firstName || '',
+//   lastName: payload.lastName || '',
+//   email: payload.email || '',
+//   role: payload.role || 'guest',
+//   HostId: payload.HostId ? String(payload.HostId) : undefined
+// };
+
+// }
+  /** 👤 EXTRACT USER FROM TOKEN - FIXED */
+ private getUserFromToken(token: string): User {
+  const payload = jwtDecode<any>(token);
+
+  const emailClaim = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress';
+  const nameClaim = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name';
+  const nameIdentifierClaim = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier';
+  const roleClaim = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+
+  // Normalize role to string[]
+  let roles: string[] = [];
+
+  const rawRoles = payload[roleClaim];
+
+  if (Array.isArray(rawRoles)) {
+    roles = rawRoles.map((r: string) => r.toLowerCase());
+  } else if (typeof rawRoles === 'string') {
+    roles = [rawRoles.toLowerCase()];
+  }
+
   return {
-  id: payload.UserID || payload.nameidentifier || '',
-  firstName: payload.firstName || '',
-  lastName: payload.lastName || '',
-  email: payload.email || '',
-  role: payload.role || 'guest',
-  HostId: payload.HostId ? String(payload.HostId) : undefined
-};
-
+    id: payload.UserID || payload[nameIdentifierClaim] || '',
+    firstName: payload[nameClaim] || payload.firstName || '',
+    lastName: payload.lastName || '',
+    email: payload[emailClaim] || payload.email || '',
+    role: roles, // ✅ always a string[]
+    HostId: payload.HostId ? String(payload.HostId) : undefined,
+    accessToken: token
+  };
 }
 
 

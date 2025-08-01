@@ -5,7 +5,8 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  ChangeDetectorRef
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -82,7 +83,9 @@ export class AvailabilityCalendarComponent implements OnInit, OnChanges {
 
   weekDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
-  ngOnInit() {
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  async ngOnInit() {
     const currentYear = new Date().getFullYear();
     this.yearOptions = Array.from({length: 5}, (_, i) => currentYear + i);
 
@@ -90,48 +93,22 @@ export class AvailabilityCalendarComponent implements OnInit, OnChanges {
     this.selectedMonthIndex = this.currentMonth.getMonth();
     this.selectedYear = this.currentMonth.getFullYear();
 
-    this.generateMockDataForCurrentMonth();
+    // Load data before generating calendar
+    await this.requestDataForMonth();
     this.generateCalendar();
-    this.requestDataForMonth();
+    this.cdr.detectChanges();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['calendarData'] || changes['priceSettings']) {
       this.generateCalendar();
-    }
-  }
-
-  generateMockDataForCurrentMonth() {
-    const year = this.currentMonth.getFullYear();
-    const month = this.currentMonth.getMonth();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-    for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(year, month, day);
-      const dateString = this.formatDateString(date);
-      const isWeekend = date.getDay() === 0 || date.getDay() === 6;
-      const isPast = this.isPastDate(date);
-
-      if (!this.calendarData[dateString]) {
-        const randomlyBlocked = Math.random() < 0.1 && !isPast;
-        this.calendarData[dateString] = {
-          date: new Date(dateString),
-          price: isWeekend ? this.priceSettings.weekendPrice : this.priceSettings.basePrice,
-          available: !isPast && !randomlyBlocked,
-          blocked: randomlyBlocked,
-          minStay: 1,
-          maxStay: 365,
-          isWeekend,
-          isEditing: false
-        };
-      }
+      this.cdr.detectChanges();
     }
   }
 
   generateCalendar() {
     const year = this.currentMonth.getFullYear();
     const month = this.currentMonth.getMonth();
-
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const daysInMonth = lastDay.getDate();
@@ -150,21 +127,24 @@ export class AvailabilityCalendarComponent implements OnInit, OnChanges {
       });
     }
 
+    // Add current month days with persisted data
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       const dateString = this.formatDateString(date);
       const isWeekend = date.getDay() === 0 || date.getDay() === 6;
       const isPast = this.isPastDate(date);
-      const dayData = this.calendarData[dateString];
-
+      
+      // Use persisted data if available, otherwise create default
+      const persistedData = this.calendarData[dateString];
       this.calendarDates.push({
         date,
-        price: dayData?.price ?? (isWeekend ? this.priceSettings.weekendPrice : this.priceSettings.basePrice),
-        available: dayData?.available ?? !isPast,
-        blocked: dayData?.blocked ?? false,
+        price: persistedData?.price ?? 
+              (isWeekend ? this.priceSettings.weekendPrice : this.priceSettings.basePrice),
+        available: persistedData?.available ?? !isPast,
+        blocked: persistedData?.blocked ?? false,
         isWeekend,
-        minStay: dayData?.minStay ?? this.availabilitySettings.minStay,
-        maxStay: dayData?.maxStay ?? this.availabilitySettings.maxStay,
+        minStay: persistedData?.minStay ?? this.availabilitySettings.minStay,
+        maxStay: persistedData?.maxStay ?? this.availabilitySettings.maxStay,
         isEditing: false
       });
     }
@@ -182,55 +162,55 @@ export class AvailabilityCalendarComponent implements OnInit, OnChanges {
         isEditing: false
       });
     }
-  }
-
-  formatDateString(date: Date): string {
-    return date.toISOString().split('T')[0];
-  }
-
-  previousMonth() {
-    this.currentMonth = new Date(this.currentMonth.getFullYear(), this.currentMonth.getMonth() - 1, 1);
-    this.selectedMonthIndex = this.currentMonth.getMonth();
-    this.selectedYear = this.currentMonth.getFullYear();
-    this.generateMockDataForCurrentMonth();
-    this.generateCalendar();
-    this.monthChanged.emit({ year: this.selectedYear, month: this.selectedMonthIndex + 1 });
-    this.requestDataForMonth();
-  }
-
-  nextMonth() {
-    this.currentMonth = new Date(this.currentMonth.getFullYear(), this.currentMonth.getMonth() + 1, 1);
-    this.selectedMonthIndex = this.currentMonth.getMonth();
-    this.selectedYear = this.currentMonth.getFullYear();
-    this.generateMockDataForCurrentMonth();
-    this.generateCalendar();
-    this.monthChanged.emit({ year: this.selectedYear, month: this.selectedMonthIndex + 1 });
-    this.requestDataForMonth();
-  }
-
-  onMonthYearChange() {
-    this.currentMonth = new Date(this.selectedYear, this.selectedMonthIndex, 1);
-    this.dataLoadRequested.emit({
-      year: this.selectedYear,
-      month: this.selectedMonthIndex + 1
-    });
-  }
-
-  requestDataForMonth() {
-    this.dataLoadRequested.emit({
-      year: this.currentMonth.getFullYear(),
-      month: this.currentMonth.getMonth() + 1
-    });
+    
+    this.cdr.detectChanges();
   }
 
   updateCalendarData(newData: CalendarData) {
     this.calendarData = { ...this.calendarData, ...newData };
     this.generateCalendar();
+    this.cdr.detectChanges();
   }
+formatDateString(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
 
-  setLoading(loading: boolean) {
-    this.isLoading = loading;
-  }
+previousMonth() {
+  this.currentMonth = new Date(this.currentMonth.getFullYear(), this.currentMonth.getMonth() - 1, 1);
+  this.selectedMonthIndex = this.currentMonth.getMonth();
+  this.selectedYear = this.currentMonth.getFullYear();
+  this.requestDataForMonth();
+  this.cdr.detectChanges();
+}
+
+nextMonth() {
+  this.currentMonth = new Date(this.currentMonth.getFullYear(), this.currentMonth.getMonth() + 1, 1);
+  this.selectedMonthIndex = this.currentMonth.getMonth();
+  this.selectedYear = this.currentMonth.getFullYear();
+  this.requestDataForMonth();
+  this.cdr.detectChanges();
+}
+
+onMonthYearChange() {
+  this.currentMonth = new Date(this.selectedYear, this.selectedMonthIndex, 1);
+  this.dataLoadRequested.emit({
+    year: this.selectedYear,
+    month: this.selectedMonthIndex + 1
+  });
+  this.cdr.detectChanges();
+}
+
+requestDataForMonth() {
+  this.dataLoadRequested.emit({
+    year: this.currentMonth.getFullYear(),
+    month: this.currentMonth.getMonth() + 1
+  });
+}
+
+setLoading(loading: boolean) {
+  this.isLoading = loading;
+  this.cdr.detectChanges();
+}
 
 selectDate(dateAvailability: DateAvailability) {
   if (!this.readonly && 
@@ -240,6 +220,7 @@ selectDate(dateAvailability: DateAvailability) {
       !this.isPastDate(dateAvailability.date)) {
     this.selectedDate = dateAvailability.date;
     this.dateSelected.emit(dateAvailability.date);
+    this.cdr.detectChanges();
   }
 }
 
@@ -250,23 +231,19 @@ toggleDateAvailability(dateAvailability: DateAvailability, event: Event) {
       this.isPastDate(dateAvailability.date)) return;
 
   dateAvailability.available = !dateAvailability.available;
-
   const dateString = this.formatDateString(dateAvailability.date);
+  
   if (!this.calendarData[dateString]) {
-    this.calendarData[dateString] = {
-      date: dateAvailability.date,
-      price: dateAvailability.price,
-      available: dateAvailability.available,
-      blocked: dateAvailability.blocked,
-      minStay: dateAvailability.minStay,
-      maxStay: dateAvailability.maxStay,
-      isWeekend: dateAvailability.isWeekend,
-      isEditing: dateAvailability.isEditing
-    };
+    this.calendarData[dateString] = { ...dateAvailability };
+  } else {
+    this.calendarData[dateString].available = dateAvailability.available;
   }
 
-  this.calendarData[dateString].available = dateAvailability.available;
-  this.dateAvailabilityChanged.emit({ date: dateAvailability.date, availability: dateAvailability });
+  this.dateAvailabilityChanged.emit({ 
+    date: dateAvailability.date, 
+    availability: dateAvailability 
+  });
+  this.cdr.detectChanges();
 }
 
 toggleEditing(dateAvailability: DateAvailability, event?: Event): void {
@@ -281,6 +258,7 @@ toggleEditing(dateAvailability: DateAvailability, event?: Event): void {
   });
 
   dateAvailability.isEditing = !dateAvailability.isEditing;
+  this.cdr.detectChanges();
 }
 
 updateDatePrice(dateAvailability: DateAvailability, newPrice: number): void {
@@ -296,21 +274,17 @@ updateDatePrice(dateAvailability: DateAvailability, newPrice: number): void {
   dateAvailability.isEditing = false;
 
   const dateString = this.formatDateString(dateAvailability.date);
-  if (!this.calendarData[dateString]){
-    this.calendarData[dateString] = {
-      date: dateAvailability.date,
-      price: dateAvailability.price,
-      available: dateAvailability.available,
-      blocked: dateAvailability.blocked,
-      minStay: dateAvailability.minStay,
-      maxStay: dateAvailability.maxStay,
-      isWeekend: dateAvailability.isWeekend,
-      isEditing: dateAvailability.isEditing
-    };
+  if (!this.calendarData[dateString]) {
+    this.calendarData[dateString] = { ...dateAvailability };
+  } else {
+    this.calendarData[dateString].price = dateAvailability.price;
   }
 
-  this.calendarData[dateString].price = dateAvailability.price;
-  this.dateAvailabilityChanged.emit({ date: dateAvailability.date, availability: dateAvailability });
+  this.dateAvailabilityChanged.emit({ 
+    date: dateAvailability.date, 
+    availability: dateAvailability 
+  });
+  this.cdr.detectChanges();
 }
 
 isCurrentMonth(date: Date): boolean {
@@ -364,28 +338,24 @@ exportCalendarData(): CalendarData {
 
 setAllDatesAvailable(available: boolean) {
   if (this.readonly) return;
+  
   this.calendarDates.forEach(dateAvailability => {
     if (this.isCurrentMonth(dateAvailability.date) && 
         !this.isPastDate(dateAvailability.date) &&
         !dateAvailability.blocked) {
       dateAvailability.available = available;
       const dateString = this.formatDateString(dateAvailability.date);
-      if (!this.calendarData[dateString]){
-        this.calendarData[dateString] = {
-          date: dateAvailability.date,
-          price: dateAvailability.price,
-          available: dateAvailability.available,
-          blocked: dateAvailability.blocked,
-          minStay: dateAvailability.minStay,
-          maxStay: dateAvailability.maxStay,
-          isWeekend: dateAvailability.isWeekend,
-          isEditing: dateAvailability.isEditing
-        };
+      
+      if (!this.calendarData[dateString]) {
+        this.calendarData[dateString] = { ...dateAvailability };
+      } else {
+        this.calendarData[dateString].available = available;
       }
-      this.calendarData[dateString].available = available;
     }
   });
+
   this.emitBulkChange();
+  this.cdr.detectChanges();
 }
 
 setWeekdayPricing(price: number) {
@@ -398,24 +368,18 @@ setWeekdayPricing(price: number) {
         !this.isPastDate(dateAvailability.date)) {
       dateAvailability.price = this.priceSettings.basePrice;
       const dateStr = this.formatDateString(dateAvailability.date);
-      if (!this.calendarData[dateStr]){
-        this.calendarData[dateStr] = {
-          date: dateAvailability.date,
-          price: dateAvailability.price,
-          available: dateAvailability.available,
-          blocked: dateAvailability.blocked,
-          minStay: dateAvailability.minStay,
-          maxStay: dateAvailability.maxStay,
-          isWeekend: dateAvailability.isWeekend,
-          isEditing: dateAvailability.isEditing
-        };
+      
+      if (!this.calendarData[dateStr]) {
+        this.calendarData[dateStr] = { ...dateAvailability };
+      } else {
+        this.calendarData[dateStr].price = this.priceSettings.basePrice;
       }
-      this.calendarData[dateStr].price = this.priceSettings.basePrice;
     }
   });
 
   this.priceSettingsChange.emit(this.priceSettings);
   this.emitBulkChange();
+  this.cdr.detectChanges();
 }
 
 setWeekendPricing(price: number) {
@@ -428,24 +392,18 @@ setWeekendPricing(price: number) {
         !this.isPastDate(dateAvailability.date)) {
       dateAvailability.price = this.priceSettings.weekendPrice;
       const dateStr = this.formatDateString(dateAvailability.date);
-      if (!this.calendarData[dateStr]){
-        this.calendarData[dateStr] = {
-          date: dateAvailability.date,
-          price: dateAvailability.price,
-          available: dateAvailability.available,
-          blocked: dateAvailability.blocked,
-          minStay: dateAvailability.minStay,
-          maxStay: dateAvailability.maxStay,
-          isWeekend: dateAvailability.isWeekend,
-          isEditing: dateAvailability.isEditing
-        };
+      
+      if (!this.calendarData[dateStr]) {
+        this.calendarData[dateStr] = { ...dateAvailability };
+      } else {
+        this.calendarData[dateStr].price = this.priceSettings.weekendPrice;
       }
-      this.calendarData[dateStr].price = this.priceSettings.weekendPrice;
     }
   });
 
   this.priceSettingsChange.emit(this.priceSettings);
   this.emitBulkChange();
+  this.cdr.detectChanges();
 }
 
 emitBulkChange() {
@@ -478,6 +436,7 @@ getMonthStats() {
   const available = currentMonthDates.filter(d => d.available && !this.isPastDate(d.date)).length;
   const blocked = currentMonthDates.filter(d => d.blocked).length;
   const total = currentMonthDates.length;
+  
   return {
     available,
     blocked,
@@ -489,6 +448,7 @@ getMonthStats() {
 clearSelection() {
   this.selectedDate = null;
   this.calendarDates.forEach(date => date.isEditing = false);
+  this.cdr.detectChanges();
 }
 
 goToToday() {
@@ -496,8 +456,7 @@ goToToday() {
   this.currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   this.selectedMonthIndex = this.currentMonth.getMonth();
   this.selectedYear = this.currentMonth.getFullYear();
-  this.generateMockDataForCurrentMonth();
-  this.generateCalendar();
-  this.monthChanged.emit({ year: this.currentMonth.getFullYear(), month: this.currentMonth.getMonth() + 1 });
+  this.requestDataForMonth();
+  this.cdr.detectChanges();
 }
 }
