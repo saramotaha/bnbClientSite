@@ -1,112 +1,146 @@
-<div class="container py-4">
-        <div class="mb-4">
-            <div class="d-flex align-items-center gap-2 mb-4">
-                <i class="bi bi-star-fill"></i>
-                <span class="fs-4 fw-semibold">4.81 • 120 reviews</span>
-            </div>
+ <div >
+        <div class="row ">
+            <div class="col-12">
+                
+                <!-- Header Section -->
+                <div class="text-center mb-5">
+                    <div class="  d-flex justify-content-center gap-3 align-items-center  mb-3">
+                        <div class="mt-5">
+                             <img src="https://a0.muscache.com/im/pictures/airbnb-platform-assets/AirbnbPlatformAssets-GuestFavorite/original/78b7687c-5acf-4ef8-a5ea-eda732ae3b2f.png" style="width: 80px;">
+                        </div>
+                        <div class="align-text-top">
+                            <span class="rating-display ">{{averageRating}}</span>
+                        </div>
+                        
+                        <div class="mt-5">
+                             <img src="https://a0.muscache.com/im/pictures/airbnb-platform-assets/AirbnbPlatformAssets-GuestFavorite/original/b4005b30-79ff-4287-860c-67829ecd7412.png" style="width: 80px;">
+                        </div>
+                       
+                    </div>
+                    <h2 class="h3  fw-semibold mb-3">Guest favorite</h2>
+                    <p class="text-muted">This home is a guest favorite based on ratings, reviews, and reliability</p>
+                </div>
 
-            <div class="row mb-4">
-                <div class="col-12 col-md-6">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="small">Cleanliness</span>
-                        <span class="small fw-medium">4.8</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="small">Accuracy</span>
-                        <span class="small fw-medium">4.9</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="small">Check-in</span>
-                        <span class="small fw-medium">4.9</span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="small">Communication</span>
-                        <span class="small fw-medium">4.7</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="small">Location</span>
-                        <span class="small fw-medium">4.8</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="small">Value</span>
-                        <span class="small fw-medium">4.6</span>
-                    </div>
-                </div>
-            </div>
+                <!-- Rating Categories Section -->
+                <div class="row g-4 mb-5 pb-4 border-bottom">
+                 
+                <!-- Reviews Grid -->
+                <div class="row g-4 mb-5">
+                    <!-- Review 1 -->
+                    <div class="col-12 col-lg-6 ">
+                        @for (rev of guestReviews.slice(0,6); track $index) {
 
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                <div class="col">
-                    <div>
-                        <div class="d-flex align-items-center gap-2 mb-2">
-                            <div class="rounded-circle overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b5bc?w=40&h=40&fit=crop&crop=face" 
-                                     alt="Sarah" 
-                                     class="review-avatar">
-                            </div>
+                        <div class="d-flex mb-3 align-items-center">
+                            <img [src]="rev.reviewerimage" alt="Ehab" class="review-avatar me-3">
                             <div>
-                                <p class="mb-0 fw-medium">Sarah</p>
-                                <p class="mb-0 small text-muted">March 2023</p>
+                                <h5 class="fw-semibold mb-1">{{rev.reviewerName}}</h5>
+                                <!-- <small class="text-muted">Dubai, United Arab Emirates</small> -->
                             </div>
                         </div>
-                        <p class="small text-muted">Great location and very clean apartment. The host was very responsive and helpful. Would definitely stay again!</p>
-                        <button class="btn btn-link p-0 small">Show more</button>
-                    </div>
-                </div>
-                <div class="col">
-                    <div>
-                        <div class="d-flex align-items-center gap-2 mb-2">
-                            <div class="rounded-circle overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" 
-                                     alt="James" 
-                                     class="review-avatar">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3">
+                                 @for (i of getStarArray(rev.rating); track i) {
+                                    <i [class]="i <= rev.rating ? 'fas fa-star star-filled' : 'fas fa-star star-empty'"></i>
+                                    }
                             </div>
-                            <div>
-                                <p class="mb-0 fw-medium">James</p>
-                                <p class="mb-0 small text-muted">February 2023</p>
-                            </div>
+                            <span class="text-muted">{{rev.createdAt | date:'MMMM yyyy'}}</span>
                         </div>
-                        <p class="small text-muted">Perfect for a city break. The apartment has everything you need and the view is amazing. Highly recommended!</p>
-                        <button class="btn btn-link p-0 small">Show more</button>
-                    </div>
-                </div>
-                <div class="col">
-                    <div>
-                        <div class="d-flex align-items-center gap-2 mb-2">
-                            <div class="rounded-circle overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" 
-                                     alt="Emma" 
-                                     class="review-avatar">
-                            </div>
-                            <div>
-                                <p class="mb-0 fw-medium">Emma</p>
-                                <p class="mb-0 small text-muted">January 2023</p>
-                            </div>
-                        </div>
-                        <p class="small text-muted">Lovely apartment in the heart of Manchester. Easy check-in process and great communication from Millar.</p>
-                        <button class="btn btn-link p-0 small">Show more</button>
-                    </div>
-                </div>
-                <div class="col">
-                    <div>
-                        <div class="d-flex align-items-center gap-2 mb-2">
-                            <div class="rounded-circle overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" 
-                                     alt="David" 
-                                     class="review-avatar">
-                            </div>
-                            <div>
-                                <p class="mb-0 fw-medium">David</p>
-                                <p class="mb-0 small text-muted">December 2022</p>
-                            </div>
-                        </div>
-                        <p class="small text-muted">Fantastic stay! The apartment was exactly as described and the location couldn't be better for exploring the city.</p>
-                        <button class="btn btn-link p-0 small">Show more</button>
-                    </div>
-                </div>
-            </div>
+                        
+                        <p class="textRev  mb-3"  style="word-break: break-word;">
+                            {{rev.comment.length > 100 ? rev.comment.substring(0, 200) + '...' : rev.comment}}
+                          
+                        </p>
+                            <ng-container *ngIf="rev.comment.length > 100">
+                               <a 
+                                href="#"
+                                (click)="openModalAndScrollTo($index)"
+                                class="text-dark Shownore text-decoration-underline fw-semibold"
+                                data-bs-toggle="modal"
+                                data-bs-target="#allReviewsModal"
+                                >Show more</a>
 
-            <button class="btn btn-outline-secondary mt-4">Show all 120 reviews</button>
+                            
+
+                        </ng-container>
+                        }
+                    </div>
+                        
+                    
+
+                <!-- Footer Section -->
+                <div class="">
+                   <button 
+  class="btn btn-outline-dark me-3 mb-3"
+  *ngIf="guestReviews.length > 6"
+  data-bs-toggle="modal"
+  data-bs-target="#allReviewsModal"
+>
+  Show all {{ guestReviews.length }} reviews
+</button>
+                    <a href="#" class="text-dark text-decoration-underline fw-semibold">Learn how reviews work</a>
+                </div>
+
+            </div>
         </div>
     </div>
+
+    <div class="modal  fade" id="allReviewsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog  modal-xl modal-dialog-scrollable">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title">All Reviews</h5>
+        
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+       <!-- Header Section -->
+                <div class="text-center mb-5">
+                    <div class="  d-flex justify-content-center gap-3 align-items-center  mb-3">
+                        <div class="mt-5">
+                             <img src="https://a0.muscache.com/im/pictures/airbnb-platform-assets/AirbnbPlatformAssets-GuestFavorite/original/78b7687c-5acf-4ef8-a5ea-eda732ae3b2f.png" style="width: 80px;">
+                        </div>
+                        <div class="align-text-top">
+                            <span class="rating-display ">{{averageRating}}</span>
+                        </div>
+                        
+                        <div class="mt-5">
+                             <img src="https://a0.muscache.com/im/pictures/airbnb-platform-assets/AirbnbPlatformAssets-GuestFavorite/original/b4005b30-79ff-4287-860c-67829ecd7412.png" style="width: 80px;">
+                        </div>
+                       
+                    </div>
+                    <h2 class="h3  fw-semibold mb-3">Guest favorite</h2>
+                    <p class="text-muted">This home is a guest favorite based on ratings, reviews, and reliability</p>
+                </div>
+                
+      <div class="modal-body p-5">
+        <div class="row">
+          <div class="col-12 col-lg-6" >
+             @for (rev of guestReviews; track $index) {
+
+                        <div class="d-flex mb-3 align-items-center" [attr.id]="'review-' + $index">
+                            <img [src]="rev.reviewerimage" alt="Ehab" class="review-avatar me-3">
+                            <div>
+                                <h5 class="fw-semibold mb-1">{{rev.reviewerName}}</h5>
+                                <!-- <small class="text-muted">Dubai, United Arab Emirates</small> -->
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3">
+                                 @for (i of getStarArray(rev.rating); track i) {
+                                    <i [class]="i <= rev.rating ? 'fas fa-star star-filled' : 'fas fa-star star-empty'"></i>
+                                    }
+                            </div>
+                            <span class="text-muted">{{rev.createdAt | date:'MMMM yyyy'}}</span>
+                        </div>
+                        
+                        <p class="textRev  mb-3"  style="word-break: break-word;">
+                            {{rev.comment}}
+                          
+                        </p>
+                        
+                        }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

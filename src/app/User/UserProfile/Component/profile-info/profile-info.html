@@ -1,0 +1,129 @@
+<div class="main-content col-12 me-0  d-flex row">
+
+
+<!-- Section Header -->
+<div class="  col-7 ">
+  <div class="section-header mt-5">
+    <h1 class="section-title">About me</h1>
+    <a href="#" class="edit-btn">Edit</a>
+  </div>
+
+  <!-- Profile Section -->
+  <div class="profile-section bg-light shadow-lg p-5 mt-5 rounded-5">
+    <div class="profile-avatar bg-black">{{currentUser?.firstName}}</div>
+    <h2 class="profile-name">{{currentUser?.firstName}}</h2>
+    <p class="profile-type">{{currentUser?.role}}</p>
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="reviews-section">
+    <!-- <div class="reviews-title">
+      <i class="far fa-comment-dots reviews-icon"></i>
+      Reviews I've written
+    </div> -->
+
+
+    <input type="checkbox" id="reviewsToggle" class="reviews-toggle">
+
+    <label for="reviewsToggle" class="reviews-label">
+      <div class="reviews-title">
+        <i class="far fa-comment-dots reviews-icon"></i>
+        Reviews I've written
+      </div>
+      <i class="fas fa-chevron-down toggle-icon"></i>
+    </label>
+
+    <div class="reviews-content">
+      <div class="reviews-list ">
+
+       @for (item of AllReviews; track $index) {
+
+
+
+        <div class="review shadow-lg border mb-3">
+          <div class="review-header">
+            <div class="review-product">{{item?.propertyName}}</div>
+            <div class="review-date">{{item?.createdAt}}</div>
+          </div>
+          <div class="rating">
+            {{ '★'.repeat(item?.rating || 0) }}
+          </div>
+          <p class="review-text">{{item?.comment}}.</p>
+        </div>
+
+
+
+       }
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div  *ngIf="FavValue == null" class="col-5 d-flex align-items-start mt-5 col-4 completeProfile">
+  <div class="complete-profile-card ">
+    <h3 class="complete-profile-title">Complete your profile</h3>
+    <p class="complete-profile-text">
+      Your Airbnb profile is an important part of every reservation. Complete yours to help other hosts and guests
+      get to know you.
+    </p>
+    <button  class="btn-airbnb  get-started-btn" data-bs-toggle="modal" data-bs-target="#favoritePlaceModal" >Get started</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="favoritePlaceModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-heart"></i> Add Your Favorite Place
+        </h5>
+        <button type="button" class="btn-close btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="FavPlacesForm" (submit)="AddFavPlace()" id="favoritePlaceForm">
+          <div class="mb-4">
+            <label class="form-label">What's your favorite place you've visited?</label>
+            <input formControlName="placeName" type="text" class="form-control" placeholder="Bali, Indonesia" required>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">Why is this place special to you?</label>
+            <textarea class="form-control" rows="3" placeholder="Share what made this place memorable..."
+              required></textarea>
+          </div>
+
+
+          <button  class="btn-airbnb  get-started-btn text-center"  type="submit"><i class="fa fa-add"></i> Add</button>
+
+        </form>
+      </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+  </div>
+
+</div>
+
+
+
+

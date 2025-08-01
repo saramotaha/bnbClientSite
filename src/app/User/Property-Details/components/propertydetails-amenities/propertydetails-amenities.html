@@ -13,8 +13,10 @@
             </div>
             }
           </div>
+          @if(propertyDetailsAmenities.length>10){
+            <button class="btn btn-secondary rounded-4 amenitybtn fs-5 fw-medium mt-3"  data-bs-toggle="modal" data-bs-target="#allAmenitiesModal">Show all {{totalAmenitiesCount}} amenities</button>
+          }
           
-          <button class="btn btn-secondary rounded-4 amenitybtn fs-5 fw-medium mt-3"  data-bs-toggle="modal" data-bs-target="#allAmenitiesModal">Show all {{totalAmenitiesCount}} amenities</button>
         </div>
         
 <!-- Modal -->

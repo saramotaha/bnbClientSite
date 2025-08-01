@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { messageService } from './message.service';
 import { SignalRService } from '../core/signalr.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../../Pages/Auth/auth.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -23,34 +24,51 @@ private signalRSubscription?:Subscription;
 constructor(private conversationService:ConversationService,
   private messageservise:messageService,
   private signalRservice :SignalRService,
-  private cdr: ChangeDetectorRef
+  private cdr: ChangeDetectorRef,
+  private authService: AuthService
 ){
   this.initializeSignalR();
 };
 private initializeSignalR(): void {
-    this.signalRservice.startConnection().then(() => {
-      this.signalRservice.onReceiveMessage((message) => {
-        if (message.conversationId === this.conversationId && this.conversation) {
-          // Add the new message to the conversation
-          this.conversation.messages = [...(this.conversation.messages || []), message];
-        }
-      });
+  this.signalRservice.startConnection().then(() => {
+    this.signalRservice.onReceiveMessage((message: any) => {
+      console.log('Raw received message:', message);
+      
+      const processedMessage = {
+        id: message.id,
+        content: message.content,
+        senderId: message.senderId,
+        receiverId: message.receiverId,
+        conversationId: message.conversationId,
+        sentAt: message.sentAt,
+        isCurrentUser: message.senderId === Number(this.authService.getUserId())
+      };
 
-      this.signalRservice.onConnectionStatusChanged((status) => {
-        console.log(`SignalR connection status: ${status}`);
-      });
-    }).catch(err => {
-      console.error('Error establishing SignalR connection:', err);
+      if (processedMessage.conversationId === this.conversationId) {
+        if (!this.conversation) {
+          console.warn('No conversation loaded');
+          return;
+        }
+        
+        // Add the message and sort by timestamp
+        this.conversation.messages = [
+          ...(this.conversation.messages || []),
+          processedMessage
+        ].sort((a, b) => new Date(a.sentAt).getTime() - new Date(b.sentAt).getTime());
+        
+        this.cdr.detectChanges();
+      }
     });
-    
-  }
+  }).catch(err => {
+    console.error('SignalR connection error:', err);
+  });
+}
   ngOnChanges(): void {
     if (this.conversationId > 0) {
       // Leave previous conversation if exists
       if (this.conversation?.id) {
         this.signalRservice.leaveConversation(this.conversation.id);
       }
-      
       // Join new conversation
       this.signalRservice.joinConversation(this.conversationId);
       
@@ -75,15 +93,23 @@ private initializeSignalR(): void {
       this.signalRSubscription.unsubscribe();
     }
   }
+  isMessageFromCurrentUser(message: any): boolean {
+  const currentUserId = Number(this.authService.getUserId());
+  return message.senderId === currentUserId;
+}
 
 sendMessage(){
   const trimmed =this.newMessageContent.trim();
-  if(!trimmed||!this.conversationId)return;
+  if(!trimmed||!this.conversationId|| !this.conversation)return;
 
+  const currentUserId=this.authService.getUserId();
+  if(!currentUserId)  return;
+
+ 
   const dto={
     content:trimmed,
-    senderId:1,
-    receiverId:this.conversation?.participantId??2,
+    senderId:(Number(currentUserId)),
+    receiverId:(this.getOtherParticipant(Number(currentUserId))),
     conversationId:this.conversationId
   };
   this.isSending=true;
@@ -100,8 +126,12 @@ sendMessage(){
       this.isSending=false;
       
     }
-    
-    
   });
+}
+private getOtherParticipant(currentUserId: number): number {
+  if (!this.conversation) return 0;
+  return this.conversation.user1Id === currentUserId
+    ? this.conversation.user2Id
+    : this.conversation.user1Id;
 }
 }

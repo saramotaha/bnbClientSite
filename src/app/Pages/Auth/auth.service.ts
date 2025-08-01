@@ -21,7 +21,7 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class AuthService {
-   private readonly API_URL = 'https://localhost:7145/api/Auth/';
+   private readonly API_URL = 'http://localhost:7145/api/Auth/';
   private readonly TOKEN_NAME = 'access_token';
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -208,6 +208,7 @@ makeAuthenticatedRequest<T>(
 
 
 
+
 //   // Add this method to your AuthService class:
 // googleAuth(googleUser: GoogleUser): Observable<User> {
 //   const googleAuthRequest: GoogleAuthRequest = {
@@ -321,6 +322,11 @@ handleGoogleAuthResponse(response: GoogleLoginResponse): Observable<User> {
     return of(user);
   } else {
     throw new Error(response.message || 'Google authentication failed');
+
+    /** 🔍 Get User ID */
+  getUserId(): string | null {
+    return this.currentUserSubject.value?.id || null;
+
   }
 }
 
