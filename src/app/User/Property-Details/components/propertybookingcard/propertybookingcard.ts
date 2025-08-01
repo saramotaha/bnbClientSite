@@ -13,6 +13,7 @@ import { IPropertyList } from '../../../../Core/Models/iproperty-list';
 import { PropertyDetailsService } from '../../property-details/property-details-service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../Pages/Auth/auth.service';
+import { ViolationService } from '../../../../components/host/pt2/services/violation.service';
 @Component({
   selector: 'app-propertybookingcard' ,
 
@@ -28,7 +29,10 @@ export class Propertybookingcard {
   @Output() datesSelected = new EventEmitter<{ checkIn: string; checkOut: string }>() // Added as per reference
   @Input() selectedCheckIn: string = ''
   @Input() selectedCheckOut: string = ''
-
+showReportModal: boolean = false;
+reportTitle: string = '';
+reportDescription: string = '';
+reportSuccess: boolean = false;
   // Calendar state from reference
   propertyDetails!: IPropertyList
   checkInDate: Date | null = null
@@ -56,7 +60,8 @@ export class Propertybookingcard {
     private bookingPaymentService: BookingPaymentService,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private AutProService: AuthService
+    private AutProService: AuthService,
+    private violationService :ViolationService
   ) {}
 
   ngOnInit() {
@@ -518,4 +523,23 @@ reserve() {
   });
 }
 
+
+/* submitReport() {
+  if (!this.reportTitle.trim() || !this.reportDescription.trim()) {
+    alert('Please fill in all fields');
+    return;
+  }
+
+  // TODO: You can call your backend API here to submit the report
+  console.log('Reporting:', this.reportTitle, this.reportDescription);
+
+  // Optionally reset fields
+  this.reportTitle = '';
+  this.reportDescription = '';
+
+  // Close the modal manually using Bootstrap API
+  const modal = document.getElementById('reportModal');
+  const modalInstance = bootstrap.Modal.getInstance(modal!);
+  modalInstance?.hide();
+} */
 }
