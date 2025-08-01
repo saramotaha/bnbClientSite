@@ -12,7 +12,7 @@ export class PropertyImageService {
     constructor(private http : HttpClient  ) {}
 
     getAllimagesPropertyId(id:Number) : Observable<IpropertImageGallery[]> {
-        return this.http.get<IpropertImageGallery[]>(`http://localhost:7145/api/properties/1/images`)
+        return this.http.get<IpropertImageGallery[]>(`http://localhost:7145/api/properties/${id}/images`)
           
           .pipe(
             tap(images=>{

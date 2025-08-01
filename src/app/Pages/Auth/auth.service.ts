@@ -16,7 +16,7 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class AuthService {
-   private readonly API_URL = 'https://localhost:7145/api/Auth/';
+   private readonly API_URL = 'http://localhost:7145/api/Auth/';
   private readonly TOKEN_NAME = 'access_token';
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -199,5 +199,9 @@ makeAuthenticatedRequest<T>(
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.getToken()}`
     });
+  }
+    /** 🔍 Get User ID */
+  getUserId(): string | null {
+    return this.currentUserSubject.value?.id || null;
   }
 }

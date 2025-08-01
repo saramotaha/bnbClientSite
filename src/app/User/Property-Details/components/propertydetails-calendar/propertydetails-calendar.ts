@@ -14,7 +14,7 @@
   export class PropertydetailsCalendar implements OnInit{
     constructor(private PropertyDetails:PropertyDetailsService ,private cdr:ChangeDetectorRef) { }
     @Input() bookingDetails!: IbookingCreate;
-    @Input() propertyId:number =1;
+    @Input() propertyId!:number ;
   @Output() datesSelected = new EventEmitter<{ checkIn: string; checkOut: string }>();
 
     propertyDetails!:IPropertyList;

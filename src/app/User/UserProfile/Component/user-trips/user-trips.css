@@ -1,0 +1,91 @@
+  header {
+            background-color: white;
+            border-bottom: 1px solid #ebebeb;
+            padding: 0 80px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            max-width: 1760px;
+            margin: 0 auto;
+        }
+
+
+        /* Main Content Styles */
+        main {
+            max-width: 1760px;
+            margin: 0 auto;
+            padding: 32px 40px;
+            display: flex;
+            gap: 48px;
+        }
+
+
+
+        /* Main Content Styles */
+        .content {
+            flex: 1;
+        }
+
+
+        .content-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .content-subtitle {
+            font-size: 16px;
+            color: #717171;
+        }
+
+        /* Empty State Styles */
+        .empty-state {
+            /* background-color: white; */
+            /* border-radius: 12px; */
+            padding: 48px;
+            text-align: center;
+            max-width: 630px;
+            margin: 0 auto;
+            /* box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05); */
+        }
+
+        .empty-state img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 24px;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            color: #222222;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .empty-state button {
+            background-color: #ff385c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .empty-state button:hover {
+            background-color: #e61e4d;
+            transform: scale(1.03);
+        }
+
+        .empty-state button:active {
+            transform: scale(0.98);
+        }

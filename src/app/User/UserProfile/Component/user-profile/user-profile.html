@@ -1,79 +1,21 @@
 <div class="p-5">
   <div class="row g-4  ">
     <!-- Sidebar -->
-    <div class="col-lg-4 col-md-4 fs-5  ms-5">
-      <div class="sidebar-header">
-        <h2 class="sidebar-title">Profile</h2>
-      </div>
-      <div class="sidebar ms-3">
-        <a href="#" class="sidebar-item active">
-          <div class="sidebar-icon active text-white">{{currentUser.firstName}}</div>
-          <span>About me</span>
-        </a>
-        <a href="#" class="sidebar-item">
-          <div class="sidebar-icon trips">
-            <i class="fa-solid fa-suitcase"></i>
-          </div>
-          <span>Past trips</span>
-        </a>
-        <a href="#" class="sidebar-item">
-          <div class="sidebar-icon connections ">
-            <i class="fa-solid fa-users "></i>
-          </div>
-          <span>Connections</span>
-        </a>
-      </div>
+    <div class="col-lg-4 col-md-4 fs-5  ms-5  ">
+
+      <app-profile-bar></app-profile-bar>
+
+
     </div>
 
     <!-- Main Content -->
     <div class="col-lg-7 row col-md-8 d-flex">
-       <div class="col-7" >
-      <div class="main-content">
-        <!-- Section Header -->
-        <div class="section-header mt-5">
-          <h1 class="section-title">About me</h1>
-          <a href="#" class="edit-btn">Edit</a>
-        </div>
+       <div class=" w-100" >
 
-        <!-- Profile Section -->
-        <div class="profile-section bg-light shadow-lg p-3 mt-5 rounded-5">
-          <div class="profile-avatar">{{currentUser.firstName}}</div>
-          <h2 class="profile-name">{{currentUser.firstName}}</h2>
-          <p class="profile-type">{{currentUser.role}}</p>
-        </div>
+        <router-outlet></router-outlet>
 
-        <!-- Reviews Section -->
-        <div class="reviews-section">
-          <div class="reviews-title">
-            <i class="far fa-comment-dots reviews-icon"></i>
-            Reviews I've written
-          </div>
-        </div>
-      </div>
+
+       </div>
    </div>
 
-
-
-
-    <div class="col-5 d-flex align-items-center">
-      <div class="complete-profile-card ">
-        <h3 class="complete-profile-title">Complete your profile</h3>
-        <p class="complete-profile-text">
-          Your Airbnb profile is an important part of every reservation. Complete yours to help other hosts and guests
-          get to know you.
-        </p>
-        <button class="get-started-btn">Get started</button>
-      </div>
     </div>
-
-    </div>
-
-
-
-    <div>
-      
-    </div>
-    <!-- Right Sidebar -->
-
-  </div>
-</div>
