@@ -7,17 +7,30 @@ import {
   ViolationDetailsDTO,
   ViolationListDTO
 } from '../models/violation.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ViolationService {
   private baseUrl = 'http://localhost:7145/api/violations';
 
   constructor(private http: HttpClient,private authService: AuthService ) {}
-
+  violatinDetailsSupject = new BehaviorSubject<CreateViolationDTO[]>([]);
+  violation$ = this.violatinDetailsSupject.asObservable();
   // Submit a new violation report
   create(dto: CreateViolationDTO): Observable<string> {
-    return this.http.post<string>(`${this.baseUrl}`, dto);
+    return this.http.post<string>(`${this.baseUrl}`, dto)
+      .pipe(
+        tap((response) => {
+          const currentViolations = this.violatinDetailsSupject.value;
+          this.violatinDetailsSupject.next([...currentViolations, dto]);
+          console.log('Violation created successfully:', response);
+
+        }),
+        catchError((error) => {
+          console.error('Error creating violation:', error);
+          return throwError(() => new Error('Failed to create violation'));
+        })
+      );
   }
 
   // Get all violations (for admin or host view)

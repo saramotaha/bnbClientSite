@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { PropertyHostService } from './Service/property-host-service';
 import { IHostProperty } from './ihost-property';
+import { ConversationService } from '../../../messages/sidebar/conversation.service';
+import { messageService } from '../../../messages/chat/message.service';
 
 @Component({
   selector: 'app-property-host',
@@ -9,7 +11,7 @@ templateUrl: './property-host.html',
   styleUrl: './property-host.css'
 })
 export class PropertyHost implements OnInit {
-  constructor(private PropertyHostService : PropertyHostService,private cdr :ChangeDetectorRef){}
+  constructor(private PropertyHostService : PropertyHostService,private cdr :ChangeDetectorRef , private ConvService:ConversationService , MsgService :messageService ){}
   hostDetails!:IHostProperty
   @Input() hostId!: number;
   ngOnInit(): void {
@@ -27,7 +29,7 @@ export class PropertyHost implements OnInit {
       });      
   }
   messageHost(){
-    
+
   }
 
 }
