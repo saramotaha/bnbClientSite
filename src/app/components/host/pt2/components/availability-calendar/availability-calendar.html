@@ -101,7 +101,7 @@
             <button 
               class="availability-toggle"
               (click)="toggleDateAvailability(dateAvailability, $event)"
-              [title]="dateAvailability.available ? 'Make unavailable' : 'Make available'"
+              [title]="dateAvailability.available ? 'Block' : 'Make available'"
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 @if (dateAvailability.available) {

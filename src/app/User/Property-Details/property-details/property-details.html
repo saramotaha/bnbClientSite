@@ -1,4 +1,5 @@
-<app-base-nav/>
+<body style="background-color: white;">
+    <app-base-nav/>
 
 <div class="container mt-3" style="max-width: 1120px">
     @if(propertyDetails) {
@@ -9,15 +10,15 @@
 }@else {
     <p>No property details available.</p>
 }
-<app-image-gallery [propertyId]="1" ></app-image-gallery>
+<app-image-gallery [propertyId]="propertyId" ></app-image-gallery>
     
    
-<div class="row p-0 details ">
+<div class="row p-0  ">
     <div class="col-8 ">
-        <h4>{{propertyDetails.description}} , {{propertyDetails.country}}</h4>
+        <h4>{{propertyDetails?.description}} , {{propertyDetails?.country}}</h4>
         <div class="d-flex gap-3">
-            <p>{{propertyDetails.maxGuests }} {{propertyDetails.maxGuests > 1 ? 'Guests':'Guest'}} • 
-                {{propertyDetails.bedrooms}} {{propertyDetails.bedrooms > 1 ? 'Bedrooms':'Bedroom'}} • {{propertyDetails.bathrooms}} {{propertyDetails.bathrooms > 1 ? 'Baths':'Bath'}} </p>
+            <p>{{propertyDetails?.maxGuests }} {{propertyDetails?.maxGuests ??0> 1 ? 'Guests':'Guest'}} • 
+                {{propertyDetails?.bedrooms}} {{propertyDetails?.bedrooms??0 > 1 ? 'Bedrooms':'Bedroom'}} • {{propertyDetails?.bathrooms}} {{propertyDetails?.bathrooms?? 0 > 1 ? 'Baths':'Bath'}} </p>
             <!-- <p>{{propertyDetails.bedrooms}} {{propertyDetails.bedrooms > 1 ? 'Bedrooms':'Bedroom'}} </p>
             <p>{{propertyDetails.bathrooms}} {{propertyDetails.bathrooms > 1 ? 'Baths':'Bath'}} </p> -->
         </div>
@@ -34,22 +35,26 @@
         </div>
         <hr class="my-5"/>
         
-        <app-propertydetails-amenities/>
+        <app-propertydetails-amenities [propertyId]="propertyId"></app-propertydetails-amenities>
         <hr class="my-5"/>
-        <app-propertydetails-calendar/>
+        <app-propertydetails-calendar (datesSelected)="onDatesSelected($event)" [propertyId]="propertyId"></app-propertydetails-calendar>
          
 
     </div>
     <div class="col-4">
         <div class="sticky-top" style="top: 15px;">
-            <app-propertybookingcard />
+            <app-propertybookingcard [selectedCheckIn]="selectedCheckIn" [selectedCheckOut]="selectedCheckOut" [propertyId]="propertyId"></app-propertybookingcard>
         </div>
     </div>
             <hr class="my-5"/>
+    <app-property-detials-review [propertyId]="propertyId"></app-property-detials-review>
 
-    <app-property-detials-review/>
+    <app-porperty-location [latitude]="latitude" [longitude]="longitude" [address]="address"></app-porperty-location>
+    <app-property-host [hostId]="hostId"></app-property-host>
 </div>
 
-
+</div>
    
 <app-footer/>
+
+</body>

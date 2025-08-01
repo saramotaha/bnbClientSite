@@ -4,7 +4,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
+  role: string[];
   HostId?: string;
   accessToken?: string;
 }
@@ -51,7 +51,7 @@ export interface JwtPayload {
   role?: string;
   exp?: number;
   firstName: string;
-  lastName?: string; 
+  lastName?: string;
 }
 
 
