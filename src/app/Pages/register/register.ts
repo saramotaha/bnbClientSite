@@ -7,6 +7,9 @@ import { takeUntil } from 'rxjs/operators';
 import { AuthService } from './../Auth/auth.service';
 import { ValidationService } from './../Auth/validation.service';
 import { RegisterDto } from './../Auth/user.model';
+import { User } from './../Auth/user.model';
+import { GoogleAuthService } from '../Auth/google-auth.service';
+import { GoogleUser } from '../Auth/google-auth.service';
 
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,6 +33,7 @@ export class Register implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private googleAuthService: GoogleAuthService,
     private router: Router
   ) {
     this.registerForm = this.createRegisterForm();
@@ -193,4 +197,37 @@ export class Register implements OnInit, OnDestroy {
   get hasPasswordMismatchError(): boolean {
     return !!(this.registerForm.errors?.['passwordMismatch'] && this.confirmPassword?.touched);
   }
+
+  
+// Add this method to your Register class:
+signInWithGoogle(): void {
+  if (this.isLoading) return;
+  
+  this.isLoading = true;
+  this.errorMessage = '';
+
+  this.googleAuthService.signIn()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (googleUser: GoogleUser) => {
+        console.log('Google user info:', googleUser);
+        
+        this.authService.googleAuth(googleUser).subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.router.navigate(['/home']);
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.errorMessage = this.getErrorMessage(error);
+          }
+        });
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.errorMessage = 'Google sign-in failed. Please try again.';
+        console.error('Google sign-in error:', error);
+      }
+    });
+}
 }

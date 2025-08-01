@@ -188,7 +188,7 @@ import { AuthService } from '../../../Pages/Auth/auth.service';
   providedIn: 'root'
 })
 export class HostVerificationService {
-  private readonly API_URL = 'http://localhost:7145/api/HostVerification';
+  private readonly API_URL = 'https://localhost:7145/api/HostVerification';
 
   constructor(
     private http: HttpClient,

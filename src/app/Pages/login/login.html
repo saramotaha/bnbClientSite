@@ -1,4 +1,4 @@
-<div class="login-container">
+<!-- <div class="login-container">
   <div class="login-card">
     <h1>Login to your account</h1>
     <h2>Welcome to Airbnb</h2>
@@ -26,6 +26,90 @@
     <div class="divider">
       <span>or</span>
     </div>
+
+    <div class="signup-link">
+      Don't have an account? <a (click)="goToRegister()">Sign up</a>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div> -->
+
+<div class="login-container">
+  <div class="login-card">
+    <h1>Login to your account</h1>
+    <h2>Welcome to Airbnb</h2>
+
+    <!-- Google Sign-In Button -->
+    <!-- <button 
+      type="button" 
+      class="btn-google" 
+      (click)="signInWithGoogle()"
+      [disabled]="isLoading || isLoading">
+      <div class="google-btn-content">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" class="google-logo">
+        <span *ngIf="!isLoading">
+          <i class="fa fa-spinner fa-spin"></i> Signing in...
+        </span>
+      </div>
+    </button> -->
+    <button 
+  type="button" 
+  class="btn-google" 
+  (click)="signInWithGoogle()"
+  [disabled]="isAnyLoading || !isGoogleReady"
+  [class.disabled]="!isGoogleReady">
+  <div class="google-btn-content">
+    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" class="google-logo">
+    <span *ngIf="!isGoogleLoading && isGoogleReady">Continue with Google</span>
+    <span *ngIf="!isGoogleLoading && !isGoogleReady">Loading Google...</span>
+    <span *ngIf="isGoogleLoading">
+      <i class="fa fa-spinner fa-spin"></i> Signing in...
+    </span>
+  </div>
+</button>
+
+    <div class="divider">
+      <span>or</span>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="text" formControlName="email" class="form-control" placeholder="Enter your email">
+        <app-validation-error 
+          [errors]="getFieldErrors('email')" 
+          fieldName="Email" 
+          *ngIf="isFieldInvalid('email')">
+        </app-validation-error>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="password-input-container">
+          <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control"
+            placeholder="Enter your password">
+          <button type="button" class="password-toggle-btn" (click)="togglePasswordVisibility()"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+            <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
+        <app-validation-error 
+          [errors]="getFieldErrors('password')" 
+          fieldName="Password" 
+          *ngIf="isFieldInvalid('password')">
+        </app-validation-error>
+      </div>
+      
+      <button type="submit" class="btn-primary" [disabled]="!loginForm.valid || isLoading">
+        <span *ngIf="!isLoading">Continue</span>
+        <span *ngIf="isLoading">
+          <i class="fa fa-spinner fa-spin"></i> Signing in...
+        </span>
+      </button>
+    </form>
 
     <div class="signup-link">
       Don't have an account? <a (click)="goToRegister()">Sign up</a>

@@ -1,14 +1,19 @@
+import { GoogleUser } from './google-auth.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
 import { map, catchError, tap, switchMap } from 'rxjs/operators';
+import { GoogleLoginResponse } from './user.model'; // Assuming you have this model defined
+import { environment } from '../../../environments/environment.prod'; // Adjust the path as necessary
+
 import {
   User,
   LoginDto,
   RegisterDto,
   AuthResponse,
   UserProfile,
-  JwtPayload
+  JwtPayload,
+  GoogleAuthRequest,
 } from './user.model';
 import { jwtDecode } from 'jwt-decode';
 
@@ -200,4 +205,126 @@ makeAuthenticatedRequest<T>(
       'Authorization': `Bearer ${this.getToken()}`
     });
   }
+
+
+
+//   // Add this method to your AuthService class:
+// googleAuth(googleUser: GoogleUser): Observable<User> {
+//   const googleAuthRequest: GoogleAuthRequest = {
+//     email: googleUser.email,
+//     firstName: googleUser.firstName,
+//     lastName: googleUser.lastName,
+//     idToken: googleUser.idToken
+//   };
+  
+
+//   return this.http.post<GoogleLoginResponse>(`${this.API_URL}google-auth`, googleAuthRequest).pipe(
+//     switchMap((response) => {
+//       if (response.success && response.data) {
+//         const token = response.data.token;
+//         localStorage.setItem(this.TOKEN_NAME, token);
+
+//         const user = this.getUserFromToken(token);
+//         console.log('✅ Google Auth User:', user);
+
+//         this.currentUserSubject.next(user);
+//         this.isAuthenticatedSubject.next(true);
+
+//         return of(user);
+//       } else {
+//         throw new Error(response.message || 'Google authentication failed');
+//       }
+//     }),
+//     catchError(err => {
+//       this.clearAuthState();
+//       return throwError(() => err);
+//     })
+//   );
+// }
+
+// // Update the googleAuth method and add these helper methods:
+// private createGoogleAuthRequest(googleUser: GoogleUser): GoogleAuthRequest {
+//   return {
+//     email: googleUser.email,
+//     firstName: googleUser.firstName,
+//     lastName: googleUser.lastName,
+//     idToken: googleUser.idToken
+//   };
+// }
+// Update your googleAuth method in auth.service.ts
+googleAuth(googleUser: GoogleUser): Observable<User> {
+  console.log('🚀 Starting Google Auth with user:', { 
+    email: googleUser.email, 
+    firstName: googleUser.firstName, 
+    lastName: googleUser.lastName 
+  });
+
+  const googleAuthRequest: GoogleAuthRequest = {
+    email: googleUser.email,
+    firstName: googleUser.firstName,
+    lastName: googleUser.lastName,
+    idToken: googleUser.idToken
+  };
+
+  console.log('📤 Sending Google Auth request:', googleAuthRequest);
+
+  return this.http.post<GoogleLoginResponse>(`${this.API_URL}google-auth`, googleAuthRequest, {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }).pipe(
+    tap(response => {
+      console.log('📥 Received Google Auth response:', response);
+    }),
+    switchMap((response) => {
+      if (response.success && response.data) {
+        const token = response.data.token;
+        console.log('✅ Token received, storing in localStorage');
+        localStorage.setItem(this.TOKEN_NAME, token);
+
+        const user = this.getUserFromToken(token);
+        console.log('✅ Google Auth User extracted:', user);
+
+        this.currentUserSubject.next(user);
+        this.isAuthenticatedSubject.next(true);
+
+        return of(user);
+      } else {
+        console.error('❌ Google Auth failed:', response.message);
+        throw new Error(response.message || 'Google authentication failed');
+      }
+    }),
+    catchError(err => {
+      console.error('❌ Google Auth HTTP Error:', err);
+      
+      // Log the full error for debugging
+      if (err.error) {
+        console.error('Error details:', err.error);
+      }
+      
+      this.clearAuthState();
+      return throwError(() => new Error(`Google authentication failed: ${err.error?.message || err.message || 'Unknown error'}`));
+    })
+  );
 }
+
+// Method to handle Google authentication response
+handleGoogleAuthResponse(response: GoogleLoginResponse): Observable<User> {
+  if (response.success && response.data) {
+    const token = response.data.token;
+    localStorage.setItem(this.TOKEN_NAME, token);
+
+    const user = this.getUserFromToken(token);
+    this.currentUserSubject.next(user);
+    this.isAuthenticatedSubject.next(true);
+
+    return of(user);
+  } else {
+    throw new Error(response.message || 'Google authentication failed');
+  }
+}
+
+
+}
+
+
