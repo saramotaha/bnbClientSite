@@ -1,0 +1,21 @@
+<div class="main-container">
+  <div class="reset-card">
+    <div class="reset-header">
+      <h2>Forget your password</h2>
+      <p class="text-muted text-black">Enter the email address associated with your account, and we'll send you a link to reset your password.</p>
+    </div>
+
+    <form [formGroup]="forgetPasswordForm">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input formControlName="Email" type="email" class="form-control" id="email" placeholder="Enter your email" required>
+      </div>
+
+      <button [routerLink]="['/ResetPassword']" routerLinkActive="router-link-active"  (click)="ForgetPass()" type="submit" class="btn-reset">Send reset link</button>
+
+      <div class="back-to-login  text-muted text-black">
+        Remember your password? <a href="#">Log in</a>
+      </div>
+    </form>
+  </div>
+</div>

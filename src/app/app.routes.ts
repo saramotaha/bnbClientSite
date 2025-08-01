@@ -53,6 +53,9 @@ import { UserProfile } from './User/UserProfile/Component/user-profile/user-prof
 import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
 import { ProfileInfo } from './User/UserProfile/Component/profile-info/profile-info';
 import { UserTrips } from './User/UserProfile/Component/user-trips/user-trips';
+import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
+import { ForgerPassWord } from './Pages/forger-pass-word/forger-pass-word';
+import { ResetPassword } from './Pages/reset-password/reset-password';
 
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
@@ -87,19 +90,16 @@ export const routes: Routes = [
 
     ]},
   { path: "login", component: Login },
-  { path: "ViewAllHomes", component: ViewAllHomes , pathMatch:"full" },
   { path: "register", component: Register , pathMatch:"full" },
+  { path: "ForgetPassWord", component: ForgerPassWord , pathMatch:"full" },
+  { path: "ResetPassword", component: ResetPassword , pathMatch:"full" },
+
+  { path: "ViewAllHomes", component: ViewAllHomes , pathMatch:"full" },
   { path: "propertyDetails/:id", component: PropertyDetails , pathMatch:"full" },
 
   { path: "messages", component: Messages , pathMatch:"full" },
   // { path: "notifications", component: Notifications , pathMatch:"full" },
-  // // { path: "AdminNotifications", component: DashBoardBar , pathMatch:"full" },
-  // { path: "propertyPhotos", component: PropertyPhotos , pathMatch:"full" },
-  // { path: "trips", component: Trips , pathMatch:"full" },
-  // { path: "wishList", component: Wishlist , pathMatch:"full" },
-  // { path: "profile", component: Profile , pathMatch:"full" },
-  // { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
-  // { path: "checkout", component: Checkout , pathMatch:"full" },
+
   { path: 'host/dashboard/calendar',component: HostCalendarPage },
   { path: 'host/dashboard', component: HostDashboard }, //layout shell
   { path: 'host/dashboard/today', component: TodayBookingsComponent},
@@ -113,7 +113,7 @@ export const routes: Routes = [
   { path: '', component: PropertyListComponent },
   { path: 'host', children: listingsRoutes },
 
-  { path: 'edit/:id', component: EditPropertyComponent }
+  { path: 'edit/:id', component: EditPropertyComponent },
 
 
 
