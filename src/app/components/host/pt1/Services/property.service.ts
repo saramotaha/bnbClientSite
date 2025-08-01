@@ -7,7 +7,7 @@ import { Property } from '../Models/property.model';
 export class PropertyService {
     private listingData: any = {};
 
-  private baseUrl = 'https://localhost:7145/api/property';    
+  private baseUrl = 'http://localhost:7145/api/property';    
   
 
   constructor(private http: HttpClient) {}
@@ -23,7 +23,7 @@ export class PropertyService {
   }
 
  update(id: number, data: any): Observable<any> {
-  return this.http.put(`https://localhost:7145/api/property/${id}`, data);
+  return this.http.put(`http://localhost:7145/api/property/${id}`, data);
 }
 
 

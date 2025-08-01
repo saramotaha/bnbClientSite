@@ -37,7 +37,6 @@ export class Step2Component {
     private http: HttpClient,
     private listingService: ListingService
   ) {
-    // استرجاع القيمة المحفوظة إذا كانت موجودة
     const savedPlaceType = this.listingService.listingData.placeType;
     if (savedPlaceType) {
       this.selectedOption = this.placeOptions.find(p => p.title === savedPlaceType) || null;
@@ -73,7 +72,7 @@ export class Step2Component {
       placeType: this.selectedOption.title
     };
 
-    this.http.post<any>(`https://localhost:7145/api/Property/${propertyId}/place-type`, updateDto, {
+    this.http.post<any>(`http://localhost:7145/api/Property/${propertyId}/place-type`, updateDto, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }).subscribe({
       next: () => {

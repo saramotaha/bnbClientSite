@@ -1,0 +1,64 @@
+<div class="container my-5">
+  <h2 class="text-center text-gradient fw-bold mb-5">
+    <i class="bi bi-bar-chart-line me-2"></i> Host Insights
+  </h2>
+
+  <!-- Spinner Loader -->
+  <div *ngIf="loading" class="text-center text-muted">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-2">Loading insights...</p>
+  </div>
+ 
+  <!-- Cards Section -->
+  <div *ngIf="!loading && insights" class="row g-4">
+<div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let item of cardItems">
+      <div class="insight-card card shadow-lg border-0 rounded-5 text-white {{ item.class }}">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center mb-3">
+            <span class="fs-2 me-3">{{ item.icon }}</span>
+            <h5 class="mb-0 fw-semibold">{{ item.label }}</h5>
+          </div>
+          <p class="display-6 fw-bold mb-0">
+            {{ item.value | number:'1.2-2' }} <span class="fs-5">{{ item.suffix ?? '' }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+<!-- Charts Section -->
+<div *ngIf="!loading && insights" class="row mt-5">
+  <!-- Earnings -->
+  <div class="col-md-6 mb-4">
+    <div class="card p-4 shadow rounded-4">
+      <h6 class="fw-bold mb-3 text-center">Earnings</h6>
+      <canvas #earningsChart height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- Bookings -->
+  <div class="col-md-6 mb-4">
+    <div class="card p-4 shadow rounded-4">
+      <h6 class="fw-bold mb-3 text-center">Bookings</h6>
+      <canvas #bookingsChart height="200"></canvas>
+    </div>
+  </div>
+
+<!-- Payouts -->
+<div class="col-12 col-md-6 offset-md-3 mb-4">
+  <div class="card p-4 shadow rounded-4">
+    <h6 class="fw-bold mb-3 text-center">Payouts</h6>
+    <canvas #payoutsChart height="200"></canvas>
+  </div>
+</div>
+
+
+
+  <!-- No Data -->
+  <div *ngIf="!loading && !insights" class="alert alert-danger text-center">
+    No data found for this host.
+  </div>
+</div>
