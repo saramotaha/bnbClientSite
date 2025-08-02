@@ -35,16 +35,13 @@ export class ListingStep1Component {
     private route: ActivatedRoute,
     private listingService: ListingService
   ) {
-    // 🟢 1. امسح البيانات القديمة لو فيه ?new=true
     const isNew = this.route.snapshot.queryParamMap.get('new');
     if (isNew === 'true') {
       this.listingService.resetListingData();
     }
 
-    // 🟡 2. استرجاع القيمة المحفوظة عند الرجوع
     this.selectedCategory = this.listingService.listingData.category || null;
 
-    // 🟠 3. استخدم القيمة من query param لو موجودة
     this.route.queryParams.subscribe(params => {
       if (params['type']) {
         this.selectedCategory = params['type'];
@@ -91,7 +88,7 @@ export class ListingStep1Component {
       categoryId: null
     };
 
-    this.http.post<any>('https://localhost:7145/api/Property', createDto, {
+    this.http.post<any>('http://localhost:7145/api/Property', createDto, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }).subscribe({
       next: (res) => {

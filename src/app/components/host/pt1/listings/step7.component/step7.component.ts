@@ -40,7 +40,7 @@ export class Step7Component implements OnInit {
         return;
       }
 
-      this.http.post(`https://localhost:7145/api/property/${propertyId}/title`, {
+      this.http.post(`http://localhost:7145/api/property/${propertyId}/title`, {
         title: trimmedTitle
       }).subscribe({
         next: () => {

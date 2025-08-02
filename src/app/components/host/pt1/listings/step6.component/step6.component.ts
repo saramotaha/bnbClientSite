@@ -23,7 +23,7 @@ export class Step6Component implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // استرجاع الصور لو كانت محفوظة في service
+
     this.uploadedImages = this.listingService.listingData.imageUrls || [];
   }
 
@@ -61,7 +61,7 @@ export class Step6Component implements OnInit {
   const propertyId = this.listingService.getPropertyId();
   if (!propertyId) throw new Error('No property ID');
 
-  const response = await fetch(`https://localhost:7145/api/properties/${propertyId}/images`, {
+  const response = await fetch(`http://localhost:7145/api/properties/${propertyId}/images`, {
     method: 'POST',
     body: formData
   });
@@ -72,8 +72,8 @@ export class Step6Component implements OnInit {
 
   const result = await response.json();
   console.log('Uploaded image name:', result.fileName);
-  const imageName = result.fileName; // 🟢 خد الاسم فقط من الـ backend
-  return `https://localhost:7145/images/${imageName}`; // 🟢 نركب المسار عندنا
+  const imageName = result.fileName; 
+  return `http://localhost:7145/images/${imageName}`; 
 }
 
 
@@ -86,7 +86,7 @@ export class Step6Component implements OnInit {
       );
 
       this.uploadedImages = uploadedUrls;
-      this.listingService.listingData.imageUrls = uploadedUrls; // 🟢 حفظ الصور في الخدمة
+      this.listingService.listingData.imageUrls = uploadedUrls; 
 
       this.selectedFiles = [];
       this.showSuccess = true;
