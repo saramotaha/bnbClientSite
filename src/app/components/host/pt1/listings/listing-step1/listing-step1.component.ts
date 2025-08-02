@@ -42,7 +42,7 @@ export class ListingStep1Component {
       this.listingService.resetListingData();
     }
 
-    this.selectedCategory = this.listingService.listingData.category || null;
+    this.selectedCategory = this.listingService.listingData.category || "home";
 
     this.route.queryParams.subscribe(params => {
       if (params['type']) {
@@ -74,7 +74,7 @@ export class ListingStep1Component {
       hostId: hostId, // Use the hostId from AuthService
       title: '',
       description: '',
-      propertyType: this.selectedCategory,
+      propertyType: 'home',
       country: '',
       address: '',
       city: '',
@@ -96,7 +96,7 @@ export class ListingStep1Component {
       categoryId: null
     };
 
-    this.http.post<any>('http://localhost:7145/api/Property', createDto, {
+        this.http.post<any>('http://localhost:7145/api/Property', createDto, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }).subscribe({
       next: (res) => {
@@ -108,7 +108,7 @@ export class ListingStep1Component {
       },
       error: (err) => {
         console.error('Failed to create property', err);
-      }
-    });
+      }
+    });
   }
 }
