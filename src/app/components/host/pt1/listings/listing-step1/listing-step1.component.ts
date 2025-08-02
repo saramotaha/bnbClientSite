@@ -64,12 +64,11 @@ export class ListingStep1Component {
 
     this.listingService.listingData.category = this.selectedCategory;
 
-    const hostId = this.authService.getHostId(); // Get hostId from AuthService
+    const hostId = Number(this.authService.getHostId()); // Get hostId from AuthService
     if (!hostId) {
       console.error('No hostId available');
       return;
     }
-
     const createDto = {
       hostId: hostId, // Use the hostId from AuthService
       title: '',
@@ -93,7 +92,7 @@ export class ListingStep1Component {
       checkOutTime: null,
       instantBook: false,
       cancellationPolicyId: null,
-      categoryId: null
+      categoryId: 1
     };
 
         this.http.post<any>('http://localhost:7145/api/Property', createDto, {
@@ -102,6 +101,8 @@ export class ListingStep1Component {
       next: (res) => {
         const id = res.id;
         this.listingService.setPropertyId(id);
+            // console.log('Host ID:', createDto); // Debugging line to check hostId
+
         this.router.navigate(['/host/listings/create/step-2'], {
           queryParams: { type: this.selectedCategory }
         });

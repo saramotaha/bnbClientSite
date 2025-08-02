@@ -42,7 +42,7 @@ export class Step16Component implements OnInit {
 
   goBack() {
     this.saveData();
-    this.router.navigate(['/host/listings/create/step15']);
+    this.router.navigate(['/dashboard/create/step15']);
   }
 
   createListing() {
@@ -65,7 +65,7 @@ export class Step16Component implements OnInit {
 
   this.listingService.setAddress(id, addressDto).subscribe({
     next: () => {
-      this.router.navigate(['/host/listings']);
+      this.router.navigate(['/host/dashboard/listings']);
     },
     error: (err) => {
       console.error('Failed to save address', err);
