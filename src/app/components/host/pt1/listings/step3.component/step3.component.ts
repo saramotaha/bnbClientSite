@@ -57,12 +57,12 @@ export class Step3Component implements AfterViewInit {
   initMap(lat: number, lng: number) {
     this.map = L.map('map').setView([lat, lng], 13);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(this.map);
 
     const icon = L.icon({
-      iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+      iconUrl: 'http://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
       iconSize: [25, 41],
       iconAnchor: [12, 41],
     });
@@ -83,7 +83,7 @@ export class Step3Component implements AfterViewInit {
   }
 
   fetchAddress(lat: number, lng: number) {
-  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
+  const url = `http://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
   fetch(url)
     .then(res => res.json())
     .then(data => {
@@ -103,7 +103,7 @@ export class Step3Component implements AfterViewInit {
   onAddressChange() {
     if (!this.address) return;
 
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.address)}`;
+    const url = `http://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.address)}`;
     fetch(url)
       .then(res => res.json())
       .then(data => {
@@ -139,7 +139,7 @@ export class Step3Component implements AfterViewInit {
     };
 
     this.http.post<any>(
-      `https://localhost:7145/api/Property/${propertyId}/location`,
+      `http://localhost:7145/api/Property/${propertyId}/location`,
       updateDto,
       {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })

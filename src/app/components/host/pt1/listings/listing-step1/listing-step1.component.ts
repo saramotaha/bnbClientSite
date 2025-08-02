@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ListingService } from '../Listing.Service';
+import { AuthService } from '../../../../../Pages/Auth/auth.service'; // Adjusted import path
 
 @Component({
   selector: 'app-listing-step1',
@@ -33,18 +34,16 @@ export class ListingStep1Component {
     private router: Router,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private listingService: ListingService
+    private listingService: ListingService,
+    private authService: AuthService // Injected AuthService
   ) {
-    // 🟢 1. امسح البيانات القديمة لو فيه ?new=true
     const isNew = this.route.snapshot.queryParamMap.get('new');
     if (isNew === 'true') {
       this.listingService.resetListingData();
     }
 
-    // 🟡 2. استرجاع القيمة المحفوظة عند الرجوع
     this.selectedCategory = this.listingService.listingData.category || null;
 
-    // 🟠 3. استخدم القيمة من query param لو موجودة
     this.route.queryParams.subscribe(params => {
       if (params['type']) {
         this.selectedCategory = params['type'];
@@ -57,7 +56,7 @@ export class ListingStep1Component {
   }
 
   goBack() {
-    this.router.navigate(['/host/listings']);
+    this.router.navigate(['/host/dashboard/listings']);
   }
 
   goNext() {
@@ -65,8 +64,14 @@ export class ListingStep1Component {
 
     this.listingService.listingData.category = this.selectedCategory;
 
+    const hostId = this.authService.getHostId(); // Get hostId from AuthService
+    if (!hostId) {
+      console.error('No hostId available');
+      return;
+    }
+
     const createDto = {
-      hostId: 1,
+      hostId: hostId, // Use the hostId from AuthService
       title: '',
       description: '',
       propertyType: this.selectedCategory,
@@ -91,7 +96,7 @@ export class ListingStep1Component {
       categoryId: null
     };
 
-    this.http.post<any>('https://localhost:7145/api/Property', createDto, {
+    this.http.post<any>('http://localhost:7145/api/Property', createDto, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }).subscribe({
       next: (res) => {

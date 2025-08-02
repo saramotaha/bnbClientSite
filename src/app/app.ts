@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-
-
 import { PropertyDetails } from './User/Property-Details/property-details/property-details';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -10,12 +8,13 @@ import { Footer } from "./Shared/footer/footer";
 import { Nav } from "./Shared/nav/nav";
 import { HostDashboard } from './components/host/pt2/pages/host-dashboard/host-dashboard';
 import { Login } from './Pages/login/login';
+import { Notifications } from "./User/notifications/notifications";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, GoogleMapsModule, HostDashboard ],
+  imports: [RouterOutlet, GoogleMapsModule, HostDashboard, Notifications],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

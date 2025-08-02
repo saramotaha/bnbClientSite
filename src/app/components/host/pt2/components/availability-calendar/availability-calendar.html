@@ -74,7 +74,7 @@
                   (dblclick)="toggleEditing(dateAvailability, $event)"
                   title="Double-click to edit"
                 >
-                  €{{ dateAvailability.price }}
+                  ${{ dateAvailability.price }}
                 </div>
               } @else {
                 <input
@@ -171,14 +171,14 @@
         </svg>
       </div>
       <div class="setting-item">
-        <span class="setting-label">€{{ priceSettings.basePrice }} per night</span>
+        <span class="setting-label">${{ priceSettings.basePrice }} per night</span>
       </div>
       <div class="setting-item">
-        <span class="setting-label">€{{ priceSettings.weekendPrice }} weekend price</span>
+        <span class="setting-label">${{ priceSettings.weekendPrice }} weekend price</span>
       </div>
-      <div class="setting-item">
+      <!-- <div class="setting-item">
         <span class="setting-label">{{ priceSettings.weeklyDiscount }}% weekly discount</span>
-      </div>
+      </div> -->
     </div>
 
     <!-- Availability Settings -->
@@ -214,7 +214,7 @@
             <input 
               class="price-input" 
               type="number" 
-              placeholder="Weekday €"
+              placeholder="Weekday $"
               #weekdayInput
               min="0"
               step="1"
@@ -227,7 +227,7 @@
             <input 
               class="price-input" 
               type="number" 
-              placeholder="Weekend €"
+              placeholder="Weekend $"
               #weekendInput
               min="0"
               step="1"

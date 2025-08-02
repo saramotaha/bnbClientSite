@@ -15,10 +15,10 @@
    
 <div class="row p-0  ">
     <div class="col-8 ">
-        <h4>{{propertyDetails.description}} , {{propertyDetails.country}}</h4>
+        <h4>{{propertyDetails?.description}} , {{propertyDetails?.country}}</h4>
         <div class="d-flex gap-3">
-            <p>{{propertyDetails.maxGuests }} {{propertyDetails.maxGuests > 1 ? 'Guests':'Guest'}} • 
-                {{propertyDetails.bedrooms}} {{propertyDetails.bedrooms > 1 ? 'Bedrooms':'Bedroom'}} • {{propertyDetails.bathrooms}} {{propertyDetails.bathrooms > 1 ? 'Baths':'Bath'}} </p>
+            <p>{{propertyDetails?.maxGuests }} {{propertyDetails?.maxGuests ??0> 1 ? 'Guests':'Guest'}} • 
+                {{propertyDetails?.bedrooms}} {{propertyDetails?.bedrooms??0 > 1 ? 'Bedrooms':'Bedroom'}} • {{propertyDetails?.bathrooms}} {{propertyDetails?.bathrooms?? 0 > 1 ? 'Baths':'Bath'}} </p>
             <!-- <p>{{propertyDetails.bedrooms}} {{propertyDetails.bedrooms > 1 ? 'Bedrooms':'Bedroom'}} </p>
             <p>{{propertyDetails.bathrooms}} {{propertyDetails.bathrooms > 1 ? 'Baths':'Bath'}} </p> -->
         </div>
@@ -48,9 +48,9 @@
     </div>
             <hr class="my-5"/>
     <app-property-detials-review [propertyId]="propertyId"></app-property-detials-review>
-            <hr class="my-5"/>
 
-    <app-porperty-location ></app-porperty-location>
+    <app-porperty-location [latitude]="latitude" [longitude]="longitude" [address]="address"></app-porperty-location>
+    <app-property-host [hostId]="hostId"></app-property-host>
 </div>
 
 </div>

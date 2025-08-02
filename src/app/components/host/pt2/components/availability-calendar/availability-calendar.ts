@@ -11,6 +11,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CalendarData } from '../../models/calendar-data.model';
+import { CreateAvailabilityDTO } from '../../models/availability.model';
 
 interface DateAvailability {
   date: Date;
@@ -44,7 +45,7 @@ interface AvailabilitySettings {
 })
 export class AvailabilityCalendarComponent implements OnInit, OnChanges {
   @Input() priceSettings: PriceSettings = {
-    basePrice: 88,
+    basePrice: 50,
     weekendPrice: 95,
     weeklyDiscount: 10
   };
@@ -231,12 +232,20 @@ toggleDateAvailability(dateAvailability: DateAvailability, event: Event) {
       this.isPastDate(dateAvailability.date)) return;
 
   dateAvailability.available = !dateAvailability.available;
+  // Clear blocked status when making available
+  if (dateAvailability.available) {
+    dateAvailability.blocked = false;
+  } else {
+    dateAvailability.blocked = true;
+  }
+  
   const dateString = this.formatDateString(dateAvailability.date);
   
   if (!this.calendarData[dateString]) {
     this.calendarData[dateString] = { ...dateAvailability };
   } else {
     this.calendarData[dateString].available = dateAvailability.available;
+    this.calendarData[dateString].blocked = dateAvailability.blocked;
   }
 
   this.dateAvailabilityChanged.emit({ 
@@ -336,74 +345,136 @@ exportCalendarData(): CalendarData {
   return { ...this.calendarData };
 }
 
-setAllDatesAvailable(available: boolean) {
-  if (this.readonly) return;
-  
-  this.calendarDates.forEach(dateAvailability => {
-    if (this.isCurrentMonth(dateAvailability.date) && 
-        !this.isPastDate(dateAvailability.date) &&
-        !dateAvailability.blocked) {
-      dateAvailability.available = available;
-      const dateString = this.formatDateString(dateAvailability.date);
-      
-      if (!this.calendarData[dateString]) {
-        this.calendarData[dateString] = { ...dateAvailability };
-      } else {
-        this.calendarData[dateString].available = available;
-      }
-    }
-  });
-
-  this.emitBulkChange();
-  this.cdr.detectChanges();
-}
-
 setWeekdayPricing(price: number) {
-  if (this.readonly) return;
-  this.priceSettings.basePrice = Math.max(0, Math.round(price));
-
+  if (this.readonly || !price || price <= 0) return;
+  
+  // Update price settings FIRST
+  this.priceSettings = {
+    ...this.priceSettings,
+    basePrice: Math.max(0, Math.round(price))
+  };
+  this.priceSettingsChange.emit(this.priceSettings);
+  
+  const updates: CreateAvailabilityDTO[] = [];
+  
   this.calendarDates.forEach(dateAvailability => {
     if (this.isCurrentMonth(dateAvailability.date) &&
         !dateAvailability.isWeekend &&
         !this.isPastDate(dateAvailability.date)) {
+      
       dateAvailability.price = this.priceSettings.basePrice;
       const dateStr = this.formatDateString(dateAvailability.date);
+      
+      updates.push({
+        propertyId: Number(this.propertyId),
+        date: dateStr,
+        isAvailable: dateAvailability.available,
+        blockedReason: dateAvailability.available ? "" : 'manual block',
+        price: dateAvailability.price,
+        minNights: dateAvailability.minStay ?? 1
+      });
       
       if (!this.calendarData[dateStr]) {
         this.calendarData[dateStr] = { ...dateAvailability };
       } else {
-        this.calendarData[dateStr].price = this.priceSettings.basePrice;
+        this.calendarData[dateStr].price = dateAvailability.price;
       }
     }
   });
 
-  this.priceSettingsChange.emit(this.priceSettings);
-  this.emitBulkChange();
+  this.bulkUpdateAvailability(updates);
   this.cdr.detectChanges();
 }
 
 setWeekendPricing(price: number) {
-  if (this.readonly) return;
-  this.priceSettings.weekendPrice = Math.max(0, Math.round(price));
-
+  if (this.readonly || !price || price <= 0) return;
+  
+  // Update price settings FIRST
+  this.priceSettings = {
+    ...this.priceSettings,
+    weekendPrice: Math.max(0, Math.round(price))
+  };
+  this.priceSettingsChange.emit(this.priceSettings);
+  
+  const updates: CreateAvailabilityDTO[] = [];
+  
   this.calendarDates.forEach(dateAvailability => {
     if (this.isCurrentMonth(dateAvailability.date) &&
         dateAvailability.isWeekend &&
         !this.isPastDate(dateAvailability.date)) {
+      
       dateAvailability.price = this.priceSettings.weekendPrice;
       const dateStr = this.formatDateString(dateAvailability.date);
+      
+      updates.push({
+        propertyId: Number(this.propertyId),
+        date: dateStr,
+        isAvailable: dateAvailability.available,
+        blockedReason: dateAvailability.available ? "" : 'manual block',
+        price: dateAvailability.price,
+        minNights: dateAvailability.minStay ?? 1
+      });
       
       if (!this.calendarData[dateStr]) {
         this.calendarData[dateStr] = { ...dateAvailability };
       } else {
-        this.calendarData[dateStr].price = this.priceSettings.weekendPrice;
+        this.calendarData[dateStr].price = dateAvailability.price;
       }
     }
   });
 
-  this.priceSettingsChange.emit(this.priceSettings);
-  this.emitBulkChange();
+  this.bulkUpdateAvailability(updates);
   this.cdr.detectChanges();
+}
+
+setAllDatesAvailable(available: boolean) {
+  if (this.readonly) return;
+  
+  const updates: CreateAvailabilityDTO[] = [];
+  
+  this.calendarDates.forEach(dateAvailability => {
+    if (this.isCurrentMonth(dateAvailability.date) && 
+        !this.isPastDate(dateAvailability.date)) {
+      
+      dateAvailability.available = available;
+      dateAvailability.blocked = !available;
+      const dateStr = this.formatDateString(dateAvailability.date);
+      
+      updates.push({
+        propertyId: Number(this.propertyId),
+        date: dateStr,
+        isAvailable: available,
+        blockedReason: available ? "" : 'manual block',
+        price: dateAvailability.price,
+        minNights: dateAvailability.minStay ?? 1
+      });
+      
+      if (!this.calendarData[dateStr]) {
+        this.calendarData[dateStr] = { ...dateAvailability };
+      } else {
+        this.calendarData[dateStr].available = available;
+        this.calendarData[dateStr].blocked = !available;
+      }
+    }
+  });
+
+  this.bulkUpdateAvailability(updates);
+  this.cdr.detectChanges();
+}
+
+private bulkUpdateAvailability(updates: CreateAvailabilityDTO[]) {
+  updates.forEach(dto => {
+    this.dateAvailabilityChanged.emit({ 
+      date: new Date(dto.date), 
+      availability: {
+        date: new Date(dto.date),
+        price: dto.price,
+        available: dto.isAvailable,
+        blocked: !dto.isAvailable,
+        minStay: dto.minNights
+      }
+    });
+  });
 }
 
 emitBulkChange() {

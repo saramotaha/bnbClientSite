@@ -10,6 +10,7 @@ export interface IPropertyList {
   city: string
   country: string
   pricePerNight: number
+  description:string
   maxGuests:number
   bedrooms:number
   bathrooms: number
@@ -18,14 +19,13 @@ export interface IPropertyList {
   hostName: string
   hostId: number
   hostEmail: string
-   latitude: number
+  latitude: number
   longitude: number
   images?: IPropImage[]
   review: number
   IsFav: boolean
   availabilityDates: IPropertiesAvailability[]
   reviews: IPropertyReviews[]
-  description: string
 }
 
 

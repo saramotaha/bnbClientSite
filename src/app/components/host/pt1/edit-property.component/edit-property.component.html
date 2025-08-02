@@ -31,11 +31,58 @@
         </div>
       </div>
 
+      <div class="mt-4">
+        <label class="form-label fw-semibold">📸 Upload Images</label>
+        <input type="file" (change)="onImageSelected($event)" multiple class="form-control" />
+
+        <!-- صور مختارة قبل الرفع -->
+        <div class="row mt-3" *ngIf="previewImages.length > 0">
+          <div class="col-md-3 mb-3" *ngFor="let img of previewImages">
+            <div class="card shadow-sm">
+              <img [src]="img" class="card-img-top" style="height: 150px; object-fit: cover;" />
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-outline-success mt-3" (click)="uploadSelectedImages()" [disabled]="!selectedImages.length">
+          ⬆️ Upload Selected Images
+        </button>
+      </div>
+
+      <!-- الصور المرفوعة -->
+      <div class="row mt-4">
+        <div class="col-md-3 mb-3" *ngFor="let img of images">
+          <div class="card shadow-sm">
+            <img [src]="'http://localhost:7145/images/' + img.imageUrl" class="card-img-top" style="height: 150px; object-fit: cover;" />
+            <div class="card-body p-2 text-center">
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="text-end mt-5">
         <button class="btn btn-primary px-5 py-2 shadow-lg rounded-pill">
           💾 Save Changes
         </button>
       </div>
     </form>
+  </div>
+</div>
+
+<!-- Modal for feedback -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow-lg">
+      <div class="modal-header">
+        <h5 class="modal-title" id="feedbackModalLabel">Property saved successfully!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        {{ modalMessage }}
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-primary rounded-pill px-4" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
   </div>
 </div>
