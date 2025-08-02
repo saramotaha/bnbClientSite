@@ -3,7 +3,7 @@
 </div>
 <div class="sidebar ms-3">
   <a  [routerLink]="['/UserProfile/profileInfo']" routerLinkActive="router-link-active"  class="sidebar-item active">
-    <div class="sidebar-icon active text-white">{{currentUser?.firstName}}</div>
+    <div class="sidebar-icon active text-white">{{currentUser?.firstName | slice:0:1}}</div>
     <span>About me</span>
   </a>
   <a  [routerLink]="['/UserProfile/UserTrips']" class="sidebar-item">
@@ -12,10 +12,4 @@
     </div>
     <span>Past trips</span>
   </a>
-  <!-- <a href="#" class="sidebar-item">
-          <div class="sidebar-icon connections ">
-            <i class="fa-solid fa-users "></i>
-          </div>
-          <span>Connections</span>
-        </a> -->
 </div>

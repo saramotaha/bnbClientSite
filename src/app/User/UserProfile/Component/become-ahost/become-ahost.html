@@ -1,0 +1,94 @@
+<div class="airbnb-container mt-5">
+  <!-- Show form until thank you screen is displayed -->
+  <div *ngIf="!showThankYou">
+    <div class="header">
+      <div class="logo">
+        <i class="fab fa-airbnb"></i>
+      </div>
+      <h1>Host Profile Questionnaire</h1>
+      <p>Answer these questions to complete your hosting profile</p>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width]="progressPercent + '%'"></div>
+      </div>
+    </div>
+
+    <!-- Question container -->
+    <div class="question-container">
+      <div class="question-number">
+        Question {{ currentQuestion.number }} of {{ questions.length }}
+      </div>
+      <div class="question-text">{{ currentQuestion.text }}</div>
+
+      <!-- Options for OPTIONS and MULTI_OPTIONS -->
+      <div *ngIf="currentQuestion.type === QuestionType.OPTIONS || currentQuestion.type === QuestionType.MULTI_OPTIONS">
+        <div class="options-container">
+          <div *ngFor="let option of currentQuestion.options" class="option-card"
+            [class.selected]="isSelected(option.text)" (click)="selectOption(option.text)">
+            <div class="option-icon"><i class="fas {{ option.icon }}"></i></div>
+            <div class="option-text">{{ option.text }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Number input -->
+      <div *ngIf="currentQuestion.type === QuestionType.NUMBER">
+        <div class="mb-0">
+          <input type="number" class="form-control form-control-airbnb" [min]="currentQuestion.min" [max]="currentQuestion.max"
+            [value]="answers[currentQuestion.number] || ''" (input)="updateInputValue($event)" placeholder="Enter a number">
+
+        </div>
+      </div>
+
+
+      <!-- Text input -->
+      <div *ngIf="currentQuestion.type === QuestionType.TEXT">
+        <div class="mb-0">
+          <input type="text" class="form-control form-control-airbnb" [value]="answers[currentQuestion.number] || ''"
+            (input)="updateInputValue($event)" [placeholder]="currentQuestion.placeholder || 'Enter your answer'">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Action buttons -->
+    <div class="action-buttons">
+      <button class="btn btn-airbnb" (click)="prevQuestion()" [disabled]="currentQuestionIndex === 0">
+        <i class="fas fa-arrow-left me-2"></i>Back
+      </button>
+      <button class="btn btn-airbnb" (click)="nextQuestion()" [disabled]="!canProceed">
+        Next<i class="fas fa-arrow-right ms-2"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Thank you screen -->
+  <!-- <button class="btn btn-airbnb btn-airbnb-secondary" (click)="restart()">
+    <i class="fas fa-save me-2"></i>Submit
+  </button> -->
+  <div *ngIf="showThankYou" class="thank-you-container ">
+    <div class="thank-you-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h2 class="thank-you-title">Thank You for Completing Your Profile!</h2>
+    <p class="thank-you-text">
+      We've updated your host profile successfully if U Click Submit.
+    </p>
+
+    <!-- <button class="btn btn-airbnb btn-airbnb-secondary me-5" (click)="restart()">
+      <i class="fas fa-redo me-2"></i>Start Again
+    </button> -->
+
+
+    <button class="btn btn-airbnb btn-airbnb-secondary" (click)="submit()">
+        <i class="fas fa-save me-2"></i>Submit
+      </button>
+
+
+
+
+  </div>
+</div>

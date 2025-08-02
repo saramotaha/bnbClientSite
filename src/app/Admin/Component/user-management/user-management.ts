@@ -171,6 +171,25 @@ onSearch(event: any) {
   }
 
 
+  UnBanUser(id: number) {
+
+     this.UserBannedId = id;
+     this.service.UnBanUser(this.UserBannedId).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.cdr.detectChanges();
+        this.GetAllUsers();
+      },
+
+      error: (error) => {
+        console.log(error);
+
+      }
+
+    })
+  }
+
+
 
   SubmitBanUser() {
     this.service.BanUser(this.UserBannedId, this.BanUserForm.value as IUserBan).subscribe({
