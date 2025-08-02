@@ -45,7 +45,6 @@ export class Step5Component implements OnInit {
     { name: 'smoke_alarm', label: 'Smoke Alarm', icon: 'fas fa-bell', selected: false }
   ];
 
-  // ID map ثابت لربط الاسم بالرقم
   private amenityNameToIdMap: { [key: string]: number } = {
     wifi: 1,
     tv: 2,
@@ -107,14 +106,13 @@ export class Step5Component implements OnInit {
       .map(a => this.amenityNameToIdMap[a.name])
       .filter(id => id);
 
-    // ✅ نحفظ القيم مؤقتًا في ListingService
     this.listingService.listingData.amenityIds = selectedIds;
 
     const updateDto = {
       amenityIds: selectedIds
     };
 
-    this.http.post(`https://localhost:7145/api/Property/update-step5/${propertyId}`, updateDto, {
+    this.http.post(`http://localhost:7145/api/Property/update-step5/${propertyId}`, updateDto, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }).subscribe({
       next: () => {

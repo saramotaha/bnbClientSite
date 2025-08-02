@@ -6,9 +6,9 @@ import {
   computed
 } from '@angular/core';
 import { Router } from '@angular/router';
- import { BookingService } from '../../services/booking.service';
+import { BookingService } from '../../services/booking.service';
 import { AuthService } from '../../../../../Pages/Auth/auth.service';
-import { BookingResponseDto } from '../../models/booking.model';
+import { BookingResponseDto, BookingStatusUpdateDto } from '../../models/booking.model';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 
@@ -19,96 +19,138 @@ import { ChangeDetectorRef } from '@angular/core';
   templateUrl: './reservations.html',
   styleUrls: ['./reservations.css']
 })
- export class Reservations implements OnInit {
-   private bookingService = inject(BookingService);
-   private authService = inject(AuthService);
-   private cdRef = inject(ChangeDetectorRef);
-   private router = inject(Router);
+export class Reservations implements OnInit {
+  private bookingService = inject(BookingService);
+  private authService = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
-   activeTab = signal<string>('upcoming');
-   reservations = signal<BookingResponseDto[]>([]);
-   loading = signal<boolean>(false);
-   
-   filteredReservations = computed(() => {
-  const today = new Date();
-  const all = this.reservations();
-  const tab = this.activeTab();
+  activeTab = signal<string>('pending');
+  reservations = signal<BookingResponseDto[]>([]);
+  loading = signal<boolean>(false);
 
-  // Helper function to safely parse dates
-  const parseDate = (dateInput: string | Date): Date => {
-    // If already a Date object, return it directly
-    if (dateInput instanceof Date) return dateInput;
-    
-    // If string, try parsing (handle both ISO and other formats)
-    const parsed = new Date(dateInput);
-    return isNaN(parsed.getTime()) ? new Date() : parsed; // Fallback to today if invalid
-  };
+  filteredReservations = computed(() => {
+    const allReservations = this.reservations();
+    const currentTab = this.activeTab();
 
-  return all.filter(r => {
-    const startDate = parseDate(r.startDate);
-    
-    switch (tab) {
-      case 'upcoming':
-        return startDate >= today && r.status !== 'cancelled';
-      case 'completed':
-        return r.status === 'completed';
-      case 'cancelled':
-        return r.status === 'cancelled';
-      case 'all':
-      default:
-        return true;
-    }
+    return allReservations.filter(reservation => {
+      const status = reservation.status.toLowerCase();
+      const startDate = new Date(reservation.startDate);
+      const endDate = new Date(reservation.endDate);
+      const today = new Date();
+      const isPast = endDate < today;
+
+      switch (currentTab) {
+        case 'pending':
+          // Show ALL pending reservations regardless of date
+          return status === 'pending';
+
+        case 'confirmed':
+          // Show only confirmed reservations that aren't past
+          return status === 'confirmed' && !isPast;
+
+        case 'completed':
+          // Show completed or past confirmed stays
+          return status === 'completed' || 
+                (status === 'confirmed' && isPast);
+
+        case 'cancelled':
+          return status === 'cancelled';
+
+        case 'all':
+          return true;
+
+        default:
+          return false;
+      }
+    });
   });
-});
 
-   ngOnInit(): void {
-     this.loadReservations();
-   }
-
-loadReservations(): void {
-  this.loading.set(true);
-
-  const hostId = Number(this.authService.getHostId());
-  if (!hostId) {
-    console.warn('Missing host ID.');
-    this.loading.set(false);
-    this.cdRef.detectChanges(); // Manually trigger change detection
-    return;
+  // Rest of the component remains exactly the same
+  confirmReservation(id: number): void {
+    const dto: BookingStatusUpdateDto = { status: 'confirmed' };
+    this.updateReservationStatus(id, dto);
   }
 
-  this.bookingService.getBookingsByHost(hostId).subscribe({
-    next: (bookings) => {
-      this.reservations.set(bookings);
+  cancelReservation(id: number): void {
+    const dto: BookingStatusUpdateDto = { status: 'cancelled' };
+    this.updateReservationStatus(id, dto);
+  }
+
+  private updateReservationStatus(id: number, dto: BookingStatusUpdateDto): void {
+    this.loading.set(true);
+    this.bookingService.updateBookingStatus(id, dto).subscribe({
+      next: () => {
+        const updatedReservations = this.reservations().map(res => {
+          if (res.id === id) {
+            return { 
+              ...res, 
+              status: dto.status,
+              ...(dto.status === 'confirmed' && { checkInStatus: 'pending' })
+            };
+          }
+          return res;
+        });
+        
+        this.reservations.set(updatedReservations);
+        this.loading.set(false);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Failed to update reservation status:', err);
+        this.loading.set(false);
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadReservations();
+  }
+
+  loadReservations(): void {
+    this.loading.set(true);
+    const hostId = Number(this.authService.getHostId());
+    
+    if (!hostId) {
+      console.warn('Missing host ID.');
       this.loading.set(false);
-      this.cdRef.detectChanges(); // Ensure UI reflects the new state
-    },
-    error: (err) => {
-      console.error('Failed to load reservations:', err);
-      this.reservations.set([]);
-      this.loading.set(false);
-      this.cdRef.detectChanges(); // Reflect error state in the view
+      this.cdr.detectChanges();
+      return;
     }
-  });
-}
 
+    this.bookingService.getBookingsByHost(hostId).subscribe({
+      next: (bookings) => {
+        this.reservations.set(bookings);
+        this.loading.set(false);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Failed to load reservations:', err);
+        this.reservations.set([]);
+        this.loading.set(false);
+        this.cdr.detectChanges();
+      }
+    });
+  }
 
-   setActiveTab(tab: string): void {
-     this.activeTab.set(tab);
-   }
+  setActiveTab(tab: string): void {
+    this.activeTab.set(tab);
+  }
 
-   goToHostDashboard(): void {
-     this.router.navigate(['/host/today']);
-   }
+  goToHostDashboard(): void {
+    this.router.navigate(['/host/dashboard/today']);
+  }
 
-   seeAllReservations(): void {
-     this.setActiveTab('all');
-   }
+  seeAllReservations(): void {
+    this.setActiveTab('all');
+  }
 
-   printReservations(): void {
-     window.print();
-   }
+  printReservations(): void {
+    window.print();
+  }
 
-   openFilter(): void {
-     console.log('Filter modal or drawer goes here 🎛️');
-   }
+  openFilter(): void {
+    console.log('Filter modal or drawer goes here 🎛️');
+  }
 }

@@ -11,12 +11,12 @@
     </div>
     
     <div class="header-actions">
-      <button class="filter-btn" (click)="openFilter()">
+      <!-- <button class="filter-btn" (click)="openFilter()">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
         Filter
-      </button>
+      </button> -->
       
       <button class="print-btn" (click)="printReservations()">
         Print
@@ -24,46 +24,61 @@
     </div>
   </div>
 
-   <!-- Tabs  -->
+  <!-- Tabs - Add new confirmed tab -->
   <div class="tabs">
     <button 
-      class="tab" 
-      [class.active]="activeTab() === 'upcoming'"
-      (click)="setActiveTab('upcoming')">
-      Upcoming
-    </button>
-    <button 
-      class="tab" 
-      [class.active]="activeTab() === 'completed'"
-      (click)="setActiveTab('completed')">
-      Completed
-    </button>
-    <button 
-      class="tab" 
-      [class.active]="activeTab() === 'cancelled'"
-      (click)="setActiveTab('cancelled')">
-      Cancelled
-    </button>
-    <button 
-      class="tab" 
-      [class.active]="activeTab() === 'all'"
-      (click)="setActiveTab('all')">
-      All
-    </button>
+    class="tab" 
+    [class.active]="activeTab() === 'pending'"
+    (click)="setActiveTab('pending')">
+    Pending
+  </button>
+  <button 
+    class="tab" 
+    [class.active]="activeTab() === 'confirmed'"
+    (click)="setActiveTab('confirmed')">
+    Confirmed
+  </button>
+  <button 
+    class="tab" 
+    [class.active]="activeTab() === 'completed'"
+    (click)="setActiveTab('completed')">
+    Completed
+  </button>
+  <button 
+    class="tab" 
+    [class.active]="activeTab() === 'cancelled'"
+    (click)="setActiveTab('cancelled')">
+    Cancelled
+  </button>
+  <button 
+    class="tab" 
+    [class.active]="activeTab() === 'all'"
+    (click)="setActiveTab('all')">
+    All
+  </button>
   </div>
 
-   <!-- Content  -->
+  <!-- Content -->
   <div class="content">
     @if (loading()) {
-      <div class="loading">
-        Loading reservations...
-      </div>
+      <div class="spinner-container">
+          <div class="spinner"></div>
+          <p class="loading-message">Loading reservations...</p>
+        </div>
     }
 
     @if (!loading() && filteredReservations().length === 0) {
       <div class="empty-state">
         <div class="empty-content">
-          <h2>You have no {{activeTab() === 'upcoming' ? 'upcoming' : activeTab()}} reservations</h2>
+          <h2>
+            @switch (activeTab()) {
+              @case ('pending') { You have no pending reservations }
+              @case ('confirmed') { You have no confirmed reservations }
+              @case ('completed') { You have no completed reservations }
+              @case ('cancelled') { You have no cancelled reservations }
+              @default { You have no reservations }
+            }
+          </h2>
           <button class="see-all-link" (click)="seeAllReservations()">
             See all reservations
           </button>
@@ -75,16 +90,29 @@
       <div class="reservations-list">
         @for (reservation of filteredReservations(); track reservation.id) {
           <div class="reservation-card">
-            <div class="reservation-info">
-              <h3>{{reservation.propertyTitle}}</h3>
-              <p class="address">{{reservation.propertyAddress}}</p>
-              <div class="reservation-details">
-                <span>{{reservation.startDate | date:'MMM d'}} - {{reservation.endDate | date:'MMM d, y'}}</span>
-                <span>{{reservation.totalGuests}} guests</span>
-                <span class="status" [class]="reservation.status">{{reservation.status | titlecase}}</span>
+            <div class="reservation-content">
+              <div class="reservation-info">
+                <h3>{{reservation.propertyTitle}}</h3>
+                <p class="address">{{reservation.propertyAddress}}</p>
+                <div class="reservation-details">
+                  <span>{{reservation.startDate | date:'MMM d'}} - {{reservation.endDate | date:'MMM d, y'}}</span>
+                  <span>{{reservation.totalGuests}} guests</span>
+                  <span class="status" [class]="reservation.status">{{reservation.status | titlecase}}</span>
+                </div>
+                <p class="guest-name">Guest: {{reservation.guestName}}</p>
+                <p class="amount">${{ reservation.totalAmount | currency:'USD':'symbol':'1.0-2' }}</p>
               </div>
-              <p class="guest-name">Guest: {{reservation.guestName}}</p>
-              <p class="amount">${{ reservation.totalAmount | currency:'USD':'symbol':'1.0-2' }}</p>
+              
+              @if (activeTab() === 'pending' && reservation.status.toLowerCase() === 'pending') {
+                <div class="reservation-actions">
+                  <button class="confirm-btn" (click)="confirmReservation(reservation.id)">
+                    Confirm
+                  </button>
+                  <button class="cancel-btn" (click)="cancelReservation(reservation.id)">
+                    Cancel
+                  </button>
+                </div>
+              }
             </div>
           </div>
         }

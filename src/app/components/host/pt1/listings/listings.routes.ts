@@ -30,7 +30,7 @@ export const listingsRoutes: Routes = [
 
 
       // ✅ Create Routes
-      { path: 'create', redirectTo: 'create/step-1', pathMatch: 'full' },
+      { path: 'create-listing', redirectTo: 'create/step-1', pathMatch: 'full' },
       { path: 'create/step-1', component: ListingStep1Component },
       { path: 'create/step-2', component: Step2Component },
       { path: 'create/step3', component: Step3Component },

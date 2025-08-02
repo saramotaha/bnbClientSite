@@ -58,7 +58,7 @@ getPrimaryImage(property: Property): string | undefined {
   return image?.imageUrl?.startsWith('http')
     ? image.imageUrl
     : image?.imageUrl
-    ? `https://localhost:7145/images/${image.imageUrl}`
+    ? `http://localhost:7145/images/${image.imageUrl}`
     : undefined; 
 }
 
@@ -77,7 +77,7 @@ getFullImageUrl(imageName: string | undefined): string {
   if (!imageName) return 'assets/default-image.jpg';
   return imageName.startsWith('http')
     ? imageName
-    : `https://localhost:7145/images/${imageName}`;
+    : `http://localhost:7145/images/${imageName}`;
 }
 
 
