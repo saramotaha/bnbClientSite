@@ -221,6 +221,12 @@
   z-index: 2;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
 }
+.calendar-cell.selected:hover {
+  color: black;
+}
+.calendar-cell.selected:hover .price{
+  color: black;
+}
 
 .calendar-cell.today {
   background-color: #ff385c;

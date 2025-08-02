@@ -7,10 +7,10 @@
 
         <!-- Navigation Links -->
         <div class="nav-links">
-          <a routerLink="host/dashboard/today" routerLinkActive="active-link" class="nav-link">Today</a>
-          <a routerLink="host/dashboard/calendar" routerLinkActive="active-link" class="nav-link">Calendar</a>
-          <a routerLink="host/dashboard/listings" routerLinkActive="active-link" class="nav-link">Listings</a>
-          <a routerLink="host/dashboard/messages" routerLinkActive="active-link" class="nav-link">Messages</a>
+          <a routerLink="today" routerLinkActive="active-link" class="nav-link">Today</a>
+          <a routerLink="calendar" routerLinkActive="active-link" class="nav-link">Calendar</a>
+          <a routerLink="listings" routerLinkActive="active-link" class="nav-link">Listings</a>
+          <a routerLink="messages" routerLinkActive="active-link" class="nav-link">Messages</a>
           <div class="menu-container">
             <button class="menu-button nav-link" [class.active]="isDropdownOpen" (click)="toggleDropdown()">
               Menu
@@ -22,7 +22,7 @@
           class="dropdown-menu" 
           [class.show]="isDropdownOpen">
           <a class="dropdown-item" (click)="navigateTo('host/dashboard/reservations')" routerLink="host/dashboard/reservations">Reservations</a>
-          <a class="dropdown-item" (click)="navigateTo('host/dashboard/earnings')" routerLink="host/dashboard/earnings">Earnings</a>
+          <!-- <a class="dropdown-item" (click)="navigateTo('host/dashboard/earnings')" routerLink="host/dashboard/earnings">Earnings</a> -->
           <a class="dropdown-item" (click)="navigateTo('host/dashboard/insights')">Insights</a>
           <a class="dropdown-item" (click)="navigateTo('host/dashboard/create-listing')" routerLink="host/dashboard/create-listing">Create a new listing</a>
           <a class="dropdown-item" (click)="navigateTo('host/dashboard/violations')" routerLink="host/dashboard/violations">Violations</a>
@@ -43,7 +43,7 @@
           </div>
           <div class="profile-container">
             <button class="profile-button">
-              <span class="profile-initial">P</span>
+              <span class="profile-initial">{{profileInitials()}}</span>
             </button>
           </div>
         </div>

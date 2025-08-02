@@ -66,7 +66,7 @@ export const routes: Routes = [
       { path: "Violation", component: Violation },
       { path: "UserManagement", component: UserManagement },
       { path: "DashboardCharts", component: DashboardCharts },
-      {path: "PropertyManagement", component: PropertyManagementComponent},
+      // {path: "PropertyManagement", component: PropertyManagementComponent},
 
       {path: "AdminHostVerificationComponent", component: AdminHostVerificationComponent},
 
@@ -89,20 +89,27 @@ export const routes: Routes = [
   // { path: "profile", component: Profile , pathMatch:"full" },
   // { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   // { path: "checkout", component: Checkout , pathMatch:"full" },
-  { path: 'host/dashboard/calendar',component: HostCalendarPage },
-  { path: 'host/dashboard', component: HostDashboard }, //layout shell
-  { path: 'host/dashboard/today', component: TodayBookingsComponent},
-  { path: 'host/dashboard/reservations', component: Reservations},
-  { path: 'host/dashboard/violations', component: Violations},
-  { path: 'host/dashboard/earnings', component: Earnings},
-  { path: 'host/dashboard/listings', component: PropertyListComponent},
-  { path: 'host/dashboard/create-listing', component: ListingStep1Component},
+  {
+  path: 'host/dashboard',
+  component: HostDashboard,
+  children: [
+    { path: 'calendar', component: HostCalendarPage },
+    { path: 'today', component: TodayBookingsComponent },
+    { path: 'reservations', component: Reservations },
+    { path: 'violations', component: Violations },
+    { path: 'earnings', component: Earnings },
+    { path: 'listings', component: PropertyListComponent },
+    { path: 'create-listing', component: ListingStep1Component },
+    { path: '', redirectTo: 'today', pathMatch: 'full' } // Optional default child route
+  ]
+},
+
   // { path: 'host/dashboard/messages', component: Messages},
   // { path: "**", component: NotFound} //MUST BE AT THE END
   { path: '', component: PropertyListComponent },
   { path: 'host', children: listingsRoutes },
 
-  { path: 'edit/:id', component: EditPropertyComponent }
+  { path: 'edit/:id', component: EditPropertyComponent },
 
 
 

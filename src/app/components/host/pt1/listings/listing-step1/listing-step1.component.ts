@@ -57,7 +57,7 @@ export class ListingStep1Component {
   }
 
   goBack() {
-    this.router.navigate(['/host/listings']);
+    this.router.navigate(['/host/dashboard/listings']);
   }
 
   goNext() {
@@ -91,7 +91,7 @@ export class ListingStep1Component {
       categoryId: null
     };
 
-    this.http.post<any>('https://localhost:7145/api/Property', createDto, {
+    this.http.post<any>('http://localhost:7145/api/Property', createDto, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }).subscribe({
       next: (res) => {
