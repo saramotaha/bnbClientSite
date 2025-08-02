@@ -23,7 +23,6 @@ export class Step8Component {
   selected: string[] = [];
 
   constructor(private router: Router, private listingService: ListingService) {
-    // ✅ تحميل القيم السابقة إن وجدت
     this.selected = this.listingService.listingData.highlights || [];
   }
 

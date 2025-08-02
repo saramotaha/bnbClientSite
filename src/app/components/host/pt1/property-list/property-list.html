@@ -7,9 +7,12 @@
 
   </div>
 
-  <div *ngIf="isLoading" class="text-center my-4">
-    <p>🔄 Loading properties...</p>
-  </div>
+  @if (isLoading) {
+      <div class="spinner-container">
+          <div class="spinner"></div>
+          <p class="loading-message">Loading reservations...</p>
+        </div>
+    }
 
   <div *ngIf="!isLoading && properties.length > 0" class="property-grid">
     <div *ngFor="let property of properties" class="property-card" (click)="openViewModal(property)">

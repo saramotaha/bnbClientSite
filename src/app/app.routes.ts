@@ -52,6 +52,7 @@ import { AdminPayment } from './Admin/Component/admin-payment/admin-payment';
 import { Messages } from './User/messages/messages';
 import { UserProfile } from './User/UserProfile/Component/user-profile/user-profile';
 import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
+import { HostInsightsComponent } from './components/host/pt1/host-insights.component/host-insights.component';
 import { ProfileInfo } from './User/UserProfile/Component/profile-info/profile-info';
 import { UserTrips } from './User/UserProfile/Component/user-trips/user-trips';
 import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
@@ -71,7 +72,7 @@ export const routes: Routes = [
       { path: "Violation", component: Violation },
       { path: "UserManagement", component: UserManagement },
       { path: "DashboardCharts", component: DashboardCharts },
-      {path: "PropertyManagement", component: PropertyManagementComponent},
+      // {path: "PropertyManagement", component: PropertyManagementComponent},
 
       {path: "AdminHostVerificationComponent", component: AdminHostVerificationComponent},
 
@@ -103,14 +104,22 @@ export const routes: Routes = [
   // { path: "profile", component: Profile , pathMatch:"full" },
   // { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   // { path: "checkout", component: Checkout , pathMatch:"full" },
-  { path: 'host/dashboard/calendar',component: HostCalendarPage },
-  { path: 'host/dashboard', component: HostDashboard }, //layout shell
-  { path: 'host/dashboard/today', component: TodayBookingsComponent},
-  { path: 'host/dashboard/reservations', component: Reservations},
-  { path: 'host/dashboard/violations', component: Violations},
-  { path: 'host/dashboard/earnings', component: Earnings},
-  { path: 'host/dashboard/listings', component: PropertyListComponent},
-  { path: 'host/dashboard/create-listing', component: ListingStep1Component},
+  {
+  path: 'host/dashboard',
+  component: HostDashboard,
+  children: [
+    { path: 'calendar', component: HostCalendarPage },
+    { path: 'today', component: TodayBookingsComponent },
+    { path: 'reservations', component: Reservations },
+    { path: 'violations', component: Violations },
+    { path: 'earnings', component: Earnings },
+    { path: 'listings', component: PropertyListComponent },
+    { path: 'create-listing', component: ListingStep1Component },
+    { path: 'insights', component: HostInsightsComponent },
+    { path: '', redirectTo: 'today', pathMatch: 'full' } // Optional default child route
+  ]
+},
+
   // { path: 'host/dashboard/messages', component: Messages},
   // { path: "**", component: NotFound} //MUST BE AT THE END
   { path: '', component: PropertyListComponent },

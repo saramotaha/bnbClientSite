@@ -475,11 +475,24 @@ export class AuthService {
 
     const rawRoles = payload[roleClaim];
 
+// <<<<<<< kareemx
     if (Array.isArray(rawRoles)) {
       roles = rawRoles.map((r: string) => r.toLowerCase());
     } else if (typeof rawRoles === 'string') {
       roles = [rawRoles.toLowerCase()];
     }
+// =======
+//   return {
+//     id: payload.UserID || payload[nameIdentifierClaim] || '',
+//     firstName: payload.firstName || '',
+//     lastName: payload.lastName || '',
+//     email:  payload.email || payload[emailClaim] || '',
+//     role: roles, // ✅ always a string[]
+//     HostId: payload.HostId ? String(payload.HostId) : undefined,
+//     accessToken: token
+//   };
+// }
+// >>>>>>> main
 
     return {
       id: payload.UserID || payload[nameIdentifierClaim] || '',

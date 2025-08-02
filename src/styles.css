@@ -1,175 +1,141 @@
-/* You can add global styles to this file, and also import other style files */
-
-
-  :root {
-     --primary-color: #FF385C;
-            --secondary-color: #FF5A6B;
-            --dark-color: #222222;
-            --gray-color: #717171;
-            --light-gray: #F7F7F7;
-            --success-color: #00A699;
-            --warning-color: #FFB400;
-            --danger-color: #FF385C;
-            --border-radius: 12px;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --airbnb-primary: #FF5A5F;
-            --airbnb-primary-light: #FF7E82;
-            --airbnb-secondary: #00A699;
-            --airbnb-accent: #FFB400;
-            --airbnb-dark: #222222;
-            --airbnb-medium: #717171;
-            --airbnb-light: #EBEBEB;
-            --airbnb-background: #F7F7F7;
-            --airbnb-card: #FFFFFF;
-            --airbnb-success: #008A05;
-            --airbnb-warning: #FFB400;
-            --airbnb-danger: #E04A4E;
-            --airbnb-info: #4285F4;
-            --transition: all 0.3s ease;
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-            --radius-sm: 10px;
-            --radius-md: 16px;
-            --radius-lg: 20px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-        }
-
-        /* body {
-            background-color: var(--airbnb-background);
-            color: var(--airbnb-medium);
-            display: flex;
-            min-height: 100vh;
-            overflow-x: hidden;
-        } */
-
+/* Global Styles */
 :root {
-            --airbnb-red: #ff385c;
-            --airbnb-dark: #222222;
-            --airbnb-light: #f7f7f7;
-            --airbnb-gray: #717171;
-            --airbnb-border: #dddddd;
-            --airbnb-green: #008A05;
-            --airbnb-yellow: #FFB400;
-            --airbnb-purple: #914669;
-        }
-
-
-        :root {
-      --primary-color: #ff385c;
-      --secondary-color: #717171;
-      --background: #f7f7f7;
-      --card-bg: #ffffff;
-      --border-color: #e6e6e6;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-/*       background-color: var(--background);
- */      color: #333;
-      margin: 0;
-      padding-bottom: 4rem;
-      overflow-x: hidden;
-    }
-
-
-    :root {
-  --airbnb-rausch: #FF5A5F;
-  --airbnb-babu: #00A699;
-  --airbnb-arches: #FC642D;
-  --airbnb-hof: #484848;
-  --airbnb-foggy: #767676;
-
-  --airbnb-pink: #FF385C;
-  --airbnb-teal: #008489;
-  --airbnb-orange: #FD5861;
-  --airbnb-purple: #9C4DCC;
-  --airbnb-blue: #0F7488;
-
-  --airbnb-white: #FFFFFF;
-  --airbnb-light-gray: #F7F7F7;
-  --airbnb-border-gray: #EBEBEB;
-  --airbnb-medium-gray: #DDDDDD;
-  --airbnb-dark-gray: #B0B0B0;
-  --airbnb-text-gray: #717171;
-  --airbnb-charcoal: #484848;
-  --airbnb-black: #222222;
-
-  --airbnb-success: #008A05;
-  --airbnb-warning: #FFB400;
-  --airbnb-error: #C13515;
-  --airbnb-info: #0F7488;
-
-  --font-family: 'Cereal', 'Circular', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-weight-light: 300;
-  --font-weight-book: 400;
-  --font-weight-medium: 500;
-  --font-weight-bold: 600;
-  --font-weight-black: 700;
-
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
-
-  --radius-small: 8px;
-  --radius-medium: 12px;
-  --radius-large: 16px;
+  /* Color Palette */
+  --primary: #FF385C;
+  --primary-light: #FF5A6B;
+  --primary-dark: #E61E4D;
+  --secondary: #00A699;
+  --accent: #FFB400;
+  
+  /* Grayscale */
+  --black: #222222;
+  --gray-dark: #484848;
+  --gray: #717171;
+  --gray-medium: #B0B0B0;
+  --gray-light: #DDDDDD;
+  --gray-lighter: #EBEBEB;
+  --gray-lightest: #F7F7F7;
+  --white: #FFFFFF;
+  
+  /* Status Colors */
+  --success: #008A05;
+  --warning: #FFB400;
+  --error: #C13515;
+  --info: #0F7488;
+  
+  /* Additional Colors */
+  --purple: #914669;
+  --blue: #4285F4;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(to right, #E61E4D, #E31C5F, #D70466);
+  
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-round: 50%;
-
-  --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.18);
-  --shadow-elevated: 0 6px 20px rgba(0, 0, 0, 0.15);
-  --shadow-floating: 0 8px 28px rgba(0, 0, 0, 0.12);
-  --shadow-modal: 0 16px 40px rgba(0, 0, 0, 0.12);
-
-  --transition-quick: 0.15s cubic-bezier(0.33, 1, 0.68, 1);
-  --transition-smooth: 0.25s cubic-bezier(0.08, 0.52, 0.52, 1);
-  --transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+  --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.2);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.45s ease;
 }
 
+/* Reset & Base Styles */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-/*   background: var(--airbnb-white);
- */}
+  background-color: var(--gray-lightest);
+  color: var(--gray-dark);
+  line-height: 1.5;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--black);
+  font-weight: var(--font-semibold);
+  line-height: 1.2;
+}
 
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
 
+a:hover {
+  color: var(--primary-dark);
+}
 
-        :root {
-            --airbnb-pink: #FF385C;
-            --airbnb-dark: #222222;
-            --airbnb-light-gray: #EBEBEB;
-            --airbnb-gray: #717171;
-            --airbnb-white: #FFFFFF;
-            --airbnb-purple: #8B4CF6;
-            --airbnb-gradient: linear-gradient(to right, #E61E4D, #E31C5F, #D70466);
-        }
+/* Utility Classes */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+.shadow-card {
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-normal);
+}
+
+.shadow-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-medium);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
