@@ -361,7 +361,7 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class AuthService {
    private readonly API_URL = 'http://localhost:7145/api/Auth/';
-  private readonly API_URL = 'https://localhost:7145/api/Auth/';
+  // private readonly API_URL = 'https://localhost:7145/api/Auth/';
   private readonly TOKEN_NAME = 'access_token';
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -550,6 +550,8 @@ export class AuthService {
   getHostId(): string | null {
     return this.currentUserSubject.value?.HostId || null;
   }
+
+
 
   /** ✅ Get Logged-in User Full Name */
   getUserFullName(): string {
