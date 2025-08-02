@@ -1,0 +1,150 @@
+<div class="violations-container">
+   <!-- Header Section  -->
+  <div class="header-section">
+    <div class="header">
+      <button class="back-btn" (click)="goToHostDashboard()" title="Go back">
+        <svg viewBox="0 0 16 16" fill="currentColor">
+          <path d="M11.354 1.646a.5.5 0 010 .708L5.707 8l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z"/>
+        </svg>
+      </button>
+      <h1>Violations</h1>
+    </div>
+    <div class="page-header">
+      <div class="header-content">
+        <div class="header-text">
+          <h1 class="page-title">Violation Reports</h1>
+          <p class="page-description">
+            Monitor and manage violation reports for your properties. Stay updated on guest feedback 
+            and address any issues to maintain your hosting standards.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- Tab Navigation  -->
+  <div class="tab-navigation">
+    <h2 class="section-title">Check your violation reports</h2>
+    <div class="tabs">
+      <button class="tab-button" [class.active]="selectedTab === 'all'" (click)="selectTab('all')">All Reports</button>
+      <button class="tab-button" [class.active]="selectedTab === 'pending'" (click)="selectTab('pending')">Pending</button>
+      <button class="tab-button" [class.active]="selectedTab === 'under-review'" (click)="selectTab('under-review')">Under Review</button>
+      <button class="tab-button" [class.active]="selectedTab === 'resolved'" (click)="selectTab('resolved')">Resolved</button>
+    </div>
+  </div>
+
+   <!-- Content Section  -->
+  <div class="content-section">
+    @if (isLoading) {
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Loading violation reports...</p>
+      </div>
+    } @else if (error) {
+      <div class="error-state">
+        <h3>Something went wrong</h3>
+        <p>{{ error }}</p>
+        <button class="retry-button" (click)="fetchHostViolations()">Try Again</button>
+      </div>
+    } @else if (filteredViolations.length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">📋</div>
+        <h3>No violation reports found</h3>
+        @if (selectedTab === 'all') {
+          <p>You don't have any violation reports at this time. Keep up the great hosting!</p>
+        } @else {
+          <p>No {{ selectedTab }} violation reports found.</p>
+        }
+      </div>
+    } @else {
+      <div class="violations-list">
+        @for (violation of filteredViolations; track violation.id) {
+          <div class="violation-card">
+            <div class="violation-header">
+              <div class="violation-meta">
+                <span class="violation-type">{{ violation.violationType }}</span>
+                <span class="violation-date">{{ formatDate(violation.createdAt) }}</span>
+              </div>
+              <span class="status-badge" [ngClass]="getStatusClass(violation.status)">
+                {{ violation.status }}
+              </span>
+            </div>
+
+            <div class="violation-content">
+              @if (violation.property) {
+                <div class="property-info">
+                  <div class="property-image">
+                    @if (violation.property.primaryImage) {
+                      <img [src]="violation.property.primaryImage" 
+                           [alt]="violation.property.title"
+                           class="property-thumbnail">
+                    } @else {
+                      <div class="property-placeholder">🏠</div>
+                    }
+                  </div>
+                  <div class="property-details">
+                    <h4 class="property-title">{{ violation.property.title }}</h4>
+                    <p class="property-location">{{ violation.property.city }}, {{ violation.property.country }}</p>
+                  </div>
+                </div>
+              }
+
+              <div class="violation-details">
+                <div class="reporter-info">
+                  <div class="reporter-avatar">
+                    @if (violation.reporter.profilePictureUrl) {
+                      <img [src]="violation.reporter.profilePictureUrl" 
+                           [alt]="violation.reporter.fullName"
+                           class="avatar">
+                    } @else {
+                      <div class="avatar-placeholder">{{ violation.reporter.fullName.charAt(0) }}</div>
+                    }
+                  </div>
+                  <div class="reporter-details">
+                    <span class="reporter-name">{{ violation.reporter.fullName }}</span>
+                    <span class="reporter-role">{{ violation.reporter.role | titlecase }}</span>
+                  </div>
+                </div>
+
+                <div class="violation-description">
+                  <h5>Report Details</h5>
+                  <p>{{ violation.description }}</p>
+                </div>
+
+                @if (violation.adminNotes) {
+                  <div class="admin-notes">
+                    <h5>Admin Notes</h5>
+                    <p>{{ violation.adminNotes }}</p>
+                  </div>
+                }
+
+                @if (violation.resolvedAt) {
+                  <div class="resolution-info">
+                    <span class="resolution-label">Resolved on:</span>
+                    <span class="resolution-date">{{ formatDate(violation.resolvedAt) }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+            
+            <!-- <div class="violation-actions">
+              @if (violation.status !== 'Resolved') {
+                <button class="action-button secondary" 
+                        (click)="updateViolationStatus(violation.id, 'Under Review')">
+                  Mark Under Review
+                </button>
+                <button class="action-button primary" 
+                        (click)="updateViolationStatus(violation.id, 'Resolved')">
+                  Mark as Resolved
+                </button>
+              } @else {
+                <span class="resolved-indicator">✓ This violation has been resolved</span>
+              }
+            </div> -->
+            
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
