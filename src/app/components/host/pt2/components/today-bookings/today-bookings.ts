@@ -46,7 +46,7 @@ loadBookings(): void {
   this.isLoading = true;
   this.authService.currentUser$.subscribe(user => {
     const hostId = user?.HostId;
-    this.hostName = user?.firstName || '';
+    this.hostName = user?.firstName || user?.lastName || 'Host';
     if (hostId) {
       this.bookingService.getBookingsByHost(+hostId).subscribe({
         next: (bookings) => {
