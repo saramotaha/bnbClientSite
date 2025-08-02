@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ListingService } from '../Listing.Service';
+import { AuthService } from '../../../../../Pages/Auth/auth.service'; // Adjusted import path
 
 @Component({
   selector: 'app-listing-step1',
@@ -33,7 +34,8 @@ export class ListingStep1Component {
     private router: Router,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private listingService: ListingService
+    private listingService: ListingService,
+    private authService: AuthService // Injected AuthService
   ) {
     const isNew = this.route.snapshot.queryParamMap.get('new');
     if (isNew === 'true') {
@@ -62,8 +64,14 @@ export class ListingStep1Component {
 
     this.listingService.listingData.category = this.selectedCategory;
 
+    const hostId = this.authService.getHostId(); // Get hostId from AuthService
+    if (!hostId) {
+      console.error('No hostId available');
+      return;
+    }
+
     const createDto = {
-      hostId: 1,
+      hostId: hostId, // Use the hostId from AuthService
       title: '',
       description: '',
       propertyType: this.selectedCategory,

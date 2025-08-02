@@ -61,9 +61,10 @@
   <!-- Content -->
   <div class="content">
     @if (loading()) {
-      <div class="loading">
-        Loading reservations...
-      </div>
+      <div class="spinner-container">
+          <div class="spinner"></div>
+          <p class="loading-message">Loading reservations...</p>
+        </div>
     }
 
     @if (!loading() && filteredReservations().length === 0) {

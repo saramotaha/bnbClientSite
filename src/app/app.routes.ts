@@ -51,7 +51,7 @@ import { AdminPayment } from './Admin/Component/admin-payment/admin-payment';
 import { Messages } from './User/messages/messages';
 import { UserProfile } from './User/UserProfile/Component/user-profile/user-profile';
 import { ViewAllHomes } from './components/view-all-homes/view-all-homes';
-
+import { HostInsightsComponent } from './components/host/pt1/host-insights.component/host-insights.component';
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
   { path: "Home", component: Home, pathMatch: "full" },
@@ -100,6 +100,7 @@ export const routes: Routes = [
     { path: 'earnings', component: Earnings },
     { path: 'listings', component: PropertyListComponent },
     { path: 'create-listing', component: ListingStep1Component },
+    { path: 'insights', component: HostInsightsComponent },
     { path: '', redirectTo: 'today', pathMatch: 'full' } // Optional default child route
   ]
 },
