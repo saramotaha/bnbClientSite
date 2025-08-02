@@ -296,6 +296,11 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding: 32px 16px;
+  overflow-y: auto;
+  max-height: 500px;
+  background-color: #F7F7F7;
+  border-radius: 12px;
 }
 
 .violation-card {

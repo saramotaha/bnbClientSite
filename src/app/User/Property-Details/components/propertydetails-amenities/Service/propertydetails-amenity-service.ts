@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
+
 // import { AmenitiesList } from './../../../../../components/amenities-list/amenities-list';
 import { IpropertyAmenity } from '../iproperty-amenity';
+
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 

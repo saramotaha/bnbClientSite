@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-
+import { AuthService } from '../../../../../Pages/Auth/auth.service';
 @Component({
   selector: 'app-nav-host-dashboard',
   imports: [RouterLink, RouterModule],
@@ -9,8 +9,10 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 })
 export class NavHostDashboard {
  isDropdownOpen = false;
+hostFname = '';
+hostLname = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -39,4 +41,20 @@ export class NavHostDashboard {
     this.router.navigate([route]);
     this.closeDropdown();
   }
+
+  profileInitials(): string {
+  let initials = 'P'; // Default fallback
+
+  this.authService.currentUser$.subscribe(user => {
+    const first = user?.firstName?.charAt(0).toUpperCase() || '';
+    const last = user?.lastName?.charAt(0).toUpperCase() || '';
+
+    if (first || last) {
+      initials = `${first}${last}`;
+    }
+  });
+
+  return initials;
+}
+
 }

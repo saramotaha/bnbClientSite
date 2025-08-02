@@ -1,0 +1,180 @@
+<!-- add-verifications.component.html -->
+
+<div class="verification-container">
+  <div class="verification-wrapper">
+    <!-- Header -->
+    <div class="header">
+      <!-- <button class="back-button" [routerLink]="['/host/dashboard']"> -->
+      <button class="back-button">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <h1>Verify your identity</h1>
+      <p class="subtitle">Add documents to confirm your identity and build trust with guests</p>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" *ngIf="success">
+      <div class="success-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <h3>Verification submitted successfully!</h3>
+        <p>We'll review your documents and notify you once verified.</p>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-message" *ngIf="error">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 10V6M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>{{ error }}</span>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="verificationForm" (ngSubmit)="onSubmit()" class="verification-form">
+      <!-- Document Type Selection -->
+      <div class="form-section">
+        <label class="section-title">Select document type</label>
+        <div class="document-types">
+          <div 
+            *ngFor="let type of verificationTypes" 
+            class="document-type-card"
+            [class.selected]="verificationForm.get('type')?.value === type.value"
+            (click)="verificationForm.patchValue({ type: type.value })"
+          >
+            <span class="type-icon">{{ type.icon }}</span>
+            <span class="type-label">{{ type.label }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Document Upload Section -->
+      <div class="form-section">
+        <label class="section-title">Upload your {{ getSelectedTypeLabel() }}</label>
+        <p class="section-description">Please upload clear photos or scans of both sides of your document</p>
+        
+        <!-- Document 1 Upload -->
+        <div class="upload-section">
+          <label class="upload-label">Front side</label>
+          <div class="upload-area" [class.has-file]="documentPreview1">
+            <input 
+              type="file" 
+              id="document1"
+              [accept]="acceptedFileTypes"
+              (change)="onFileSelect($event, 1)"
+              class="file-input"
+            >
+            
+            <div *ngIf="!documentPreview1" class="upload-placeholder">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <path d="M24 16V32M16 24H32M44 24C44 35.0457 35.0457 44 24 44C12.9543 44 4 35.0457 4 24C4 12.9543 12.9543 4 24 4C35.0457 4 44 12.9543 44 24Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p>Click to upload or drag and drop</p>
+              <span class="file-types">JPG, JPEG, PNG, PDF (max. 5MB)</span>
+            </div>
+            
+            <div *ngIf="documentPreview1" class="file-preview">
+              <img 
+                *ngIf="isImageFile(documentPreview1.url)" 
+                [src]="documentPreview1.url" 
+                alt="Document preview"
+              >
+              <div *ngIf="!isImageFile(documentPreview1.url)" class="pdf-preview">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <path d="M28 4H12C9.79086 4 8 5.79086 8 8V40C8 42.2091 9.79086 44 12 44H36C38.2091 44 40 42.2091 40 40V16L28 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M28 4V16H40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p>{{ documentPreview1.file.name }}</p>
+              </div>
+              <button type="button" class="remove-file" (click)="removeFile(1)">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="field-error" *ngIf="verificationForm.get('documentUrl1')?.touched && verificationForm.get('documentUrl1')?.errors?.['required']">
+            Front side document is required
+          </div>
+        </div>
+
+        <!-- Document 2 Upload -->
+        <div class="upload-section">
+          <label class="upload-label">Back side</label>
+          <div class="upload-area" [class.has-file]="documentPreview2">
+            <input 
+              type="file" 
+              id="document2"
+              [accept]="acceptedFileTypes"
+              (change)="onFileSelect($event, 2)"
+              class="file-input"
+            >
+            
+            <div *ngIf="!documentPreview2" class="upload-placeholder">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <path d="M24 16V32M16 24H32M44 24C44 35.0457 35.0457 44 24 44C12.9543 44 4 35.0457 4 24C4 12.9543 12.9543 4 24 4C35.0457 4 44 12.9543 44 24Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p>Click to upload or drag and drop</p>
+              <span class="file-types">JPG, JPEG, PNG, PDF (max. 5MB)</span>
+            </div>
+            
+            <div *ngIf="documentPreview2" class="file-preview">
+              <img 
+                *ngIf="isImageFile(documentPreview2.url)" 
+                [src]="documentPreview2.url" 
+                alt="Document preview"
+              >
+              <div *ngIf="!isImageFile(documentPreview2.url)" class="pdf-preview">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <path d="M28 4H12C9.79086 4 8 5.79086 8 8V40C8 42.2091 9.79086 44 12 44H36C38.2091 44 40 42.2091 40 40V16L28 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M28 4V16H40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p>{{ documentPreview2.file.name }}</p>
+              </div>
+              <button type="button" class="remove-file" (click)="removeFile(2)">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="field-error" *ngIf="verificationForm.get('documentUrl2')?.touched && verificationForm.get('documentUrl2')?.errors?.['required']">
+            Back side document is required
+          </div>
+        </div>
+      </div>
+
+      <!-- Privacy Notice -->
+      <div class="privacy-notice">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2L3 7V11C3 14.5 5.5 17.5 10 18C14.5 17.5 17 14.5 17 11V7L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M7 10L9 12L13 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p>Your documents are encrypted and securely stored. We'll only use them to verify your identity.</p>
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="submit-button"
+        [disabled]="isSubmitting || verificationForm.invalid"
+        [class.loading]="isSubmitting"
+      >
+        <span *ngIf="!isSubmitting">Submit verification</span>
+        <span *ngIf="isSubmitting" class="loading-text">
+          <svg class="spinner" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="40" stroke-dashoffset="10">
+              <animateTransform attributeName="transform" type="rotate" from="0 10 10" to="360 10 10" dur="1s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+          Submitting...
+        </span>
+      </button>
+    </form>
+  </div>
+</div>

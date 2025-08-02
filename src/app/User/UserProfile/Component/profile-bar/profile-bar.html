@@ -1,0 +1,21 @@
+<div class="sidebar-header">
+  <h2 class="sidebar-title">Profile</h2>
+</div>
+<div class="sidebar ms-3">
+  <a  [routerLink]="['/UserProfile/profileInfo']" routerLinkActive="router-link-active"  class="sidebar-item active">
+    <div class="sidebar-icon active text-white">{{currentUser?.firstName}}</div>
+    <span>About me</span>
+  </a>
+  <a  [routerLink]="['/UserProfile/UserTrips']" class="sidebar-item">
+    <div class="sidebar-icon trips">
+      <i class="fa-solid fa-suitcase"></i>
+    </div>
+    <span>Past trips</span>
+  </a>
+  <!-- <a href="#" class="sidebar-item">
+          <div class="sidebar-icon connections ">
+            <i class="fa-solid fa-users "></i>
+          </div>
+          <span>Connections</span>
+        </a> -->
+</div>

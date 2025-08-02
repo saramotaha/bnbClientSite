@@ -61,7 +61,7 @@ export class Step12Component {
   }
 
   goBack() {
-    this.router.navigate(['/host/listings/create/step11']);
+    this.router.navigate(['/host/listings/create/step9']);
   }
 
   goNext() {

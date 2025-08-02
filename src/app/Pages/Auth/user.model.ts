@@ -4,7 +4,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
+  role: string[];
   HostId?: string;
   accessToken?: string;
 }
@@ -51,7 +51,29 @@ export interface JwtPayload {
   role?: string;
   exp?: number;
   firstName: string;
-  lastName?: string; 
+  lastName?: string;
+}
+// google auth related interfaces and services
+export interface GoogleAuthRequest {
+  email: string;
+  firstName: string;
+  lastName: string;
+  idToken?: string;
 }
 
+export interface GoogleLoginResponse {
+  success: boolean;
+  message: string;
+  data: {
+    token: string;
+    refreshToken?: string;
+    user: {
+      id: string;
+      email: string;
+      username: string;
+      roles: string[];
+    };
+    roles: string[];
+  };
+}
 

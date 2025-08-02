@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
+import { AuthService } from '../../../../Pages/Auth/auth.service';
 
 interface HostInsights {
   hostId: number;
@@ -24,7 +25,7 @@ interface HostInsights {
   styleUrls: ['./host-insights.component.css']
 })
 export class HostInsightsComponent implements OnInit {
-  hostId = 1;
+  hostId: string | null = null; // Changed from number to string | null
   insights: HostInsights | null = null;
   loading = true;
   baseUrl = 'http://localhost:7145';
@@ -47,14 +48,23 @@ export class HostInsightsComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService // Injected AuthService
   ) {}
 
   ngOnInit(): void {
-    this.getHostInsights();
+    this.hostId = this.authService.getHostId(); // Get hostId from AuthService
+    if (this.hostId) {
+      this.getHostInsights();
+    } else {
+      console.error('No hostId available');
+      this.loading = false;
+    }
   }
 
   getHostInsights(): void {
+    if (!this.hostId) return;
+    
     this.http.get<HostInsights>(`${this.baseUrl}/api/host/${this.hostId}/insights`)
       .pipe(take(1))
       .subscribe({

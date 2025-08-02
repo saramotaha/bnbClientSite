@@ -7,9 +7,12 @@
 
   </div>
 
-  <div *ngIf="isLoading" class="text-center my-4">
-    <p>🔄 Loading properties...</p>
-  </div>
+  @if (isLoading) {
+      <div class="spinner-container">
+          <div class="spinner"></div>
+          <p class="loading-message">Loading listings...</p>
+        </div>
+    }
 
   <div *ngIf="!isLoading && properties.length > 0" class="property-grid">
     <div *ngFor="let property of properties" class="property-card" (click)="openViewModal(property)">
@@ -61,14 +64,14 @@
       <h3 class="text-center mb-4">What would you like to host?</h3>
 
       <div class="row text-center">
-        <div class="col-md-4" (click)="selectType('home')">
+        <div class="col-md-12" (click)="selectType('home')">
           <div class="border rounded p-4 h-100 shadow-sm card-hover" [class.bg-light]="selectedType === 'home'">
             <img src="https://a0.muscache.com/im/pictures/airbnb-platform-assets/AirbnbPlatformAssets-search-bar-icons/original/4aae4ed7-5939-4e76-b100-e69440ebeae4.png?im_w=240" class="mb-3 img-fluid" />
             <h5>Home</h5>
           </div>
         </div>
 
-        <div class="col-md-4" (click)="selectType('experience')">
+        <!-- <div class="col-md-4" (click)="selectType('experience')">
           <div class="border rounded p-4 h-100 shadow-sm card-hover" [class.bg-light]="selectedType === 'experience'">
             <img src="https://a0.muscache.com/im/pictures/airbnb-platform-assets/AirbnbPlatformAssets-search-bar-icons/original/e47ab655-027b-4679-b2e6-df1c99a5c33d.png?im_w=240" class="mb-3 img-fluid" />
             <h5>Experience</h5>
@@ -80,7 +83,7 @@
             <img src="https://a0.muscache.com/im/pictures/airbnb-platform-assets/AirbnbPlatformAssets-search-bar-icons/original/2bf5d36d-e731-4465-a8ef-91abbf2ae8ce.png?im_w=240" class="mb-3 img-fluid" />
             <h5>Service</h5>
           </div>
-        </div>
+        </div> -->
       </div>
 <hr>
       <div class="mt-4 d-flex justify-content-end">
