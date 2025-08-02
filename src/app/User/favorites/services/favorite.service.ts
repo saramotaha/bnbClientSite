@@ -6,7 +6,7 @@ import { HttpClient } from "@angular/common/http"
 
 @Injectable({providedIn:'root'})
 export class FavoriteService{
-    private apiUrl ='https://localhost:7145/api/Favourites';
+    private apiUrl ='http://localhost:7145/api/Favourites';
     constructor (private http:HttpClient){}
     getFavorites():Observable<Ifavorite[]>{
         return this.http.get<Ifavorite[]>(this.apiUrl);

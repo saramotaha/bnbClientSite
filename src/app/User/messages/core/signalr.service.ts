@@ -6,6 +6,7 @@ import { Conversation } from '../models/conversation';
 export class SignalRService {
   private hubConnection?: signalR.HubConnection;
   private baseUrl = 'http://localhost:7145/chatHub'; // Directly use your API URL
+  
 
   constructor() { }
 
