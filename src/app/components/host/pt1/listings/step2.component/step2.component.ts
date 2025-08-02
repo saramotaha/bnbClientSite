@@ -37,7 +37,6 @@ export class Step2Component {
     private http: HttpClient,
     private listingService: ListingService
   ) {
-    // استرجاع القيمة المحفوظة إذا كانت موجودة
     const savedPlaceType = this.listingService.listingData.placeType;
     if (savedPlaceType) {
       this.selectedOption = this.placeOptions.find(p => p.title === savedPlaceType) || null;

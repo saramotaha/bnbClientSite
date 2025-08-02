@@ -65,25 +65,25 @@ export class ListingService {
   }
 
   setDescription(id: number, description: string) {
-    return this.http.post(`https://localhost:7145/api/property/${id}/description`, { description });
+    return this.http.post(`http://localhost:7145/api/property/${id}/description`, { description });
   }
 
   setBookingSetting(id: number, bookingSetting: string) {
-    return this.http.post(`https://localhost:7145/api/property/${id}/booking-setting`, { bookingSetting });
+    return this.http.post(`http://localhost:7145/api/property/${id}/booking-setting`, { bookingSetting });
   }
 
   savePricing(basePrice: number, weekendPrice: number) {
     const id = this.getPropertyId();
     if (!id) throw new Error('Property ID not found');
     
-    return this.http.post(`https://localhost:7145/api/property/${id}/pricing`, {
+    return this.http.post(`http://localhost:7145/api/property/${id}/pricing`, {
       basePrice,
       weekendPrice
     });
   }
 
   setAddress(propertyId: number, dto: any) {
-    return this.http.post(`https://localhost:7145/api/property/${propertyId}/address`, dto);
+    return this.http.post(`http://localhost:7145/api/property/${propertyId}/address`, dto);
   }
 
 
@@ -95,7 +95,7 @@ export class ListingService {
 
     const { hasCamera, hasNoiseMonitor, hasWeapons } = this.listingData;
 
-    return this.http.post(`https://localhost:7145/api/property/${id}/safety-details`, {
+    return this.http.post(`http://localhost:7145/api/property/${id}/safety-details`, {
       hasSecurityCamera: hasCamera,
       hasNoiseMonitor: hasNoiseMonitor,
       hasWeapons: hasWeapons
