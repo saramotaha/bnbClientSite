@@ -89,7 +89,7 @@
 
       <div class="filter-group">
         <label for="searchTerm">Search</label>
-        <input id="searchTerm" type="text" formControlName="searchTerm" class="form-control" placeholder="Search by name or ID">
+        <input id="searchTerm" type="text" formControlName="searchTerm" class="form-control" placeholder="Search by name, email or ID">
       </div>
 
       <div class="filter-group">
@@ -169,9 +169,13 @@
               <div class="host-info">
                 <div class="host-name">
                   <i class="fas fa-user"></i>
-                  {{ verification.hostname || 'N/A' }}
+                  {{ verification.hostName || 'N/A' }}
                 </div>
                 <div class="host-id">Host ID: {{ verification.hostId }}</div>
+                <div class="host-email" *ngIf="verification.hostEmail">
+                  <i class="fas fa-envelope"></i>
+                  {{ verification.hostEmail }}
+                </div>
               </div>
             </td>
 
@@ -190,15 +194,15 @@
 
             <td class="date-cell">
               <div class="date-info">
-                <div class="date-primary">{{ formatDate(verification.submittedDate) }}</div>
-                <div class="date-time">{{ verification.submittedDate | date:'shortTime' }}</div>
+                <div class="date-primary">{{ formatDate(verification.submittedAt) }}</div>
+                <div class="date-time">{{ verification.submittedAt | date:'shortTime' }}</div>
               </div>
             </td>
 
             <td class="type-cell">
               <span class="verification-type">
                 <i class="fas fa-tag"></i>
-                {{ verification.VerificationType || 'Standard' | titlecase }}
+                {{ verification.type || 'Standard' | titlecase }}
               </span>
             </td>
 
@@ -207,6 +211,12 @@
                 <i class="fas fa-file-alt"></i>
                 <span class="documents-count">{{ getDocumentsCount(verification) }}</span>
                 <span class="documents-label">docs</span>
+                <button class="action-btn view-docs-btn" 
+                        (click)="viewDocuments(verification)" 
+                        *ngIf="hasDocuments(verification)"
+                        title="View Documents">
+                  <i class="fas fa-eye"></i>
+                </button>
               </div>
             </td>
 
@@ -300,7 +310,11 @@
             </div>
             <div class="detail-item">
               <label>Name:</label>
-              <span>{{ selectedVerification.hostname || 'N/A' }}</span>
+              <span>{{ selectedVerification.hostName || 'N/A' }}</span>
+            </div>
+            <div class="detail-item" *ngIf="selectedVerification.hostEmail">
+              <label>Email:</label>
+              <span>{{ selectedVerification.hostEmail }}</span>
             </div>
           </div>
         </div>
@@ -323,32 +337,24 @@
             </div>
             <div class="detail-item">
               <label>Type:</label>
-              <span>{{ selectedVerification.VerificationType || 'Standard' | titlecase }}</span>
+              <span>{{ selectedVerification.type || 'Standard' | titlecase }}</span>
             </div>
             <div class="detail-item">
               <label>Submitted Date:</label>
-              <span>{{ formatDate(selectedVerification.submittedDate) }}</span>
+              <span>{{ formatDate(selectedVerification.submittedAt) }}</span>
             </div>
-            <div class="detail-item" *ngIf="selectedVerification.reviewedDate">
-              <label>Reviewed Date:</label>
-              <span>{{ formatDate(selectedVerification.reviewedDate) }}</span>
+            <div class="detail-item" *ngIf="selectedVerification.verifiedAt">
+              <label>Verified Date:</label>
+              <span>{{ formatDate(selectedVerification.verifiedAt) }}</span>
             </div>
           </div>
         </div>
 
         <!-- Admin Notes -->
-        <div class="detail-section" *ngIf="selectedVerification.AdminNotes">
+        <div class="detail-section" *ngIf="selectedVerification.adminNotes">
           <h4><i class="fas fa-sticky-note"></i> Admin Notes</h4>
           <div class="description-content">
-            <p>{{ selectedVerification.AdminNotes }}</p>
-          </div>
-        </div>
-
-        <!-- Comments -->
-        <div class="detail-section" *ngIf="selectedVerification.comments">
-          <h4><i class="fas fa-comment-alt"></i> Comments</h4>
-          <div class="description-content">
-            <p>{{ selectedVerification.comments }}</p>
+            <p>{{ selectedVerification.adminNotes }}</p>
           </div>
         </div>
 
@@ -359,14 +365,25 @@
             <div *ngIf="selectedVerification.documentUrl1" class="document-item">
               <div class="document-info">
                 <div class="document-name">
-                  <i class="fas fa-file"></i>
-                  Document 1
+                  <i [class]="getFileIcon(selectedVerification.documentUrl1)"></i>
+                  Document 1: {{ selectedVerification.documentUrl1 }}
                 </div>
-                <div class="document-date">Uploaded: {{ formatDate(selectedVerification.submittedDate) }}</div>
+                <div class="document-date">Uploaded: {{ formatDate(selectedVerification.submittedAt) }}</div>
+                <div class="document-preview" *ngIf="isImageFile(selectedVerification.documentUrl1)">
+                    <img [src]="selectedVerification.documentUrl1Full" 
+                          [alt]="selectedVerification.documentUrl1"
+                          class="preview-thumbnail"
+                     (error)="onImageError($event)">
+                </div>
               </div>
               <div class="document-actions">
+                <button class="action-btn view-btn" 
+                        (click)="viewDocument(selectedVerification.id, 1)">
+                  <i class="fas fa-eye"></i>
+                  View
+                </button>
                 <button class="action-btn download-btn" 
-                        (click)="downloadDocument(selectedVerification.documentUrl1, 'Document_1')">
+                        (click)="downloadDocument(selectedVerification.id, 1, selectedVerification.documentUrl1)">
                   <i class="fas fa-download"></i>
                   Download
                 </button>
@@ -376,14 +393,25 @@
             <div *ngIf="selectedVerification.documentUrl2" class="document-item">
               <div class="document-info">
                 <div class="document-name">
-                  <i class="fas fa-file"></i>
-                  Document 2
+                  <i [class]="getFileIcon(selectedVerification.documentUrl2)"></i>
+                  Document 2: {{ selectedVerification.documentUrl2 }}
                 </div>
-                <div class="document-date">Uploaded: {{ formatDate(selectedVerification.submittedDate) }}</div>
+                <div class="document-date">Uploaded: {{ formatDate(selectedVerification.submittedAt) }}</div>
+                <div class="document-preview" *ngIf="isImageFile(selectedVerification.documentUrl2)">
+                  <img [src]="selectedVerification.documentUrl2Full" 
+                    [alt]="selectedVerification.documentUrl2"
+                      class="preview-thumbnail"
+                       (error)="onImageError($event)">
+                </div>
               </div>
               <div class="document-actions">
+                <button class="action-btn view-btn" 
+                        (click)="viewDocument(selectedVerification.id, 2)">
+                  <i class="fas fa-eye"></i>
+                  View
+                </button>
                 <button class="action-btn download-btn" 
-                        (click)="downloadDocument(selectedVerification.documentUrl2, 'Document_2')">
+                        (click)="downloadDocument(selectedVerification.id, 2, selectedVerification.documentUrl2)">
                   <i class="fas fa-download"></i>
                   Download
                 </button>
@@ -406,8 +434,191 @@
   </div>
 </div>
 
+<!-- Document Viewer Modal -->
+<div *ngIf="showDocumentModal && selectedVerification" class="modal-overlay" (click)="closeModals()">
+  <div class="modal-content modal-xl document-modal" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>
+        <i class="fas fa-file-alt"></i>
+        Verification Documents - ID: {{ selectedVerification.id }}
+      </h2>
+      <button class="close-modal-btn" (click)="closeModals()">
+        <i class="fas fa-times"></i>
+      </button>
+    </header>
+
+    <div class="modal-body">
+      <!-- Verification Info -->
+      <div class="verification-info-card">
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>Host ID:</strong> {{ selectedVerification.hostId }}</p>
+            <p><strong>Host Name:</strong> {{ selectedVerification.hostName || 'N/A' }}</p>
+            <p><strong>Type:</strong> {{ selectedVerification.type }}</p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Status:</strong> 
+              <span [class]="'badge bg-' + getStatusColor(selectedVerification.status)">
+                {{ selectedVerification.status | titlecase }}
+              </span>
+            </p>
+            <p><strong>Submitted:</strong> {{ selectedVerification.submittedAt | date:'medium' }}</p>
+            <p *ngIf="selectedVerification.verifiedAt"><strong>Verified:</strong> {{ selectedVerification.verifiedAt | date:'medium' }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Documents Display -->
+      <div class="documents-display">
+        <div class="row">
+          <!-- Document 1 -->
+          <div class="col-lg-6" *ngIf="selectedDocuments.doc1">
+            <div class="document-section">
+              <h6 class="document-title">
+                <i [class]="selectedDocuments.doc1.fileIcon"></i>
+                Document 1: {{ selectedDocuments.doc1.fileName }}
+              </h6>
+              
+              <div class="document-preview-container">
+                <!-- Image Preview -->
+                <div *ngIf="selectedDocuments.doc1.isImage" class="image-preview">
+                  <img 
+                    [src]="selectedDocuments.doc1.fullFileUrl" 
+                    [alt]="selectedDocuments.doc1.fileName"
+                    class="img-fluid preview-image"
+                    (click)="viewDocument(selectedVerification.id, 1)"
+                     (error)="onImageError($event)"
+                   loading="lazy">
+                  <div class="image-overlay">
+                    <i class="fas fa-search-plus"></i>
+                  </div>
+                </div>
+                
+                <!-- PDF Preview -->
+                <div *ngIf="selectedDocuments.doc1.isPdf" class="pdf-preview">
+                  <iframe 
+                    [src]="selectedDocuments.doc1.fullFileUrl"
+                    class="pdf-iframe">
+                  </iframe>
+                </div>
+                
+                <!-- Generic File -->
+                <div *ngIf="!selectedDocuments.doc1.isImage && !selectedDocuments.doc1.isPdf" 
+                     class="generic-file">
+                  <i [class]="selectedDocuments.doc1.fileIcon + ' fa-3x text-muted'"></i>
+                  <p class="text-muted">{{ selectedDocuments.doc1.fileName }}</p>
+                </div>
+              </div>
+              
+              <!-- Document Actions -->
+              <div class="document-actions">
+                <button 
+                  type="button" 
+                  class="btn btn-sm btn-outline-primary me-2"
+                  (click)="viewDocument(selectedVerification.id, 1)">
+                  <i class="fas fa-eye"></i> View Full Size
+                </button>
+                <button 
+                  type="button" 
+                  class="btn btn-sm btn-outline-secondary"
+                  (click)="downloadDocument(selectedVerification.id, 1, selectedDocuments.doc1.fileName)">
+                  <i class="fas fa-download"></i> Download
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Document 2 -->
+          <div class="col-lg-6" *ngIf="selectedDocuments.doc2">
+            <div class="document-section">
+              <h6 class="document-title">
+                <i [class]="selectedDocuments.doc2.fileIcon"></i>
+                Document 2: {{ selectedDocuments.doc2.fileName }}
+              </h6>
+              
+              <div class="document-preview-container">
+                <!-- Image Preview -->
+                <div *ngIf="selectedDocuments.doc2.isImage" class="image-preview">
+                  <img 
+                 [src]="selectedDocuments.doc2.fullFileUrl" 
+                 [alt]="selectedDocuments.doc2.fileName"
+                   class="img-fluid preview-image"
+                         (click)="viewDocument(selectedVerification.id, 2)"
+                         (error)="onImageError($event)"
+                    loading="lazy">
+                  <div class="image-overlay">
+                    <i class="fas fa-search-plus"></i>
+                  </div>
+                </div>
+                
+                <!-- PDF Preview -->
+                <div *ngIf="selectedDocuments.doc2.isPdf" class="pdf-preview">
+                  <iframe 
+                    [src]="selectedDocuments.doc2.fullFileUrl"
+                    class="pdf-iframe">
+                  </iframe>
+                </div>
+                
+                <!-- Generic File -->
+                <div *ngIf="!selectedDocuments.doc2.isImage && !selectedDocuments.doc2.isPdf" 
+                     class="generic-file">
+                  <i [class]="selectedDocuments.doc2.fileIcon + ' fa-3x text-muted'"></i>
+                  <p class="text-muted">{{ selectedDocuments.doc2.fileName }}</p>
+                </div>
+              </div>
+              
+              <!-- Document Actions -->
+              <div class="document-actions">
+                <button 
+                  type="button" 
+                  class="btn btn-sm btn-outline-primary me-2"
+                  (click)="viewDocument(selectedVerification.id, 2)">
+                  <i class="fas fa-eye"></i> View Full Size
+                </button>
+                <button 
+                  type="button" 
+                  class="btn btn-sm btn-outline-secondary"
+                  (click)="downloadDocument(selectedVerification.id, 2, selectedDocuments.doc2.fileName)">
+                  <i class="fas fa-download"></i> Download
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Notes if present -->
+      <div class="admin-notes-section" *ngIf="selectedVerification.adminNotes">
+        <h6><i class="fas fa-sticky-note"></i> Admin Notes</h6>
+        <div class="alert alert-info">
+          {{ selectedVerification.adminNotes }}
+        </div>
+      </div>
+    </div>
+    
+    <footer class="modal-footer">
+      <button class="modal-btn cancel-btn" (click)="closeModals()">
+        <i class="fas fa-times"></i>
+        Close
+      </button>
+      
+      <!-- Action buttons for pending verifications -->
+      <div *ngIf="selectedVerification.status === 'pending'" class="verification-actions">
+        <button class="modal-btn approve-btn" (click)="openApprovalModal(selectedVerification)">
+          <i class="fas fa-check"></i>
+          Approve
+        </button>
+        <button class="modal-btn reject-btn" (click)="openRejectionModal(selectedVerification)">
+          <i class="fas fa-times"></i>
+          Reject
+        </button>
+      </div>
+    </footer>
+  </div>
+</div>
+
 <!-- Approval Modal -->
-<div *ngIf="showApprovalModal" class="modal-overlay" (click)="closeModals()">
+<!-- <div *ngIf="showApprovalModal" class="modal-overlay" (click)="closeModals()">
   <div class="modal-content modal-sm" (click)="$event.stopPropagation()">
     <header class="modal-header">
       <h2>
@@ -446,10 +657,53 @@
       </footer>
     </form>
   </div>
+</div> -->
+
+<div *ngIf="showApprovalModal" class="modal-overlay" (click)="closeModals()">
+  <div class="modal-content modal-sm" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>
+        <i class="fas fa-check-circle"></i>
+        Approve Verification
+        <span *ngIf="selectedVerification" class="verification-id-badge">#{{ selectedVerification.id }}</span>
+      </h2>
+      <button class="close-modal-btn" (click)="closeModals()">
+        <i class="fas fa-times"></i>
+      </button>
+    </header>
+
+    <form [formGroup]="approvalForm" (ngSubmit)="approveVerification()">
+      <div class="modal-body">
+        <p>Are you sure you want to approve this verification?</p>
+        
+        <div class="form-group">
+          <label for="approvalNotes">Admin Notes (Optional)</label>
+          <textarea id="approvalNotes" 
+                    formControlName="adminNotes" 
+                    class="form-control" 
+                    rows="3"
+                    placeholder="Add any approval notes (optional)..."></textarea>
+          <small class="form-text text-muted">You can approve without adding notes.</small>
+        </div>
+      </div>
+
+      <footer class="modal-footer">
+        <button type="button" class="modal-btn cancel-btn" (click)="closeModals()">
+          <i class="fas fa-times"></i>
+          Cancel
+        </button>
+        <!-- Removed [disabled] condition to allow submission with empty notes -->
+        <button type="submit" class="modal-btn save-btn approve-confirm">
+          <i class="fas fa-check"></i>
+          Approve Verification
+        </button>
+      </footer>
+    </form>
+  </div>
 </div>
 
 <!-- Rejection Modal -->
-<div *ngIf="showRejectionModal" class="modal-overlay" (click)="closeModals()">
+<!-- <div *ngIf="showRejectionModal" class="modal-overlay" (click)="closeModals()">
   <div class="modal-content modal-sm" (click)="$event.stopPropagation()">
     <header class="modal-header">
       <h2>
@@ -483,6 +737,48 @@
           Cancel
         </button>
         <button type="submit" class="modal-btn confirm-delete-btn" [disabled]="rejectionForm.invalid">
+          <i class="fas fa-times"></i>
+          Reject Verification
+        </button>
+      </footer>
+    </form>
+  </div>
+</div> -->
+<div *ngIf="showRejectionModal" class="modal-overlay" (click)="closeModals()">
+  <div class="modal-content modal-sm" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>
+        <i class="fas fa-times-circle"></i>
+        Reject Verification
+        <span *ngIf="selectedVerification" class="verification-id-badge">#{{ selectedVerification.id }}</span>
+      </h2>
+      <button class="close-modal-btn" (click)="closeModals()">
+        <i class="fas fa-times"></i>
+      </button>
+    </header>
+
+    <form [formGroup]="rejectionForm" (ngSubmit)="rejectVerification()">
+      <div class="modal-body">
+        <p>Are you sure you want to reject this verification?</p>
+        
+        <div class="form-group">
+          <label for="rejectionNotes">Reason for Rejection (Optional)</label>
+          <textarea id="rejectionNotes" 
+                    formControlName="adminNotes" 
+                    class="form-control" 
+                    rows="3"
+                    placeholder="Provide a reason for rejection (optional)..."></textarea>
+          <small class="form-text text-muted">You can reject without adding notes.</small>
+        </div>
+      </div>
+
+      <footer class="modal-footer">
+        <button type="button" class="modal-btn cancel-btn" (click)="closeModals()">
+          <i class="fas fa-times"></i>
+          Cancel
+        </button>
+        <!-- Removed [disabled]="rejectionForm.invalid" to allow submission with empty notes -->
+        <button type="submit" class="modal-btn confirm-delete-btn">
           <i class="fas fa-times"></i>
           Reject Verification
         </button>
