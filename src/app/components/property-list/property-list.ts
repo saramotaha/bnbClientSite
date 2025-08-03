@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { Loader } from "../loader/loader";
 import { FormsModule } from '@angular/forms';
+import { AverageRatingPipe } from '../../Admin/Pipes/average-rating-pipe';
 
 
 
@@ -15,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-property-list',
   standalone:true,
   imports: [CommonModule,
-   FormsModule , Loader],
+   FormsModule , Loader , AverageRatingPipe],
   templateUrl: './property-list.html',
   styleUrls: ['./property-list.css']
 })

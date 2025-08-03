@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <title>BnbClientApp</title>
   <base href="/">
+
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -15,10 +17,19 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="9497120430-alh2k2stssd939m306c6r3mck7tgj3nq.apps.googleusercontent.com">  
 </head>
 <body>
   <app-root></app-root>
-
+  <script>
+    // Global error handler for Google Auth issues
+    window.addEventListener('unhandledrejection', function(event) {
+      if (event.reason && event.reason.toString().includes('google')) {
+        console.error('Google Auth Promise Rejection:', event.reason);
+        // Don't prevent default to allow Angular's error handler to also run
+      }
+    });
+  </script>
 </body>
 </html>

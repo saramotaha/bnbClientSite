@@ -102,26 +102,27 @@
   border-radius: 50%;
   animation: spin 1s linear infinite;
 } */
-  .spinner-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255,255,255,0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 10;
-      }
-      .spinner {
-        width: 40px;
-        height: 40px;
-        border: 4px solid #ccc;
-        border-top: 4px solid #e31c5f;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
+.spinner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 12px; /* ADD THIS */
+}
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e0e0e0; /* CHANGED COLOR */
+  border-top: 4px solid #ff385c; /* CHANGED COLOR */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
@@ -148,6 +149,7 @@
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
   transition: opacity 0.3s ease;
+  position: relative;
 }
 
 .calendar-grid.loading {
@@ -220,6 +222,12 @@
   transform: scale(1.04);
   z-index: 2;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+}
+.calendar-cell.selected:hover {
+  color: black;
+}
+.calendar-cell.selected:hover .price{
+  color: black;
 }
 
 .calendar-cell.today {

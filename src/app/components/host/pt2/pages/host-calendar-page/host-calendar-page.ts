@@ -55,11 +55,12 @@ export class HostCalendarPage implements OnInit {
     });
   }
 
- handleCalendarRequest({ year, month }: { year: number; month: number }) {
+handleCalendarRequest({ year, month }: { year: number; month: number }) {
   this.currentMonthYear = { year, month };
   this.calendarComponent?.setLoading(true);
 
-  this.availabilityService.getCurrentHostAvailability(month, year).subscribe({
+  // Use property-specific API instead of host-wide API
+  this.availabilityService.getByPropertyId(this.selectedPropertyId).subscribe({
     next: slots => {
       const calendarData = this.mapSlotsToCalendarData(slots);
       this.calendarData = calendarData;
@@ -75,38 +76,11 @@ export class HostCalendarPage implements OnInit {
   });
 }
 
-  onSelectProperty(propertyId: number): void {
-    this.selectedPropertyId = propertyId;
-
-    this.availabilityService.getByPropertyId(propertyId).subscribe({
-      next: (dtoArray: CreateAvailabilityDTO[]) => {
-        const calendarFormatted: CalendarData = {};
-
-        dtoArray.forEach(dto => {
-          const dateObj = new Date(dto.date);
-
-          calendarFormatted[dto.date] = {
-            date: dateObj,
-            price: dto.price,
-            available: dto.isAvailable,
-            blocked: !!dto.blockedReason,
-            minStay: dto.minNights,
-            maxStay: undefined,
-            isWeekend: [0, 6].includes(dateObj.getDay()),
-            isEditing: false
-          };
-        });
-
-        this.calendarData = calendarFormatted;
-        this.calendarComponent?.updateCalendarData(calendarFormatted);
-        this.cdr.detectChanges(); // 🔔 Ensure view reflects new data
-      },
-      error: err => {
-        console.error('Error loading availability:', err);
-        this.showToast('errorToast');
-      }
-    });
-  }
+onSelectProperty(propertyId: number): void {
+  this.selectedPropertyId = propertyId;
+  this.calendarComponent?.setLoading(true);
+  this.handleCalendarRequest(this.currentMonthYear);
+}
 
 handleAvailabilityUpdate(change: { date: Date; availability: DateAvailability }) {
   const dateStr = new Date(change.date).toISOString().split('T')[0];
@@ -121,31 +95,38 @@ handleAvailabilityUpdate(change: { date: Date; availability: DateAvailability })
           propertyId: this.selectedPropertyId,
           date: dateStr,
           isAvailable: change.availability.available,
-          blockedReason: change.availability.blocked ? 'manual block' : undefined,
+          blockedReason: change.availability.available ? "" : 'manual block',
           price: change.availability.price,
           minNights: change.availability.minStay ?? 1
         };
         
         this.availabilityService.addAvailability(newDto).subscribe({
-          next: () => this.showToast('availabilityToast', `Added: ${newDto.date}`),
+          next: () => {
+            this.showToast('availabilityToast', `Added: ${newDto.date}`);
+            this.cdr.detectChanges();
+          },
           error: (err) => this.handleError(err)
         });
         return;
       }
 
-      // TypeScript now knows existing.id is definitely a number here
-      const updateDto: CreateAvailabilityDTO = {
-        id: existing.id,
+      // Update existing record
+      const updateDto = {
         propertyId: this.selectedPropertyId,
         date: dateStr,
         isAvailable: change.availability.available,
-        blockedReason: change.availability.blocked ? 'manual block' : undefined,
+        blockedReason: change.availability.available ? "" : 'manual block',
         price: change.availability.price,
         minNights: change.availability.minStay ?? 1
       };
+      
+      console.log('Sending update:', updateDto);
 
       this.availabilityService.updateAvailability(existing.id, updateDto).subscribe({
-        next: () => this.showToast('availabilityToast', `Updated: ${updateDto.date}`),
+        next: () => {
+          this.showToast('availabilityToast', `Updated: ${updateDto.date}`);
+          this.cdr.detectChanges();
+        },
         error: (err) => this.handleError(err)
       });
     },

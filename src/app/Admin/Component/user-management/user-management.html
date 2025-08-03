@@ -29,7 +29,7 @@
 <div class="">
   <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
     <h2 class="">User Management</h2>
-    <button class="btn btn-primary-custom"  data-bs-toggle="modal" data-bs-target="#addUserModal">
+    <button hidden class="btn btn-primary-custom"  data-bs-toggle="modal" data-bs-target="#addUserModal">
       <i class="fas fa-user-plus me-2"></i>
       Add New User
     </button>
@@ -50,7 +50,7 @@
         <option value="pending">Pending</option>
         <option value="banned">Banned</option>
       </select> -->
-    <button (click)="applyFilters()" class="btn btn-outline-secondary mt-3">
+    <button hidden (click)="applyFilters()" class="btn btn-outline-secondary mt-3">
       <i class="fa fa-filter me-1 "></i>Filter
     </button>
   </div>
@@ -100,7 +100,8 @@
                                       class="fa fa-eye"></i></button>
                                   <!-- <button class="btn btn-outline-primary btn-icon" data-bs-toggle="modal" data-bs-target="#editUserModal"><i
                                       class="fa fa-edit"></i></button> -->
-                                  <button (click)="BanUser(item.id)" class="btn btn-outline-danger btn-icon"><i class="fa fa-ban"></i></button>
+                                  <button *ngIf="item.accountStatus=='active'" (click)="BanUser(item.id)" class="btn btn-outline-danger btn-icon"><i class="fa fa-ban"></i></button>
+                                  <button  *ngIf="item.accountStatus=='suspended'" (click)="UnBanUser(item.id)" class="btn btn-outline-danger btn-icon"><i class="fa fa-undo"></i></button>
                                 </div>
                               </td>
                             </tr>

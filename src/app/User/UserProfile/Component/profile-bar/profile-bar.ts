@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../../Pages/Auth/auth.service';
 import { RouterLink } from '@angular/router';
+import { SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-profile-bar',
-  imports: [RouterLink],
+  imports: [RouterLink , SlicePipe],
   templateUrl: './profile-bar.html',
   styleUrl: './profile-bar.css'
 })

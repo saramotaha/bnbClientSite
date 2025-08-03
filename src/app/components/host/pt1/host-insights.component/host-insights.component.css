@@ -1,0 +1,17 @@
+.card {
+  min-height: 160px;
+  transition: transform 0.3s ease-in-out;
+  background-color: #fff !important;
+  color: #000 !important;
+  border: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+.card h6 {
+  font-size: 1.1rem;
+  color: #495057;
+}
