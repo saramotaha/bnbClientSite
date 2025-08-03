@@ -83,7 +83,51 @@
   padding: 40px;
   color: #6c757d;
 }
+/* Add to notifications.css */
 
+.notification-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.notification-card.unread {
+  background-color: #f8f9ff;
+  border-left: 3px solid #0d6efd;
+}
+
+.notification-card:hover {
+  background-color: #f8f9fa;
+}
+
+.notification-content {
+  flex-grow: 1;
+  padding-right: 10px;
+}
+
+.notification-content p.unread {
+  font-weight: bold;
+  color: #0d6efd;
+}
+
+.read-indicator {
+  position: absolute;
+  top: 15px;
+  right: 45px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #0d6efd;
+}
+
+.read-indicator.read {
+  background-color: transparent;
+}
 /* Infinite scroll loading indicator */
 .loading-indicator {
   padding: 15px;

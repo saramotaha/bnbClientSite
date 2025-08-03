@@ -1,101 +1,85 @@
-<nav class="airbnb-navbar">
-  <div class="container-fluid">
-    <div class="navbar-content">
-      <!-- Logo -->
-      <div class="navbar-brand-custom">
-        <img class="logo"
-          src="../../../assets/images/Aire de casa design (4).png"          
-          alt="airdeCasa logo">
-      </div>
-
-      <!-- Navigation Links -->
-      <div class="nav-center">
-        <a href="#" class="nav-item-custom active">
-          <i class="bi bi-house-door"></i>
-          <span>Where</span>
-        </a>
-        <a href="#" class="nav-item-custom">
-          <div class="icon-wrapper">
-            <i class="bi bi-globe"></i>
+<!-- combined-nav.component.html -->
+<div>
+  <!-- Base Navigation (always visible) -->
+  <header class="py-3">
+    <div class="container">
+      <div class="row align-items-center">
+        <!-- Logo -->
+        <div class="col-auto">
+          <div class="logo">
+            <img class="logo-icon" src="../../../../../../assets/images/Aire de casa design (4).png" alt="logo">
+            <span class="logoName">AirDeCasa</span>
           </div>
-          <span>Experiences</span>
-        </a>
-        <a href="#" class="nav-item-custom">
-          <div class="icon-wrapper">
-            <i class="bi bi-trophy"></i>
-            <!-- <span class="new-badge">Soon</span> -->
-          </div>
-          <span>Premium</span>
-        </a>
-      </div>
-
-      <!-- Right Side -->
-      <div class="navbar-right">
-        <a href="#" class="become-host-btn">Become a Host</a>
-                 
-       <div class="notification-container">
-  <button class="notification-button" (click)="toggleNotifications($event)">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8 1.5C5.51472 1.5 3.5 3.51472 3.5 6V9.5L2 11V12H14V11L12.5 9.5V6C12.5 3.51472 10.4853 1.5 8 1.5Z" stroke="currentColor" stroke-width="1.5"/>
-      <path d="M6.5 13.5C6.5 14.6046 7.39543 15.5 8.5 15.5C9.60457 15.5 10.5 14.6046 10.5 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-    <span *ngIf="unreadCount > 0" class="notification-badge">{{ unreadCount }}</span>
-  </button>
-  
-  <div class="notification-dropdown" [class.show]="showNotifications">
-    <div class="notification-header">
-      <h3>Notifications</h3>
-    </div>
-    
-    <div class="notification-list">
-      <div *ngFor="let notification of notifications" class="notification-card">
-        <div class="notification-content">
-          <p [class.unread]="!notification.is_read">{{ notification.message }}</p>
-          <small>{{ formatNotificationDate(notification.created_at) }}</small>
         </div>
-        <button 
-          (click)="deleteNotification(notification.id, $event)" 
-          class="delete-btn"
-          aria-label="Delete notification"
-        >
-          ×
-        </button>
-      </div>
+        
+        <!-- Search Bar (triggers expanded nav) -->
+        <div class="col d-none d-md-block ms-md-5 centerdiv" (click)="toggleMainNav($event)">
+          <div class="d-flex align-items-center justify-content-around border rounded-pill py-1 shadow-sm mx-auto" style="max-width: 400px; height: 48px;">
+            <div class="d-flex align-items-center">
+              <img src="https://a0.muscache.com/im/pictures/airbnb-platform-assets/AirbnbPlatformAssets-search-bar-icons/original/4aae4ed7-5939-4e76-b100-e69440ebeae4.png?im_w=240" style="width: 48px;" alt="">
+              <div class="small fw-medium">Anywhere</div>
+            </div>
+            <div class="border-start px-3 small fw-medium">Any week</div>
+            <div class="border-start px-3 small fw-medium">Add guests</div>
+            <button class="btn btn-danger btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Right-side Menu Items -->
+        <div class="col-auto">
+          <div class="d-flex align-items-center gap-3">
+            <a href="#" class="become-host-btn">Become a Host</a>
+            
+            <!-- Notifications -->
+            <div class="notification-container">
+              <button class="notification-button" (click)="toggleNotifications($event)">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 1.5C5.51472 1.5 3.5 3.51472 3.5 6V9.5L2 11V12H14V11L12.5 9.5V6C12.5 3.51472 10.4853 1.5 8 1.5Z" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M6.5 13.5C6.5 14.6046 7.39543 15.5 8.5 15.5C9.60457 15.5 10.5 14.6046 10.5 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              <span *ngIf="unreadCount > 0" class="notification-badge">{{ unreadCount }}</span>
+              </button>
+              <app-notifications (allNotificationsRead)="onAllNotificationsRead()"></app-notifications>
 
-      <div *ngIf="notifications.length === 0 && !isLoading" class="empty-state">
-        No notifications to display
-      </div>
-      
-      <div *ngIf="isLoading" class="loading-indicator">
-        Loading notifications...
+            </div>
+            <!-- profile -->
+             <div class="profile-icon-container">
+                <div class="profile-icon" (click)="toggleUserMenu($event)">
+                {{ getUserInitials() }}
+                </div>
+              </div>
+            <!-- User Menu -->
+            <div class="user-menu bg-body-secondary d-flex align-items-center justify-content-center border rounded-circle" 
+                style="width: 40px; height: 40px; position: relative;">
+              <button class="btn-icon d-flex justify-content-center align-items-center text-center" 
+                      (click)="toggleUserMenu($event)">
+                <i class="bi bi-list fs-5 text-center"></i>
+              </button>
+              <div class="user-dropdown" *ngIf="showUserMenu">
+                <div class="dropdown-item" *ngFor="let item of userMenuItems" (click)="navigateTo(item.route || '')">
+                  <label style="display: flex; align-items: center; cursor: pointer; padding: 5px 10px;">
+                    <i class="bi {{item.icon}}" style="margin-right: 10px;"></i>
+                    {{item.name}}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-         <!-- user menu div  -->
-<div class="user-menu bg-body-secondary d-flex align-items-center justify-content-center border rounded-circle" 
-     style="width: 40px; height: 40px; position: relative;">
-  <button class="btn-icon d-flex justify-content-center align-items-center text-center" 
-          (click)="toggleUserMenu($event)">
-    <i class="bi bi-list fs-5 text-center"></i>
-  </button>
-  <!-- dropdown menu -->
-<div class="user-dropdown" *ngIf="showUserMenu">
-  <div class="dropdown-item" *ngFor="let item of userMenuItems" (click)="navigateTo(item.route || '')">
-    <label style="display: flex; align-items: center; cursor: pointer; padding: 5px 10px;">
-      <i class="bi {{item.icon}}" style="margin-right: 10px;"></i>
-      {{item.name}}
-    </label>
-  </div>
-</div>
-</div>
-      </div>
-    </div>
+  </header>
 
-    <!-- Search Bar -->
+  <!-- Expanded Search Navigation (shown when clicking search bar) -->
+  <nav class="airbnb-navbar" 
+     *ngIf="showMainNav || isClosingMainNav" 
+     [class.slide-up]="isClosingMainNav">
     <div class="search-container mb-5">
       <div class="search-bar">
         <div class="search-input-group">
+          <!-- Where Field -->
           <div class="search-field where-field">
             <label>Where</label>
             <input type="text" placeholder="Search destinations" [(ngModel)]="searchQuery" class="search-input">
@@ -103,6 +87,7 @@
 
           <div class="divider"></div>
 
+          <!-- Check-in Field -->
           <div class="search-field checkin-field" (mouseenter)="onCheckInHover()" [class.active]="showCheckInCalendar">
             <label>Check in</label>
             <input type="text" placeholder="Add dates" [value]="formatDate(checkInDate)" readonly class="search-input">
@@ -110,6 +95,7 @@
 
           <div class="divider"></div>
 
+          <!-- Check-out Field -->
           <div class="search-field checkout-field" (mouseenter)="onCheckOutHover()" [class.active]="showCheckOutCalendar">
             <label>Check out</label>
             <input type="text" placeholder="Add dates" [value]="formatDate(checkOutDate)" readonly class="search-input">
@@ -117,6 +103,7 @@
 
           <div class="divider"></div>
 
+          <!-- Guests Field -->
           <div class="search-field who-field" (click)="onGuestsClick()" [class.active]="showGuestsDropdown">
             <label>Who</label>
             <input type="text" placeholder="Add guests"
@@ -124,6 +111,7 @@
               class="search-input">
           </div>
 
+          <!-- Search Button -->
           <button class="search-button" (click)="onSearch()">
             <svg viewBox="0 0 32 32"
               style="display:block;fill:none;height:16px;width:16px;stroke:currentColor;stroke-width:4;overflow:visible">
@@ -135,7 +123,7 @@
         </div>
       </div>
 
-      <!-- Check-in Calendar -->
+      <!-- Check-in Calendar Dropdown -->
       <div class="calendar-dropdown" *ngIf="showCheckInCalendar">
         <div class="calendar-header">
           <button (click)="previousMonth()" class="nav-button">&lt;</button>
@@ -151,16 +139,18 @@
           <div class="day-header">Fri</div>
           <div class="day-header">Sat</div>
 
-          <div *ngFor="let day of checkInCalendarDays" class="calendar-day" [class.other-month]="!day.isCurrentMonth"
-            [class.today]="day.isToday"
-            [class.selected]="checkInDate && day.date.toDateString() === checkInDate.toDateString()"
-            [class.past]="day.isPast" (click)="selectCheckInDate(day)">
+          <div *ngFor="let day of checkInCalendarDays" class="calendar-day" 
+               [class.other-month]="!day.isCurrentMonth"
+               [class.today]="day.isToday"
+               [class.selected]="checkInDate && day.date.toDateString() === checkInDate.toDateString()"
+               [class.past]="day.isPast" 
+               (click)="selectCheckInDate(day)">
             {{ day.day }}
           </div>
         </div>
       </div>
 
-      <!-- Check-out Calendar -->
+      <!-- Check-out Calendar Dropdown -->
       <div class="calendar-dropdown" *ngIf="showCheckOutCalendar">
         <div class="calendar-header">
           <button (click)="previousMonth()" class="nav-button">&lt;</button>
@@ -176,10 +166,12 @@
           <div class="day-header">Fri</div>
           <div class="day-header">Sat</div>
 
-          <div *ngFor="let day of checkOutCalendarDays" class="calendar-day" [class.other-month]="!day.isCurrentMonth"
-            [class.today]="day.isToday"
-            [class.selected]="checkOutDate && day.date.toDateString() === checkOutDate.toDateString()"
-            [class.past]="day.isPast" (click)="selectCheckOutDate(day)">
+          <div *ngFor="let day of checkOutCalendarDays" class="calendar-day" 
+               [class.other-month]="!day.isCurrentMonth"
+               [class.today]="day.isToday"
+               [class.selected]="checkOutDate && day.date.toDateString() === checkOutDate.toDateString()"
+               [class.past]="day.isPast" 
+               (click)="selectCheckOutDate(day)">
             {{ day.day }}
           </div>
         </div>
@@ -193,8 +185,7 @@
             <div class="guest-subtitle">Ages 13 or above</div>
           </div>
           <div class="guest-controls">
-            <button (click)="adjustGuests('adults', 'decrement')" [disabled]="guests.adults <= 1"
-              class="guest-button">-</button>
+            <button (click)="adjustGuests('adults', 'decrement')" [disabled]="guests.adults <= 1" class="guest-button">-</button>
             <span class="guest-count">{{ guests.adults }}</span>
             <button (click)="adjustGuests('adults', 'increment')" class="guest-button">+</button>
           </div>
@@ -206,8 +197,7 @@
             <div class="guest-subtitle">Ages 2–12</div>
           </div>
           <div class="guest-controls">
-            <button (click)="adjustGuests('children', 'decrement')" [disabled]="guests.children <= 0"
-              class="guest-button">-</button>
+            <button (click)="adjustGuests('children', 'decrement')" [disabled]="guests.children <= 0" class="guest-button">-</button>
             <span class="guest-count">{{ guests.children }}</span>
             <button (click)="adjustGuests('children', 'increment')" class="guest-button">+</button>
           </div>
@@ -219,20 +209,12 @@
             <div class="guest-subtitle">Under 2</div>
           </div>
           <div class="guest-controls">
-            <button (click)="adjustGuests('infants', 'decrement')" [disabled]="guests.infants <= 0"
-              class="guest-button">-</button>
+            <button (click)="adjustGuests('infants', 'decrement')" [disabled]="guests.infants <= 0" class="guest-button">-</button>
             <span class="guest-count">{{ guests.infants }}</span>
             <button (click)="adjustGuests('infants', 'increment')" class="guest-button">+</button>
           </div>
         </div>
       </div>
     </div>
-    </div>
-
-
   </nav>
-
-
-
-
-
+</div>

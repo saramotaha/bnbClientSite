@@ -1,496 +1,385 @@
-   .airbnb-navbar {
-            background: var(--airbnb-white);
-            border-bottom: 1px solid var(--airbnb-light-gray);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
+/* combined-nav.component.css */
 
-        .navbar-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 40px;
-            height: 80px;
-            max-width: 1800px;
-            margin: 0 auto;
-        }
-
-        /* Logo */
-        .navbar-brand-custom {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            transition: transform 0.2s ease;
-        }
-
-        .navbar-brand-custom:hover {
-            transform: scale(1.03);
-        }
-
-        .logo {
-            width: 120px;
-            height: 40px;
-            object-fit: contain;
-        }
-
-        /* Navigation Links */
-        .nav-center {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .nav-item-custom {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 16px;
-            border-radius: 22px;
-            text-decoration: none;
-            color: var(--airbnb-gray);
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            position: relative;
-            white-space: nowrap;
-        }
-
-        .nav-item-custom:hover {
-            background-color: #f8f8f8;
-            color: var(--airbnb-dark);
-            text-decoration: none;
-        }
-
-        .nav-item-custom.active {
-            color: var(--airbnb-dark);
-            font-weight: 600;
-        }
-
-        .nav-item-custom.active::after {
-            content: '';
-            position: absolute;
-            bottom: -28px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 24px;
-            height: 2px;
-            background-color: var(--airbnb-dark);
-            border-radius: 1px;
-        }
-
-        .icon-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-item-custom:hover i {
-            transform: scale(1.1);
-            transition: all 0.2s ease;
-        }
-
-        .new-badge {
-            position: absolute;
-            top: -8px;
-            right: -12px;
-            background: var(--airbnb-purple);
-            color: white;
-            font-size: 9px;
-            font-weight: 700;
-            padding: 2px 5px;
-            border-radius: 8px;
-            line-height: 1.2;
-            letter-spacing: 0.5px;
-        }
-
-        /* Right Side */
-        .navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .become-host-btn {
-            color: var(--airbnb-dark);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 12px 16px;
-            border-radius: 22px;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .become-host-btn:hover {
-            background-color: #f8f8f8;
-            color: var(--airbnb-dark);
-            text-decoration: none;
-        }
-
-        .btn-icon {
-            background: none;
-            border: none;
-            padding: 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: var(--airbnb-gray);
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            position: relative;
-        }
-
-        .btn-icon:hover {
-            background-color: #f8f8f8;
-        }
-
-        .btn-icon i {
-            font-size: 18px;
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 6px;
-            border: 1px solid var(--airbnb-light-gray);
-            border-radius: 30px;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .user-menu:hover {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-        }
-
-        .user-icon {
-            color: var(--airbnb-gray);
-            font-size: 20px;
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--airbnb-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        /* Search Section */
-        .search-section {
-            padding: 0 40px 20px;
-            max-width: 1800px;
-            margin: 0 auto;
-        }
-
-        .search-bar-container {
-            display: flex;
-            align-items: center;
-            background: var(--airbnb-white);
-            border: 1px solid var(--airbnb-light-gray);
-            border-radius: 60px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05);
-            max-width: 850px;
-            margin: 0 auto;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .search-bar-container:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        }
-
-        .search-item {
-            flex: 1;
-            padding: 16px 24px;
-            cursor: pointer;
-            border-radius: 40px;
-            transition: background-color 0.2s ease;
-            min-width: 0;
-            position: relative;
-        }
-
-        .search-item:hover {
-            background-color: #f8f8f8;
-        }
-
-        .search-item-who {
-            flex: 1;
-            padding: 12px 24px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            min-width: 0;
-        }
-
-        .who-section {
-            display: flex;
-            align-items: center;
-            border-radius: 40px;
-            padding-right: 10px;
-        }
-
-        .who-section:hover {
-            background-color: #f8f8f8;
-        }
-
-        .search-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--airbnb-dark);
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .search-input {
-            border: none;
-            outline: none;
-            background: transparent;
-            font-size: 14px;
-            color: var(--airbnb-gray);
-            width: 100%;
-            padding: 0;
-            font-weight: 500;
-        }
-
-        .search-input::placeholder {
-            color: var(--airbnb-gray);
-            font-size: 14px;
-            font-weight: 400;
-        }
-
-        .search-divider {
-            width: 1px;
-            height: 32px;
-            background-color: var(--airbnb-light-gray);
-            flex-shrink: 0;
-        }
-
-        .search-btn {
-            background: var(--airbnb-gradient);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            margin-left: 8px;
-            transition: all 0.2s ease;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .search-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(231, 28, 95, 0.4);
-        }
-
-        .search-btn:active {
-            transform: scale(0.95);
-        }
-
-        .search-btn i {
-            font-size: 16px;
-        }
-
-
-
-
-
-
-        /* guest numbers */
-
-
-
-
-  .guest-selector {
-  position: absolute;
-  background: white;
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  z-index: 1000;
-  width: 300px;
-  top: 65%; /* you may need to adjust this */
-  left: 55%;
+/* Base Styles */
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-.who-section {
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.col, .col-auto {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.col-auto {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.d-md-block {
+  @media (min-width: 768px) {
+    display: block !important;
+  }
+}
+
+/* Logo Styles */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  width: 40px;
+  height: auto;
+}
+
+.logo .logoName {
+  font-size: 20px;
+  color: #FD798A;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+}
+
+/* Search Bar Styles */
+.centerdiv {
+  cursor: pointer;
+}
+
+.border {
+  border: 1px solid #dee2e6 !important;
+}
+
+.rounded-pill {
+  border-radius: 50rem !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+}
+
+.mx-auto {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.py-1 {
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+}
+
+.small {
+  font-size: 80%;
+  font-weight: 400;
+}
+
+.fw-medium {
+  font-weight: 500;
+}
+
+.px-3 {
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+}
+
+.border-start {
+  border-left: 1px solid #dee2e6 !important;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, 
+              border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+/* Right Navigation Items */
+.gap-3 {
+  gap: 1rem !important;
+}
+
+.become-host-btn {
+  color: #222;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 16px;
+  border-radius: 22px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.become-host-btn:hover {
+  background-color: #f8f8f8;
+  color: #222;
+  text-decoration: none;
+}
+
+/* Notification Styles */
+.notification-container {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-button {
+  background: none;
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.notification-button:hover {
+  background-color: #f7f7f7;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff385c;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  border: 2px solid white;
+}
+
+.notification-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 350px;
+  max-height: 500px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  display: none;
+  margin-top: 10px;
+}
+
+.notification-dropdown.show {
+  display: block;
+}
+
+.notification-header {
+  padding: 15px;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.notification-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.notification-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.notification-card {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-card:hover {
+  background-color: #f9f9f9;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-content p {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+}
+
+.notification-content p.unread {
+  font-weight: bold;
+  color: #000;
+}
+
+.notification-content small {
+  color: #717171;
+  font-size: 12px;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #717171;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0 8px;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  color: #ff385c;
+  transform: scale(1.2);
+}
+
+.empty-state, .loading-indicator {
+  padding: 24px;
+  text-align: center;
+  color: #717171;
+  font-size: 14px;
+}
+
+/* User Menu Styles */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px;
+  border: 1px solid #ebebeb;
+  border-radius: 30px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.user-menu:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #717171;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
   position: relative;
 }
 
+.btn-icon:hover {
+  background-color: #f8f8f8;
+}
 
-        .guest-selector:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-        }
+.btn-icon i {
+  font-size: 18px;
+}
 
-        .selector-header {
-            padding: 28px 24px;
-            border-bottom: 1px solid #ebebeb;
-        }
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+  padding: 8px 0;
+  margin-top: 8px;
+  min-width: 200px;
+  z-index: 1001;
+}
 
-        .selector-header h2 {
-            font-size: 22px;
-            font-weight: 600;
-            color: #222;
-            margin-bottom: 4px;
-        }
+.dropdown-item {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #222222;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
 
-        .selector-header p {
-            font-size: 14px;
-            color: #717171;
-            font-weight: 400;
-        }
+.dropdown-item:hover {
+  background-color: #f7f7f7;
+}
 
-        .guest-option {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px;
-            transition: background-color 0.2s ease;
-        }
+.dropdown-item i {
+  width: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: #222;
+}
 
-        .guest-option:hover {
-            background-color: #fafafa;
-        }
+.dropdown-item:hover i {
+  color: #ff385c;
+}
 
-        .option-info {
-            flex: 1;
-        }
-
-        .option-info h5 {
-            font-size: 16px;
-            font-weight: 500;
-            color: #222;
-            margin-bottom: 4px;
-        }
-
-        .option-info p {
-            font-size: 14px;
-            color: #717171;
-            font-weight: 400;
-        }
-
-        .counter-controls {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .counter-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid #b0b0b0;
-            color: #b0b0b0;
-            font-size: 18px;
-            font-weight: 300;
-            background: transparent;
-        }
-
-        .counter-btn:hover {
-            border-color: #222;
-            color: #222;
-        }
-
-        .counter-btn.active {
-            border-color: #222;
-            color: #222;
-            cursor: pointer;
-        }
-
-        .counter-value {
-            min-width: 30px;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 500;
-            color: #222;
-        }
-
-        .divider {
-            height: 1px;
-            background: #ebebeb;
-            margin: 0 24px;
-        }
-
-        .selector-footer {
-            padding: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #ebebeb;
-        }
-
-
-        /* Animation for counter */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .counter-btn:active {
-            animation: pulse 0.3s ease;
-        }
-
-        .counter-value.changed {
-            animation: pulse 0.5s ease;
-        }
-
-
-
-        .navbar {
+/* Expanded Search Nav Styles */
+.airbnb-navbar {
   background: white;
   border-bottom: 1px solid #ebebeb;
   position: sticky;
   top: 0;
   z-index: 1000;
-  padding: 10px 0;
-}
-
-.nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
-.nav-logo {
-  flex-shrink: 0;
-  cursor: pointer;
-}
-
-.nav-logo svg {
-  transition: transform 0.2s ease;
-}
-
-.nav-logo:hover svg {
-  transform: scale(1.05);
+  padding: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .search-container {
@@ -498,6 +387,7 @@
   flex: 1;
   max-width: 850px;
   margin: 0 auto;
+  padding: 0 40px;
 }
 
 .search-bar {
@@ -583,8 +473,8 @@
   background: #d70466;
 }
 
-.calendar-dropdown,
-.guests-dropdown {
+/* Calendar Dropdown Styles */
+.calendar-dropdown {
   position: absolute;
   top: 100%;
   left: 50%;
@@ -675,7 +565,18 @@
   cursor: not-allowed;
 }
 
+/* Guests Dropdown Styles */
 .guests-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+  padding: 32px;
+  margin-top: 8px;
+  z-index: 1001;
   min-width: 320px;
 }
 
@@ -712,7 +613,86 @@
   align-items: center;
   gap: 16px;
 }
+/* Profile Icon Styles */
+.profile-icon-container {
+  display: inline-block;
+}
 
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #222222;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+/* Add this to your nav.css file */
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff385c;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.notification-badge.new-notification {
+  animation: pulse-badge 1s ease-in-out;
+}
+
+@keyframes pulse-badge {
+  0% { 
+    transform: scale(1); 
+    background-color: #ff385c; 
+  }
+  50% { 
+    transform: scale(1.2); 
+    background-color: #ff1744; 
+  }
+  100% { 
+    transform: scale(1); 
+    background-color: #ff385c; 
+  }
+}
+
+.notification-container {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-button {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.notification-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.profile-icon:hover {
+  background: #484848;
+  transform: scale(1.05);
+}
 .guest-button {
   width: 32px;
   height: 32px;
@@ -745,133 +725,10 @@
   text-align: center;
 }
 
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.host-link {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.host-link a {
-  text-decoration: none;
-  color: #222222;
-  padding: 12px 16px;
-  border-radius: 22px;
-  transition: background-color 0.2s ease;
-}
-
-.host-link a:hover {
-  background-color: #f7f7f7;
-}
-
-.user-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
-  padding: 8px 0;
-  margin-top: 8px;
-  min-width: 200px;
-  z-index: 1001;
-}
-
-.dropdown-item {
-  padding: 12px 16px;
-  font-size: 14px;
-  color: #222222;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.dropdown-item:hover {
-  background-color: #f7f7f7;
-}
-/* Add to nav.css */
-.dropdown-item i {
-  width: 20px;
-  text-align: center;
-  font-size: 16px;
-  color: #222;
-}
-
-.dropdown-item:hover i {
-  color: #ff385c;
-}
-
-/* Style for the logout item differently */
-.dropdown-item:last-child {
-  border-top: 1px solid #ebebeb;
-  margin-top: 8px;
-  padding-top: 12px;
-}
-
-.dropdown-item:last-child i {
-  color: #ff385c;
-}
-
-.dropdown-item label {
-  margin-bottom: 0;
-  cursor: pointer;
-  width: 100%;
-}
-
-.dropdown-item input[type="checkbox"] {
-  cursor: pointer;
-}
-.menu-icon {
-  color: #717171;
-}
-
-.profile-icon {
-  color: #717171;
-  width: 30px;
-  height: 30px;
-}
-
-.user-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
-  padding: 8px 0;
-  margin-top: 8px;
-  min-width: 240px;
-  z-index: 1001;
-}
-
-.dropdown-item {
-  padding: 12px 16px;
-  font-size: 14px;
-  color: #222222;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.dropdown-item:hover {
-  background-color: #f7f7f7;
-}
-
-.dropdown-divider {
-  height: 1px;
-  background-color: #ebebeb;
-  margin: 8px 0;
-}
-
+/* Responsive Styles */
 @media (max-width: 768px) {
-  .nav-container {
-    padding: 0 24px;
-  }
-
   .search-container {
-    max-width: none;
+    padding: 0 24px;
   }
 
   .search-input-group {
@@ -893,132 +750,51 @@
     right: 0;
     transform: none;
     margin: 8px 24px 0;
+    width: auto;
   }
 }
-/* Notification styles */
-.notification-container {
-  position: relative;
-  display: inline-block;
-  margin-left: 15px;
-}
+/* Add this to your existing nav.css file */
 
-.notification-button {
-  background: none;
-  border: 1px solid #dddddd;
-  border-radius: 50%;
-  padding: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.notification-button:hover {
-  background-color: #f7f7f7;
-}
-
-.notification-badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background: #ff385c;
-  color: white;
-  font-size: 11px;
-  font-weight: 600;
-  min-width: 18px;
-  height: 18px;
-  border-radius: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 2px;
-  border: 2px solid white;
-}
-
-.notification-dropdown {
-  position: absolute;
-  right: 0;
-  top: 100%;
-  width: 350px;
-  max-height: 500px;
-  overflow-y: auto;
+/* Smooth animation for expanded search navbar */
+.airbnb-navbar {
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
-  z-index: 1000;
-  display: none;
-  margin-top: 10px;
-}
-
-.notification-dropdown.show {
-  display: block;
-}
-
-.notification-header {
-  padding: 15px;
   border-bottom: 1px solid #ebebeb;
-}
-
-.notification-header h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.notification-list {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   padding: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  
+  /* Animation properties */
+  transform: translateY(-100%);
+  opacity: 0;
+  animation: slideDown 0.3s ease-out forwards;
 }
 
-.notification-card {
-  padding: 12px 16px;
-  border-bottom: 1px solid #f0f0f0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Keyframe animation for sliding down */
+@keyframes slideDown {
+  from {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-.notification-card:hover {
-  background-color: #f9f9f9;
+/* Optional: Add exit animation class */
+.airbnb-navbar.slide-up {
+  animation: slideUp 0.3s ease-in forwards;
 }
 
-.notification-content {
-  flex: 1;
-}
-
-.notification-content p {
-  margin: 0 0 4px 0;
-  font-size: 14px;
-}
-
-.notification-content p.unread {
-  font-weight: bold;
-  color: #000;
-}
-
-.notification-content small {
-  color: #717171;
-  font-size: 12px;
-}
-
-.delete-btn {
-  background: none;
-  border: none;
-  color: #717171;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0 8px;
-  transition: all 0.2s ease;
-}
-
-.delete-btn:hover {
-  color: #ff385c;
-  transform: scale(1.2);
-}
-
-.empty-state, .loading-indicator {
-  padding: 24px;
-  text-align: center;
-  color: #717171;
-  font-size: 14px;
+@keyframes slideUp {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
 }

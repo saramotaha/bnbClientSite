@@ -1,7 +1,6 @@
 
   import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
   import { ImageGallery } from "../components/image-gallery/image-gallery";
-  import { BaseNav } from "../../../Shared/base-nav/base-nav/base-nav";
   import { Footer } from "../../../Shared/footer/footer";
   import { BehaviorSubject } from 'rxjs';
   import { IPropertyList } from '../../../Core/Models/iproperty-list';
@@ -14,10 +13,11 @@
   import { Route, ActivatedRoute } from '@angular/router';
   import { PorpertyLocation } from "../components/porperty-location/porperty-location";
 import { PropertyHost } from "../components/property-host/property-host";
+import { Nav } from '../../../Shared/nav/nav';
 
   @Component({
     selector: 'app-property-details',
-    imports: [ImageGallery, BaseNav, Footer, PropertyDetialsReview, Propertybookingcard, PropertydetailsAmenities, PropertydetailsCalendar, PorpertyLocation, PropertyHost],
+    imports: [ImageGallery, Nav, Footer, PropertyDetialsReview, Propertybookingcard, PropertydetailsAmenities, PropertydetailsCalendar, PorpertyLocation, PropertyHost],
   templateUrl: './property-details.html',
     styleUrl: './property-details.css'
   })
