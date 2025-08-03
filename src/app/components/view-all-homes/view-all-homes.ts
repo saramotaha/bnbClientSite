@@ -11,12 +11,13 @@ import { Loader } from "../loader/loader";
 import { FormsModule } from '@angular/forms';
 import { NotFound } from '../../Pages/not-found/not-found';
 import { Route, Router, RouterLink } from '@angular/router';
+import { AverageRatingPipe } from '../../Admin/Pipes/average-rating-pipe';
 
 
 @Component({
   selector: 'app-view-all-homes',
   standalone: true,
-  imports: [CommonModule, Map, FormsModule, Nav, Footer, NotFound, Loader,RouterLink],
+  imports: [CommonModule, Map, FormsModule, Nav, Footer, NotFound, Loader,RouterLink, AverageRatingPipe],
   templateUrl: './view-all-homes.html',
   styleUrl: './view-all-homes.css'
 })

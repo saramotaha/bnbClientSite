@@ -6,10 +6,11 @@ import { DashBoardBar } from "../../Admin/Component/dash-board-bar/dash-board-ba
 import { AdminDashboard } from "../../Admin/Component/admin-dashboard/admin-dashboard";
 import { Nav } from "../../Shared/nav/nav";
 import { Footer } from "../../Shared/footer/footer";
+import { Loader } from "../../components/loader/loader";
 
 @Component({
   selector: 'app-home',
-  imports: [PropertyList, Nav, Footer],
+  imports: [PropertyList, Nav, Footer, Loader],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
