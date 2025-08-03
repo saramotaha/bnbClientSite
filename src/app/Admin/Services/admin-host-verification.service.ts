@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { 
-  HostVerification, 
+import {
+  HostVerification,
   HostVerificationResponse,
   VerificationFilters
 } from '../Models/admin-host-verification.model';
@@ -17,7 +17,7 @@ export interface AdminNotesDto {
   providedIn: 'root'
 })
 export class HostVerificationService {
-  private readonly baseUrl = 'https://localhost:7145/api/HostVerification'; // Updated to match your controller
+  private readonly baseUrl = 'http://localhost:7145/api/HostVerification'; // Updated to match your controller
   private verificationsSubject = new BehaviorSubject<HostVerification[]>([]);
   public verifications$ = this.verificationsSubject.asObservable();
 
@@ -74,7 +74,7 @@ export class HostVerificationService {
   // Approve host verification - matches [HttpPut("{id}/approve")] ApproveVerification(int id, [FromBody] AdminNotesDto? adminNotesDto = null)
   approveVerification(id: number, adminNotes?: string): Observable<HostVerificationResponse> {
     const body: AdminNotesDto = { adminNotes };
-    
+
     return this.http.put<HostVerificationResponse>(`${this.baseUrl}/${id}/approve`, body)
       .pipe(
         map(response => {
@@ -88,7 +88,7 @@ export class HostVerificationService {
   // Reject host verification - matches [HttpPut("{id}/reject")] RejectVerification(int id, [FromBody] AdminNotesDto? adminNotesDto = null)
   rejectVerification(id: number, adminNotes?: string): Observable<HostVerificationResponse> {
     const body: AdminNotesDto = { adminNotes };
-    
+
     return this.http.put<HostVerificationResponse>(`${this.baseUrl}/${id}/reject`, body)
       .pipe(
         map(response => {
@@ -105,12 +105,12 @@ export class HostVerificationService {
     if (filters.status && !filters.hostId && !filters.verificationType && !filters.dateFrom && !filters.dateTo) {
       return this.getVerificationsByStatus(filters.status);
     }
-    
+
     // If only hostId filter is provided, use the host endpoint
     if (filters.hostId && !filters.status && !filters.verificationType && !filters.dateFrom && !filters.dateTo) {
       return this.getVerificationsByHostId(filters.hostId);
     }
-    
+
     // For complex filtering, get all and filter client-side
     return this.getAllVerifications().pipe(
       map(verifications => this.filterVerificationsClientSide(verifications, filters))
@@ -160,7 +160,7 @@ export class HostVerificationService {
   // Error handler
   private handleError = (error: any): Observable<never> => {
     console.error('Host Verification Service Error:', error);
-    
+
     // Handle specific error cases
     if (error.status === 404) {
       console.error('Resource not found');
@@ -169,7 +169,7 @@ export class HostVerificationService {
     } else if (error.status === 500) {
       console.error('Internal server error:', error.error?.message || error.message);
     }
-    
+
     return throwError(() => error);
   };
 
@@ -208,21 +208,21 @@ export class HostVerificationService {
   // Helper method to create FormData for file uploads
   createVerificationFormData(data: any, files?: File[]): FormData {
     const formData = new FormData();
-    
+
     // Add form fields
     Object.keys(data).forEach(key => {
       if (data[key] !== null && data[key] !== undefined) {
         formData.append(key, data[key]);
       }
     });
-    
+
     // Add files if provided
     if (files && files.length > 0) {
       files.forEach((file, index) => {
         formData.append(`files`, file);
       });
     }
-    
+
     return formData;
   }
 }

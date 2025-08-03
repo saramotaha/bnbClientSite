@@ -553,6 +553,31 @@ export class AuthService {
 
 
 
+
+
+  /** ✅ Get Host Verification Status */
+getHostVerified(): Observable<any> {
+  const hostId = this.getHostId();
+
+  if (!hostId) {
+    console.error('❌ No Host ID found. User might not be a host.');
+    return throwError(() => new Error('No Host ID found.'));
+  }
+
+  const url = `http://localhost:7145/api/HostVerification/GetHostVerification/${hostId}`;
+
+  return this.http.get<any>(url, { headers: this.getAuthHeaders() }).pipe(
+    tap(response => console.log('✅ Host verification data:', response)),
+    catchError((error: HttpErrorResponse) => {
+      console.error('❌ Failed to fetch host verification:', error);
+      return throwError(() => error);
+    })
+  );
+}
+
+
+
+
   /** ✅ Get Logged-in User Full Name */
   getUserFullName(): string {
     const user = this.currentUserSubject.value;
