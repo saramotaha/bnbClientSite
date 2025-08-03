@@ -39,5 +39,4 @@ export class PropertyService {
   setBookingSetting(id: number, bookingSetting: 'instant' | 'manual'): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/${id}/booking-setting`, { bookingSetting });
   }
-
 }

@@ -68,7 +68,7 @@ export class Step12Component {
     const weekendPrice = this.listingService.listingData.weekendPrice || this.basePrice;
     if (this.isValidPrice) {
       this.listingService.savePricing(this.basePrice, weekendPrice).subscribe({
-        next: () => this.router.navigate(['/host/listings/create/step13']),
+        next: () => this.router.navigate(['/host/listings/create/step15']),
         error: (err) => console.error('Failed to save pricing:', err),
       });
     }

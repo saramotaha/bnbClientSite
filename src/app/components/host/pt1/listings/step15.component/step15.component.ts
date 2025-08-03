@@ -26,7 +26,7 @@ export class Step15Component {
 
   goBack() {
     this.saveToService();
-    this.router.navigate(['/host/listings/create/step13']);
+    this.router.navigate(['/host/listings/create/step12']);
   }
 
   goNext() {
