@@ -1,6 +1,5 @@
 export interface DateAvailability {
   date: Date;
-  price: number;
   available: boolean;
   blocked?: boolean; 
   minStay?: number;
