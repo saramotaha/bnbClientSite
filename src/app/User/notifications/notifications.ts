@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NotificationService } from './notifications.service';
 import { AuthService } from '../../Pages/Auth/auth.service';
@@ -6,15 +6,23 @@ import { AuthService } from '../../Pages/Auth/auth.service';
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [CommonModule], // Only need CommonModule (no NgIf/NgFor)
+  imports: [CommonModule],
   templateUrl: './notifications.html',
   styleUrl: './notifications.css',
-  providers: [DatePipe]
+  providers: [DatePipe],
+    exportAs: 'notifications' ,
+      host: {
+    '[class.show]': 'isOpen'
+  }
 })
 export class Notifications implements OnInit {
   Notifications: any[] = [];
   isLoading = true;
-  
+@Input() isOpen = false;
+  page = 1;
+  pageSize = 10;
+  hasMore = true;
+
   constructor(
     private datepipe: DatePipe,
     private notificationService: NotificationService,
@@ -25,12 +33,28 @@ export class Notifications implements OnInit {
     const userId = this.authService.getUserId();
     this.loadNotifications(Number(userId));
   }
-    deleteNotification(notificationId: number): void {
+
+  toggleDropdown(): void {
+    this.isOpen = !this.isOpen;
+    if (this.isOpen && this.Notifications.length === 0) {
+      const userId = this.authService.getUserId();
+      this.loadNotifications(Number(userId));
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.notification-container') && !target.closest('.notification-dropdown')) {
+      this.isOpen = false;
+    }
+  }
+
+  deleteNotification(notificationId: number): void {
     this.notificationService.deleteNotifications(notificationId).subscribe({
       next: () => {
-        // Remove the deleted notification from the local array
         this.Notifications = this.Notifications.filter(
-          Notifications => Notifications.id !== notificationId
+          notification => notification.id !== notificationId
         );
         console.log('Notification deleted successfully');
       },
@@ -40,10 +64,22 @@ export class Notifications implements OnInit {
     });
   }
 
-  loadNotifications(userId: number): void {
+  loadNotifications(userId: number, loadMore = false): void {
+    if (!loadMore) {
+      this.page = 1;
+      this.hasMore = true;
+    }
+
+    this.isLoading = true;
     this.notificationService.getNotifications(userId).subscribe({
       next: (data) => {
-        this.Notifications = data;
+        if (loadMore) {
+          this.Notifications = [...this.Notifications, ...data];
+        } else {
+          this.Notifications = data;
+        }
+        
+        this.hasMore = data.length === this.pageSize;
         this.isLoading = false;
       },
       error: (err) => {
@@ -51,6 +87,14 @@ export class Notifications implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  onScroll(): void {
+    if (!this.isLoading && this.hasMore) {
+      this.page++;
+      const userId = this.authService.getUserId();
+      this.loadNotifications(Number(userId), true);
+    }
   }
 
   formatDate(dateString: string): string {
