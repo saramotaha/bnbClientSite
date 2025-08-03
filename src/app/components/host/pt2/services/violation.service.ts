@@ -17,7 +17,7 @@ export class ViolationService {
   violatinDetailsSupject = new BehaviorSubject<CreateViolationDTO[]>([]);
   violation$ = this.violatinDetailsSupject.asObservable();
   // Submit a new violation report
-  create(dto: CreateViolationDTO): Observable<string> {
+  createViolation(dto: CreateViolationDTO): Observable<string> {
     return this.http.post<string>(`${this.baseUrl}`, dto)
       .pipe(
         tap((response) => {
