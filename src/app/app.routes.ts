@@ -111,11 +111,12 @@ export const routes: Routes = [
   { path: 'host/dashboard/earnings', component: Earnings},
   { path: 'host/dashboard/listings', component: PropertyListComponent},
   { path: 'host/dashboard/create-listing', component: ListingStep1Component},
-  // { path: 'host/dashboard/messages', component: Messages},
-  // { path: "**", component: NotFound} //MUST BE AT THE END
   { path: '', component: PropertyListComponent },
   { path: 'host', children: listingsRoutes },
 
+  // { path: 'host/dashboard/messages', component: Messages},
+  // { path: "**", component: NotFound} //MUST BE AT THE END
+  
   { path: 'edit/:id', component: EditPropertyComponent },
 
 
