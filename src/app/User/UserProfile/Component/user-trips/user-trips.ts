@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../../Pages/Auth/auth.service';
 import { GetTripsOfUser } from '../../Services/get-trips-of-user';
 import { IUserProfile } from '../../Models/iuser-profile';
@@ -18,7 +18,7 @@ export class UserTrips implements OnInit {
 
   AllReviews!: [];
 
-  constructor(private service: AuthService, private GetTrips: GetTripsOfUser) { }
+  constructor(private service: AuthService, private GetTrips: GetTripsOfUser ,private cdr: ChangeDetectorRef) { }
 
 
 
@@ -27,10 +27,10 @@ export class UserTrips implements OnInit {
 
   ngOnInit(): void {
 
-    this.currentUser = this.service.currentUser;
+     this.currentUser = this.service.currentUser;
     console.log(this.currentUser);
 
-    this.id = this?.currentUser?.value?.id ?? 0;
+    this.id = this?.currentUser?.id ?? 0;
 
 
 
