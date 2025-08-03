@@ -4,5 +4,5 @@ export interface IUserReviews {
   comment: string
   createdAt: string
   reviewerName: string
-  propertyName:String
+  propertyName:string
 }

@@ -1,0 +1,204 @@
+ .airbnb-container {
+   max-width: 800px;
+   margin: 0 auto;
+   background: white;
+   border-radius: 16px;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+   overflow: hidden;
+   position: relative;
+ }
+
+ .header {
+   background: linear-gradient(120deg, black, black,black, black);
+   color: white;
+   padding: 2.5rem 2rem;
+   text-align: center;
+ }
+.header p{
+  color: #cccccc;
+}
+ .logo {
+   font-size: 2.5rem;
+   margin-bottom: 1rem;
+ }
+
+ .progress-container {
+   padding: 1.5rem 2rem;
+   background: var(--airbnb-light);
+ }
+
+ .progress-bar {
+   height: 8px;
+   border-radius: 10px;
+   background: #e0e0e0;
+ }
+
+ .progress-fill {
+   height: 100%;
+   border-radius: 10px;
+   background: #E61E4D;
+   width: 0%;
+   transition: width 0.5s ease;
+ }
+
+ .question-container {
+   padding: 2.5rem 2rem;
+   min-height: 350px;
+ }
+
+ .question-number {
+   /* color: var(--airbnb-teal); */
+   color: gray;
+   font-weight: 600;
+   margin-bottom: 0.5rem;
+ }
+
+ .question-text {
+   font-size: 1.5rem;
+   font-weight: 600;
+   margin-bottom: 1.5rem;
+   color: var(--airbnb-dark);
+ }
+
+ .option-card {
+   border: 2px solid #e0e0e0;
+   border-radius: 12px;
+   padding: 1.5rem;
+   margin-bottom: 1rem;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   display: flex;
+   align-items: center;
+ }
+
+ .option-card:hover {
+   border-color: var(--airbnb-teal);
+   transform: translateY(-3px);
+   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+ }
+
+ .option-card.selected {
+   /* border-color: var(--airbnb-teal); */
+   border-color: gray;
+   background-color: rgba(0, 166, 153, 0.05);
+ }
+
+ .option-icon {
+   font-size: 1.8rem;
+   /* color: var(--airbnb-teal); */
+   color: gray;
+   margin-right: 1rem;
+   width: 40px;
+   text-align: center;
+ }
+
+ .btn-airbnb {
+   background: #E61E4D;
+   color: white;
+   padding: 0.8rem 2rem;
+   border-radius: 10px;
+   font-weight: 600;
+   border: none;
+   transition: all 0.3s ease;
+ }
+
+ .btn-airbnb:hover {
+   background: #E61E4D;
+   transform: translateY(-2px);
+   box-shadow: 0 4px 10px rgba(255, 90, 95, 0.3);
+ }
+
+ .btn-airbnb:disabled {
+   background: #cccccc;
+   cursor: not-allowed;
+   transform: none;
+   box-shadow: none;
+ }
+
+ .btn-airbnb-secondary {
+   /* background: var(--airbnb-teal);  */
+   background: gray;
+ }
+
+ .btn-airbnb-secondary:hover {
+   background: gray;
+   /* background: #008e82; */
+ }
+
+ .form-control-airbnb {
+   border: 2px solid #e0e0e0;
+   border-radius: 10px;
+   padding: 0.8rem 1rem;
+   font-size: 1rem;
+ }
+
+ .form-control-airbnb:focus {
+   /* border-color: var(--airbnb-teal); */
+   border-color:gray;
+   box-shadow: 0 0 0 0.25rem rgba(0, 166, 153, 0.25);
+ }
+
+ .action-buttons {
+   padding: 1.5rem 2rem;
+   display: flex;
+   justify-content: space-between;
+   background: var(--airbnb-light);
+   border-top: 1px solid #eaeaea;
+ }
+
+ .thank-you-container {
+   text-align: center;
+   padding: 3rem 2rem;
+ }
+
+ .thank-you-icon {
+   font-size: 5rem;
+   color: var(--airbnb-teal);
+   margin-bottom: 1.5rem;
+ }
+
+ .thank-you-title {
+   font-size: 2rem;
+   font-weight: 700;
+   color: var(--airbnb-dark);
+   margin-bottom: 1rem;
+ }
+
+ .thank-you-text {
+   font-size: 1.1rem;
+   color: #666;
+   max-width: 600px;
+   margin: 0 auto 2rem;
+ }
+
+ .ts-badge {
+   position: absolute;
+   top: 15px;
+   right: 15px;
+   background: #3178c6;
+   color: white;
+   padding: 5px 10px;
+   border-radius: 4px;
+   font-size: 0.8rem;
+   font-weight: 600;
+   z-index: 10;
+ }
+
+ @media (max-width: 768px) {
+   .airbnb-container {
+     margin: 0;
+   }
+
+   .header {
+     padding: 1.5rem 1rem;
+   }
+
+   .question-container {
+     padding: 1.5rem 1rem;
+     min-height: 300px;
+   }
+
+   .question-text {
+     font-size: 1.3rem;
+   }
+ }

@@ -39,6 +39,7 @@ interface IncomeStatsResponse {
   imports: [CommonModule],
 templateUrl: './dashboard-charts.html',
   styleUrl: './dashboard-charts.css'
+
 })
 export class DashboardCharts implements OnInit, AfterViewInit {
   @ViewChild("bookingsChartCanvas") bookingsChartCanvas!: ElementRef<HTMLCanvasElement>

@@ -11,13 +11,13 @@ export class LoaderService {
     loading$ = this.isLoading.asObservable();
 
   show() {
+      console.log('[LoaderService] Show called');
 
     this.isLoading.next(true);
-
   }
-
-
   hide() {
+      console.log('[LoaderService] hide called');
+
     this.isLoading.next(false);
   }
 

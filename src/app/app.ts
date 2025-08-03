@@ -9,12 +9,13 @@ import { Nav } from "./Shared/nav/nav";
 import { HostDashboard } from './components/host/pt2/pages/host-dashboard/host-dashboard';
 import { Login } from './Pages/login/login';
 import { Notifications } from "./User/notifications/notifications";
+import { Loader } from "./components/loader/loader";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, GoogleMapsModule, HostDashboard, Notifications],
+  imports: [RouterOutlet, GoogleMapsModule, HostDashboard, Notifications, Loader],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

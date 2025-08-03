@@ -3,14 +3,16 @@
 
 <!-- Section Header -->
 <div class="  col-7 ">
-  <div class="section-header mt-5">
-    <h1 class="section-title">About me</h1>
-    <a href="#" class="edit-btn">Edit</a>
+  <div class="section-header mt-5  d-flex align-items-center">
+    <h1 class="section-title  mt-4">About me</h1>
+    <button class="btn btn-airbnb mt-0 " data-bs-toggle="modal" data-bs-target="#editProfileModal">
+      <i class="fas fa-edit me-2"></i>Edit Profile
+    </button>
   </div>
 
   <!-- Profile Section -->
   <div class="profile-section bg-light shadow-lg p-5 mt-5 rounded-5">
-    <div class="profile-avatar bg-black">{{currentUser?.firstName}}</div>
+    <div class="profile-avatar bg-black">{{currentUser?.firstName | slice:0:1}}</div>
     <h2 class="profile-name">{{currentUser?.firstName}}</h2>
     <p class="profile-type">{{currentUser?.role}}</p>
   </div>
@@ -94,14 +96,39 @@
         <form [formGroup]="FavPlacesForm" (submit)="AddFavPlace()" id="favoritePlaceForm">
           <div class="mb-4">
             <label class="form-label">What's your favorite place you've visited?</label>
-            <input formControlName="placeName" type="text" class="form-control" placeholder="Bali, Indonesia" required>
+            <input formControlName="preferredCity" type="text" class="form-control" placeholder="Enter Your Fav City" required>
           </div>
 
           <div class="mb-4">
             <label class="form-label">Why is this place special to you?</label>
-            <textarea class="form-control" rows="3" placeholder="Share what made this place memorable..."
-              required></textarea>
+           <input formControlName="budgetForNight" type="number" class="form-control" placeholder="Enter Your Budget for 1 night" required>
+
           </div>
+
+          <div class="mb-4">
+            <label class="form-label">Why is this place special to you?</label>
+            <input formControlName="MaxGuest" type="number" class="form-control" placeholder="Enter num of max Guest" required>
+          </div>
+
+
+          <label class="form-label" for="propertyType">Property Type</label>
+          <select id="propertyType" formControlName="propertyType" class="form-control mb-3" required>
+            <option value="Apartment">Apartment</option>
+            <option value="Cabin">Cabin</option>
+            <option value="House">House</option>
+            <option value="Dome">Dome</option>
+            <option value="Loft">Loft</option>
+            <option value="Chalet">Chalet</option>
+            <option value="Castle">Castle</option>
+            <option value="Treehouse">Treehouse</option>
+            <option value="Suite">Suite</option>
+            <option value="Studio">Studio</option>
+            <option value="Flat">Flat</option>
+            <option value="Villa">Villa</option>
+          </select>
+
+
+
 
 
           <button  class="btn-airbnb  get-started-btn text-center"  type="submit"><i class="fa fa-add"></i> Add</button>
@@ -121,6 +148,76 @@
     </div>
   </div>
   </div>
+
+
+
+
+
+
+
+
+
+    <div class="modal fade " id="editProfileModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg w-30">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit your profile</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+         <form [formGroup]="EditProfileForm" (submit)="EditProfile()">
+
+          <div class="modal-body">
+            <div class="avatar-upload">
+              <!-- <img
+                [src]="UserData?.profilePictureUrl ??'https://cdn5.vectorstock.com/i/1000x1000/31/34/unknown-person-female-vector-31173134.jpg'"
+                alt="Profile" class="avatar-preview"> -->
+              <!-- <button class="avatar-upload-btn">
+                          <i class="fas fa-camera me-2"></i>profile Picture
+                        </button> -->
+
+
+              <!-- <input type="file" name="" id="" > -->
+
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">FName</label>
+              <input formControlName="firstName" type="text" class="form-control" >
+            </div>
+            <div class="mb-3">
+              <label class="form-label">LName</label>
+              <input  formControlName="lastName" type="text" class="form-control" >
+            </div>
+            <!-- <div class="mb-3">
+                        <label class="form-label">PassWord</label>
+                        <input type="password" class="form-control" [value]="UserData.passw">
+                      </div> -->
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input  formControlName="email" type="email" class="form-control" >
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">PhoneNumber</label>
+              <input  formControlName="phoneNumber" type="tel" class="form-control" >
+            </div>
+
+            <div class="">
+              <label class="form-label">Date Of Birth</label>
+              <input  formControlName="dateOfBirth" type="date" class="form-control" >
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-airbnb-outline" data-bs-dismiss="modal">Cancel</button>
+            <button (submit)="EditProfile()" type="submit" class="btn btn-airbnb">Save changes</button>
+          </div>
+
+
+         </form>
+        </div>
+      </div>
+    </div>
 
 </div>
 

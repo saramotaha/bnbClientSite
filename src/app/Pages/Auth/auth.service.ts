@@ -221,7 +221,7 @@
 // //     lastName: googleUser.lastName,
 // //     idToken: googleUser.idToken
 // //   };
-  
+
 
 // //   return this.http.post<GoogleLoginResponse>(`${this.API_URL}google-auth`, googleAuthRequest).pipe(
 // //     switchMap((response) => {
@@ -258,10 +258,10 @@
 // // }
 // // Update your googleAuth method in auth.service.ts
 // googleAuth(googleUser: GoogleUser): Observable<User> {
-//   console.log('🚀 Starting Google Auth with user:', { 
-//     email: googleUser.email, 
-//     firstName: googleUser.firstName, 
-//     lastName: googleUser.lastName 
+//   console.log('🚀 Starting Google Auth with user:', {
+//     email: googleUser.email,
+//     firstName: googleUser.firstName,
+//     lastName: googleUser.lastName
 //   });
 
 //   const googleAuthRequest: GoogleAuthRequest = {
@@ -301,12 +301,12 @@
 //     }),
 //     catchError(err => {
 //       console.error('❌ Google Auth HTTP Error:', err);
-      
+
 //       // Log the full error for debugging
 //       if (err.error) {
 //         console.error('Error details:', err.error);
 //       }
-      
+
 //       this.clearAuthState();
 //       return throwError(() => new Error(`Google authentication failed: ${err.error?.message || err.message || 'Unknown error'}`));
 //     })
@@ -360,7 +360,8 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'https://localhost:7145/api/Auth/';
+   private readonly API_URL = 'http://localhost:7145/api/Auth/';
+  // private readonly API_URL = 'https://localhost:7145/api/Auth/';
   private readonly TOKEN_NAME = 'access_token';
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -550,6 +551,8 @@ export class AuthService {
     return this.currentUserSubject.value?.HostId || null;
   }
 
+
+
   /** ✅ Get Logged-in User Full Name */
   getUserFullName(): string {
     const user = this.currentUserSubject.value;
@@ -591,10 +594,10 @@ export class AuthService {
 
   // 🔄 Updated googleAuth method
   googleAuth(googleUser: GoogleUser): Observable<User> {
-    console.log('🚀 Starting Google Auth with user:', { 
-      email: googleUser.email, 
-      firstName: googleUser.firstName, 
-      lastName: googleUser.lastName 
+    console.log('🚀 Starting Google Auth with user:', {
+      email: googleUser.email,
+      firstName: googleUser.firstName,
+      lastName: googleUser.lastName
     });
 
     const googleAuthRequest: GoogleAuthRequest = {
@@ -634,11 +637,11 @@ export class AuthService {
       }),
       catchError(err => {
         console.error('❌ Google Auth HTTP Error:', err);
-        
+
         if (err.error) {
           console.error('Error details:', err.error);
         }
-        
+
         this.clearAuthState();
         return throwError(() => new Error(`Google authentication failed: ${err.error?.message || err.message || 'Unknown error'}`));
       })
