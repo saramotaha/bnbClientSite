@@ -1,21 +1,25 @@
-<div class="notifications-container">
-  <h2>Your Notifications</h2>
-  
-  <div *ngFor="let notification of Notifications" class="notification-card">
-    <div class="notification-content">
-      <p [class.unread]="!notification.is_read">{{ notification.message }}</p>
-      <small>{{ notification.created_at | date:'medium' }}</small>
-    </div>
-    <button 
-      (click)="deleteNotification(notification.id)" 
-      class="delete-btn"
-      aria-label="Delete notification"
-    >
-      ×
-    </button>
+<div class="notification-dropdown">
+  <div class="notification-header">
+    <h3>Notifications</h3>
   </div>
+  
+  <div class="notification-list">
+    <div *ngFor="let notification of Notifications" class="notification-card">
+      <div class="notification-content">
+        <p [class.unread]="!notification.is_read">{{ notification.message }}</p>
+        <small>{{ notification.created_at | date:'medium' }}</small>
+      </div>
+      <button 
+        (click)="deleteNotification(notification.id); $event.stopPropagation()" 
+        class="delete-btn"
+        aria-label="Delete notification"
+      >
+        ×
+      </button>
+    </div>
 
-  <div *ngIf="Notifications.length === 0" class="empty-state">
-    No notifications to display
+    <div *ngIf="Notifications.length === 0" class="empty-state">
+      No notifications to display
+    </div>
   </div>
 </div>

@@ -1,0 +1,26 @@
+.recommendation-modal {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  
+  .mat-dialog-container {
+    padding: 0 !important;
+    overflow: hidden;
+  }
+}
+/* Airbnb-styled dialog */
+.bottom-right-dialog .mat-dialog-container {
+  position: fixed !important;
+  bottom: 80px !important;
+  right: 24px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+  border: 1px solid #EBEBEB !important;
+}
+
+/* Close button styling */
+.mat-dialog-header button {
+  color: white !important;
+}

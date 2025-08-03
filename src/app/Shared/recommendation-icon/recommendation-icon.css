@@ -1,0 +1,43 @@
+.recommendation-icon-container {
+  position: fixed;
+  bottom: 50px;
+  right: 24px;
+  z-index: 1000;
+}
+
+.recommendation-icon-container .recommendation-button {
+  background-color: #FF5A5F; /* Airbnb pink/red */
+  color: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  overflow: visible;
+}
+
+.recommendation-icon-container .recommendation-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(255, 90, 95, 0.3); /* Airbnb pink/red with opacity */
+}
+
+.recommendation-icon-container .recommendation-button:active {
+  transform: scale(0.95);
+  background-color: #E04E54; /* Slightly darker Airbnb pink */
+}
+
+/* Robot Icon Image */
+.robot-icon-image {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* Makes the image white */
+}
+
+/* Hover effect for robot icon */
+.recommendation-button:hover .robot-icon-image {
+  animation: robotBounce 0.6s ease-in-out;
+  transform: scale(1.1);
+}
+
+@keyframes robotBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
