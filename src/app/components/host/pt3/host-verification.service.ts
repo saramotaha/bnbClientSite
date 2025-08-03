@@ -1,4 +1,3 @@
-// ===== HOST VERIFICATION SERVICE =====
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -17,34 +16,37 @@ export class HostVerificationService {
     private authService: AuthService
   ) {}
 
-  /** ✅ ADD HOST VERIFICATION */
+  /** ✅ FIXED: ADD HOST VERIFICATION */
   addVerification(verificationData: HostVerificationRequest): Observable<HostVerification> {
     const formData = new FormData();
     
-    // Add the verification type
-    formData.append('Type', verificationData.type);
+    // ✅ FIX 1: Add the verification type correctly
+    formData.append('Type', verificationData.type.toString());
     
-    // Add the files
-    // formData.append('DocumentUrl1', verificationData.documentUrl1);
-    // formData.append('DocumentUrl2', verificationData.documentUrl2);
+    // ✅ FIX 2: Actually append the files (this was missing!)
+    formData.append('DocumentUrl1', verificationData.documentUrl1, verificationData.documentUrl1.name);
+    formData.append('DocumentUrl2', verificationData.documentUrl2, verificationData.documentUrl2.name);
     
-    // Add current timestamp
+    // ✅ FIX 3: Add current timestamp
     formData.append('SubmittedAt', new Date().toISOString());
 
-    // Get auth headers but remove Content-Type for FormData
+    // ✅ FIX 4: DO NOT set Content-Type header for FormData - let browser set it automatically
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.authService.getToken()}`
+      // ❌ Don't set Content-Type for FormData uploads
     });
 
     console.log('📤 Sending verification request...');
     console.log('Type:', verificationData.type);
-    console.log('File 1:', verificationData.documentUrl1.name);
-    console.log('File 2:', verificationData.documentUrl2.name);
+    console.log('File 1:', verificationData.documentUrl1.name, verificationData.documentUrl1.size);
+    console.log('File 2:', verificationData.documentUrl2.name, verificationData.documentUrl2.size);
 
-    return this.http.post<HostVerification>(`${this.API_URL}`, formData, { headers })
+    // ✅ FIX 5: Use correct endpoint that matches your controller
+    return this.http.post<HostVerification>(`${this.API_URL}/AddVerifications`, formData, { headers })
       .pipe(
         catchError(error => {
           console.error('❌ Verification submission failed:', error);
+          console.error('Full error response:', error.error);
           return throwError(() => error);
         })
       );
@@ -54,7 +56,7 @@ export class HostVerificationService {
   getHostVerifications(): Observable<HostVerification[]> {
     const headers = this.authService.getAuthHeaders();
     
-    return this.http.get<HostVerification[]>(`${this.API_URL}GetHostVerifications`, { headers })
+    return this.http.get<HostVerification[]>(`${this.API_URL}/GetHostVerifications`, { headers })
       .pipe(
         catchError(error => {
           console.error('❌ Failed to get verifications:', error);
@@ -67,7 +69,7 @@ export class HostVerificationService {
   getVerificationById(id: number): Observable<HostVerification> {
     const headers = this.authService.getAuthHeaders();
     
-    return this.http.get<HostVerification>(`${this.API_URL}GetVerification/${id}`, { headers })
+    return this.http.get<HostVerification>(`${this.API_URL}/GetVerification/${id}`, { headers })
       .pipe(
         catchError(error => {
           console.error('❌ Failed to get verification:', error);
@@ -80,16 +82,16 @@ export class HostVerificationService {
   updateVerification(id: number, verificationData: HostVerificationRequest): Observable<HostVerification> {
     const formData = new FormData();
     
-    formData.append('Type', verificationData.type);
-    formData.append('DocumentUrl1', verificationData.documentUrl1);
-    formData.append('DocumentUrl2', verificationData.documentUrl2);
+    formData.append('Type', verificationData.type.toString());
+    formData.append('DocumentUrl1', verificationData.documentUrl1, verificationData.documentUrl1.name);
+    formData.append('DocumentUrl2', verificationData.documentUrl2, verificationData.documentUrl2.name);
     formData.append('SubmittedAt', new Date().toISOString());
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.authService.getToken()}`
     });
 
-    return this.http.put<HostVerification>(`${this.API_URL}UpdateVerification/${id}`, formData, { headers })
+    return this.http.put<HostVerification>(`${this.API_URL}/UpdateVerification/${id}`, formData, { headers })
       .pipe(
         catchError(error => {
           console.error('❌ Verification update failed:', error);
@@ -102,7 +104,7 @@ export class HostVerificationService {
   deleteVerification(id: number): Observable<any> {
     const headers = this.authService.getAuthHeaders();
     
-    return this.http.delete(`${this.API_URL}DeleteVerification/${id}`, { headers })
+    return this.http.delete(`${this.API_URL}/DeleteVerification/${id}`, { headers })
       .pipe(
         catchError(error => {
           console.error('❌ Verification deletion failed:', error);
