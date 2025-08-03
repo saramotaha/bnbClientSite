@@ -18,7 +18,7 @@ export interface AdminNotesDto {
   providedIn: 'root'
 })
 export class HostVerificationService {
-  private readonly baseUrl = 'https://localhost:7145/api/HostVerification';
+  private readonly baseUrl = 'http://localhost:7145/api/HostVerification';
   private verificationsSubject = new BehaviorSubject<HostVerification[]>([]);
   public verifications$ = this.verificationsSubject.asObservable();
 

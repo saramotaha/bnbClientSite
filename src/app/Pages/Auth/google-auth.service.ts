@@ -1,4 +1,3 @@
-// google-auth.service.ts
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
@@ -58,7 +57,7 @@ export class GoogleAuthService {
       }
 
       const script = document.createElement('script');
-      script.src = 'https://accounts.google.com/gsi/client';
+      script.src = 'http://accounts.google.com/gsi/client';
       script.async = true;
       script.defer = true;
       
