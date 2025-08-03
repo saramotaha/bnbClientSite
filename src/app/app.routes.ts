@@ -59,6 +59,7 @@ import { ForgerPassWord } from './Pages/forger-pass-word/forger-pass-word';
 import { ResetPassword } from './Pages/reset-password/reset-password';
 import { BecomeAHost } from './User/UserProfile/Component/become-ahost/become-ahost';
 import { AddVerificationsComponent } from './components/host/pt3/add-verifications/add-verifications';
+import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
 
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
@@ -75,7 +76,7 @@ export const routes: Routes = [
       { path: "Violation", component: Violation },
       { path: "UserManagement", component: UserManagement },
       { path: "DashboardCharts", component: DashboardCharts },
-      // {path: "PropertyManagement", component: PropertyManagementComponent},
+      {path: "PropertyManagement", component: PropertyManagementComponent},
 
       {path: "AdminHostVerificationComponent", component: AdminHostVerificationComponent},
 
@@ -86,7 +87,7 @@ export const routes: Routes = [
   },
 
 
-  {path: "UserTrips",
+  {path: "UserProfile",
     component: UserProfile,children: [
       { path: "", redirectTo: "profileInfo", pathMatch: "full" },
       { path: "profileInfo", component: ProfileInfo },

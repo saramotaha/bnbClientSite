@@ -55,13 +55,24 @@
     </div>
 
     <!-- Action buttons -->
-    <div class="action-buttons">
-      <button class="btn btn-airbnb" (click)="prevQuestion()" [disabled]="currentQuestionIndex === 0">
-        <i class="fas fa-arrow-left me-2"></i>Back
-      </button>
-      <button class="btn btn-airbnb" (click)="nextQuestion()" [disabled]="!canProceed">
-        Next<i class="fas fa-arrow-right ms-2"></i>
-      </button>
+    <div class="action-buttons ">
+      <div class="action-buttons  d-flex justify-content-between ">
+        <button class="btn btn-airbnb" (click)="prevQuestion()" [disabled]="currentQuestionIndex === 0">
+          <i class="fas fa-arrow-left me-2"></i>Back
+        </button>
+
+        <!-- Show "Next" until the last question -->
+        <button *ngIf="!isLastQuestion" class="btn btn-airbnb" (click)="nextQuestion()" [disabled]="!canProceed">
+          Next<i class="fas fa-arrow-right ms-2"></i>
+        </button>
+
+        <!-- On the last question, show "Submit" -->
+        <button *ngIf="isLastQuestion" class="btn btn-airbnb btn-airbnb-secondary btn-outline-success" (click)="submit()"
+          [disabled]="!canProceed">
+          <i class="fas fa-save me-2"></i>Submit
+        </button>
+      </div>
+
     </div>
   </div>
 
@@ -73,7 +84,7 @@
     <div class="thank-you-icon">
       <i class="fas fa-check-circle"></i>
     </div>
-    <h2 class="thank-you-title">Thank You for Completing Your Profile!</h2>
+    <h4 class="thank-you-title">Thank You for Completing Your Profile!</h4>
     <p class="thank-you-text">
       We've updated your host profile successfully if U Click Submit.
     </p>
@@ -90,5 +101,24 @@
 
 
 
+      <div>
+        <div class="alert alert-warning">U Must Verification your account at a host <button
+            [routerLink]="['/AddVerification']" routerLinkActive="router-link-active">Verify</button> </div>
+      </div>
+
+
+
+
   </div>
+
+
+
+
+
+  <div>
+    <div class="alert alert-warning">U Must Verification your account at a host <button  class="btn btn-secondary p-2 ms-5"
+        [routerLink]="['/AddVerification']" routerLinkActive="router-link-active">Verify</button> </div>
+  </div>
+
+
 </div>
