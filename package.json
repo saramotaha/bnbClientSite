@@ -38,13 +38,17 @@
     "@fullcalendar/core": "^6.1.18",
     "@fullcalendar/daygrid": "^6.1.18",
     "@microsoft/signalr": "^8.0.7",
+    "@types/gapi": "^0.0.47",
+    "@types/gapi.auth2": "^0.0.61",
     "bootstrap": "^5.3.7",
     "bootstrap-icons": "^1.13.1",
     "chart.js": "^4.5.0",
     "date-fns": "^4.1.0",
+    "google-auth-library": "^10.2.0",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
     "ng2-charts": "^8.0.0",
+    "ngx-one-tap": "^0.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "^0.15.1"
@@ -62,6 +66,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "sass": "^1.89.2",
     "typescript": "~5.8.2"
   }
 }

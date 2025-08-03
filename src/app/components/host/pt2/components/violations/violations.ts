@@ -92,6 +92,6 @@ export class Violations implements OnInit {
   }
 
   goToHostDashboard(): void {
-    this.router.navigate(['/host/today']);
+    this.router.navigate(['/host/dashboard/today']);
   }
 }

@@ -9,14 +9,14 @@
 <div class="pricing-section d-flex justify-content-center">
   <ng-container class=" text-center" *ngIf="finalPriceDisplay==0">
     <span class="current-price-title  text-center w-100">Add dates for prices</span>
-    
+
   </ng-container>
   <ng-container class="" *ngIf="finalPriceDisplay!=0">
     <span class="current-price text-center ">${{finalPriceDisplay}}</span>
      <span class="nights-text text-center" *ngIf="getNights() > 0">for {{ getNights() }} night{{ getNights() === 1 ? '' : 's' }}</span>
   </ng-container>
 
-<!-- 
+<!--
     <span class="current-price">{{ finalPriceDisplay == 0 ? "Add dates for prices": finalPriceDisplay}}</span>
     <span class="nights-text" *ngIf="getNights() > 0">for {{ getNights() }} night{{ getNights() === 1 ? '' : 's' }}</span>
     <span class="nights-text" *ngIf="getNights() === 0">Select dates for pricing</span> -->

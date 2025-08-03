@@ -1,1 +1,53 @@
-<p>recommendation-details works!</p>
+<!-- recommendation-details.html -->
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2 mat-dialog-title>Your Recommendations</h2>
+    <button mat-icon-button mat-dialog-close aria-label="Close recommendations">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    <div class="recommendation-content">
+      <!-- Authentication error with sign-in button -->
+     <div *ngIf="error === 'Please sign in to view recommendations'" class="error-message auth-error">
+  {{ error }}
+  <button mat-button color="primary" (click)="navigateToLogin()" class="sign-in-button">
+    Sign In
+  </button>
+</div>
+      
+      <!-- Other errors -->
+      <div *ngIf="error && error !== 'Please sign in to view recommendations'" class="error-message">
+        {{ error }}
+      </div>
+      
+      <mat-spinner *ngIf="isLoading" diameter="40"></mat-spinner>
+
+      <div *ngIf="!isLoading && recommendations.length === 0 && !error" class="placeholder">
+        No recommendations available at this time.
+      </div>
+
+      <div class="recommendations-list">
+        <mat-card *ngFor="let rec of recommendations" class="recommendation-card" 
+                  (click)="navigateToProperty(rec.property.id)">
+          <img mat-card-image [src]="rec.property.images[0]?.imageUrl || 'assets/images/default-property.jpg'" 
+               alt="{{ rec.property.title }}">
+          <mat-card-content>
+            <h3>{{ rec.property.title }}</h3>
+            <p>{{ rec.property.city }}, {{ rec.property.country }}</p>
+            <p>{{ rec.property.pricePerNight | currency }} per night</p>
+            <p>Match: {{ rec.matchPercentage }}%</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button color="primary" (click)="refreshRecommendations()" [disabled]="isLoading">
+      <mat-icon>refresh</mat-icon>
+      Refresh
+    </button>
+  </mat-dialog-actions>
+</div>

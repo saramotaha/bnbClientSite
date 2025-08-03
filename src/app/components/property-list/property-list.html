@@ -1,4 +1,4 @@
-<app-loader></app-loader>
+<app-loader ></app-loader>
 
 
 <div class="p-5 bg-white shadow-lg mt-5">
@@ -29,7 +29,7 @@
       <div class="property-price">€{{item?.pricePerNight}} per night</div>
       <div class="property-rating">
         <span class="star">★</span>
-        <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+        <span class="rating-value">{{item?.reviews | averageRating | number:'1.1-1'}}</span>
       </div>
     </div>
   </div>
@@ -70,7 +70,7 @@
                 <div class="property-price">€{{item.pricePerNight}} per night</div>
                 <div class="property-rating">
                   <span class="star">★</span>
-                  <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+                  <span class="rating-value">{{item?.reviews | averageRating | number:'1.1-1'}}</span>
                 </div>
               </div>
             </div>
@@ -113,7 +113,7 @@
             <div class="property-price">€{{item.pricePerNight}} per night</div>
             <div class="property-rating">
               <span class="star">★</span>
-              <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+              <span class="rating-value">{{item?.reviews | averageRating | number:'1.1-1'}}</span>
             </div>
           </div>
         </div>
@@ -159,7 +159,7 @@
               <div class="property-price">€{{item.pricePerNight}} per night</div>
               <div class="property-rating">
                 <span class="star">★</span>
-                <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+                <span class="rating-value">{{item?.reviews | averageRating | number:'1.1-1'}}</span>
               </div>
             </div>
           </div>
@@ -205,7 +205,7 @@
                 <div class="property-price">€{{item.pricePerNight}} per night</div>
                 <div class="property-rating">
                   <span class="star">★</span>
-                  <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+                  <span class="rating-value">{{item?.reviews | averageRating | number:'1.1-1'}}</span>
                 </div>
               </div>
             </div>
@@ -252,7 +252,7 @@
                   <div class="property-price">€{{item.pricePerNight}} per night</div>
                   <div class="property-rating">
                     <span class="star">★</span>
-                    <span class="rating-value">{{item?.reviews?.[0]?.rating ?? 0}}</span>
+                    <span class="rating-value">{{item?.reviews | averageRating | number:'1.1-1'}}</span>
                   </div>
                 </div>
               </div>

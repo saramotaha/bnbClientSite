@@ -20,13 +20,12 @@ export class Step4Component implements OnInit {
     private listingService: ListingService
   ) {}
 
-  // ✅ استرجاع القيم عند فتح الصفحة
   ngOnInit(): void {
     const data = this.listingService.listingData;
     if (data.maxGuests) this.guests = data.maxGuests;
     if (data.bedrooms) this.bedrooms = data.bedrooms;
     if (data.bathrooms) this.bathrooms = data.bathrooms;
-    // beds لو حبيت تخزّنها برضو
+
     if (data.beds) this.beds = data.beds;
   }
 
@@ -45,7 +44,6 @@ export class Step4Component implements OnInit {
       return;
     }
 
-    // ✅ حفظ القيم في الخدمة
     this.listingService.listingData.maxGuests = this.guests;
     this.listingService.listingData.bedrooms = this.bedrooms;
     this.listingService.listingData.bathrooms = this.bathrooms;
@@ -57,7 +55,7 @@ export class Step4Component implements OnInit {
       bathrooms: this.bathrooms
     };
 
-    this.http.post(`https://localhost:7145/api/Property/${propertyId}/step4`, updateDto, {
+    this.http.post(`http://localhost:7145/api/Property/${propertyId}/step4`, updateDto, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }).subscribe({
       next: () => this.router.navigate(['/host/listings/create/step5']),

@@ -32,4 +32,8 @@ export class UserManagementService {
    return this.http.put<IUserBan>(`${this.BaseUrl}/${id}/ban` ,User );
   }
 
+  UnBanUser(id:number ):Observable<any> {
+    return this.http.put(`${this.BaseUrl}/${id}/unban`, null );
+  }
+
 }
