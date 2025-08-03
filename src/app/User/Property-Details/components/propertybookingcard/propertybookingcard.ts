@@ -14,6 +14,7 @@ import { PropertyDetailsService } from '../../property-details/property-details-
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../Pages/Auth/auth.service';
 import { ViolationService } from '../../../../components/host/pt2/services/violation.service';
+
 @Component({
   selector: 'app-propertybookingcard' ,
 
@@ -29,10 +30,7 @@ export class Propertybookingcard {
   @Output() datesSelected = new EventEmitter<{ checkIn: string; checkOut: string }>() // Added as per reference
   @Input() selectedCheckIn: string = ''
   @Input() selectedCheckOut: string = ''
-showReportModal: boolean = false;
-reportTitle: string = '';
-reportDescription: string = '';
-reportSuccess: boolean = false;
+
   // Calendar state from reference
   propertyDetails!: IPropertyList
   checkInDate: Date | null = null
@@ -53,6 +51,9 @@ reportSuccess: boolean = false;
   finalPriceDisplay = 0 // This is for the top-level price display
 
   availableDatesMap: Map<string, boolean> = new Map()
+// reportTitle: string = '';
+// reportDescription: string = '';
+//   reportSent = false;
 
   constructor(
     private PropertyDetails: PropertyDetailsService,
@@ -495,7 +496,7 @@ reserve() {
     alert('Invalid amount');
     return;
   }
-  const userId =(this.AutProService.currentUser); // Assuming you have a method to get the current user's ID
+  const userId =(this.AutProService.getUserId()); // Assuming you have a method to get the current user's ID
   const paymentData = {
     guestId: (Number(userId)), // Assuming a static guest ID for now
     propertyId: this.propertyId,
@@ -523,23 +524,118 @@ reserve() {
   });
 }
 
+/*  submitReport() {
 
-/* submitReport() {
-  if (!this.reportTitle.trim() || !this.reportDescription.trim()) {
-    alert('Please fill in all fields');
-    return;
-  }
+    // Call your backend here if needed
 
-  // TODO: You can call your backend API here to submit the report
-  console.log('Reporting:', this.reportTitle, this.reportDescription);
+    const dto = {
+      reportedById: Number(this.AutProService.getUserId()), // Assuming you have a method to get the current user's ID;
+  reportedPropertyId: this.propertyId, // Assuming you have the property ID available;
+  reportedHostId: this.propertyDetails?.hostId, // Assuming you have the host ID available;
+  violationType: this.reportTitle, // Example violation type;
+  description: this.reportDescription,
+  };
+  this.violationService.createViolation(dto).subscribe({
+    next: (response) => {
+      console.log('Report submitted successfully:', response);
+    },
+    error: (error) => {
+      console.error('Error submitting report:', error);
+      alert('Failed to submit report. Please try again later.');
+    }
+  });
 
-  // Optionally reset fields
-  this.reportTitle = '';
-  this.reportDescription = '';
+    
+  } */
 
-  // Close the modal manually using Bootstrap API
-  const modal = document.getElementById('reportModal');
-  const modalInstance = bootstrap.Modal.getInstance(modal!);
-  modalInstance?.hide();
-} */
+// report = {
+//   title: '',
+//   description: ''
+// };
+
+// reportSubmitted = false;
+
+// submitReport() {
+//   if (!this.report.title.trim() || !this.report.description.trim()) {
+//     alert("Please fill in both fields."); // Replace with better UI validation if needed
+//     return;
+//   }
+
+//   // Submit logic (call API or just simulate)
+//   console.log('Report submitted:', this.report);
+
+//   // Show confirmation
+//   this.reportSubmitted = true;
+
+//   /* // Optional: auto-close modal after a few seconds
+//   setTimeout(() => {
+//     const modalEl = document.getElementById('reportModal');
+//     if (modalEl) {
+//       const modal = bootstrap.Modal.getInstance(modalEl);
+//       modal?.hide();
+//     }
+//     this.resetReport();
+//   }, 2000); */
+// }
+
+// resetReport() {
+//   this.report = { title: '', description: '' };
+//   this.reportSubmitted = false;
+// }
+
+
+
+// Add these properties to your component class
+// reportReason: string = '';
+// reportDescription: string = '';
+// reportSubmitted: boolean = false;
+
+// // Add this method to your component class
+// submitReport() {
+//   // Here you would typically send the report to your backend service
+//   // For example:
+//   // this.listingService.reportListing(this.propertyId, this.reportReason, this.reportDescription)
+//   //   .subscribe(response => {
+//   //     this.reportSubmitted = true;
+//   //   });
+
+//    const dto = {
+//       reportedById: Number(this.AutProService.getUserId()), // Assuming you have a method to get the current user's ID;
+//   reportedPropertyId: this.propertyId, // Assuming you have the property ID available;
+//   reportedHostId: this.propertyDetails?.hostId, // Assuming you have the host ID available;
+//   violationType: this.reportReason, // Example violation type;
+//   description: this.reportDescription,
+//   };
+//   this.violationService.createViolation(dto).subscribe({
+//     next: (response) => {
+//       console.log('Report submitted successfully:', response);
+//     },
+//     error: (error) => {
+//       console.error('Error submitting report:', error);
+//       alert('Failed to submit report. Please try again later.');
+//     }
+//   });
+
+    
+
+//   // For demo purposes, we'll just set the flag
+//   this.reportSubmitted = true;
+  
+//   // Optional: Reset the form when modal is closed
+//   // You can listen to modal close events to do this
+// }
+
+// // Optional: Reset the form when modal is closed
+// resetReportForm() {
+//   this.reportReason = '';
+//   this.reportDescription = '';
+//   this.reportSubmitted = false;
+// }
+
+
+
+
+
+
+
 }

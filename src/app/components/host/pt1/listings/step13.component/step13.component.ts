@@ -43,7 +43,7 @@ export class Step13Component implements OnInit {
 
   goNext() {
     this.saveCurrentStep(); // نحفظ قبل التقدم
-    this.router.navigate(['/host/listings/create/step14']);
+    this.router.navigate(['/host/listings/create/step15']);
   }
 
   private saveCurrentStep() {

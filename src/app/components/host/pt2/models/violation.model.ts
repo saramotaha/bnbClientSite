@@ -1,8 +1,19 @@
+// In your property-details.ts or a shared types file
+export enum ViolationType {
+  PropertyMisrepresentation = 0,//'PropertyMisrepresentation',
+  HostMisconduct = 1,//'HostMisconduct',
+  SafetyIssue = 2,//'SafetyIssue',
+  PolicyViolation = 3, //'PolicyViolation',
+  FraudulentActivity = 4,//'FraudulentActivity',
+  Other = 'Other'
+}
+
+
 export interface CreateViolationDTO {
   reportedById: number;
-  reportedPropertyId?: number;
-  reportedHostId?: number;
-  violationType: string;
+  reportedPropertyId: number;
+  reportedHostId: number;
+  violationType: ViolationType; // Now using the enum type
   description: string;
 }
 

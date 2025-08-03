@@ -196,38 +196,23 @@
 <p class="disclaimer-text">You won't be charged yet</p>
 
 <!-- Report Link -->
+<!-- <div class="text-center mt-4">
+ <button class="btn btn-link text-danger p-0" >
+  <i class="bi bi-flag"></i> Report this listing
+</button>
+</div>
+ -->
+<!-- Button trigger -->
+<!-- Trigger Button -->
 <div class="text-center mt-4">
-  <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#reportModal">
+  <button 
+    class="btn btn-link text-danger p-0" 
+    data-bs-toggle="modal" 
+    data-bs-target="#violationModal">
     <i class="bi bi-flag"></i> Report this listing
-  </a>
+  </button>
 </div>
+
+
 </div>
-<!-- Modal -->
-<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title" id="reportModalLabel">Report This Listing</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-
-      <div class="modal-body">
-        <div class="mb-3">
-          <label for="reportTitle" class="form-label">Title</label>
-          <input type="text" class="form-control" id="reportTitle" [(ngModel)]="reportTitle">
-        </div>
-        <div class="mb-3">
-          <label for="reportDescription" class="form-label">Description</label>
-          <textarea class="form-control" id="reportDescription" rows="4" [(ngModel)]="reportDescription"></textarea>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <!-- <button type="button" class="btn btn-danger" (click)="submitReport()">Submit</button> -->
-      </div>
-
-    </div>
-  </div>
-</div>
