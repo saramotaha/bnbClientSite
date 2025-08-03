@@ -1,8 +1,7 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NotificationService } from '../../User/notifications/notifications.service';
 import { AuthService } from '../../Pages/Auth/auth.service';
 import { catchError, distinctUntilChanged, forkJoin, interval, map, Observable, of, Subscription, switchMap, tap } from 'rxjs';
 import { Notifications } from "../../User/notifications/notifications";
@@ -16,15 +15,8 @@ import { Notifications } from "../../User/notifications/notifications";
   providers: [DatePipe]
 })
 export class Nav implements OnInit, OnDestroy {
-  // Base nav properties
-  showNotifications = false;
-  notifications: any[] = [];
-  unreadCount = 0;
-  isLoading = false;
-  showUserMenu = false;
-  private notificationPolling?: Subscription;
-
   // Nav properties
+  showUserMenu = false;
   showMainNav = false;
   isClosingMainNav = false;
   showCheckInCalendar = false;
@@ -50,129 +42,18 @@ export class Nav implements OnInit, OnDestroy {
     { name: 'Logout', icon: 'bi-box-arrow-right' }
   ];
 
-  @ViewChild(Notifications) notificationComponent!: Notifications;
-
   constructor(
     private elementRef: ElementRef,
     private datePipe: DatePipe,
     private router: Router,
-    private authService: AuthService,
-    private notificationService: NotificationService
+    private authService: AuthService
   ) {
     this.generateCalendar();
   }
 
-  // NOTIFICATION METHODS
-  ngOnInit(): void {
-    this.loadNotifications();
-    this.startNotificationPolling();
-  }
+  ngOnInit(): void {}
 
-  ngOnDestroy(): void {
-    this.stopNotificationPolling();
-  }
-
-private loadNotifications(): void {
-  const userId = this.authService.getUserId();
-  if (!userId) return;
-
-  this.isLoading = true;
-  this.notificationService.getNotifications(Number(userId)).pipe(
-    catchError(err => {
-      console.error('Error loading notifications:', err);
-      this.isLoading = false;
-      return of([]);
-    })
-  ).subscribe({
-    next: (data) => {
-      this.notifications = data;
-      this.updateUnreadCount(data);
-      this.isLoading = false;
-    }
-  });
-}
-
-// Add this helper method:
-private updateUnreadCount(notifications: any[]): void {
-  this.unreadCount = notifications.filter((n: any) => !n.isRead).length;
-}
-
-  private startNotificationPolling(): void {
-  const userId = this.authService.getUserId();
-  if (!userId) return;
-
-  this.notificationPolling = interval(15000).pipe(
-    switchMap(() => this.notificationService.getNotifications(Number(userId))),
-    catchError(err => {
-      console.error('Polling error:', err);
-      return of([]);
-    })
-  ).subscribe(notifications => {
-    const previousUnreadCount = this.unreadCount;
-    this.notifications = notifications;
-    this.updateUnreadCount(notifications);
-    
-    // Only show badge animation if unread count increased (new notifications)
-    if (this.unreadCount > previousUnreadCount) {
-      this.animateNotificationBadge();
-    }
-  });
-}
-
-// Add this method for badge animation:
-private animateNotificationBadge(): void {
-  const badge = document.querySelector('.notification-badge');
-  if (badge) {
-    badge.classList.add('new-notification');
-    setTimeout(() => {
-      badge.classList.remove('new-notification');
-    }, 1000);
-  }
-}
-
-
- // Add this method to your Nav class
-markAllAsRead(): void {
-  const userId = this.authService.getUserId();
-  if (!userId) return;
-
-  this.notificationService.markAllAsRead(Number(userId)).subscribe({
-    next: () => {
-      // Update local state
-      this.notifications.forEach(n => n.isRead = true);
-      this.unreadCount = 0;
-      
-      // Update notification component state
-      if (this.notificationComponent) {
-        this.notificationComponent.markAllAsRead();
-      }
-    },
-    error: err => console.error('Error marking all as read:', err)
-  });
-}
-
-// Add this new method to handle when all notifications are marked as read from the component
-onAllNotificationsRead(): void {
-  this.unreadCount = 0;
-}
-// Update the toggleNotifications method to use it correctly
-toggleNotifications(event: Event): void {
-  event.stopPropagation();
-  this.showNotifications = !this.showNotifications;
-  
-  if (this.showNotifications && this.notificationComponent) {
-    this.notificationComponent.isOpen = this.showNotifications;
-    const userId = this.authService.getUserId();
-    if (userId) {
-      this.notificationComponent.loadNotifications(Number(userId));
-      // Don't automatically mark as read when opening - let user control this
-    }
-  }
-}
-
-  private stopNotificationPolling(): void {
-    this.notificationPolling?.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   // NAVIGATION METHODS
   toggleMainNav(event: Event): void {
@@ -184,7 +65,6 @@ toggleNotifications(event: Event): void {
       this.showMainNav = true;
       this.isClosingMainNav = false;
       if (this.showMainNav) {
-        this.showNotifications = false;
         this.showUserMenu = false;
       }
     }
@@ -201,11 +81,8 @@ toggleNotifications(event: Event): void {
   toggleUserMenu(event: Event): void {
     event.stopPropagation();
     this.showUserMenu = !this.showUserMenu;
-    if (this.showUserMenu) {
-      if (this.showMainNav) {
-        this.closeMainNavWithAnimation();
-      }
-      this.showNotifications = false;
+    if (this.showUserMenu && this.showMainNav) {
+      this.closeMainNavWithAnimation();
     }
   }
 
@@ -347,15 +224,10 @@ toggleNotifications(event: Event): void {
     const target = event.target as HTMLElement;
     
     // Handle dropdowns
-    const notificationEl = this.elementRef.nativeElement.querySelector('.notification-dropdown');
-    const notificationButton = this.elementRef.nativeElement.querySelector('.notification-button');
     const userMenuEl = this.elementRef.nativeElement.querySelector('.user-dropdown');
     const userMenuButton = this.elementRef.nativeElement.querySelector('.user-menu');
     const centerDiv = this.elementRef.nativeElement.querySelector('.centerdiv');
     
-    if (!notificationEl?.contains(target) && !notificationButton?.contains(target)) {
-      this.showNotifications = false;
-    }
     if (!userMenuEl?.contains(target) && !userMenuButton?.contains(target)) {
       this.showUserMenu = false;
     }
