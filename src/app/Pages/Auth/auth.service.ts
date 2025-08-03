@@ -497,9 +497,9 @@ export class AuthService {
 
     return {
       id: payload.UserID || payload[nameIdentifierClaim] || '',
-      firstName: payload[nameClaim] || payload.firstName || '',
+      firstName: payload.firstName ||payload[nameClaim] || '',
       lastName: payload.lastName || '',
-      email: payload[emailClaim] || payload.email || '',
+      email: payload.email || payload[emailClaim] || '',
       role: roles, // ✅ always a string[]
       HostId: payload.HostId ? String(payload.HostId) : undefined,
       accessToken: token

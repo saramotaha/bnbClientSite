@@ -20,7 +20,7 @@ export class Step14Component {
   constructor(private router: Router) {}
 
   goBack() {
-    this.router.navigate(['/host/listings/create/step13']);
+    this.router.navigate(['/host/listings/create/step9']);
   }
 
   saveDiscounts() {
