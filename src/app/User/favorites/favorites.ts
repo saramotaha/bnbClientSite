@@ -32,7 +32,6 @@ ngOnInit(): void {
   });
 }
 
-
 removeFavorite(item: Ifavorite, index: number) {
   console.log('Removing from parent:', item); // Debug
 
@@ -40,7 +39,7 @@ removeFavorite(item: Ifavorite, index: number) {
     next: () => {
       const deleted = this.favorites.splice(index, 1)[0];
 
-      this.snackBar.open('Removed from favorites', 'Undo', { duration: 3000 })
+      this.snackBar.open('Removed from favorites')
         .onAction().subscribe(() => {
           this.favorites.splice(index, 0, deleted);
           

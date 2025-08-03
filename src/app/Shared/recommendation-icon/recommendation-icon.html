@@ -1,1 +1,8 @@
-<p>recommendation-icon works!</p>
+<div class="recommendation-icon-container" *ngIf="shouldShowIcon">
+  <button mat-fab class="recommendation-button" 
+          (click)="openRecommendationModal()" 
+          aria-label="View recommendations"
+          matTooltip="Recommendations">
+    <img src="../../../assets/images/robot-icon.png" alt="Robot" class="robot-icon-image">
+  </button>
+</div>

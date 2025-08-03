@@ -1,34 +1,44 @@
-import { Component , OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router, NavigationEnd } from '@angular/router';
 import { RecommendationDetails } from '../recommendation-details/recommendation-details';
-import { Login } from '../../Pages/login/login';
-import { AuthService } from '../../Pages/Auth/auth.service';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-recommendation-icon',
-  imports: [],
+  imports:[CommonModule, MatDialogModule,
+    MatIconModule,
+    MatButtonModule],
   templateUrl: './recommendation-icon.html',
-  styleUrl: './recommendation-icon.css'
+  styleUrls: ['./recommendation-icon.css']
 })
 export class RecommendationIcon implements OnInit {
-  showIcon : boolean=true;
-  constructor(private http : HttpClient,
-    private router: Router,
-    private dialog : MatDialog,
-    private authService : AuthService
-  ){}
-  ngOnInit(){
-    this.router.events.subscribe(()=>{
-      const currentRouter = this.router.url;
-      this.showIcon=![`/login`,'/register'].some(route=>currentRouter.includes(route));
+  shouldShowIcon: boolean = true;
+  excludedRoutes = ['/login', '/register', '/auth/login', '/auth/register'];
+
+  constructor(private router: Router, private dialog: MatDialog) {}
+
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.shouldShowIcon = !this.isExcludedRoute(event.urlAfterRedirects);
+      }
     });
   }
- /* getRecommednations(){
-    const userId = this.authService.getUserId();
-     this.http.get<any[]>(`http://localhost:7145/api/Recommendations/user/${userId}`).subscribe({
-      next
-     })
-  }*/
+
+  private isExcludedRoute(url: string): boolean {
+    return this.excludedRoutes.some(route => url.startsWith(route));
+  }
+openRecommendationModal() {
+  this.dialog.open(RecommendationDetails, {
+    width: '350px',
+    position: {
+      bottom: '80px',
+      right: '24px'
+    },
+    panelClass: 'bottom-right-dialog'
+  });
+}
 }
