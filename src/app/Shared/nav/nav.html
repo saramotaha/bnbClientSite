@@ -11,7 +11,7 @@
             <span class="logoName">AirDeCasa</span>
           </div>
         </div>
-        
+
         <!-- Search Bar (triggers expanded nav) -->
         <div class="col d-none d-md-block ms-md-5 centerdiv" (click)="toggleMainNav($event)">
           <div class="d-flex align-items-center justify-content-around border rounded-pill py-1 shadow-sm mx-auto" style="max-width: 400px; height: 48px;">
@@ -26,15 +26,15 @@
             </button>
           </div>
         </div>
-        
+
         <!-- Right-side Menu Items -->
         <div class="col-auto">
           <div class="d-flex align-items-center gap-3">
-            <a  class="become-host-btn" routerLink="/host/dashboard" >Become a Host</a>
-            
+            <a (click)="handleBecomeHost()"  class="become-host-btn">Become a Host</a>
+
             <!-- Notifications -->
             <app-notifications></app-notifications>
-            
+
             <!-- profile -->
              <div class="profile-icon-container">
                 <div class="profile-icon" (click)="toggleUserMenu($event)">
@@ -42,9 +42,9 @@
                 </div>
               </div>
             <!-- User Menu -->
-            <div class="user-menu bg-body-secondary d-flex align-items-center justify-content-center border rounded-circle" 
+            <div class="user-menu bg-body-secondary d-flex align-items-center justify-content-center border rounded-circle"
                 style="width: 40px; height: 40px; position: relative;">
-              <button class="btn-icon d-flex justify-content-center align-items-center text-center" 
+              <button class="btn-icon d-flex justify-content-center align-items-center text-center"
                       (click)="toggleUserMenu($event)">
                 <i class="bi bi-list fs-5 text-center"></i>
               </button>
@@ -64,8 +64,8 @@
   </header>
 
   <!-- Expanded Search Navigation (shown when clicking search bar) -->
-  <nav class="airbnb-navbar" 
-     *ngIf="showMainNav || isClosingMainNav" 
+  <nav class="airbnb-navbar"
+     *ngIf="showMainNav || isClosingMainNav"
      [class.slide-up]="isClosingMainNav">
     <div class="search-container mb-5">
       <div class="search-bar">
@@ -130,11 +130,11 @@
           <div class="day-header">Fri</div>
           <div class="day-header">Sat</div>
 
-          <div *ngFor="let day of checkInCalendarDays" class="calendar-day" 
+          <div *ngFor="let day of checkInCalendarDays" class="calendar-day"
                [class.other-month]="!day.isCurrentMonth"
                [class.today]="day.isToday"
                [class.selected]="checkInDate && day.date.toDateString() === checkInDate.toDateString()"
-               [class.past]="day.isPast" 
+               [class.past]="day.isPast"
                (click)="selectCheckInDate(day)">
             {{ day.day }}
           </div>
@@ -157,11 +157,11 @@
           <div class="day-header">Fri</div>
           <div class="day-header">Sat</div>
 
-          <div *ngFor="let day of checkOutCalendarDays" class="calendar-day" 
+          <div *ngFor="let day of checkOutCalendarDays" class="calendar-day"
                [class.other-month]="!day.isCurrentMonth"
                [class.today]="day.isToday"
                [class.selected]="checkOutDate && day.date.toDateString() === checkOutDate.toDateString()"
-               [class.past]="day.isPast" 
+               [class.past]="day.isPast"
                (click)="selectCheckOutDate(day)">
             {{ day.day }}
           </div>

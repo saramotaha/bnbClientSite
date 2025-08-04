@@ -596,10 +596,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap, timeout } from 'rxjs/operators';
-import { 
-  AdminPropertyListDto, 
-  AdminPropertyResponseDto, 
-  PropertyStatusUpdateDto, 
+import {
+  AdminPropertyListDto,
+  AdminPropertyResponseDto,
+  PropertyStatusUpdateDto,
   PropertySoftDeleteDto,
   PropertyDetailDto
 } from '../Models/Property.model';
@@ -629,8 +629,8 @@ export class PropertyService {
    * Fetches all properties including pending ones
    */
   getAllProperties(): Observable<AdminPropertyListDto[]> {
-    console.log('🏠 Fetching all properties from:', `${this.apiUrl}/properties`);
-    
+    console.log(' Fetching all properties from:', `${this.apiUrl}/properties`);
+
     return this.http.get<AdminPropertyListDto[]>(`${this.apiUrl}/properties`, this.httpOptions).pipe(
       timeout(30000),
       tap((properties) => {
@@ -761,7 +761,7 @@ export class PropertyService {
       payload: request,
       headers: this.httpOptions.headers
     });
-    
+
     // Validate the request payload
     if (!request || !request.status) {
       console.error('❌ Invalid payload for status update:', request);
@@ -836,7 +836,7 @@ export class PropertyService {
     });
 
     let errorMessage = 'An unknown error occurred!';
-    
+
     if (error.error instanceof ErrorEvent) {
       errorMessage = `Client Error: ${error.error.message}`;
       console.error('Client-side error occurred:', error.error.message);
@@ -906,7 +906,7 @@ export class PropertyService {
           console.error(`❌ HTTP ${error.status} error occurred`);
       }
     }
-    
+
     console.error(`Final error message for ${operation}:`, errorMessage);
     return throwError(() => new Error(errorMessage));
   }
