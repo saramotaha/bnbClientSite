@@ -487,13 +487,13 @@ export class Propertybookingcard {
   }
 reserve() {
   if (!this.checkInDate || !this.checkOutDate) {
-    alert('Please select check-in and check-out dates');
+    // alert('Please select check-in and check-out dates');
     return;
   }
 
   // Validate amount
   if (this.finalPriceDisplay <= 0 || isNaN(this.finalPriceDisplay)) {
-    alert('Invalid amount');
+    // alert('Invalid amount');
     return;
   }
   const userId =(this.AutProService.getUserId()); // Assuming you have a method to get the current user's ID
@@ -514,12 +514,12 @@ reserve() {
       if (response?.url) {
         window.location.href = response.url;
       } else {
-        alert('Payment URL not received');
+        // alert('Payment URL not received');
       }
     },
     error: (err) => {
       console.error('Payment Error:', err);
-      alert(`Payment failed: ${err.message}`);
+      // alert(`Payment failed: ${err.message}`);
     }
   });
 }

@@ -1,33 +1,37 @@
+<!-- Trips Header -->
 <div class="content-header px-5 pt-4 text-start">
   <h1 class="content-title mb-1">Your Trips</h1>
 </div>
 
+<!-- Outer Large Card -->
 <div class="container mt-4">
   <div *ngIf="AllTrips && AllTrips.length > 0; else noTrips">
-    <div class="row g-4">
-      <div class="col-12 col-md-6 col-lg-4" *ngFor="let item of AllTrips">
-        <div class="card h-100 shadow-sm rounded-4 border-0">
-          <div class="card-body">
-            <h5 class="card-title fw-bold text-capitalize mb-2">{{ item.propertyTitle }}</h5>
-            <p class="card-text text-muted mb-1">
-              <i class="bi bi-geo-alt-fill me-1"></i>{{ item.propertyAddress }}
-            </p>
-            <p class="card-text text-secondary mb-2">
-              <i class="bi bi-calendar-check me-1"></i>{{ item.startDate }} → {{ item.endDate }}
-            </p>
-            <hr>
-            <p class="card-text small text-muted mb-0">
-              Guests: {{ item.totalGuests }}<br>
-              Status: {{ item.status }}<br>
-              Amount: ${{ item.totalAmount }}
-            </p>
+    <div class="main-card shadow-lg rounded-4 p-4 bg-white">
+      <div class="row g-4">
+        <div class="col-12 col-md-6 col-lg-4" *ngFor="let item of AllTrips">
+          <div class="trip-card card h-100 border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+              <h5 class="card-title fw-bold text-capitalize mb-2">{{ item.propertyTitle }}</h5>
+              <p class="card-text text-muted mb-1">
+                <i class="bi bi-geo-alt-fill me-1"></i>{{ item.propertyAddress }}
+              </p>
+              <p class="card-text text-secondary mb-3">
+                <i class="bi bi-calendar-check me-1"></i>{{ item.startDate }} → {{ item.endDate }}
+              </p>
+              <hr>
+              <p class="card-text small text-muted mb-0">
+                Guests: {{ item.totalGuests }}<br>
+                Status: {{ item.status }}<br>
+                Amount: ${{ item.totalAmount }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- no trips -->
+  <!-- No Trips State -->
   <ng-template #noTrips>
     <div class="empty-state-container w-100 d-flex justify-content-center mt-5">
       <div class="empty-state text-center p-5 rounded-4 shadow-sm bg-white">

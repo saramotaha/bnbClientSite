@@ -1,23 +1,26 @@
 import { ConversationService } from './../sidebar/conversation.service';
 import { Conversation } from './../models/conversation';
-import { Component, Input, OnChanges, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { messageService } from './message.service';
 import { SignalRService } from '../core/signalr.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../Pages/Auth/auth.service';
+import { PropertyHostService } from '../../Property-Details/components/property-host/Service/property-host-service';
+import { IHostProperty } from '../../Property-Details/components/property-host/ihost-property';
 
 @Component({
   selector: 'app-chat-window',
   standalone:true,
   imports: [CommonModule,FormsModule],
-  templateUrl: './chat-window.html',
+templateUrl: './chat-window.html',
   styleUrl: './chat-window.css'
 })
-export class ChatWindow implements OnChanges ,OnDestroy {
+export class ChatWindow implements OnChanges ,OnDestroy,OnInit {
 @Input() conversationId!:number;
 conversation?:Conversation;
+  hostDetails!:IHostProperty
 newMessageContent='';
 isSending=false;
 private signalRSubscription?:Subscription;
@@ -25,10 +28,25 @@ constructor(private conversationService:ConversationService,
   private messageservise:messageService,
   private signalRservice :SignalRService,
   private cdr: ChangeDetectorRef,
-  private authService: AuthService
+  private authService: AuthService,
+  private hostinf :PropertyHostService
 ){
   this.initializeSignalR();
-};
+}ngOnInit(): void {
+  // this.hostinf.getHostById(this.hostId).subscribe({
+  //      next: (PropertyHostDetailsRes) => {
+  //         this.hostDetails = PropertyHostDetailsRes;
+  //         console.log('Property details fetched successfully:', PropertyHostDetailsRes); 
+  //             console.log('Host IDDD HERRRRe:', this.hostDetails.firstName);
+
+  //         this.cdr.detectChanges();
+  //       } ,
+  //       error: (error) => { 
+  //         console.error('Error fetching property details:', error);
+  //       }
+  //     });   
+  }
+;
 private initializeSignalR(): void {
   this.signalRservice.startConnection().then(() => {
     this.signalRservice.onReceiveMessage((message: any) => {

@@ -91,20 +91,46 @@
         }
 
 
-        .content-title {
+.content-title {
   font-size: 2.5rem;
   font-weight: 700;
 }
 
+/* الكارد الكبير الخارجي */
+.main-card {
+  background-color: #fff;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); /* ظل بارز */
+  border-radius: 1.5rem;
+  padding: 2rem;
+}
+
+/* الكارد الداخلي */
 .trip-card {
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  background-color: #fffcfc;
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* ظل أقوى */
+  border: 1px solid #a16a6a; /* بوردر خفيف */
+  margin-bottom: 1rem; /* فصل تحت الكارد */
 }
 
+/* Hover effect أقوى */
 .trip-card:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  border-color: #bbb;
+}
+/* تنسيق الكلام */
+.card-title {
+  font-size: 1.25rem;
 }
 
+.card-text {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* الحالة الفارغة */
 .empty-state img {
   max-width: 100%;
   height: auto;
@@ -118,15 +144,4 @@
 .empty-state button:hover {
   background-color: #e61e4d !important;
   transform: scale(1.05);
-}
-
-
-
-.card {
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }

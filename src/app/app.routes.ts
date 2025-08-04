@@ -103,13 +103,17 @@ export const routes: Routes = [
 },
 
 
-  {path: "UserProfile",
-    component: UserProfile,children: [
-      { path: "", redirectTo: "profileInfo", pathMatch: "full" },
-      { path: "profileInfo", component: ProfileInfo },
-      { path: "UserTrips", component: UserTrips },
-
-    ]},
+ {
+  path: "UserProfile",
+  component: UserProfile,
+  canActivate: [authGuard],
+  data: { roles: ['Guest'] }, // or requiredRole: 'guest' if using the old format
+  children: [
+    { path: "", redirectTo: "profileInfo", pathMatch: "full" },
+    { path: "profileInfo", component: ProfileInfo },
+    { path: "UserTrips", component: UserTrips },
+  ]
+},
   { path: "login", component: Login },
   { path: "register", component: Register , pathMatch:"full" },
   { path: "ForgetPassWord", component: ForgerPassWord , pathMatch:"full" },

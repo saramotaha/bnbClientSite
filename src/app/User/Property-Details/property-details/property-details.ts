@@ -75,67 +75,6 @@ import { ViolationType } from '../../../components/host/pt2/models/violation.mod
     }
 
 
-//   reportData = {
-//     title: '',
-//     description: ''
-//   };
-//   isSubmitted = false;
-
-// // Open modal function
-//   openReportModal(content: any) {
-//     this.resetForm();
-//     // this.modalService.open(content, { ariaLabelledBy: 'report-modal-title' });
-//   }
-
-//   // Handle form submission
-//   submitReport() {
-//     console.log('Report submitted:', this.reportData);
-//     // Here you would typically call your API service
-//     // Example:
-//     // this.apiService.submitReport(this.reportData).subscribe({
-//     //   next: () => this.isSubmitted = true,
-//     //   error: (err) => console.error('Error submitting report:', err)
-//     // });
-    
-        
-//      const dto = {
-//           reportedById: Number(this.authService.getUserId()), // Assuming you have a method to get the current user's ID;
-//       reportedPropertyId: this.propertyId, // Assuming you have the property ID available;
-//       reportedHostId: this.propertyDetails?.hostId, // Assuming you have the host ID available;
-//       violationType: this.reportData.title, // Example violation type;
-//       description: this.reportData.description,
-//       };
-//       this.violationService.createViolation(dto).subscribe({
-//         next: (response) => {
-//           console.log('Report submitted successfully:', response);
-//         },
-//         error: (error) => {
-//           console.error('Error submitting report:', error);
-//           alert('Failed to submit report. Please try again later.');
-//         }
-//       });
-
-
-
-//     // For demo purposes, we'll just set isSubmitted to true
-//     this.isSubmitted = true;
-//   }
-
-//   // Reset form when modal is closed
-//   resetForm() {
-//     this.reportData = {
-//       title: '',
-//       description: ''
-//     };
-//     this.isSubmitted = false;
-//   }
-
-//   // Close modal
-//   closeModal(modal: any) {
-//     modal.close();
-//     this.resetForm();
-//   }
-
 formatViolationType(typeValue: number): string {
   // Get the enum name from the numeric value
   const typeName = ViolationType[typeValue];
@@ -179,11 +118,11 @@ console.log('Report desc:', this.report.description);
       this.violationService.createViolation(dto).subscribe({
         next: (response) => {
           console.log('Report submitted successfully:', response);
-        },
-        error: (error) => {
-          console.error('Error submitting report:', error);
-          alert('Failed to submit report. Please try again later.');
         }
+      //   error: (error) => {
+      //     console.error('Error submitting report:', error);
+      //     alert('Failed to submit report. Please try again later.');
+      //   }
       });
 
 
