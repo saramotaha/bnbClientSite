@@ -293,10 +293,13 @@ updateInputValue(event: Event): void {
 
     this.service.AddHost(AllHostData).subscribe({
       next: (response) => {
-        console.log(response);
-
-
-      }
+      console.log(response);
+      this.showThankYou = true;
+    },
+    error: (err) => {
+      console.error(err);
+      alert('Something went wrong!');
+    }
 
     })
 

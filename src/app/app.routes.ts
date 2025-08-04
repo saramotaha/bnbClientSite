@@ -59,6 +59,7 @@ import { ForgerPassWord } from './Pages/forger-pass-word/forger-pass-word';
 import { ResetPassword } from './Pages/reset-password/reset-password';
 import { BecomeAHost } from './User/UserProfile/Component/become-ahost/become-ahost';
 import { authGuard } from './Pages/Auth/auth-guard';
+import { AddVerificationsComponent } from './components/host/pt3/add-verifications/add-verifications';
 
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
@@ -145,10 +146,10 @@ export const routes: Routes = [
 
   path: 'host/dashboard',
   component: HostDashboard,
-  canActivate: [authGuard], // 👈 Guard added here
-  data: {
-    requiredRole: 'Host'
-  },
+  // canActivate: [authGuard], // 👈 Guard added here
+  // data: {
+  //   requiredRole: 'Host'
+  // },
   children: [
     { path: 'calendar', component: HostCalendarPage },
     { path: 'today', component: TodayBookingsComponent },
@@ -173,10 +174,12 @@ export const routes: Routes = [
 
 
 
+
   { path: "favorites",component:Favorites,pathMatch:"full"},
 
     { path: "UserProfile",component:UserProfile,pathMatch:"full"},
-    { path: "HostApplication",component:BecomeAHost,pathMatch:"full"},
+  { path: "HostApplication", component: BecomeAHost, pathMatch: "full" },
+    { path: 'AddVerification', component: AddVerificationsComponent, pathMatch: "full"  },
   // { path: "notifications", component: Notifications , pathMatch:"full" },
   // { path: "AdminNotifications", component: DashBoardBar , pathMatch:"full" },
 

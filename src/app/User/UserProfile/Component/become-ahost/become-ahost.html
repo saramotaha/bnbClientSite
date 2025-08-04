@@ -94,17 +94,25 @@
     </button> -->
 
 
-    <button class="btn btn-airbnb btn-airbnb-secondary" (click)="submit()">
-        <i class="fas fa-save me-2"></i>Submit
-      </button>
 
 
-
-
-      <div>
-        <div class="alert alert-warning">U Must Verification your account at a host <button
-            [routerLink]="['/AddVerification']" routerLinkActive="router-link-active">Verify</button> </div>
+    <div class="verify-alert-container">
+      <div class="verify-alert">
+        <div class="verify-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <div class="verify-content">
+          <h4>Verify Your Host Account</h4>
+          <p>To start hosting and unlock full features, please verify your account.</p>
+        </div>
+        <div class="verify-action">
+          <button class="btn-airbnb" [routerLink]="['/AddVerification']" routerLinkActive="router-link-active">
+            Verify Now
+          </button>
+        </div>
       </div>
+    </div>
+
 
 
 
@@ -115,10 +123,7 @@
 
 
 
-  <div>
-    <div class="alert alert-warning">U Must Verification your account at a host <button  class="btn btn-secondary p-2 ms-5"
-        [routerLink]="['/AddVerification']" routerLinkActive="router-link-active">Verify</button> </div>
-  </div>
+
 
 
 </div>
