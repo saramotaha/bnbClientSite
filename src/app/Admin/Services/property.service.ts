@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap, timeout } from 'rxjs/operators';
-import { 
-  AdminPropertyListDto, 
-  AdminPropertyResponseDto, 
-  PropertyStatusUpdateDto, 
+import {
+  AdminPropertyListDto,
+  AdminPropertyResponseDto,
+  PropertyStatusUpdateDto,
   PropertySoftDeleteDto,
   PropertyDetailDto // Add this new interface
 } from '../Models/Property.model';
@@ -17,7 +17,7 @@ export class PropertyService {
   // IMPORTANT: Replace with your actual backend API URL.
   private readonly apiUrl = 'http://localhost:7145/api/admin';
   private readonly publicApiUrl = 'http://localhost:7145/api/Property'; // Add public API URL
-  
+
   // Default HTTP options
   private readonly httpOptions = {
     headers: new HttpHeaders({
@@ -40,19 +40,19 @@ export class PropertyService {
    */
   getAllProperties(): Observable<AdminPropertyListDto[]> {
     console.log(' Fetching all properties from:', `${this.apiUrl}/properties`);
-    
+
     return this.http.get<AdminPropertyListDto[]>(`${this.apiUrl}/properties`, this.httpOptions).pipe(
       timeout(30000), // 30 second timeout
       tap((properties) => {
         console.log(' Successfully fetched properties:', properties.length);
         console.log('First property sample:', properties[0] || 'No properties found');
-        
+
         // Log property statuses for debugging
         const statusCounts = properties.reduce((acc, prop) => {
           acc[prop.status] = (acc[prop.status] || 0) + 1;
           return acc;
         }, {} as Record<string, number>);
-        
+
         console.log('Property status distribution:', statusCounts);
       }),
       catchError((error) => this.handleError(error, 'getAllProperties'))
@@ -66,7 +66,7 @@ export class PropertyService {
    */
   getPropertyById(id: number): Observable<AdminPropertyResponseDto> {
     console.log(' Fetching property by ID from admin endpoint:', id);
-    
+
     return this.http.get<AdminPropertyResponseDto>(`${this.apiUrl}/properties/${id}`, this.httpOptions).pipe(
       timeout(30000),
       tap((property) => {
@@ -88,7 +88,7 @@ export class PropertyService {
    */
   getPropertyDetails(id: number): Observable<PropertyDetailDto> {
     console.log(' Fetching detailed property information from public API:', id);
-    
+
     return this.http.get<PropertyDetailDto>(`${this.publicApiUrl}/${id}`, this.httpOptions).pipe(
       timeout(30000),
       tap((property) => {
@@ -111,20 +111,20 @@ export class PropertyService {
    */
   updatePropertyStatus(id: number, request: PropertyStatusUpdateDto): Observable<any> {
     const url = `${this.apiUrl}/properties/${id}/status`;
-    
+
     console.log(' Updating property status:', {
       url,
       propertyId: id,
       payload: request,
       headers: this.httpOptions.headers
     });
-    
+
     // Validate the request payload
     if (!request || !request.status) {
       console.error(' Invalid payload for status update:', request);
       return throwError(() => new Error('Invalid status update payload'));
     }
-    
+
     // Validate the status value
     const validStatuses = ['active', 'rejected', 'suspended'];
     if (!validStatuses.includes(request.status)) {
@@ -156,7 +156,7 @@ export class PropertyService {
     const payload: PropertySoftDeleteDto = {
       adminNotes: adminNotes || 'Property suspended by admin'
     };
-    
+
     console.log(' Soft deleting property:', {
       url,
       propertyId: id,
@@ -191,12 +191,12 @@ export class PropertyService {
    */
   private handleError(error: HttpErrorResponse, operation: string, context?: any) {
     console.error(` ${operation} failed:`, error);
-    
+
     // Log the context if provided
     if (context) {
       console.error('Operation context:', context);
     }
-    
+
     // Log detailed error information
     console.error('Error details:', {
       status: error.status,
@@ -211,7 +211,7 @@ export class PropertyService {
     });
 
     let errorMessage = 'An unknown error occurred!';
-    
+
     if (error.error instanceof ErrorEvent) {
       // Client-side or network error
       errorMessage = `Client Error: ${error.error.message}`;
@@ -222,7 +222,7 @@ export class PropertyService {
         status: error.status,
         body: error.error
       });
-      
+
       // Handle specific HTTP status codes
       switch (error.status) {
         case 0:
@@ -286,7 +286,7 @@ export class PropertyService {
           console.error(` HTTP ${error.status} error occurred`);
       }
     }
-    
+
     console.error(`Final error message for ${operation}:`, errorMessage);
     return throwError(() => new Error(errorMessage));
   }

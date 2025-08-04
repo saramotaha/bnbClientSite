@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AddHost } from '../../Services/add-host';
 import { IAddHost } from '../../Models/iadd-host';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 enum QuestionType {
   OPTIONS = 'options',
@@ -27,7 +29,7 @@ interface Question {
 
 @Component({
   selector: 'app-become-ahost',
-  imports: [CommonModule],
+  imports: [CommonModule , RouterLink],
   templateUrl: './become-ahost.html',
   styleUrl: './become-ahost.css'
 })
@@ -212,14 +214,38 @@ updateInputValue(event: Event): void {
     }
   }
 
+//  nextQuestion() {
+//   if (this.currentQuestionIndex < this.questions.length - 1) {
+//     this.currentQuestionIndex++;
+//     this.updateProgress();
+//   } else {
+//     this.showThankYou = true;
+//   }
+//   }
+
+
+
   nextQuestion() {
     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
       this.updateProgress();
-    } else {
+    }
+
+
+    else {
       this.showThankYou = true;
     }
   }
+
+
+
+
+  get isLastQuestion(): boolean {
+  return this.currentQuestionIndex === this.questions.length - 1;
+}
+
+
+
 
   prevQuestion() {
     if (this.currentQuestionIndex > 0) {
@@ -267,16 +293,22 @@ updateInputValue(event: Event): void {
 
     this.service.AddHost(AllHostData).subscribe({
       next: (response) => {
-        console.log(response);
-
-
-      }
+      console.log(response);
+      this.showThankYou = true;
+    },
+    error: (err) => {
+      console.error(err);
+      alert('Something went wrong!');
+    }
 
     })
 
 
 
   }
+
+
+
 
 
 

@@ -15,6 +15,37 @@ import { Notifications } from "../../User/notifications/notifications";
   providers: [DatePipe]
 })
 export class Nav implements OnInit, OnDestroy {
+
+
+handleBecomeHost() {
+  const roles = this.authService.getRoles();
+  console.log(roles);
+
+  if (roles.includes('Host')) {
+    // ✅ Check if host is verified
+    this.authService.getHostVerified().subscribe({
+      next: (isVerified: boolean) => {
+        if (!isVerified) {
+          // ❌ Host but NOT verified → Go to Add Verification
+          this.router.navigate(['/AddVerification']);
+        } else {
+          // ✅ Host and Verified → Go to Dashboard
+          this.router.navigate(['/host/dashboard']);
+        }
+      },
+      error: (err) => {
+        console.error('Verification check failed:', err);
+        // Fallback → Treat as NOT verified
+        this.router.navigate(['/AddVerification']);
+      }
+    });
+  }
+  else if (roles.includes('Guest')) {
+    // ✅ Guest → Navigate to Host Application
+    this.router.navigate(['/HostApplication']);
+  }
+}
+
   // Nav properties
   showUserMenu = false;
   showMainNav = false;
@@ -58,7 +89,7 @@ export class Nav implements OnInit, OnDestroy {
   // NAVIGATION METHODS
   toggleMainNav(event: Event): void {
     event.stopPropagation();
-    
+
     if (this.showMainNav) {
       this.closeMainNavWithAnimation();
     } else {
@@ -222,18 +253,18 @@ export class Nav implements OnInit, OnDestroy {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
-    
+
     // Handle dropdowns
     const userMenuEl = this.elementRef.nativeElement.querySelector('.user-dropdown');
     const userMenuButton = this.elementRef.nativeElement.querySelector('.user-menu');
     const centerDiv = this.elementRef.nativeElement.querySelector('.centerdiv');
-    
+
     if (!userMenuEl?.contains(target) && !userMenuButton?.contains(target)) {
       this.showUserMenu = false;
     }
 
     // Handle nav visibility
-    if (!this.elementRef.nativeElement.querySelector('.airbnb-navbar')?.contains(target) && 
+    if (!this.elementRef.nativeElement.querySelector('.airbnb-navbar')?.contains(target) &&
         !centerDiv?.contains(target) && this.showMainNav) {
       this.closeMainNavWithAnimation();
     }
