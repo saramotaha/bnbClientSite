@@ -21,7 +21,15 @@
     <div class="guest-favorite" *ngIf="item.IsFav">
       <i class="fas fa-crown"></i> Guest favorite
     </div>
-    <button  class="favorite-btn fs-3">♡</button>
+    <!-- In each property card, update the favorite button to this: -->
+<button 
+  class="favorite-btn fs-3" 
+  [class.favorite-active]="item.IsFav"
+  [class.save-animation]="item.isAnimating"
+  (click)="toggleFavorite($event, item)"
+>
+  ♡
+</button>
         </div>
   <div class="property-info ">
     <div class="property-title">{{item?.title}}</div>

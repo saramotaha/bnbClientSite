@@ -85,7 +85,7 @@ export const routes: Routes = [
   },
 
 
-  {path: "UserTrips",
+  {path: "UserProfile",
     component: UserProfile,children: [
       { path: "", redirectTo: "profileInfo", pathMatch: "full" },
       { path: "profileInfo", component: ProfileInfo },

@@ -53,6 +53,7 @@ export class Nav {
   ) {
     this.generateCalendar();
     this.loadNotifications();
+      console.log('AuthService in Nav:', authService);
   }
 
   // Notification methods
@@ -243,13 +244,20 @@ userMenuItems = [
   { name: 'Logout',  icon: 'bi-box-arrow-right' }
 ];
 // Update in nav.ts
-toggleMenuItem(item: any) {
+toggleMenuItem(item: any, event?: Event) {
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  
   if (item.name === 'Logout') {
     this.handleLogout();
     return;
   }
-  item.checked = !item.checked;
-  this.navigateTo(item.route);
+  
+  if (item.route) {
+    this.navigateTo(item.route);
+  }
 }
 navigateTo(route: string) {
   this.showUserMenu = false;
@@ -261,9 +269,13 @@ navigateTo(route: string) {
 }
 
 handleLogout() {
-  // Add your logout logic here
-  console.log('Logging out...');
-  // Example: this.authService.logout();
+  console.log('Logout initiated'); // Debug log
+  this.authService.logout();
+  console.log('AuthService logout completed'); // Debug log
   this.showUserMenu = false;
+  this.router.navigate(['/login'])
+    .then(() => console.log('Navigation to login completed'))
+    .catch(err => console.error('Navigation error:', err));
+    
 }
 }
