@@ -36,7 +36,7 @@ export class Step9Component implements OnInit {
       next: () => {
         this.listingService.listingData.description = desc;
         this.listingService.saveDataToLocalStorage(); // ✅ حفظ في localStorage
-        this.router.navigate(['/host/listings/create/step10']);
+        this.router.navigate(['/host/listings/create/step12']);
       },
       error: (err) => {
         console.error('Error saving description:', err);

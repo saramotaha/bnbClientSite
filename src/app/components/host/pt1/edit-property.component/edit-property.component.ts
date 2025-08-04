@@ -35,7 +35,7 @@ export class EditPropertyComponent implements OnInit {
     this.propertyId = Number(id);
     if (isNaN(this.propertyId)) {
       this.openModal('❌ Invalid property ID');
-      this.router.navigate(['/host/listings']);
+      this.router.navigate(['/host/dashboard/listings']);
       return;
     }
 
@@ -57,7 +57,7 @@ export class EditPropertyComponent implements OnInit {
       },
       error: () => {
         this.openModal('❌ Failed to load property');
-        this.router.navigate(['/host/listings']);
+        this.router.navigate(['/host/dashboard/listings']);
       }
     });
   }
@@ -106,7 +106,7 @@ if (files && files.length > 0) {
     this.propertyService.update(this.propertyId, updatedFields).subscribe({
       next: () => {
         this.openModal('✅ Property updated successfully');
-        this.router.navigate(['/host/listings']);
+        this.router.navigate(['/host/dashboard/listings']);
       },
       error: (err) => {
         console.error('Update failed:', err);
@@ -116,7 +116,7 @@ if (files && files.length > 0) {
   }
 
   goBack(): void {
-    this.router.navigate(['/host/listings']);
+    this.router.navigate(['/host/dashboard/listings']);
   }
 
   openModal(message: string): void {

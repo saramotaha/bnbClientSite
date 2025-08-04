@@ -84,24 +84,6 @@
 }
 
 /* Loading Indicator */
-/* .loading-indicator {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 20px;
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  margin-bottom: 24px;
-}
-
-.loading-spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #e0e0e0;
-  border-top: 2px solid #ff385c;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-} */
 .spinner-overlay {
   position: absolute;
   top: 0;
@@ -113,13 +95,13 @@
   justify-content: center;
   align-items: center;
   z-index: 10;
-  border-radius: 12px; /* ADD THIS */
+  border-radius: 12px;
 }
 .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid #e0e0e0; /* CHANGED COLOR */
-  border-top: 4px solid #ff385c; /* CHANGED COLOR */
+  border: 4px solid #e0e0e0;
+  border-top: 4px solid #ff385c;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -406,6 +388,14 @@
   margin-top: 24px;
 }
 
+.stats-grid-two {
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .stat-item {
   text-align: center;
   padding: 16px 8px;
@@ -572,6 +562,10 @@
   .stats-grid {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  .stats-grid-two {
+    grid-template-columns: 1fr;
   }
 
   .stat-item {

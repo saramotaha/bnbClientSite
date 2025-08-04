@@ -19,9 +19,11 @@
 <app-availability-calendar
   [calendarData]="calendarData"
   [propertyId]="selectedPropertyId.toString()"
+  [basePrice]="currentProperty?.pricePerNight || 50"
   [initialMonth]="getInitialMonth()"
   (monthChanged)="handleCalendarRequest($event)"
   (dateAvailabilityChanged)="handleAvailabilityUpdate($event)"
+  (basePriceChange)="onBasePriceChange($event)"
   (dataLoadRequested)="handleCalendarRequest($event)">
 </app-availability-calendar>
 
