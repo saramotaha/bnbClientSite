@@ -78,10 +78,11 @@ export interface PropertyDetailDto {
 export interface Property extends AdminPropertyListDto {}
 
 /**
- * Defines the structure for the payload when updating a property's status.
+ * FIXED: Defines the structure for the payload when updating a property's status.
+ * Now includes 'pending' status to match AdminPropertyListDto
  */
 export interface PropertyStatusUpdateDto {
-  status: 'active' | 'rejected' | 'suspended';
+  status: 'pending' | 'active' | 'rejected' | 'suspended'; // ✅ Added 'pending'
   adminNotes?: string;
 }
 
@@ -90,4 +91,72 @@ export interface PropertyStatusUpdateDto {
  */
 export interface PropertySoftDeleteDto {
   adminNotes?: string;
+}
+
+/**
+ * OPTIONAL: Create specific DTOs for different operations if needed
+ */
+
+/**
+ * For approving/rejecting pending properties
+ */
+export interface PropertyApprovalDto {
+  status: 'active' | 'rejected';
+  adminNotes?: string;
+}
+
+/**
+ * For changing status of active properties
+ */
+export interface PropertyStatusChangeDto {
+  status: 'active' | 'suspended';
+  adminNotes?: string;
+}
+
+/**
+ * Union type for all possible property statuses
+ */
+export type PropertyStatus = 'pending' | 'active' | 'rejected' | 'suspended';
+
+/**
+ * Helper function to check if a status is valid
+ */
+export function isValidPropertyStatus(status: string): status is PropertyStatus {
+  return ['pending', 'active', 'rejected', 'suspended'].includes(status);
+}
+
+/**
+ * Helper function to get display text for status
+ */
+export function getStatusDisplayText(status: PropertyStatus): string {
+  switch (status) {
+    case 'pending':
+      return 'Pending Review';
+    case 'active':
+      return 'Active';
+    case 'rejected':
+      return 'Rejected';
+    case 'suspended':
+      return 'Suspended';
+    default:
+      return 'Unknown';
+  }
+}
+
+/**
+ * Helper function to get status color/class for UI
+ */
+export function getStatusCssClass(status: PropertyStatus): string {
+  switch (status) {
+    case 'pending':
+      return 'status-pending'; // yellow/orange
+    case 'active':
+      return 'status-active'; // green
+    case 'rejected':
+      return 'status-rejected'; // red
+    case 'suspended':
+      return 'status-suspended'; // gray
+    default:
+      return 'status-unknown';
+  }
 }
