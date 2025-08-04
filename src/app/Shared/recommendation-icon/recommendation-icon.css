@@ -1,6 +1,6 @@
 .recommendation-icon-container {
   position: fixed;
-  bottom: 50px;
+  bottom: 75px;
   right: 24px;
   z-index: 1000;
 }
@@ -13,7 +13,7 @@
   overflow: visible;
 }
 
-.recommendation-icon-container .recommendation-button:hover {
+.recommendation-icon-container .recommendation-butt6on:hover {
   transform: scale(1.1);
   box-shadow: 0 4px 8px rgba(255, 90, 95, 0.3); /* Airbnb pink/red with opacity */
 }

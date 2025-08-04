@@ -1,10 +1,13 @@
 <div class="card" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
-  <button 
-    *ngIf="hover" 
-    class="remove-btn" 
-    (click)="onRemoveClick()"
-  >✖</button>
-  <img [src]="favorite.imageUrl" alt="{{favorite.title}}" />
-  <h3>{{favorite.title}}</h3>
-  <p>Added: {{favorite.favouritedAt}}</p>
+  <button *ngIf="hover" class="remove-btn" (click)="onRemoveClick()">✖</button>
+  
+  <!-- Safe navigation and alternative properties -->
+  <img [src]="favorite?.imageUrl || favorite?.imageUrl" 
+       [alt]="favorite?.title || 'Property image'" />
+  
+  <h3>{{ favorite?.title }}</h3>
+  
+  <!-- Handle both Date and string formats -->
+  <p>Added: {{ (favorite?.favouritedAt || favorite?.favouritedAt) | date }}</p>
+  
 </div>
