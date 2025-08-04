@@ -225,7 +225,7 @@ export class AddVerificationsComponent implements OnInit {
         
         // ✅ IMPROVED: Better success handling
         setTimeout(() => {
-          this.router.navigate(['/host/dashboard']);
+          this.router.navigate(['/Home']);
         }, 2000); // Reduced from 3 seconds to 2 seconds
       },
       error: (error) => {

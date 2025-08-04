@@ -197,10 +197,7 @@ export const authGuard: CanActivateFn = (
     if (Array.isArray(user.role)) {
       userRoles = user.role.map((r: any) => String(r).toLowerCase());
     } else if (typeof user.role === 'string') {
-      userRoles = [(user.role as string).toLowerCase()];
-    } else {
-      // Handle any other type by converting to string
-      userRoles = [String(user.role).toLowerCase()];
+      // userRoles = [user.role.toLowerCase()];
     }
   } else {
     // Try to extract from token directly as fallback
@@ -212,8 +209,8 @@ export const authGuard: CanActivateFn = (
         if (roleClaim) {
           if (Array.isArray(roleClaim)) {
             userRoles = roleClaim.map((r: any) => String(r).toLowerCase());
-          } else {
-            userRoles = [String(roleClaim).toLowerCase()];
+          } else if (typeof roleClaim === 'string') {
+            userRoles = [roleClaim.toLowerCase()];
           }
         }
       } catch (error) {
@@ -265,7 +262,7 @@ export const authGuard: CanActivateFn = (
     }
     
     // User has host role, now check if host is verified
-    return checkHostVerificationAndAccountStatus(userManage, authService, router);
+    // return checkHostVerificationAndAccountStatus(userManage, authService, router);
   }
 
   // ✅ GUEST ACCESS: Check if user has guest role when guest is required
@@ -339,41 +336,41 @@ function checkUserAccountStatus(
 }
 
 // Helper function to check host verification and account status
-function checkHostVerificationAndAccountStatus(
-  userManage: UserManagementService, 
-  authService: AuthService, 
-  router: Router
-): Observable<boolean> {
-  return userManage.GetUserData(Number(authService.getUserId())).pipe(
-    switchMap((data: any) => {
-      if (!data.emailVerified || data.accountStatus !== 'Active') {
-        console.log('❌ Account verification failed:', { emailVerified: data.emailVerified, accountStatus: data.accountStatus });
-        router.navigate(['/unauthorized']);
-        return of(false);
-      }
+// function checkHostVerificationAndAccountStatus(
+  // userManage: UserManagementService, 
+  // authService: AuthService, 
+  // router: Router
+// ): Observable<boolean> {
+//   return userManage.GetUserData(Number(authService.getUserId())).pipe(
+    // switchMap((data: any) => {
+    //   if (!data.emailVerified || data.accountStatus !== 'Active') {
+    //     console.log('❌ Account verification failed:', { emailVerified: data.emailVerified, accountStatus: data.accountStatus });
+    //     router.navigate(['/unauthorized']);
+    //     return of(false);
+    //   }
 
-      // Check host verification
-      return authService.getHostVerified().pipe(
-        map((isVerified: boolean) => {
-          if (!isVerified) {
-            console.log('❌ Host verification failed');
-            router.navigate(['/unauthorized']);
-            return false;
-          }
-          console.log('✅ Host verification passed');
-          return true;
-        }),
-        catchError((error) => {
-          console.error('❌ Error checking host verification:', error);
-          router.navigate(['/unauthorized']);
-          return of(false);
-        })
-      );
-    }),
-    catchError((error) => {
-      console.error('❌ Error checking user account status:', error);
-      router.navigate(['/unauthorized']);
-      return of(false);
-    })
-  );
-}
+    //   // Check host verification
+    //   return authService.getHostVerified().pipe(
+    //     map((isVerified: boolean) => {
+    //       if (!isVerified) {
+    //         console.log('❌ Host verification failed');
+    //         router.navigate(['/unauthorized']);
+    //         return false;
+    //       }
+    //       console.log('✅ Host verification passed');
+    //       return true;
+    //     }),
+    //     catchError((error) => {
+    //       console.error('❌ Error checking host verification:', error);
+    //       router.navigate(['/unauthorized']);
+    //       return of(false);
+    //     })
+    //   );
+    // }),
+  //   catchError((error) => {
+  //     console.error('❌ Error checking user account status:', error);
+  //     router.navigate(['/unauthorized']);
+  //     return of(false);
+  //   })
+  // );
+// }}
