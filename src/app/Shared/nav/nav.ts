@@ -39,7 +39,7 @@ export class Nav implements OnInit, OnDestroy {
     { name: 'Trips', icon: 'bi-airplane' },
     { name: 'Messages', icon: 'bi-chat', route: '/messages' },
     { name: 'Profile', icon: 'bi-person', route: 'UserTrips' },
-    { name: 'Logout', icon: 'bi-box-arrow-right' }
+    { name: 'Logout', icon: 'bi-box-arrow-right',route: '/Login'  }
   ];
 
   constructor(

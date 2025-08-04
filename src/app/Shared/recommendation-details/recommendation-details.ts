@@ -63,6 +63,7 @@ export class RecommendationDetails implements OnInit {
     this.recommendationService.getRecommendations(userId).subscribe({
       next: (data) => {
         if (data && data.length > 0) {
+          console.log(data)
           this.recommendations = data;
         this.cdr.detectChanges();
         }

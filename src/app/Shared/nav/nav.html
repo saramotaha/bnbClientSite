@@ -49,8 +49,12 @@
                 <i class="bi bi-list fs-5 text-center"></i>
               </button>
               <div class="user-dropdown" *ngIf="showUserMenu">
-                <div class="dropdown-item" *ngFor="let item of userMenuItems" (click)="navigateTo(item.route || '')">
-                  <label style="display: flex; align-items: center; cursor: pointer; padding: 5px 10px;">
+                <div class="dropdown-item" *ngFor="let item of userMenuItems" >
+                  <label (click)="navigateTo(item.route || '')" *ngIf="item.name !== 'Logout'" style="display: flex; align-items: center; cursor: pointer; padding: 5px 10px;">
+                    <i class="bi {{item.icon}}" style="margin-right: 10px;"></i>
+                    {{item.name}}
+                  </label>
+                  <label (click)="handleLogout()" *ngIf="item.name === 'Logout'" style="display: flex; align-items: center; cursor: pointer; padding: 5px 10px;">
                     <i class="bi {{item.icon}}" style="margin-right: 10px;"></i>
                     {{item.name}}
                   </label>
