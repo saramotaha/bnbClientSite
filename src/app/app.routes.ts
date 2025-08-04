@@ -105,9 +105,9 @@ export const routes: Routes = [
 
  {
   path: "UserProfile",
-  component: UserProfile,
-  canActivate: [authGuard],
-  data: { roles: ['Guest'] }, // or requiredRole: 'guest' if using the old format
+  // component: UserProfile,
+  // canActivate: [authGuard],
+  // data: { roles: ['Guest'] }, // or requiredRole: 'guest' if using the old format
   children: [
     { path: "", redirectTo: "profileInfo", pathMatch: "full" },
     { path: "profileInfo", component: ProfileInfo },

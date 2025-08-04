@@ -67,9 +67,9 @@ handleBecomeHost() {
 
   userMenuItems = [
     { name: 'Favorites', icon: 'bi-heart', route: 'favorites' },
-    { name: 'Trips', icon: 'bi-airplane' },
+    { name: 'Trips', icon: 'bi-airplane' , route: 'UserProfile/UserTrips' },
     { name: 'Messages', icon: 'bi-chat', route: '/messages' },
-    { name: 'Profile', icon: 'bi-person', route: 'UserTrips' },
+    { name: 'Profile', icon: 'bi-person', route: 'UserProfile' },
     { name: 'Logout', icon: 'bi-box-arrow-right' }
   ];
 
