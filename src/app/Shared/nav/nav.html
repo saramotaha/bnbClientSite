@@ -36,19 +36,19 @@
             <app-notifications></app-notifications>
 
             <!-- profile -->
-             <div class="profile-icon-container">
+             <div *ngIf="isLogged" class="profile-icon-container">
                 <div class="profile-icon" (click)="toggleUserMenu($event)">
                 {{ getUserInitials() }}
                 </div>
               </div>
             <!-- User Menu -->
-            <div class="user-menu bg-body-secondary d-flex align-items-center justify-content-center border rounded-circle"
+            <div *ngIf="isLogged" class="user-menu bg-body-secondary d-flex align-items-center justify-content-center border rounded-circle"
                 style="width: 40px; height: 40px; position: relative;">
               <button class="btn-icon d-flex justify-content-center align-items-center text-center"
                       (click)="toggleUserMenu($event)">
                 <i class="bi bi-list fs-5 text-center"></i>
               </button>
-              <div class="user-dropdown" *ngIf="showUserMenu">
+              <div class="user-dropdown" *ngIf="showUserMenu" >
                 <div class="dropdown-item" *ngFor="let item of userMenuItems" >
                   <label (click)="navigateTo(item.route || '')" *ngIf="item.name !== 'Logout'" style="display: flex; align-items: center; cursor: pointer; padding: 5px 10px;">
                     <i class="bi {{item.icon}}" style="margin-right: 10px;"></i>
@@ -60,6 +60,9 @@
                   </label>
                 </div>
               </div>
+            </div>
+            <div>
+              <button *ngIf="!isLogged" [routerLink]="['/login']" class="btn btn-lg btn-primary" > Login</button>
             </div>
           </div>
       </div>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +16,7 @@ import { Notifications } from "../../User/notifications/notifications";
 })
 export class Nav implements OnInit, OnDestroy {
 
+   isLogged:boolean = false;
 
 handleBecomeHost() {
   const roles = this.authService.getRoles();
@@ -45,6 +46,7 @@ handleBecomeHost() {
     this.router.navigate(['/HostApplication']);
   }
 }
+private cdr=inject(ChangeDetectorRef)
 
   // Nav properties
   showUserMenu = false;
@@ -82,7 +84,10 @@ handleBecomeHost() {
     this.generateCalendar();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isLogged = this.authService.isAuthenticated();
+    this.cdr.detectChanges();
+  }
 
   ngOnDestroy(): void {}
 

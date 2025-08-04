@@ -222,9 +222,9 @@ export class Login implements OnInit, OnDestroy {
     } else if (roles.includes('host')) {
       this.router.navigate(['/host/dashboard']);
     } else if (roles.includes('guest')) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/Home']);
     } else {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/Home']);
     }
   }
 
