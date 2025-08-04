@@ -1,7 +1,7 @@
-/* recommendation-details.css */
 .dialog-container {
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
+  padding: 16px;
 }
 
 .dialog-header {
@@ -11,11 +11,50 @@
   margin-bottom: 16px;
 }
 
+.error-state,
+.no-recommendations-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.error-state mat-icon,
+.no-recommendations-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+}
+
+.error-state mat-icon {
+  color: #f44336;
+}
+
+.no-recommendations-state mat-icon {
+  color: #FF9800;
+}
+
+h3 {
+  margin: 8px 0;
+  color: #333;
+}
+
+p {
+  color: #666;
+  margin-bottom: 16px;
+}
+
+ol {
+  text-align: left;
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
 .recommendations-list {
   display: grid;
-  grid-template-columns: 1fr;
   gap: 16px;
-  margin-top: 16px;
 }
 
 .recommendation-card {
@@ -27,28 +66,22 @@
   transform: translateY(-2px);
 }
 
-.error-message {
-  color: #f44336;
-  padding: 8px;
-  background-color: #ffebee;
-  border-radius: 4px;
-  margin-bottom: 16px;
-}
-
-.placeholder {
-  color: #666;
-  font-style: italic;
-  text-align: center;
-  padding: 16px;
-}
-.error-message.auth-error {
+.property-details {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
-  padding: 16px;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
 }
 
-.sign-in-button {
-  margin-top: 8px;
+.property-details mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+button[mat-raised-button] {
+  margin-top: 16px;
 }
