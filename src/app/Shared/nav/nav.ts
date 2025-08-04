@@ -46,6 +46,12 @@ handleBecomeHost() {
   }
 }
 
+
+   get isLoggedIn(): boolean {
+    return !!localStorage.getItem('token'); // ✅ Check token presence
+  }
+
+
   // Nav properties
   showUserMenu = false;
   showMainNav = false;

@@ -1,247 +1,61 @@
+/* Layout */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: white;
+  background: #fff;
+  padding: 20px;
 }
 
 .login-card {
-  background: white;
-  padding: 24px;
+  background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+  max-width: 400px;
   width: 100%;
-  border: 1px solid rgb(255, 255, 255);
-
-  max-width: 600px;
-}
-
-h1 {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-h2 {
-  font-size: 32px;
-  font-weight: 600;
-  margin-bottom: 24px;
-}
-
-.form-group {
-  margin-bottom: 16px;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
-
-.form-control {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-.disclaimer {
-  font-size: 12px;
-  color: #666;
-  margin: 16px 0;
-}
-
-.btn-primary {
-  width: 100%;
-  padding: 12px;
-  background-color: #ff385c;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.btn-primary:disabled {
-  background-color: #ff385c;
-  cursor: not-allowed;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 16px 0;
-  color: #666;
-}
-
-.divider::before,
-.divider::after {
-  content: "";
-  flex: 1;
-  border-bottom: 1px solid #ddd;
-}
-
-.divider::before {
-  margin-right: 16px;
-}
-
-.divider::after {
-  margin-left: 16px;
-}
-
-.btn-social {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 12px;
-  background: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-social i {
-  margin-right: 8px;
-}
-
-.alert {
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 16px;
-}
-
-.alert-danger {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
-
-.signup-link {
   text-align: center;
-  margin-top: 16px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Typography */
+.login-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.login-subtitle {
   font-size: 14px;
+  color: #717171;
+  margin-bottom: 20px;
 }
 
-.signup-link a {
-  color: #ff385c;
-  text-decoration: none;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.error-message {
-  color: #ff0000;
-  font-size: 0.8rem;
-  margin-top: 0.25rem;
-}
-
-.form-control.invalid {
-  border-color: #ff0000;
-}
-
-
-.password-input-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.password-toggle-btn {
-  position: absolute;
-  right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #777;
-  padding: 0;
-  font-size: 16px;
-}
-
-.password-toggle-btn:focus {
-  outline: none;
-}
-
-.form-control {
-  width: 100%;
-  padding-right: 40px;
-}
-
-.forgot-password-link {
-  text-align: right;
-  margin-bottom: 16px;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.forgot-password-link a {
-  color: #ff385c;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 16px;
-  position: relative;
-  padding-bottom: 2px;
-  transition: all 0.3s ease;
-}
-
-.forgot-password-link a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #ff385c;
-  transition: width 0.3s ease;
-}
-
-.forgot-password-link a:hover {
-  color: #d93250;
-}
-
-.forgot-password-link a:hover::after {
-  width: 100%;
-}
-
-
-/* Google Auth Button Styles */
+/* Google Button */
 .btn-google {
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #dadce0;
+  background: #fff;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #ffffff;
-  color: #3c4043;
+  padding: 10px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-google:hover:not(:disabled) {
-  background-color: #f8f9fa;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.btn-google:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  border-color: #bbb;
+  background: #f8f8f8;
 }
 
 .google-btn-content {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 8px;
 }
 
 .google-logo {
@@ -249,37 +63,135 @@ label {
   height: 18px;
 }
 
+/* Divider */
 .divider {
-  margin: 24px 0;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  color: #717171;
+  font-size: 13px;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+}
+.divider span {
+  margin: 0 10px;
+  font-size: 13px;
+  color: #717171;
+}
+
+/* Form Controls */
+.form-group {
+  text-align: left;
+  margin-bottom: 16px;
+}
+label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #222;
+  display: block;
+  margin-bottom: 4px;
+}
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+}
+.form-control:focus {
+  border-color: #ff385c;
+  box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.15);
+}
+
+/* Password Toggle */
+.password-input-container {
   position: relative;
 }
-
-.divider::before {
-  content: '';
+.password-toggle-btn {
   position: absolute;
+  right: 10px;
   top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: #e0e0e0;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #717171;
+  font-size: 16px;
 }
 
-.divider span {
-  background-color: white;
-  padding: 0 16px;
-  color: #666;
-  font-size: 14px;
+/* Primary Button */
+.btn-primary {
+  width: 100%;
+  background: #ff385c;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 8px;
+  transition: background 0.2s ease-in-out;
+  cursor: pointer;
 }
-
-/* Loading state for buttons */
-.btn-primary:disabled,
-.btn-google:disabled {
+.btn-primary:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
-
-.fa-spinner {
-  margin-right: 8px;
+.btn-primary:hover:not(:disabled) {
+  background: #e03150;
 }
-/**/
+
+/* Forgot Password */
+.forgot-password {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #ff385c;
+  cursor: pointer;
+  text-decoration: none;
+}
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* Sign Up Link */
+.signup-link {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #717171;
+}
+.signup-link a {
+  color: #ff385c;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Error Alert */
+.alert {
+  font-size: 13px;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 24px;
+    max-width: 90%;
+  }
+  .login-title {
+    font-size: 22px;
+  }
+}
+
+
+
+

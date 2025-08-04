@@ -30,22 +30,24 @@
         <!-- Right-side Menu Items -->
         <div class="col-auto">
           <div class="d-flex align-items-center gap-3">
-            <a (click)="handleBecomeHost()"  class="become-host-btn">Become a Host</a>
+            <a  *ngIf="isLoggedIn"(click)="handleBecomeHost()" class="become-host-btn">Become a Host</a>
 
-            <!-- Notifications -->
-            <app-notifications></app-notifications>
+            <a *ngIf="!isLoggedIn" [routerLink]="['/login']" class="become-host-btn">Login</a>
 
-            <!-- profile -->
-             <div class="profile-icon-container">
-                <div class="profile-icon" (click)="toggleUserMenu($event)">
+            <app-notifications *ngIf="isLoggedIn"></app-notifications>
+
+            <!-- Profile Icon and User Menu (only when logged in) -->
+            <div *ngIf="isLoggedIn" class="profile-icon-container">
+              <div class="profile-icon" (click)="toggleUserMenu($event)">
                 {{ getUserInitials() }}
-                </div>
               </div>
-            <!-- User Menu -->
-            <div class="user-menu bg-body-secondary d-flex align-items-center justify-content-center border rounded-circle"
-                style="width: 40px; height: 40px; position: relative;">
+            </div>
+
+            <div *ngIf="isLoggedIn"
+              class="user-menu bg-body-secondary d-flex align-items-center justify-content-center border rounded-circle"
+              style="width: 40px; height: 40px; position: relative;">
               <button class="btn-icon d-flex justify-content-center align-items-center text-center"
-                      (click)="toggleUserMenu($event)">
+                (click)="toggleUserMenu($event)">
                 <i class="bi bi-list fs-5 text-center"></i>
               </button>
               <div class="user-dropdown" *ngIf="showUserMenu">
@@ -57,6 +59,7 @@
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
