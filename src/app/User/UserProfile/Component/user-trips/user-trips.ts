@@ -2,10 +2,12 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../../Pages/Auth/auth.service';
 import { GetTripsOfUser } from '../../Services/get-trips-of-user';
 import { IUserProfile } from '../../Models/iuser-profile';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-trips',
-  imports: [],
+  imports: [CommonModule,FormsModule],
   templateUrl: './user-trips.html',
   styleUrl: './user-trips.css'
 })
@@ -37,6 +39,7 @@ export class UserTrips implements OnInit {
     this.GetTrips.GetUserTrips(this.id).subscribe({
       next: (response) => {
         this.AllTrips = response;
+        this.cdr.detectChanges(); // Ensure the view updates with the new data
         console.log(this.AllTrips);
 
       }
