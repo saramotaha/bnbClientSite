@@ -64,6 +64,7 @@ import { AddVerificationsComponent } from './components/host/pt3/add-verificatio
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
   { path: "Home", component: Home, pathMatch: "full" },
+  {path:"home",component:Home,pathMatch:"full"},
 
 
   // {
