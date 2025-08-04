@@ -19,14 +19,14 @@ export class HostVerificationService {
   /** ✅ FIXED: ADD HOST VERIFICATION */
   addVerification(verificationData: HostVerificationRequest): Observable<HostVerification> {
     const formData = new FormData();
-    
+
     // ✅ FIX 1: Add the verification type correctly
     formData.append('Type', verificationData.type.toString());
-    
+
     // ✅ FIX 2: Actually append the files (this was missing!)
     formData.append('DocumentUrl1', verificationData.documentUrl1, verificationData.documentUrl1.name);
     formData.append('DocumentUrl2', verificationData.documentUrl2, verificationData.documentUrl2.name);
-    
+
     // ✅ FIX 3: Add current timestamp
     formData.append('SubmittedAt', new Date().toISOString());
 
@@ -55,7 +55,7 @@ export class HostVerificationService {
   /** ✅ GET HOST VERIFICATIONS */
   getHostVerifications(): Observable<HostVerification[]> {
     const headers = this.authService.getAuthHeaders();
-    
+
     return this.http.get<HostVerification[]>(`${this.API_URL}/GetHostVerifications`, { headers })
       .pipe(
         catchError(error => {
@@ -68,7 +68,7 @@ export class HostVerificationService {
   /** ✅ GET VERIFICATION BY ID */
   getVerificationById(id: number): Observable<HostVerification> {
     const headers = this.authService.getAuthHeaders();
-    
+
     return this.http.get<HostVerification>(`${this.API_URL}/GetVerification/${id}`, { headers })
       .pipe(
         catchError(error => {
@@ -81,7 +81,7 @@ export class HostVerificationService {
   /** ✅ UPDATE VERIFICATION */
   updateVerification(id: number, verificationData: HostVerificationRequest): Observable<HostVerification> {
     const formData = new FormData();
-    
+
     formData.append('Type', verificationData.type.toString());
     formData.append('DocumentUrl1', verificationData.documentUrl1, verificationData.documentUrl1.name);
     formData.append('DocumentUrl2', verificationData.documentUrl2, verificationData.documentUrl2.name);
@@ -103,7 +103,7 @@ export class HostVerificationService {
   /** ✅ DELETE VERIFICATION */
   deleteVerification(id: number): Observable<any> {
     const headers = this.authService.getAuthHeaders();
-    
+
     return this.http.delete(`${this.API_URL}/DeleteVerification/${id}`, { headers })
       .pipe(
         catchError(error => {

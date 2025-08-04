@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { 
-  HostVerification, 
+import {
+  HostVerification,
   HostVerificationResponse,
   VerificationFilters,
   AdminHostVerificationResponseDto
@@ -147,82 +147,32 @@ export class HostVerificationService {
       );
   }
 
-  // // Approve host verification - matches [HttpPut("{id}/approve")]
-  // approveVerification(id: number, adminNotes?: string): Observable<HostVerificationResponse> {
-  //   const body: AdminNotesDto = { adminNotes };
-    
-  //   return this.http.put<HostVerificationResponse>(`${this.baseUrl}/${id}/approve`, body)
-  //     .pipe(
-  //       map(response => {
-  //         this.refreshVerifications();
-  //         return response;
-  //       }),
-  //       catchError(this.handleError)
-  //     );
-  // }
+  // Approve host verification - matches [HttpPut("{id}/approve")] ApproveVerification(int id, [FromBody] AdminNotesDto? adminNotesDto = null)
+  approveVerification(id: number, adminNotes?: string): Observable<HostVerificationResponse> {
+    const body: AdminNotesDto = { adminNotes };
 
-  // // Reject host verification - matches [HttpPut("{id}/reject")]
-  // rejectVerification(id: number, adminNotes?: string): Observable<HostVerificationResponse> {
-  //   const body: AdminNotesDto = { adminNotes };
-    
-  //   return this.http.put<HostVerificationResponse>(`${this.baseUrl}/${id}/reject`, body)
-  //     .pipe(
-  //       map(response => {
-  //         this.refreshVerifications();
-  //         return response;
-  //       }),
-  //       catchError(this.handleError)
-  //     );
-  // }
-// Approve host verification - matches [HttpPut("{id}/approve")]
-approveVerification(id: number, adminNotes?: string): Observable<HostVerificationResponse> {
-  // Ensure adminNotes is either a string or undefined, not null
-  const body: AdminNotesDto = { 
-    adminNotes: adminNotes || '' // Convert null/undefined to empty string
-  };
-  
-  return this.http.put<HostVerificationResponse>(`${this.baseUrl}/${id}/approve`, body)
-    .pipe(
-      map(response => {
-        this.refreshVerifications();
-        return response;
-      }),
-      catchError(this.handleError)
-    );
-}
+    return this.http.put<HostVerificationResponse>(`${this.baseUrl}/${id}/approve`, body)
+      .pipe(
+        map(response => {
+          this.refreshVerifications();
+          return response;
+        }),
+        catchError(this.handleError)
+      );
+  }
 
-// Reject host verification - matches [HttpPut("{id}/reject")]
-rejectVerification(id: number, adminNotes?: string): Observable<HostVerificationResponse> {
-  // Ensure adminNotes is either a string or undefined, not null
-  const body: AdminNotesDto = { 
-    adminNotes: adminNotes || '' // Convert null/undefined to empty string
-  };
-  
-  return this.http.put<HostVerificationResponse>(`${this.baseUrl}/${id}/reject`, body)
-    .pipe(
-      map(response => {
-        this.refreshVerifications();
-        return response;
-      }),
-      catchError(this.handleError)
-    );
-}
-  // Filter verifications with documents
-  filterVerificationsWithDocuments(filters: VerificationFilters): Observable<AdminHostVerificationResponseDto[]> {
-    // If only status filter is provided, use the status endpoint
-    if (filters.status && !filters.hostId && !filters.verificationType && !filters.dateFrom && !filters.dateTo) {
-      return this.getVerificationsByStatusWithDocuments(filters.status);
-    }
-    
-    // If only hostId filter is provided, use the host endpoint
-    if (filters.hostId && !filters.status && !filters.verificationType && !filters.dateFrom && !filters.dateTo) {
-      return this.getVerificationsByHostIdWithDocuments(filters.hostId);
-    }
-    
-    // For complex filtering, get all and filter client-side
-    return this.getAllVerificationsWithDocuments().pipe(
-      map(verifications => this.filterVerificationsWithDocumentsClientSide(verifications, filters))
-    );
+  // Reject host verification - matches [HttpPut("{id}/reject")] RejectVerification(int id, [FromBody] AdminNotesDto? adminNotesDto = null)
+  rejectVerification(id: number, adminNotes?: string): Observable<HostVerificationResponse> {
+    const body: AdminNotesDto = { adminNotes };
+
+    return this.http.put<HostVerificationResponse>(`${this.baseUrl}/${id}/reject`, body)
+      .pipe(
+        map(response => {
+          this.refreshVerifications();
+          return response;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   // Filter verifications - uses existing endpoints to filter client-side or by status
@@ -231,12 +181,12 @@ rejectVerification(id: number, adminNotes?: string): Observable<HostVerification
     if (filters.status && !filters.hostId && !filters.verificationType && !filters.dateFrom && !filters.dateTo) {
       return this.getVerificationsByStatus(filters.status);
     }
-    
+
     // If only hostId filter is provided, use the host endpoint
     if (filters.hostId && !filters.status && !filters.verificationType && !filters.dateFrom && !filters.dateTo) {
       return this.getVerificationsByHostId(filters.hostId);
     }
-    
+
     // For complex filtering, get all and filter client-side
     return this.getAllVerifications().pipe(
       map(verifications => this.filterVerificationsClientSide(verifications, filters))
@@ -245,7 +195,7 @@ rejectVerification(id: number, adminNotes?: string): Observable<HostVerification
 
   // Client-side filtering for verifications with documents
   private filterVerificationsWithDocumentsClientSide(
-    verifications: AdminHostVerificationResponseDto[], 
+    verifications: AdminHostVerificationResponseDto[],
     filters: VerificationFilters
   ): AdminHostVerificationResponseDto[] {
     return verifications.filter(verification => {
@@ -333,9 +283,9 @@ rejectVerification(id: number, adminNotes?: string): Observable<HostVerification
   // Get file icon based on extension
   getFileIcon(fileName: string): string {
     if (!fileName) return 'fas fa-file';
-    
+
     const extension = fileName.toLowerCase().split('.').pop();
-    
+
     switch (extension) {
       case 'jpg':
       case 'jpeg':
@@ -362,7 +312,7 @@ rejectVerification(id: number, adminNotes?: string): Observable<HostVerification
   // Error handler
   private handleError = (error: any): Observable<never> => {
     console.error('Host Verification Service Error:', error);
-    
+
     // Handle specific error cases
     if (error.status === 404) {
       console.error('Resource not found');
@@ -371,7 +321,7 @@ rejectVerification(id: number, adminNotes?: string): Observable<HostVerification
     } else if (error.status === 500) {
       console.error('Internal server error:', error.error?.message || error.message);
     }
-    
+
     return throwError(() => error);
   };
 
@@ -410,21 +360,21 @@ rejectVerification(id: number, adminNotes?: string): Observable<HostVerification
   // Helper method to create FormData for file uploads
   createVerificationFormData(data: any, files?: File[]): FormData {
     const formData = new FormData();
-    
+
     // Add form fields
     Object.keys(data).forEach(key => {
       if (data[key] !== null && data[key] !== undefined) {
         formData.append(key, data[key]);
       }
     });
-    
+
     // Add files if provided
     if (files && files.length > 0) {
       files.forEach((file, index) => {
         formData.append(`files`, file);
       });
     }
-    
+
     return formData;
   }
 }

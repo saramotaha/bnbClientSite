@@ -515,6 +515,33 @@ private readonly API_URL = 'http://localhost:7145/api/Auth/';
     return this.currentUserSubject.value?.HostId || null;
   }
 
+
+
+
+
+//   /** ✅ Get Host Verification Status */
+// getHostVerified(): Observable<any> {
+//   const hostId = this.getHostId();
+
+//   if (!hostId) {
+//     console.error('❌ No Host ID found. User might not be a host.');
+//     return throwError(() => new Error('No Host ID found.'));
+//   }
+
+//   const url = `http://localhost:7145/api/HostVerification/GetHostVerification/${hostId}`;
+
+//   return this.http.get<any>(url, { headers: this.getAuthHeaders() }).pipe(
+//     tap(response => console.log('✅ Host verification data:', response)),
+//     catchError((error: HttpErrorResponse) => {
+//       console.error('❌ Failed to fetch host verification:', error);
+//       return throwError(() => error);
+//     })
+//   );
+// }
+
+
+
+
   /** ✅ Get Logged-in User Full Name */
   getUserFullName(): string {
     const user = this.currentUserSubject.value;
@@ -556,10 +583,10 @@ private readonly API_URL = 'http://localhost:7145/api/Auth/';
 
   // 🔄 Updated googleAuth method
   googleAuth(googleUser: GoogleUser): Observable<User> {
-    console.log('🚀 Starting Google Auth with user:', { 
-      email: googleUser.email, 
-      firstName: googleUser.firstName, 
-      lastName: googleUser.lastName 
+    console.log('🚀 Starting Google Auth with user:', {
+      email: googleUser.email,
+      firstName: googleUser.firstName,
+      lastName: googleUser.lastName
     });
 
     const googleAuthRequest: GoogleAuthRequest = {
@@ -599,11 +626,11 @@ private readonly API_URL = 'http://localhost:7145/api/Auth/';
       }),
       catchError(err => {
         console.error('❌ Google Auth HTTP Error:', err);
-        
+
         if (err.error) {
           console.error('Error details:', err.error);
         }
-        
+
         this.clearAuthState();
         return throwError(() => new Error(`Google authentication failed: ${err.error?.message || err.message || 'Unknown error'}`));
       })
@@ -626,25 +653,61 @@ private readonly API_URL = 'http://localhost:7145/api/Auth/';
     }
   }
 
+
+
+
+
+
+
+  getRoles(): string[] {
+  const token = localStorage.getItem('access_token');
+  if (!token) return [];
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+    const roles = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+
+    if (Array.isArray(roles)) {
+      return roles;
+    } else if (roles) {
+      return [roles];
+    }
+  } catch (error) {
+    console.error('Failed to parse token roles:', error);
+  }
+  return [];
+}
+
+
+
+
+
+
+
 /** ✅ Get Host Verification Status */
 getHostVerified(): Observable<boolean> {
   const hostId = this.getHostId();
 
   if (!hostId) {
     console.error('❌ No Host ID found. User might not be a host.');
-    // return throwError(() => new Error('No Host ID found.'));
-    return of(false); // Return false if no Host ID
+    return of(false);
   }
 
   const url = `http://localhost:7145/api/HostVerification/GetHostVerification/${hostId}`;
 
-  return this.http.get<any>(url, { headers: this.getAuthHeaders() }).pipe(
-    tap(response => console.log('✅ Host verification data:', response)),
+  return this.http.get<{ isVerified: boolean }>(url, { headers: this.getAuthHeaders() }).pipe(
+    map(response => response.isVerified), // ✅ Only return boolean
     catchError((error: HttpErrorResponse) => {
       console.error('❌ Failed to fetch host verification:', error);
+      // Return false if 404 (not verified), else rethrow
+      if (error.status === 404) {
+        return of(false);
+      }
       return throwError(() => error);
     })
   );
 }
+
+
 
 }
