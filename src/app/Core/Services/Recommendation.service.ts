@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { AuthService } from "../../Pages/Auth/auth.service";
 import { Observable, forkJoin, map, switchMap } from 'rxjs';
+import { idata } from "../Models/ifilter-data";
+import { RecommendationModel } from "../Models/irecomm-model";
 
 
 @Injectable({
@@ -10,10 +12,11 @@ import { Observable, forkJoin, map, switchMap } from 'rxjs';
 
 export class RecommendationService {
   private baseUrl = 'http://localhost:7145/api';
+  private url ='http://localhost:7145/api/Recommendations/recommend';
     constructor(private http:HttpClient, private authService:AuthService){}
       getRecommendations(userId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/Recommendations/user/${userId}`).pipe(
-      switchMap(recommendations => {
+        return this.http.get<any[]>(`${this.baseUrl}/Recommendations/user/${userId}`).pipe(
+        switchMap(recommendations => {
         // Fetch all properties in parallel
         const propertyRequests = recommendations.map(rec => 
           this.http.get<any>(`${this.baseUrl}/Property/${rec.propertyId}`).pipe(
@@ -27,5 +30,8 @@ export class RecommendationService {
         return forkJoin(propertyRequests);
       })
     );
+  }
+  getfilterRecommendations(data:RecommendationModel):Observable<idata[]>{
+    return this.http.post<idata[]>(`${this.url}`,data)
   }
 }
