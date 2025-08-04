@@ -1,5 +1,5 @@
 <body style="background-color: white;">
-    <app-base-nav/>
+    <app-nav/>
 
 <div class="container mt-3" style="max-width: 1120px">
     @if(propertyDetails) {
@@ -44,17 +44,91 @@
     <div class="col-4">
         <div class="sticky-top" style="top: 15px;">
             <app-propertybookingcard [selectedCheckIn]="selectedCheckIn" [selectedCheckOut]="selectedCheckOut" [propertyId]="propertyId"></app-propertybookingcard>
+
         </div>
+<!-- Report Modal -->
+<div class="modal fade report-modal" id="violationModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reportModalLabel">Report This Listing</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Form -->
+        <form *ngIf="!isSubmitted" (ngSubmit)="submitReport()" #reportForm="ngForm" class="report-form">
+         <div class="mb-3">
+  <label for="violationType" class="form-label">Violation Type</label>
+  <select
+    class="form-select"
+    id="violationType"
+    name="violationType"
+    [(ngModel)]="selectedViolationType"
+    required
+  >
+    <option value="" disabled selected>Select a violation type</option>
+    <option *ngFor="let type of violationTypes" [value]="type.value">
+      {{ type.label }}
+    </option>
+  </select>
+</div>
+
+          <div class="mb-3">
+            <label for="reportDescription" class="form-label">Description</label>
+            <textarea
+              class="form-control"
+              id="reportDescription"
+              name="description"
+              rows="4"
+              [(ngModel)]="report.description"
+              required
+              placeholder="Please provide details about the violation..."
+            ></textarea>
+            <div class="form-text">Be as specific as possible to help us investigate</div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-report text-white" [disabled]="!reportForm.form.valid">
+              Submit Report
+            </button>
+          </div>
+        </form>
+
+        <!-- Confirmation Message -->
+        <div *ngIf="isSubmitted" class="text-center">
+          <div class="confirmation-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+            </svg>
+          </div>
+          <h5 class="confirmation-message">Thank you for your report!</h5>
+          <p>We've received your report and will review it shortly.</p>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     </div>
             <hr class="my-5"/>
     <app-property-detials-review [propertyId]="propertyId"></app-property-detials-review>
 
     <app-porperty-location [latitude]="latitude" [longitude]="longitude" [address]="address"></app-porperty-location>
-    <app-property-host [hostId]="hostId"></app-property-host>
+    <app-property-host [hostId]="hostId" [propertyId]="propertyId"></app-property-host>
 </div>
 
 </div>
    
+
+
+
 <app-footer/>
 
 </body>
+
+
+

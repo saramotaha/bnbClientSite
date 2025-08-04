@@ -15,8 +15,8 @@ import {
 })
 export class PropertyService {
   // IMPORTANT: Replace with your actual backend API URL.
-  private readonly apiUrl = 'https://localhost:7145/api/admin';
-  private readonly publicApiUrl = 'https://localhost:7145/api/Property'; // Add public API URL
+  private readonly apiUrl = 'http://localhost:7145/api/admin';
+  private readonly publicApiUrl = 'http://localhost:7145/api/Property'; // Add public API URL
   
   // Default HTTP options
   private readonly httpOptions = {

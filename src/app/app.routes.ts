@@ -38,7 +38,7 @@ import { DashBoardBar } from './Admin/Component/dash-board-bar/dash-board-bar';
 import { AdminDashboard } from './Admin/Component/admin-dashboard/admin-dashboard';
 import { UserManagement } from './Admin/Component/user-management/user-management';
 import { DashboardCharts } from './Admin/Component/dashboard-charts/dashboard-charts';
-//import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
+import { PropertyManagementComponent } from './Admin/Component/admin-properties-manegment/admin-property-management/admin-property-management';
 import { AdminHostVerificationComponent } from './Admin/Component/admin-host-verifications/admin-host-verifications';
 
 import { Earnings } from './components/host/pt2/components/earnings/earnings';
@@ -58,31 +58,48 @@ import { UserTrips } from './User/UserProfile/Component/user-trips/user-trips';
 import { ForgerPassWord } from './Pages/forger-pass-word/forger-pass-word';
 import { ResetPassword } from './Pages/reset-password/reset-password';
 import { BecomeAHost } from './User/UserProfile/Component/become-ahost/become-ahost';
+import { authGuard } from './Pages/Auth/auth-guard';
 
 export const routes: Routes = [
   { path: "", redirectTo:"Home", pathMatch: "full"},
   { path: "Home", component: Home, pathMatch: "full" },
 
 
+  // {
+
+  //   path: "admin",
+  //   component: AdminDashboard,
+  //   children: [
+  //     { path: "", redirectTo: "DashboardCharts", pathMatch: "full" },
+  //     { path: "AdminNotifications", component: AdminNotifications },
+  //     { path: "Violation", component: Violation },
+  //     { path: "UserManagement", component: UserManagement },
+  //     { path: "DashboardCharts", component: DashboardCharts },
+  //     // {path: "PropertyManagement", component: PropertyManagementComponent},
+
+  //     {path: "AdminHostVerificationComponent", component: AdminHostVerificationComponent},
+
+  //     {path: "AdminPayment", component: AdminPayment},
+
+  //   ]
+
+  // },
   {
-
-    path: "admin",
-    component: AdminDashboard,
-    children: [
-      { path: "", redirectTo: "DashboardCharts", pathMatch: "full" },
-      { path: "AdminNotifications", component: AdminNotifications },
-      { path: "Violation", component: Violation },
-      { path: "UserManagement", component: UserManagement },
-      { path: "DashboardCharts", component: DashboardCharts },
-      // {path: "PropertyManagement", component: PropertyManagementComponent},
-
-      {path: "AdminHostVerificationComponent", component: AdminHostVerificationComponent},
-
-      {path: "AdminPayment", component: AdminPayment},
-
-    ]
-
-  },
+  path: 'admin',
+  component: AdminDashboard,
+  canActivate: [authGuard],
+  data: { requiredRole: 'Admin'},
+  children: [
+    { path: '', redirectTo: 'DashboardCharts', pathMatch: 'full' },
+    { path: 'AdminNotifications', component: AdminNotifications },
+    { path: 'Violation', component: Violation },
+    { path: 'UserManagement', component: UserManagement },
+    { path: 'DashboardCharts', component: DashboardCharts },
+     { path: 'PropertyManagement', component: PropertyManagementComponent },
+    { path: 'AdminHostVerificationComponent', component: AdminHostVerificationComponent },
+    { path: 'AdminPayment', component: AdminPayment }
+  ]
+},
 
 
   {path: "UserProfile",
@@ -110,8 +127,28 @@ export const routes: Routes = [
   // { path: "profileInfo", component: ProfileInfo , pathMatch:"full" },
   // { path: "checkout", component: Checkout , pathMatch:"full" },
   {
+//   path: 'host/dashboard',
+//   component: HostDashboard,
+//   children: [
+//     { path: 'calendar', component: HostCalendarPage },
+//     { path: 'today', component: TodayBookingsComponent },
+//     { path: 'reservations', component: Reservations },
+//     { path: 'violations', component: Violations },
+//     { path: 'earnings', component: Earnings },
+//     { path: 'listings', component: PropertyListComponent },
+//     { path: 'create-listing', component: ListingStep1Component },
+//     { path: 'insights', component: HostInsightsComponent },
+//     { path: '', redirectTo: 'today', pathMatch: 'full' } // Optional default child route
+//   ]
+// },
+
+
   path: 'host/dashboard',
   component: HostDashboard,
+  canActivate: [authGuard], // 👈 Guard added here
+  data: {
+    requiredRole: 'Host'
+  },
   children: [
     { path: 'calendar', component: HostCalendarPage },
     { path: 'today', component: TodayBookingsComponent },
@@ -121,14 +158,17 @@ export const routes: Routes = [
     { path: 'listings', component: PropertyListComponent },
     { path: 'create-listing', component: ListingStep1Component },
     { path: 'insights', component: HostInsightsComponent },
-    { path: '', redirectTo: 'today', pathMatch: 'full' } // Optional default child route
+    { path: '', redirectTo: 'today', pathMatch: 'full' }
   ]
 },
-
   // { path: 'host/dashboard/messages', component: Messages},
-  { path: '', component: PropertyListComponent },
+
+  // { path: '', component: PropertyListComponent },
   { path: 'host', children: listingsRoutes },
 
+  // { path: 'host/dashboard/messages', component: Messages},
+  // { path: "**", component: NotFound} //MUST BE AT THE END
+  
   { path: 'edit/:id', component: EditPropertyComponent },
 
 
@@ -136,7 +176,7 @@ export const routes: Routes = [
   { path: "favorites",component:Favorites,pathMatch:"full"},
 
     { path: "UserProfile",component:UserProfile,pathMatch:"full"},
-    { path: "BecomeAHost",component:BecomeAHost,pathMatch:"full"},
+    { path: "HostApplication",component:BecomeAHost,pathMatch:"full"},
   // { path: "notifications", component: Notifications , pathMatch:"full" },
   // { path: "AdminNotifications", component: DashBoardBar , pathMatch:"full" },
 

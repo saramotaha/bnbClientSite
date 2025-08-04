@@ -5,13 +5,13 @@ import { CommonModule } from '@angular/common';
 import { Map } from "../map/map";
 
 import { CurrentProperties } from '../../Core/Services/current-properties';
-import { Nav } from "../../Shared/nav/nav";
 import { Footer } from "../../Shared/footer/footer";
 import { Loader } from "../loader/loader";
 import { FormsModule } from '@angular/forms';
 import { NotFound } from '../../Pages/not-found/not-found';
 import { Route, Router, RouterLink } from '@angular/router';
 import { AverageRatingPipe } from '../../Admin/Pipes/average-rating-pipe';
+import { Nav } from '../../Shared/nav/nav';
 
 
 @Component({
