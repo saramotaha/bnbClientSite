@@ -24,7 +24,7 @@ export class PropertyService {
   }
 
  update(id: number, data: any): Observable<any> {
-  return this.http.put(`http://localhost:7145/api/property/${id}`, data);
+  return this.http.put(`${this.baseUrl}/${id}`, data);
 }
 getById(id: number): Observable<Property> {
   return this.http.get<Property>(`${this.baseUrl}/${id}`);
