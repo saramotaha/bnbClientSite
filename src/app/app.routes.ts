@@ -89,8 +89,8 @@ export const routes: Routes = [
   {
   path: 'admin',
   component: AdminDashboard,
-  canActivate: [authGuard],
-  data: { requiredRole: 'Admin'},
+  // canActivate: [authGuard],
+  // data: { requiredRole: 'Admin'},
   children: [
     { path: '', redirectTo: 'DashboardCharts', pathMatch: 'full' },
     { path: 'AdminNotifications', component: AdminNotifications },

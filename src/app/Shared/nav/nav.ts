@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../Pages/Auth/auth.service';
 import { catchError, distinctUntilChanged, forkJoin, interval, map, Observable, of, Subscription, switchMap, tap } from 'rxjs';
 import { Notifications } from "../../User/notifications/notifications";
+import { FilterHomesServices } from '../../Core/Services/filter-homes-services';
 
 @Component({
   selector: 'app-nav',
@@ -77,6 +78,7 @@ private cdr=inject(ChangeDetectorRef)
 
   constructor(
     private elementRef: ElementRef,
+    private service: FilterHomesServices,
     private datePipe: DatePipe,
     private router: Router,
     private authService: AuthService
@@ -251,7 +253,16 @@ private cdr=inject(ChangeDetectorRef)
 
   onSearch(): void {
     console.log('Searching for:', this.searchQuery);
-    this.closeMainNavWithAnimation();
+     this.service.setFilters({
+      location: this.searchQuery,
+    startDate: this.checkInDate,
+    endDate: this.checkOutDate,
+    guests: this.getTotalGuests()
+
+    })
+
+    this.router.navigate(['/ViewAllHomes']);
+    // this.closeMainNavWithAnimation();
   }
 
   // EVENT LISTENERS
